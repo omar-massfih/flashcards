@@ -1,0 +1,4 @@
+What is Cargo in the Rust ecosystem?	The included dependency manager and build tool.
+What does Cargo make easier?	Adding, compiling, and managing dependencies consistently.
+What is rustfmt used for?	Automatic formatting to keep a consistent coding style.
+Name three example domains where Rust is used in production.	Command line tools; web services; embedded devices.
