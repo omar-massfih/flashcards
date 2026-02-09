@@ -1,0 +1,39 @@
+What does `loop { ... }` do?	Creates an infinite loop that runs until you exit it (e.g., with `break`).
+What does `break` do in a loop?	Exits the nearest enclosing loop immediately.
+What does `continue` do in a loop?	Skips the rest of the current loop iteration and starts the next iteration.
+What is the Rust prelude?	A set of standard-library items automatically in scope in every program.
+When do you write a `use ...;` statement?	To bring a module/type/trait into scope when it isn’t already available (e.g., not in the prelude) or to shorten paths.
+What does `::` mean in Rust paths?	It separates path segments (modules/types/traits) and is used to access associated items (e.g., `Type::function`).
+What is an associated function?	A function defined on a type and called with `Type::function`, not on an instance.
+Are variables mutable by default?	No; bindings are immutable by default.
+What does `mut` mean on a binding?	It allows reassignment of the binding and/or mutation through it (when the type supports mutation).
+What is `String` (std) in one phrase?	A growable, UTF-8–encoded owned string.
+What does `&T` mean?	A shared (immutable) reference to a value of type `T`.
+What does `&mut T` mean?	A mutable reference to a value of type `T` (allows mutation through the reference).
+Why pass `&mut T` to a function?	So the function can mutate a caller-owned value without taking ownership of it.
+What is `std::io::stdin()` conceptually?	A handle to standard input that you can read user input from.
+What does `read_line(&mut String)` return?	A `Result` indicating success (`Ok(...)`) or failure (`Err(...)`).
+What does `read_line` do to the string buffer?	It appends the input line (including the trailing newline) to the `String`.
+What is method chaining?	Calling methods on returned values in sequence, like `a().b().c()`.
+What is `Result<T, E>`?	An enum that represents either success (`Ok(T)`) or failure (`Err(E)`).
+What are the `Result` variants?	`Ok` and `Err`.
+What does `expect("msg")` do on a `Result`?	If `Ok`, unwraps the value; if `Err`, panics and prints the provided message.
+What is `match` used for?	Branching on patterns (often enum variants) in an exhaustive way and producing a value.
+What does the wildcard pattern `_` mean?	Match anything (catch-all), ignoring the matched value.
+What does `trim()` do (Rust strings)?	Removes leading and trailing whitespace (including `\n` / `\r\n`).
+What does `parse::<T>()` do?	Attempts to convert a string to type `T`, returning a `Result`.
+Why does `parse` return a `Result`?	Because the conversion can fail for invalid input.
+Why add a type annotation like `: u32`?	To guide type inference and choose the concrete type you want.
+What is shadowing?	Re-declaring a name to bind it to a new value (possibly a different type) in the same scope.
+What does “static typing” mean?	Types are checked at compile time, and many mismatches are rejected before the program runs.
+Why can’t you compare values of different types directly?	Operations like comparison require compatible types; Rust forces explicit conversions instead of implicit type mixing.
+What is `std::cmp::Ordering` for?	Representing comparison outcomes: `Less`, `Greater`, or `Equal`.
+What does `cmp(&other)` return?	An `Ordering` describing how two values compare.
+Difference between `start..end` and `start..=end`?	`start..end` excludes `end`; `start..=end` includes `end`.
+What does `{name}` do in `println!`?	Inserts the value of the named variable into the output.
+Is `match` an expression or a statement?	An expression: it evaluates to a value, so you can write `let x = match ...;`.
+What does a `match` arm consist of?	A pattern to match and an expression/block to run when it matches.
+What does a pattern like `Ok(num)` do in a `match`?	It matches the `Ok` variant and binds the inner value to `num`.
+Why must `match` be exhaustive?	Rust requires handling all possible cases (or using `_`) so you don’t miss a variant.
+What is “turbofish” syntax `::<T>` used for?	To specify generic type parameters explicitly, e.g., `parse::<u32>()`.
+Why bring a trait into scope with `use`?	To make the trait’s methods available for method-call syntax on compatible types.
