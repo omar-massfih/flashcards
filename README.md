@@ -14,8 +14,6 @@ This repo contains Anki import files (`.txt`) with **tab-separated** fields for 
 - Each topic folder contains an `anki.txt`.
 - Each topic folder can also contain an `all.txt` that combines all `*/anki.txt` files under that topic (recommended import).
 
-See `rust/README.md` for the Rust/TRPL-specific notes.
-
 ## Import into Anki
 - Prefer importing `<topic>/all.txt` (for example, `rust/all.txt`) to import the whole topic at once.
 - Note type: **Basic**
