@@ -1,0 +1,35 @@
+What two subsets of data types does TRPL highlight?	Scalar types and compound types.
+What is a scalar type (Rust)?	A type that represents a single value; Rust’s primary scalar types are integers, floats, booleans, and chars.
+What is a compound type (Rust)?	A type that groups multiple values into one; Rust’s primitive compound types are tuples and arrays.
+Integer types: what do `i*` vs `u*` mean (Rust)?	`i*` is signed (can be negative); `u*` is unsigned (nonnegative).
+What does a type like `u32` indicate?	An unsigned 32-bit integer.
+What built-in integer sizes does Rust provide?	8/16/32/64/128-bit signed+unsigned plus `isize`/`usize`.
+What determines the size of `isize`/`usize`?	The target architecture (64-bit on 64-bit platforms; 32-bit on 32-bit platforms).
+What integer type does Rust default to when unspecified?	`i32`.
+When is `usize` commonly used in Rust?	For indexing collections/arrays and sizes/lengths.
+How can you write integer literals in hex/octal/binary (Rust)?	Hex `0x...`; octal `0o...`; binary `0b...`; decimal is the default.
+What is a numeric type suffix on a literal?	A suffix like `57u8` that explicitly selects the literal’s type.
+What does `_` do in numeric literals (Rust)?	It’s a visual separator only (e.g., `1_000` equals `1000`).
+What is integer overflow (Rust)?	When a value exceeds the range a fixed-size integer type can represent.
+What happens on integer overflow in debug builds (Rust)?	Runtime overflow checks cause a panic when overflow occurs.
+What happens on integer overflow in release builds by default (Rust)?	It wraps using two’s complement wrapping (no overflow panic by default).
+What are the four method families for handling overflow explicitly?	`wrapping_*`; `checked_*`; `overflowing_*`; `saturating_*`.
+What do `wrapping_*` methods do?	Always wrap on overflow (in all build modes).
+What do `checked_*` methods do on overflow?	Return `None` (an `Option` indicating overflow).
+What do `overflowing_*` methods return?	The wrapped value and a boolean indicating whether overflow happened.
+What do `saturating_*` methods do?	Clamp results at the type’s min/max instead of wrapping.
+What floating-point types does Rust have?	`f32` and `f64`.
+What floating-point type does Rust default to?	`f64`.
+How does integer division behave in Rust?	It truncates toward zero.
+What is the boolean type called in Rust?	`bool` (values `true` and `false`).
+How do you write a `char` literal vs a string literal (Rust)?	`char` uses single quotes (e.g., `'z'`); strings use double quotes (e.g., "z").
+What does `char` represent in Rust (and size)?	A Unicode scalar value; `char` is 4 bytes.
+What is a tuple (Rust)?	A fixed-length compound type that can hold values of different types.
+What does a tuple type annotation look like?	`(T1, T2, T3)`.
+How do you destructure a tuple (Rust)?	Use a pattern: `let (x, y, z) = tup;`.
+How do you access tuple elements by index (Rust)?	Use dot-indexing: `tup.0`, `tup.1`, etc.
+What is the unit type/value in Rust?	`()`; an empty value / empty return type.
+What is an array in Rust (core properties)?	A fixed-length collection where every element has the same type.
+What is Rust array type syntax (including repeat init)?	`[T; N]` and repeat init like `[value; N]`.
+Arrays vs vectors: when should you prefer `Vec<T>` over arrays?	When you need a growable/shrinkable collection; if unsure, use a vector.
+What happens on out-of-bounds array indexing in Rust (and why)?	It panics at runtime via bounds checks to prevent invalid memory access (memory safety).
