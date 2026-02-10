@@ -1,0 +1,24 @@
+What does Rust error `E0384` indicate?	You attempted to assign to an immutable binding (e.g., “cannot assign twice to immutable variable”).
+When does Rust catch attempts to reassign an immutable binding?	At compile time (a compile-time error).
+Why does Rust default to immutable bindings?	It nudges you toward safer, easier-to-reason-about code and supports safe concurrency.
+What kind of bug can immutability help prevent?	Code that assumes a value won’t change being broken by code that changes it (especially intermittently).
+What does adding `mut` to a binding communicate?	Intent: the value bound to this name is expected to change.
+What keyword declares a constant in Rust?	`const`
+Can you use `mut` with a `const`?	No—constants are always immutable.
+What must a Rust `const` declaration always include?	A type annotation (e.g., `const X: u32 = ...;`).
+Where can Rust constants be declared?	In any scope, including global scope.
+What can Rust constants be initialized with?	Only constant expressions (values computable at compile time).
+What is the “constant expression” restriction for constants?	A `const` can’t depend on values only known at runtime.
+How long is a Rust constant valid?	For the entire time the program runs, within the scope it’s declared.
+Rust constant naming convention?	ALL_CAPS with underscores between words.
+Why replace repeated “magic numbers” with a `const`?	Conveys meaning; one place to update if the value changes.
+What is shadowing in Rust (in one phrase)?	Rebinding the same name with `let`, creating a new binding that hides the previous one.
+How do you shadow a variable?	Write `let name = ...;` again with the same name.
+Shadowing vs `mut`: what’s the key difference in how the value changes?	Shadowing creates a new binding (requires `let`); `mut` allows reassignment of the same binding.
+Shadowing: why does it help prevent accidental reassignment?	Changing the value requires `let`; an assignment without `let` won’t compile for an immutable binding.
+Shadowing vs `mut`: can shadowing change the type?	Yes; shadowing can change the type while reusing the same name.
+Why can’t `mut` be used to “change” a variable’s type?	A binding’s type is fixed; assignment requires a value of the same type.
+How does shadowing interact with inner scopes?	An inner block can shadow a name temporarily; when the block ends, the outer binding is visible again.
+Why might you choose shadowing over new variable names?	It avoids awkward names (e.g., `spaces_str`/`spaces_num`) while keeping code readable.
+What does the compiler often suggest for an immutability assignment error?	Make the binding mutable (e.g., change `let x = ...` to `let mut x = ...`).
+If you want a transformed value but still prefer immutability, what Rust feature helps?	Shadowing: rebind with `let` to apply transformations, then keep the new binding immutable.
