@@ -1,0 +1,30 @@
+What is Rust’s naming convention for functions and variables?	snake_case: all lowercase with underscores between words.
+What is the syntax for calling a function in Rust?	Write the function name followed by parentheses, e.g., `do_thing()`.
+Does Rust care whether a function is defined before or after it’s called?	No; order in the file doesn’t matter as long as the function is in scope for the caller.
+What must be true for code to call a function in Rust?	The function must be defined in a scope visible to the caller.
+What is the difference between a parameter and an argument?	A parameter is a named variable in the function signature; an argument is the concrete value passed at the call site.
+In Rust function signatures, what must you write for each parameter?	The parameter’s type.
+What is the syntax for a typed parameter in Rust?	`name: Type`.
+How do you write multiple parameters in a Rust function signature?	Comma-separated, e.g., `fn f(a: i32, b: char)`.
+Why does Rust require parameter types in function signatures?	It helps the compiler produce better errors and reduces the need for type annotations elsewhere.
+What is a statement (Rust, concept)?	An instruction that performs an action and does not return a value.
+What is an expression (Rust, concept)?	Something that evaluates to a value.
+Is `let x = 5;` a statement or an expression in Rust?	A statement.
+Why can’t you write `let x = (let y = 6);` in Rust?	`let` is a statement and doesn’t produce a value to assign.
+Are function definitions statements or expressions in Rust?	Statements.
+Is calling a function a statement or an expression in Rust?	An expression (it evaluates to a value).
+Is calling a macro (e.g., `println!`) a statement or an expression in Rust?	An expression.
+Is a block `{ ... }` an expression in Rust?	Yes; a block can evaluate to a value.
+In a block expression, what determines the block’s value?	The value of its final expression (the “tail expression”).
+What is a “tail expression” in Rust?	The final expression in a block without a trailing semicolon; it becomes the block’s value.
+What does adding a semicolon to an expression do in Rust?	It turns the expression into a statement, so it no longer yields its value.
+In a block, what happens if the last line ends with `;`?	The block’s value becomes `()` (unit), because there is no tail expression.
+How do you declare a function return type in Rust?	With `-> T` after the parameter list.
+What is the default return type when a Rust function omits `-> ...`?	`()` (unit).
+How do Rust functions typically return a value without `return`?	By making the last line of the body a tail expression (no semicolon).
+What does the `return` keyword do in Rust?	Returns early from a function with the provided value.
+What common mistake causes a function to return `()` unexpectedly?	Putting a semicolon after the intended return expression (removing the tail expression).
+What does `()` represent as a return value?	The unit value (an “empty” value).
+Why does `x + 1;` often cause a return-type mismatch in Rust functions?	The semicolon makes it a statement, so it yields `()` instead of the numeric value.
+What kind of compiler error often appears when a function’s body yields `()` but the signature says it returns a non-`()` type?	A “mismatched types” error (expected the declared return type, found `()`).
+How can a block expression be used with `let`?	You can bind a block’s value: `let x = { ... tail_expression ... };`.
