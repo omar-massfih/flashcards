@@ -1,0 +1,35 @@
+What are the two main control-flow capabilities highlighted in this section?	Branching on conditions and repeating code (looping).
+What is an `if` expression used for (Rust)?	Branching: run a block when a condition is true; optionally run an `else` block when false.
+What type must a Rust `if` condition have?	`bool`.
+Does Rust perform truthy/falsy coercions for `if` conditions?	No; conditions must be explicitly boolean.
+What happens if an `if` condition is false and there is no `else`?	The `if` block is skipped and execution continues.
+What is `else if` used for?	Checking multiple conditions in sequence.
+In an `if`/`else if` chain, how many branches run?	At most one: the first branch whose condition is true.
+Why can “too many `else if`” be a code smell (per TRPL)?	It can clutter code; consider refactoring (e.g., using `match` for complex branching).
+What are the blocks in an `if` expression sometimes called?	Arms (similar terminology to `match`).
+Is `if` a statement or an expression in Rust?	An expression (it can produce a value).
+What does “`if` is an expression” enable in Rust?	Using `if` on the right-hand side of `let` to choose a value.
+When using `if` in `let`, what must be true about the result types of each arm?	All possible arm results must have the same type.
+Why must those arm result types match (Rust)?	A variable has a single compile-time type; Rust must know it definitively.
+What common compile error happens when `if` and `else` produce different types?	An error that the `if` and `else` have incompatible types (type mismatch).
+What are the three kinds of loops in Rust?	`loop`, `while`, and `for`.
+What is one practical use-case for an infinite-style loop besides “repeat forever”?	Retrying an operation until it succeeds / a condition is met.
+How can a `loop` produce a value (Rust)?	Use `break <expr>`; the loop expression evaluates to that value.
+Where does the value from `break <expr>` go?	It becomes the value of the entire `loop` expression (often bound with `let result = loop { ... };`).
+What is the difference between `break` and `return` in this context?	`break` exits the current loop; `return` exits the current function.
+In nested loops, which loop do `break` and `continue` affect by default?	The innermost loop at that point.
+What is a loop label used for?	Disambiguating which loop `break`/`continue` should apply to in nested loops.
+What is the syntax shape of a labeled loop?	`'label: loop { ... }` (label starts with a single quote).
+How do you break an outer labeled loop from inside an inner loop?	`break 'label;`.
+What does a `while` loop represent (Rust)?	“Run while condition is true; stop when it becomes false.”
+Why does `while` reduce nesting versus `loop` + `if` + `break` patterns?	The condition is built into the loop construct, so it’s clearer and less nested.
+What is a common use of `while` shown in TRPL?	Counting down until a condition (e.g., `number != 0`) becomes false.
+What is a `for` loop primarily used for (Rust)?	Iterating over items in a collection/iterator.
+Why is iterating with `while` + manual index considered error-prone?	Off-by-one mistakes can cause panics (out-of-bounds) or skipped elements.
+Why can `while` + manual indexing also be slower?	It can require repeated bounds checks / comparisons each iteration.
+Why is `for` preferred when iterating a collection (TRPL’s emphasis)?	Safer, more concise, and often more efficient.
+What advantage does `for` have when the collection length changes?	You don’t need to update an index bound; it iterates the elements directly.
+What does TRPL recommend as the most commonly used loop construct in Rust?	`for`.
+What standard-library concept is used to run a loop a fixed number of times?	A range (an iterator producing a sequence of numbers).
+What does calling `.rev()` on an iterator do (conceptually)?	Reverses the iteration order.
+Why might you wrap a range in parentheses before calling `.rev()`?	To call the method on the range expression as a whole, e.g., `(1..4).rev()`.
