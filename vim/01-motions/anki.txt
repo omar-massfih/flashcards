@@ -1,0 +1,42 @@
+Move to start of line (Vim, Normal mode)	`0`
+Move to first non-blank character (Vim, Normal mode)	`^`
+Move to first non-blank character (Vim, Normal mode; count-aware)	`_`
+Move to end of line (Vim, Normal mode)	`$`
+Move one word forward (Vim, Normal mode)	`w`
+Move one word backward (Vim, Normal mode)	`b`
+Move to end of word (Vim, Normal mode)	`e`
+Move to end of previous word (Vim, Normal mode)	`ge`
+Move one WORD forward (whitespace-separated)	`W`
+Move one WORD backward (whitespace-separated)	`B`
+Move to end of WORD (whitespace-separated)	`E`
+Go to first line of file	`gg`
+Go to last line of file	`G`
+Move to top of screen	`H`
+Move to middle of screen	`M`
+Move to bottom of screen	`L`
+Search forward for text	`/text`
+Search backward for text	`?text`
+Next match (after a search)	`n`
+Previous match (after a search)	`N`
+Enter Visual mode (characterwise)	`v`
+Enter Visual Line mode	`V`
+Enter Visual Block mode	`Ctrl-v`
+What does the delete operator `d` do?	Deletes the text covered by a following motion (e.g., `dw`, `d$`).
+What does the yank operator `y` do?	Copies (yanks) the text covered by a following motion (e.g., `yw`, `y$`).
+Delete current visual selection (Vim, Visual mode)	`d`
+Yank current visual selection (Vim, Visual mode)	`y`
+Delete one character under cursor	`x`
+Delete word from cursor	`dw`
+Delete to end of line	`d$`
+Delete to end of line (Vim; shorthand)	`D`
+Delete entire line	`dd`
+Delete two lines	`2dd`
+Join line below to current line	`J`
+Yank (copy) current line	`yy`
+Paste after cursor	`p`
+Paste before cursor	`P`
+After yanking a whole line, paste it below current line	`yy` then `p`
+After yanking a whole line, paste it above current line	`yy` then `P`
+Indent current line right	`>>`
+Indent current line left	`<<`
+How do counts work with motions/operators?	Prefix a command with a number (e.g., `3w`, `2dd`) to repeat/apply it multiple times.

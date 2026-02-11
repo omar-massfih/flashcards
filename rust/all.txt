@@ -220,3 +220,36 @@ What does TRPL recommend as the most commonly used loop construct in Rust?	`for`
 What standard-library concept is used to run a loop a fixed number of times?	A range (an iterator producing a sequence of numbers).
 What does calling `.rev()` on an iterator do (conceptually)?	Reverses the iteration order.
 Why might you wrap a range in parentheses before calling `.rev()`?	To call the method on the range expression as a whole, e.g., `(1..4).rev()`.
+What is ownership (Rust)?	A set of rules that govern how a Rust program manages memory.
+How does Rust enforce ownership rules?	With compile-time checks; code that violates the rules won’t compile.
+Do ownership checks add runtime overhead (Rust)?	No; the checks happen at compile time.
+What is the stack (memory) organized as?	Last in, first out (LIFO).
+What are “push” and “pop” (stack)?	Push adds data to the top; pop removes data from the top.
+What must be true of data stored on the stack?	It must have a known, fixed size at compile time.
+When must data be stored on the heap?	When its size is unknown at compile time or may change.
+What happens when you allocate on the heap?	The allocator finds space, marks it used, and returns a pointer (address).
+Why is pushing to the stack usually faster than heap allocation?	The stack top is always available; heap allocation requires searching/bookkeeping.
+Why is accessing heap data usually slower than stack data?	You must follow a pointer; data may be less cache-local.
+What happens to values/local variables on a function call (conceptually)?	Arguments and locals are pushed onto the stack; they’re popped when the function returns.
+What are Rust’s three ownership rules?	Each value has an owner; only one owner at a time; when the owner goes out of scope, the value is dropped.
+What is “scope” (Rust) in one phrase?	The range of code where a binding is valid.
+When is a binding valid (scope-wise) in Rust?	From its declaration until the end of the current scope.
+Why aren’t string literals suitable for all text (Rust)?	They’re immutable, and not all text is known at compile time.
+What does `String` enable compared to string literals (Rust)?	Owned, heap-allocated, growable text for runtime-sized content.
+How do you create a `String` from a literal (Rust)?	`String::from("hello")`.
+Why can a `String` be mutated but a string literal can’t (Rust)?	`String` owns heap-allocated data; literals are immutable data baked into the binary.
+What must happen at runtime to build a `String`?	It must allocate heap memory for its contents.
+When is a `String`’s heap memory freed (Rust)?	When its owner goes out of scope and Rust runs `drop`.
+What does `drop` do (Rust, conceptually)?	Runs cleanup for a value going out of scope (e.g., freeing heap memory).
+What happens when you assign a `String` to another variable (Rust ownership)?	The value moves: stack metadata is copied, heap data is not; the source binding becomes invalid.
+Why does Rust invalidate the source binding after a move?	To prevent double frees and other use-after-free style bugs.
+Does Rust automatically deep-copy heap data on assignment?	No; implicit copies are intended to be inexpensive.
+How do you deep-copy a `String` (Rust)?	Call `clone()` to copy the heap data (potentially expensive).
+What is stored in a `String` value on the stack (Rust)?	A pointer to the heap data plus length and capacity.
+What does the `Copy` trait mean for assignment/passing (Rust)?	The value is trivially copied; the original remains valid.
+Why can’t a type be `Copy` if it (or a field) implements `Drop`?	`Drop` implies special cleanup; `Copy` would allow duplicated values that both get dropped.
+Which types commonly implement `Copy` (Rust)?	Integers; `bool`; floats; `char`; tuples of only `Copy` types (e.g., `(i32, i32)`).
+How does passing a value to a function affect ownership (Rust)?	It moves or copies, just like assignment does.
+What happens when a function takes a `String` parameter by value?	Ownership moves into the function; the caller can’t use it afterward.
+What happens to ownership when a function returns a value?	The returned value moves to the caller.
+Why return a tuple like `(String, usize)` from a function (Rust)?	To return ownership of the input value along with computed data (e.g., length).
