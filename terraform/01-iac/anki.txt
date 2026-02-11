@@ -1,0 +1,25 @@
+What is Infrastructure as Code (IaC)?	Managing infrastructure using configuration files instead of manual GUI/point-and-click changes.
+What does IaC enable (core benefit list)?	Safe; consistent; repeatable infrastructure changes via versionable configuration.
+Why is IaC “safer” than manual changes (in principle)?	Changes are explicit, reviewable, and reproducible from versioned config.
+What is Terraform (in one sentence)?	HashiCorp’s IaC tool that defines infrastructure in declarative config files and manages its lifecycle.
+What does “declarative configuration” mean (Terraform)?	You describe the desired end-state; Terraform determines the actions to reach it.
+Terraform: what is a provider?	A plugin that lets Terraform interact with a platform/service via its API.
+Terraform: what does a provider interact with?	Cloud platforms and services via their application programming interfaces (APIs).
+Where do you find Terraform providers?	The Terraform Registry (and you can write your own if needed).
+Terraform: what is a resource (conceptually)?	An individual unit of infrastructure managed by Terraform (e.g., compute instance, network).
+Terraform: what is a module?	A reusable Terraform configuration composed from resources (possibly across providers).
+Why are modules useful?	They let you reuse and standardize infrastructure patterns.
+How does Terraform handle dependencies between resources?	It automatically calculates dependencies to create/destroy in the correct order.
+Terraform workflow: what are the core steps?	Scope; Author; Initialize; Plan; Apply.
+Terraform workflow: what does “Scope” mean?	Identify the infrastructure needed for the project.
+Terraform workflow: what does “Author” mean?	Write the configuration that describes the desired infrastructure.
+Terraform workflow: what does “Initialize” do?	Install the plugins/providers Terraform needs to manage infrastructure.
+Terraform workflow: what does “Plan” do?	Preview the changes Terraform will make to match the configuration.
+Terraform workflow: what does “Apply” do?	Make the planned changes to reach the desired state.
+What is Terraform state (purpose)?	A state file that tracks real infrastructure and acts as a source of truth.
+How does Terraform use state during deployments?	It compares desired config to state to decide what changes to make.
+Why is version control valuable with Terraform configurations?	It enables safe collaboration and change tracking via code review and history.
+What is a remote state backend used for?	To securely share state and coordinate access for team collaboration.
+What problem do remote backends help prevent?	Race conditions when multiple people apply changes concurrently.
+What is HCP Terraform used for (high level)?	Hosted Terraform that can share state, run Terraform in a stable environment, and support collaboration.
+How can Terraform integrate with VCS (high level)?	Connect to GitHub/GitLab/etc. to propose infra changes when config changes are committed.

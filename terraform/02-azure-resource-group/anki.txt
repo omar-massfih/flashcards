@@ -1,0 +1,30 @@
+Terraform Azure prerequisite (account): what do you need?	An Azure subscription/account with permissions to create resources.
+Terraform Azure prerequisite (tooling): what CLI is commonly used for auth?	The Azure CLI (used to authenticate locally).
+What does `az login` do (Azure CLI)?	Authenticates you to Azure and lets CLI/Terraform use your account context.
+How do you select the active Azure subscription in Azure CLI?	Use `az account set --subscription "<SUBSCRIPTION_ID>"`.
+What is an Azure “service principal” in Terraform auth context?	An Azure AD application identity Terraform can use to authenticate and manage resources.
+Why create a service principal for Terraform (Azure)?	To grant Terraform an identity with RBAC permissions to perform actions.
+What does `az ad sp create-for-rbac` do (high level)?	Creates a service principal and assigns it an RBAC role over a given scope.
+Security rule: what must you NOT do with service principal credentials?	Do not commit or share them (treat as secrets).
+Azure provider auth (env vars): which `ARM_...` vars are commonly used?	`ARM_CLIENT_ID`; `ARM_CLIENT_SECRET`; `ARM_SUBSCRIPTION_ID`; `ARM_TENANT_ID`.
+How do you set Azure provider auth env vars in macOS/Linux shell?	Use `export ARM_CLIENT_ID="..."` etc.
+Why prefer env vars over putting Azure credentials in Terraform config?	To reduce the chance of checking secrets into source control.
+What is the purpose of the `terraform { ... }` block?	Terraform settings like required providers and Terraform CLI version constraints.
+Where do you declare required providers in Terraform?	In `terraform { required_providers { ... } }`.
+What does a provider `source` address like `hashicorp/azurerm` specify?	Which provider to install (from the Terraform Registry by default).
+Why add a provider version constraint in `required_providers`?	To avoid unplanned upgrades that may introduce breaking changes.
+What does the Terraform version constraint `required_version` do?	Prevents using Terraform CLI versions that don’t satisfy the constraint.
+What does `~> 3.0.2` mean in a Terraform version constraint?	Allow `>= 3.0.2` and `< 3.1.0` (patch updates, not minor).
+What is a Terraform `provider` block used for?	Configure a provider plugin (credentials, features, regions, etc.).
+What is a Terraform `resource` block used for?	Declare an infrastructure object Terraform will manage.
+Resource block structure (Terraform): what are the two strings after `resource`?	Resource type and resource name (e.g., `resource "TYPE" "NAME"`).
+What is a Terraform resource address (format)?	`<resource_type>.<resource_name>` (e.g., `azurerm_resource_group.rg`).
+What does `terraform init` do?	Initializes the working directory (downloads providers/modules; sets up backend).
+What does `terraform plan` do?	Shows a preview of changes needed to reach the desired state.
+What does `terraform apply` do?	Applies the planned changes to create/update/destroy infrastructure.
+Why is it safe to abort at the `terraform apply` confirmation prompt?	No changes are made until you approve and proceed.
+What does `terraform fmt` do?	Formats `.tf` files to canonical Terraform style.
+What does `terraform validate` do?	Checks configuration syntax and internal consistency (without applying).
+What file does Terraform use to record deployed infrastructure state by default?	`terraform.tfstate`.
+Why must you protect `terraform.tfstate`?	It can contain sensitive data in plaintext; don’t share or commit it.
+What does `terraform state list` do?	Lists resource addresses tracked in the current state.
