@@ -1,6 +1,7 @@
 Move to start of line (Vim, Normal mode)	`0`
-Move to first non-blank character (Vim, Normal mode)	`^`
-Move to first non-blank character (Vim, Normal mode; count-aware)	`_`
+Move to first non-blank character on current line (Vim, Normal mode)	`^` (count ignored)
+Move to first non-blank character; count selects the line (Vim, Normal mode)	`_` (e.g., `2_` -> next line)
+^ vs _ (Vim): what’s the key difference?	`^` stays on current line (count ignored); `_` accepts a count to choose the line.
 Move to end of line (Vim, Normal mode)	`$`
 Move one word forward (Vim, Normal mode)	`w`
 Move one word backward (Vim, Normal mode)	`b`
@@ -22,6 +23,7 @@ Enter Visual mode (characterwise)	`v`
 Enter Visual Line mode	`V`
 Enter Visual Block mode	`Ctrl-v`
 What does the delete operator `d` do?	Deletes the text covered by a following motion (e.g., `dw`, `d$`).
+What does `d2_` do (Vim)?	Deletes from cursor through the first non-blank of the next line (because `2_` moves there).
 What does the yank operator `y` do?	Copies (yanks) the text covered by a following motion (e.g., `yw`, `y$`).
 Delete current visual selection (Vim, Visual mode)	`d`
 Yank current visual selection (Vim, Visual mode)	`y`
