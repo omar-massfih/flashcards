@@ -253,3 +253,35 @@ How does passing a value to a function affect ownership (Rust)?	It moves or copi
 What happens when a function takes a `String` parameter by value?	Ownership moves into the function; the caller can’t use it afterward.
 What happens to ownership when a function returns a value?	The returned value moves to the caller.
 Why return a tuple like `(String, usize)` from a function (Rust)?	To return ownership of the input value along with computed data (e.g., length).
+What is a reference (Rust)?	An address you can follow to access data owned by another variable, without taking ownership.
+What does “borrowing” mean (Rust)?	Creating a reference to use a value without taking ownership of it.
+What does applying `&` to a value do (Rust)?	Creates a shared (immutable) reference to that value (borrows it).
+Why pass a reference to a function instead of an owned value (Rust)?	So the function can use the value without moving ownership; the caller can still use it afterward.
+Why don’t you need to “return ownership back” when a function takes references (Rust)?	Because references don’t take ownership in the first place.
+How are Rust references like pointers, and how are they different?	Like pointers, they are addresses; unlike raw pointers, references are guaranteed valid for their lifetime.
+What is dereferencing (Rust)?	Accessing the value a reference points to (often using the dereference operator `*`).
+What is the dereference operator in Rust?	`*` (used to dereference a reference).
+Why doesn’t the referenced value get dropped when a reference goes out of scope (Rust)?	Because the reference doesn’t own the value; only the owner is dropped.
+Can you mutate through a shared reference `&T` (Rust)?	No; shared references are immutable by default, so mutation through `&T` is rejected.
+How do you allow a function to mutate a borrowed `String` (Rust)?	Take a mutable reference parameter, e.g. `fn f(s: &mut String) { ... }`.
+What must be true to create `&mut s` (Rust)?	The binding must be mutable (e.g., `let mut s = ...;`).
+What does a mutable reference communicate at the call site (Rust)?	That the function is allowed to mutate the borrowed value (`&mut` makes mutation explicit).
+Core rule: how many mutable references can you have at once (Rust)?	At most one mutable reference to a value at a time.
+Core rule: how many immutable references can you have at once (Rust)?	Any number of immutable references, as long as there’s no mutable reference in use.
+Core rule: can you mix mutable and immutable references at the same time (Rust)?	No: you can’t have `&mut` while immutable borrows of the same value are still in use.
+Why does Rust forbid multiple mutable references at the same time?	To prevent data races by ensuring controlled, exclusive mutation.
+What is a data race (Rust explanation)?	When 2+ pointers access the same data at once, at least one writes, and there’s no synchronization.
+How does Rust prevent data races related to references?	By enforcing borrowing rules at compile time (exclusive mutable access or shared read-only access).
+How can you get two mutable references to the same value without overlap (Rust)?	Use scopes so the first mutable borrow ends before the second begins (e.g., an inner block).
+When does a reference’s “active borrow scope” last (Rust)?	From creation through the last time the reference is used (not necessarily the end of the enclosing block).
+Why can a mutable borrow be allowed after immutable borrows in the same scope (Rust)?	If the immutable borrows are no longer used, their borrow scopes have ended before the mutable borrow starts.
+What’s a common symptom of trying to mutate through `&String`?	A compile error indicating you can’t borrow as mutable behind a `&` reference; use `&mut` instead.
+How would you write a non-owning length function for a `String` (Rust)?	`fn len(s: &String) -> usize { s.len() }` (borrows; doesn’t move).
+What is a dangling reference (general concept)?	A reference to memory that has been freed or is no longer valid.
+What guarantee does Rust provide about references and dangling pointers?	References will never be dangling; the compiler enforces validity.
+Why can’t a function return a reference to a local variable (Rust)?	The local is dropped when the function ends, so the returned reference would dangle.
+What’s the typical fix for “returning a reference to a local” (Rust)?	Return an owned value instead (e.g., return `String`, not `&String`).
+Why can returning `&String` from a function trigger “missing lifetime specifier” (high level)?	The return type is borrowed, but there’s no valid source value that outlives the function to borrow from.
+What does “references must always be valid” mean (Rust rule)?	A reference can’t outlive the data it points to.
+Rules recap: references (Rust)	Either 1 mutable reference or many immutable references; references must always be valid.
+Why are borrow-checker errors useful even if frustrating (Rust)?	They catch potential bugs at compile time and point to where the problematic borrows occur.
