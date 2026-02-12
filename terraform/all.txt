@@ -53,3 +53,186 @@ What does `terraform validate` do?	Checks configuration syntax and internal cons
 What file does Terraform use to record deployed infrastructure state by default?	`terraform.tfstate`.
 Why must you protect `terraform.tfstate`?	It can contain sensitive data in plaintext; don’t share or commit it.
 What does `terraform state list` do?	Lists resource addresses tracked in the current state.
+What does it mean to “change infrastructure” in Terraform?	Edit configuration, then run `terraform apply` to create/update resources to match the new desired state.
+How do you add a new resource in Terraform (conceptually)?	Add a new `resource "TYPE" "NAME" { ... }` block to your configuration.
+How do you reference another resource’s attribute in Terraform config?	Use `<TYPE>.<NAME>.<ATTRIBUTE>` (e.g., `azurerm_resource_group.rg.name`).
+What does referencing `azurerm_resource_group.rg.name` accomplish in another resource?	Uses the existing resource’s value and creates an implicit dependency between the resources.
+Why does Terraform create a dependency graph?	To ensure resources are created/updated in a valid order based on references.
+In Terraform plan output, what does `+ create` indicate?	A new resource will be created.
+In Terraform plan output, what does `~ update in-place` indicate?	An existing resource will be modified without replacing it.
+What does it mean to “update in-place” (Terraform)?	The resource is modified while keeping the same identity/address; it is not destroyed and recreated.
+In plan output, what does “(known after apply)” mean?	The value is computed by the provider during apply and isn’t known at plan time.
+What does “Refreshing state...” mean during `terraform apply`?	Terraform is reading current real-world resource data to synchronize state before planning/applying changes.
+Why can adding a reference create an implicit dependency without `depends_on`?	Because Terraform can infer ordering from the expression graph (data flow) in configuration.
+What Azure resource is added in this tutorial example?	An Azure virtual network resource (`azurerm_virtual_network`).
+What is the purpose of `resource_group_name = azurerm_resource_group.rg.name` (Azure example)?	Places the VNet in the same resource group and ties its lifecycle ordering to the resource group.
+What kind of value is `address_space` for an Azure VNet in Terraform?	A list of CIDR blocks (e.g., `["10.0.0.0/16"]`).
+What does a CIDR block like `10.0.0.0/16` represent (high level)?	An IP address range; `/16` indicates the prefix length (network size).
+Why should you avoid hardcoding values like `location` when they may differ by account/region?	Some regions may be unavailable; prefer configuration/variables when portability matters.
+What does it mean that a new resource “references your resource group” (tutorial phrasing)?	The new resource’s arguments use values from the resource group, so Terraform orders creation accordingly.
+After changing Terraform configuration, what command applies the change?	`terraform apply`.
+What does the `tags` block do on a Terraform resource (Azure example)?	Assigns metadata key/value tags to the resource.
+In HCL, what is the type/shape of `tags = { ... }`?	A map/object of keys to values (e.g., `Environment = "..."`).
+Why are tags useful in cloud infrastructure?	They help with organization, ownership, environment labeling, and cost/accounting policies.
+How does Terraform show tag additions in a plan?	As an in-place update (`~`) with new keys/values added under `tags`.
+What’s the difference between creating a new resource vs modifying an existing one (Terraform)?	Create adds a new managed object; modify changes attributes of an existing managed object (often in-place).
+What does the plan summary “Plan: 1 to add, 0 to change, 0 to destroy” mean?	Counts of create/change/destroy actions Terraform intends to take.
+What does the plan summary “Plan: 0 to add, 1 to change, 0 to destroy” mean?	Terraform will update one existing resource and create/destroy none.
+What does it mean that Terraform “only accepts ‘yes’” at the prompt?	`terraform apply` requires explicit confirmation before making changes.
+What does the resource address `azurerm_virtual_network.vnet` identify?	The specific managed resource instance: `<TYPE>.<NAME>`.
+What does `terraform show` help you verify after an apply?	It displays the current state values Terraform knows for managed resources (including updated tags).
+Why might Terraform show `id = (known after apply)` during planning?	IDs are assigned by the provider/cloud when the resource is created.
+What is the key mental model behind Terraform changes?	Terraform compares desired configuration to current tracked state and applies actions to converge them.
+What does `terraform destroy` do?	Terminates (destroys) the resources managed by the current Terraform project/state.
+Why destroy infrastructure when you no longer need it?	To reduce security exposure and costs (e.g., remove short-lived test/build environments).
+What is `terraform destroy` the “inverse” of (Terraform)?	`terraform apply`: apply creates/updates; destroy removes managed infrastructure.
+Does `terraform destroy` delete resources not managed by the current project?	No; it targets only the infrastructure tracked/managed by the current Terraform state.
+What does `terraform destroy` use to decide what to terminate?	The current state (local `terraform.tfstate` or remote backend state, depending on setup).
+What happens before Terraform destroys resources?	It generates an execution plan and asks for confirmation before making changes.
+In destroy plan output, what does `- destroy` indicate?	That the resource instance will be destroyed.
+In destroy plan output, what does `-> null` mean?	The attribute value will be removed because the resource is being destroyed.
+What does “Refreshing state...” mean during `terraform destroy`?	Terraform reads current real-world resource data to sync state before planning/destruction.
+What does the plan summary “Plan: 0 to add, 0 to change, N to destroy” mean?	Terraform intends to destroy N resources and make no creates/updates.
+Why does Terraform require typing `yes` to confirm destroy?	Destroy is irreversible (“no undo”), so Terraform requires explicit approval.
+What warning does Terraform give before destroying managed infrastructure?	There is no undo; only `yes` is accepted to confirm.
+Does Terraform destroy resources in arbitrary order?	No; it destroys in an order that respects dependencies.
+Why does destroy order matter (Terraform)?	Dependent resources must be destroyed before the resources they depend on (e.g., destroy VNet before resource group).
+How does Terraform figure out destroy order in complex setups?	It analyzes the dependency graph and chooses a suitable order.
+What two Azure resources are shown being destroyed in the tutorial example?	`azurerm_virtual_network.vnet` and `azurerm_resource_group.rg`.
+In the tutorial example, what plan symbol indicates the VNet will be destroyed?	`-` (destroy).
+After destroy finishes, what does Terraform print (high level)?	A completion message summarizing how many resources were destroyed.
+What does `terraform destroy` change besides cloud resources?	It updates Terraform state to reflect that managed resources no longer exist.
+What’s a safe point to abort if something looks wrong during destroy?	At the confirmation prompt—no changes happen until you approve.
+What is the key mental model behind `terraform destroy`?	Terraform compares desired actions to current state and then removes managed resources after approval.
+How is destroy planning similar to apply planning?	Terraform shows an execution plan, uses refresh/state, and waits for approval before acting.
+Why might you destroy a production environment (example from tutorial)?	If you remove it from service or rotate environments to limit risk/cost.
+Why use input variables in Terraform?	To avoid hard-coded values and make configurations more flexible and reusable.
+What is an input variable (Terraform)?	A named value you can set from outside the config (or via defaults) and reference as `var.<name>`.
+Where do you commonly declare input variables (Terraform)?	In `.tf` files such as `variables.tf` using `variable "<name>" { ... }`.
+What is the basic syntax of an input variable block (Terraform)?	`variable "name" { ... }`.
+What does `default = "..."` do in a Terraform variable?	Makes the variable optional by providing a value when no input is given.
+When is a Terraform variable required input?	When it has no `default` and no value is provided via other mechanisms.
+How do you reference an input variable in Terraform configuration?	Use `var.<variable_name>` (e.g., `var.resource_group_name`).
+In the tutorial, what does `name = var.resource_group_name` accomplish?	It uses the input variable value for the resource group name instead of a hard-coded string.
+What file does the tutorial create to define `resource_group_name`?	`variables.tf`.
+How do you override a variable value for a single run (Terraform)?	Pass it on the CLI, e.g. `terraform apply -var "resource_group_name=NewName"`.
+Does `terraform apply -var ...` persist the value for future runs?	No; CLI-provided values are not saved automatically.
+If CLI `-var` values aren’t saved, how do you avoid retyping them?	Use other mechanisms like `.tfvars` files or environment variables.
+What is a `.tfvars` file used for (Terraform)?	To provide variable values from a file so you don’t have to pass them on the CLI each time.
+What environment-variable naming pattern can set Terraform variables?	`TF_VAR_<variable_name>` (e.g., `TF_VAR_resource_group_name`).
+In plan output, what does `-/+` mean?	Destroy and then create replacement (resource will be replaced).
+What does “must be replaced” mean in Terraform plan output?	The resource cannot be updated in-place for the change, so Terraform will replace it.
+What does “forces replacement” indicate in plan output?	That changing the attribute requires destroying and recreating the resource.
+Why is renaming an Azure resource group described as a destructive update in the tutorial?	Changing its name forces replacement, so Terraform recreates the resource instead of updating it in-place.
+Why can a dependent resource be replaced when its dependency is replaced?	Because it references attributes that change (e.g., `resource_group_name`), forcing it to be recreated too.
+How does Terraform know which resources depend on others?	It infers dependencies from references like `azurerm_resource_group.rg.name` in other resources.
+What does a plan showing both “to destroy” and “to add” often indicate?	Replacement: Terraform will destroy old instances and create new ones.
+How do you tell replacement apart from in-place update in plan symbols?	`~` is update in-place; `-/+` is destroy then create replacement.
+What does “known after apply” often indicate during replacement?	New IDs/values will be assigned when the replacement resource is created.
+In HCL, what type of data structure is `tags = { ... }`?	A map/object of key/value pairs.
+What is the key benefit of giving a variable a default value (Terraform)?	It lets config work without extra inputs while still allowing overrides.
+Why should you be cautious about putting secrets in variable defaults?	Defaults can end up in code/version control; prefer secret-safe inputs (env vars/secret managers).
+What’s a typical variable definition “shape” you’ll see in real configs?	`variable "x" { type = string; description = "..."; default = "..." }`.
+When should you add a `type` to a Terraform variable?	When you want stronger validation and clearer intent (e.g., `string`, `list(string)`).
+What does the plan summary “Plan: 2 to add, 0 to change, 2 to destroy” imply?	Terraform will replace resources (create new ones and destroy old ones).
+What’s the mental model for variable-driven changes in Terraform?	Changing inputs changes desired state; Terraform plans actions (update/replace) to converge real infra to that state.
+Why use output values in Terraform?	To avoid digging through many resource attributes by exposing only the values you care about.
+What is an output value (Terraform)?	A declared value (in an `output` block) that Terraform records and can display/query for the user.
+When does Terraform print output values?	After `terraform apply` completes (it prints an “Outputs” section).
+How do you query saved outputs from the CLI (Terraform)?	Run `terraform output`.
+How do you query a single output by name (Terraform)?	`terraform output <output_name>` (e.g., `terraform output resource_group_id`).
+Where do you typically define outputs (Terraform)?	In `.tf` files (often `outputs.tf`), using `output "..." { ... }`.
+What is the basic syntax of an output block (Terraform)?	`output "name" { value = <expression> }`.
+What does the output block name represent (Terraform)?	The output variable’s name (the key users query with `terraform output`).
+Why should output names follow Terraform identifier conventions?	So they can be referenced cleanly (e.g., as module outputs used by other configurations).
+How do you set an output’s value (Terraform)?	With `value = <expression>` inside the output block.
+How do you reference a resource attribute in an output (Terraform)?	Use `<TYPE>.<NAME>.<ATTRIBUTE>` (e.g., `azurerm_resource_group.rg.id`).
+Example: output a resource group ID (Terraform Azure)?	`value = azurerm_resource_group.rg.id`.
+Can you define multiple outputs (Terraform)?	Yes; you can add multiple `output` blocks.
+Do outputs change real infrastructure by themselves (Terraform)?	No; they expose values—`apply` may update state/outputs without changing resources.
+After adding an output to an already-applied config, what must you run to see it?	Re-run `terraform apply`.
+In plan output, what does “Changes to Outputs:” mean?	Terraform will update which outputs are recorded in state and shown after apply.
+Can `terraform apply` save new outputs without changing resources?	Yes; the plan can be `0 to add, 0 to change, 0 to destroy` while outputs change.
+Where are output values stored between runs (Terraform)?	In Terraform state (local `terraform.tfstate` or a remote backend state).
+Why are outputs useful in complex configurations?	They surface a few important values from hundreds/thousands of tracked attributes.
+How does a parent configuration reference a child module’s output (Terraform)?	`module.<module_name>.<output_name>`.
+What does `sensitive = true` do for an output (Terraform)?	Marks the output as sensitive so Terraform suppresses it in normal CLI output.
+Does marking an output as sensitive keep it out of state (Terraform)?	No; it can still be stored in state, so you must protect state access.
+What does `terraform output -json` provide?	Machine-readable JSON output for automation/scripts.
+What’s a common workflow to verify outputs after adding them?	Run `terraform apply`, then query with `terraform output` (or `terraform output <name>`).
+Why store Terraform state remotely (production)?	To keep state secure/encrypted and enable team collaboration via shared state access.
+What is HCP Terraform (high level)?	A hosted Terraform platform for collaboration (versioning/auditing runs), remote execution, and remote state storage.
+Why run Terraform in a remote environment (HCP Terraform)?	It provides shared access to state and a stable environment for long-running Terraform operations.
+How do you configure HCP Terraform in Terraform CLI workflow (HCL block)?	Use a `terraform { cloud { organization = "..."; workspaces { name = "..." } } }` block.
+What is an HCP Terraform workspace (conceptually)?	A named context that holds state and run history for a configuration.
+Why does the tutorial require Terraform `>= 1.1.0`?	The `cloud { ... }` block requires newer Terraform versions.
+If `cloud { ... }` isn’t supported, what older alternative is mentioned?	Use the `remote` backend block to configure the CLI workflow and migrate state.
+What does `terraform login` do (HCP Terraform)?	Authenticates the CLI to HCP Terraform by obtaining/storing an API token.
+Where does `terraform login` store the HCP Terraform token?	In `~/.terraform.d/credentials.tfrc.json` (stored in plain text).
+Why should you protect `credentials.tfrc.json`?	It contains an API token; anyone with the file can access HCP Terraform as you.
+After adding a `cloud` block, what Terraform command reinitializes and detects it?	`terraform init`.
+During `terraform init`, what does “migrate your existing state” mean?	Copy the latest local state snapshot into the configured HCP Terraform workspace.
+In the migration prompt, what does answering `yes` do?	Copies the local state snapshot to the HCP Terraform workspace.
+In the migration prompt, what does answering `no` do?	Activates the configured HCP Terraform workspace without copying local state.
+After migrating state to HCP Terraform, why delete the local `terraform.tfstate`?	To avoid keeping sensitive state on disk and to prevent using stale local state by mistake.
+What is the default execution mode for HCP Terraform CLI-driven workflow?	Remote execution (Terraform operations run in HCP Terraform).
+What does “local execution” mean with HCP Terraform (CLI-driven)?	Terraform runs locally but stores state remotely in HCP Terraform.
+Where should you set Azure `ARM_...` auth variables when using HCP Terraform?	In the HCP Terraform workspace Variables UI (not only as local shell exports).
+Which Azure auth value should be marked sensitive in HCP Terraform variables?	`ARM_CLIENT_SECRET`.
+How do you create an Azure service principal for Terraform access (Azure CLI)?	`az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<SUBSCRIPTION_ID>"`.
+After migrating state, what does “No changes. Infrastructure is up-to-date.” indicate?	Terraform found no diffs between configuration and real resources, so no actions are needed.
+What does the tutorial claim about how remote state is loaded when used?	Remote state is loaded only in memory when Terraform needs it.
+What two main workflows does HCP Terraform support (names)?	VCS-driven workflow and API-driven workflow.
+What triggers runs in an HCP Terraform VCS-driven workflow?	Commits/changes to the connected VCS repository queue plans/runs automatically.
+Terraform language: what is HCL?	A configuration language Terraform’s native syntax is based on (also used by other HashiCorp tools).
+Terraform config syntax: what are the two core constructs?	Arguments and blocks.
+What is an argument in Terraform configuration syntax?	A name/value assignment like `image_id = "abc123"` where the value is an expression.
+In an argument, what is the part before `=`?	The argument name (an identifier).
+In an argument, what is the part after `=`?	An expression that produces the argument’s value.
+What determines what value types an argument can accept?	The context/schema where the argument appears (e.g., a resource type’s argument schema).
+Why does Terraform docs prefer the word “argument” over HCL’s “attribute”?	To avoid confusion with resource attributes like `id` that you can read but can’t assign in config.
+What is a block in Terraform configuration syntax?	A container with a block type, optional labels, and a `{ ... }` body containing arguments and nested blocks.
+What are “block labels” (Terraform/HCL)?	Quoted strings after the block type keyword that identify a particular instance (label count depends on block type).
+How is a block body delimited in Terraform configuration?	With `{` and `}`.
+Can blocks contain other blocks?	Yes; blocks can nest other blocks (and arguments) to form a hierarchy.
+For a `resource` block, what are the two labels (high level)?	The resource type (provider-specific) and the resource’s local name (arbitrary within the module).
+What is the purpose of the second label in `resource "TYPE" "NAME" { ... }`?	It uniquely names that instance so you can reference it (e.g., `TYPE.NAME`).
+What are “top-level blocks” in Terraform?	Block types that can appear outside any other block; most Terraform features are implemented as top-level blocks.
+Terraform syntax: can some nested blocks have zero labels?	Yes; some nested block types require no labels.
+What is an identifier in Terraform configuration?	A name token used for argument names, block types, and Terraform constructs (resources, variables, etc.).
+What characters can Terraform identifiers contain?	Letters; digits; underscores (`_`); hyphens (`-`).
+What identifier rule avoids ambiguity with numbers?	The first character of an identifier must not be a digit.
+What identifier character set does Terraform implement (high level)?	Unicode identifier syntax plus support for ASCII hyphen (`-`).
+What comment styles are supported in Terraform config?	`#` single-line; `//` single-line; `/* ... */` multi-line.
+Which comment style is idiomatic in Terraform?	`#` for single-line comments.
+What might `terraform fmt` do to `//` comments?	It may rewrite them to `#` because `//` is not idiomatic.
+What encoding must Terraform configuration files use?	UTF-8.
+Which line endings does Terraform accept in `.tf` files?	LF or CRLF, but LF is idiomatic and tools may normalize to LF.
+Does the resource label affect the real resource (Terraform)?	No; it’s only for Terraform state tracking and references (e.g., `TYPE.NAME`).
+Terraform resource `TYPE`: where does it come from?	From a provider’s resource types (or the built-in `terraform_data` type).
+What is `terraform_data` (Terraform)?	A built-in resource type that stores values and can trigger operations without creating real infrastructure.
+Terraform resource meta-argument: what does `count` do?	Provisions multiple instances of the same resource from one block.
+Can you use both `count` and `for_each` on the same resource (Terraform)?	No; they are mutually exclusive.
+Terraform resource meta-argument: what does `for_each` do?	Provisions multiple instances from one block, one per element in a map or set.
+What kinds of values can `for_each` take (Terraform)?	A map or a set of strings.
+Terraform resource meta-argument: what does `depends_on` do?	Forces Terraform to complete operations on listed upstream references before operating on this resource.
+Terraform resource meta-argument: what does `provider` do?	Selects a specific provider configuration (alias) to use for that resource.
+How do you point a resource at an aliased provider config (Terraform)?	Set `provider = <PROVIDER>.<ALIAS>` inside the resource block.
+What is the purpose of `lifecycle { ... }` on a resource (Terraform)?	Defines lifecycle rules controlling create/update/replace/destroy behavior.
+Terraform lifecycle: what does `create_before_destroy` do?	Creates the replacement resource before destroying the current one.
+Terraform lifecycle: what does `prevent_destroy` do?	Makes Terraform error if a plan would destroy the resource.
+Does `prevent_destroy` protect a resource if you remove its configuration (Terraform)?	No; removing the block removes the rule, so Terraform can plan to destroy it.
+Terraform lifecycle: what does `ignore_changes` do?	Tells Terraform to ignore diffs for listed attributes and not try to update them.
+Terraform lifecycle: what does `replace_triggered_by` do?	Forces replacement when the referenced resources/attributes change.
+Terraform lifecycle: what is a `precondition`?	A condition that must be true before creating the resource; otherwise Terraform errors with `error_message`.
+Terraform lifecycle: what is a `postcondition`?	A condition checked after creating the resource; otherwise Terraform errors with `error_message`.
+What values are allowed inside a `lifecycle` block (Terraform)?	Only literal values (Terraform processes lifecycle rules before evaluating arbitrary expressions).
+Terraform language: what is an expression?	Syntax that produces a value in configuration (e.g., literals, references, operators, conditionals, function calls).
+What is the simplest kind of Terraform expression?	A literal value (e.g., `"hello"` or `5`).
+What can Terraform expressions do besides literal values?	Reference values; do arithmetic; conditional evaluation; call built-in functions.
+What is a reference expression (Terraform)?	An expression that reads a value exported elsewhere (e.g., `var.<name>` or `<TYPE>.<NAME>.<ATTRIBUTE>`).
+Why can’t every Terraform expression be used everywhere?	Some contexts restrict expressions (e.g., require a literal value of a particular type or forbid certain references).
+Example restriction: what might a context require from an expression (Terraform)?	A literal value of a particular type (not an arbitrary computed expression).
+Example restriction: what might a context forbid in an expression (Terraform)?	References to certain values (e.g., resource attributes), depending on the language feature.
+What command opens Terraform’s expression console?	`terraform console`
+What is `terraform console` used for (Terraform)?	To experiment with and evaluate expressions interactively.
