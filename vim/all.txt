@@ -1,3 +1,10 @@
+Open help for a keyword (Vim)	`:help {keyword}` (or `:h {keyword}`)
+Save current buffer to a new file path (Vim)	`:saveas {file}` (or `:sav {file}`)
+Close the current window (Vim)	`:close` (or `:clo`)
+Open a terminal window (Vim)	`:terminal` (or `:ter`)
+Open man page for word under cursor (Vim, Normal mode)	`K`
+Start Vim’s interactive tutorial (terminal)	`vimtutor`
+Vim help: where to read shortcut key notation?	`:help key-notation`
 Move to start of line (Vim, Normal mode)	`0`
 Move to first non-blank character on current line (Vim, Normal mode)	`^` (count ignored)
 Move to first non-blank character; count selects the line (Vim, Normal mode)	`_` (e.g., `2_` -> next line)
@@ -42,3 +49,294 @@ After yanking a whole line, paste it above current line	`yy` then `P`
 Indent current line right	`>>`
 Indent current line left	`<<`
 How do counts work with motions/operators?	Prefix a command with a number (e.g., `3w`, `2dd`) to repeat/apply it multiple times.
+Move cursor left (Vim, Normal mode)	`h`
+Move cursor down (Vim, Normal mode)	`j`
+Move cursor up (Vim, Normal mode)	`k`
+Move cursor right (Vim, Normal mode)	`l`
+Move down by display line (wrapped text) (Vim, Normal mode)	`gj`
+Move up by display line (wrapped text) (Vim, Normal mode)	`gk`
+Jump to matching bracket/paren (Vim, Normal mode)	`%`
+Jump to last non-blank character on the line (Vim, Normal mode)	`g_`
+Go to line N (Vim, Normal mode)	`{N}gg` (or `{N}G`)
+Go to local declaration (Vim, Normal mode)	`gd`
+Go to global declaration (Vim, Normal mode)	`gD`
+Find next occurrence of character x on the line (Vim, Normal mode)	`fx`
+Move before next occurrence of character x on the line (Vim, Normal mode)	`tx`
+Find previous occurrence of character x on the line (Vim, Normal mode)	`Fx`
+Move after previous occurrence of character x on the line (Vim, Normal mode)	`Tx`
+Repeat last `f`/`t`/`F`/`T` in same direction (Vim, Normal mode)	`;`
+Repeat last `f`/`t`/`F`/`T` in opposite direction (Vim, Normal mode)	`,`
+Jump to next paragraph (Vim, Normal mode)	`}`
+Jump to previous paragraph (Vim, Normal mode)	`{`
+Center cursor line on screen (Vim, Normal mode)	`zz`
+Scroll so cursor line is at top of screen (Vim, Normal mode)	`zt`
+Scroll so cursor line is at bottom of screen (Vim, Normal mode)	`zb`
+Scroll down by one line (without moving cursor) (Vim, Normal mode)	`Ctrl-e`
+Scroll up by one line (without moving cursor) (Vim, Normal mode)	`Ctrl-y`
+Scroll down one screen (Vim, Normal mode)	`Ctrl-f`
+Scroll up one screen (Vim, Normal mode)	`Ctrl-b`
+Scroll down half a screen (Vim, Normal mode)	`Ctrl-d`
+Scroll up half a screen (Vim, Normal mode)	`Ctrl-u`
+Enter Insert mode before cursor (Vim)	`i`
+Enter Insert mode at start of line (Vim)	`I`
+Enter Insert mode after cursor (append) (Vim)	`a`
+Enter Insert mode at end of line (append) (Vim)	`A`
+Open a new line below and enter Insert mode (Vim)	`o`
+Open a new line above and enter Insert mode (Vim)	`O`
+Append at end of word (Vim)	`ea`
+Delete character before cursor in Insert mode (Vim)	`Ctrl-h`
+Delete previous word in Insert mode (Vim)	`Ctrl-w`
+Insert a line break in Insert mode (Vim)	`Ctrl-j`
+Indent current line while in Insert mode (Vim)	`Ctrl-t`
+De-indent current line while in Insert mode (Vim)	`Ctrl-d`
+Insert next completion match (Insert mode) (Vim)	`Ctrl-n`
+Insert previous completion match (Insert mode) (Vim)	`Ctrl-p`
+Insert contents of register x in Insert mode (Vim)	`Ctrl-r{x}`
+Temporarily run one Normal-mode command from Insert mode (Vim)	`Ctrl-o{command}`
+Exit Insert mode (Vim)	`Esc`
+Exit Insert mode (Vim; alternative to `Esc`)	`Ctrl-[`
+Exit Insert mode and abort current command (Vim)	`Ctrl-c`
+Replace one character under cursor (Vim, Normal mode)	`r{char}`
+Enter Replace mode (overwrite) (Vim, Normal mode)	`R`
+Join line below without inserting a space (Vim, Normal mode)	`gJ`
+Reflow (format) paragraph (Vim, Normal mode)	`gwip`
+Toggle case over a motion (Vim, Normal mode)	`g~{motion}`
+Make text lowercase over a motion (Vim, Normal mode)	`gu{motion}`
+Make text uppercase over a motion (Vim, Normal mode)	`gU{motion}`
+Change (replace) entire line (Vim, Normal mode)	`cc`
+Change to end of line (Vim, Normal mode)	`C` (or `c$`)
+Change inner word (Vim, Normal mode)	`ciw`
+Change to end of word (Vim, Normal mode)	`cw` (or `ce`)
+Substitute character under cursor (delete + insert) (Vim, Normal mode)	`s`
+Substitute entire line (delete line + insert) (Vim, Normal mode)	`S`
+Transpose two characters (Vim, Normal mode)	`xp`
+Undo last change (Vim, Normal mode)	`u`
+Undo changes on the current line (Vim, Normal mode)	`U`
+Redo (Vim, Normal mode)	`Ctrl-r`
+Repeat last change (Vim, Normal mode)	`.`
+Toggle case of character under cursor (Vim, Normal mode)	`~`
+Uppercase current line (Vim, Normal mode)	`gUU` (also `gUgU`)
+Lowercase current line (Vim, Normal mode)	`guu` (also `gugu`)
+Swap the active end of the Visual selection (Vim, Visual mode)	`o`
+Swap to the other corner of a Visual block selection (Vim, Visual Block mode)	`O`
+Select “a word” text object (Vim, operator/visual)	`aw`
+Select “a () block” text object (Vim, operator/visual)	`ab`
+Select “a {} block” text object (Vim, operator/visual)	`aB`
+Select “a tag block” text object (Vim, operator/visual)	`at`
+Select “inner () block” (Vim, operator/visual)	`ib`
+Select “inner {} block” (Vim, operator/visual)	`iB`
+Select “inner tag block” (Vim, operator/visual)	`it`
+Exit Visual mode (Vim)	`Esc` (or `Ctrl-c`)
+Shift Visual selection right (indent) (Vim, Visual mode)	`>`
+Shift Visual selection left (de-indent) (Vim, Visual mode)	`<`
+Delete Visual selection (alternate to `d`) (Vim, Visual mode)	`x`
+Replace Visual selection (Vim, Visual mode)	`s`
+Toggle case of Visual selection (Vim, Visual mode)	`~`
+Lowercase Visual selection (Vim, Visual mode)	`u`
+Uppercase Visual selection (Vim, Visual mode)	`U`
+Show registers (Vim)	`:registers` (or `:reg`)
+Yank into a named register (Vim)	`"{register}y{motion}` (example: `"ayw`)
+Paste from a named register (Vim)	`"{register}p`
+Yank to system clipboard register (Vim)	`"+y{motion}`
+Paste from system clipboard register (Vim)	`"+p`
+Yank to the `*` register (Vim)	`"*y{motion}`
+Paste from the `*` register (Vim)	`"*p`
+Registers `"+` vs `"*`: what’s the difference (Vim)?	`"+` is the system clipboard; `"*` is the X11 primary selection.
+What does register `0` contain (Vim)?	The most recent yank.
+What does the unnamed register `"` contain (Vim)?	The most recent delete or yank.
+What does register `%` contain (Vim)?	The current file name.
+What does register `#` contain (Vim)?	The alternate file name.
+What does register `/` contain (Vim)?	The last search pattern.
+What does register `:` contain (Vim)?	The last command-line command.
+What does register `.` contain (Vim)?	The last inserted text.
+What does register `-` contain (Vim)?	The last small (less-than-a-line) delete.
+What is the expression register `=` used for (Vim)?	Evaluating an expression and inserting its result.
+What is the black-hole register `_` used for (Vim)?	Delete/change without yanking (discard the text).
+List marks (Vim)	`:marks`
+Set mark a at the current cursor position (Vim, Normal mode)	`ma`
+Jump to mark a (exact position) (Vim, Normal mode)	`a
+Jump to mark a (start of line) (Vim, Normal mode)	`'a`
+Backtick vs apostrophe for marks (Vim): what’s the difference?	Backtick jumps to exact column; apostrophe jumps to first non-blank of the line.
+Yank from cursor to mark a (Vim, Normal mode)	y`a
+Jump to last position in last file edited (Vim, Normal mode)	`0
+Jump to last exited current buffer (Vim, Normal mode)	`"
+Jump to location of last change in current file (Vim, Normal mode)	`.
+Jump to position before the last jump (Vim, Normal mode)	``
+Jump to last cursor position in Insert mode (Vim, Normal mode)	`^
+Jump back to line where you last jumped from (Vim, Normal mode)	`''
+Jump to beginning of previously changed/yanked text (Vim, Normal mode)	`[
+Jump to end of previously changed/yanked text (Vim, Normal mode)	`]
+Jump to beginning of last Visual selection (Vim, Normal mode)	`<
+Jump to end of last Visual selection (Vim, Normal mode)	`>
+Delete mark a (Vim)	`:delmarks a` (or `:delm a`)
+Delete marks a through d (Vim)	`:delmarks a-d` (or `:delm a-d`)
+Delete marks a, b, c (Vim)	`:delmarks abc` (or `:delm abc`)
+Delete from current line to mark a’s line (Vim, Normal mode)	`d'a`
+Delete from cursor to mark a’s exact position (Vim, Normal mode)	`d`a`
+Change from current line to mark a’s line (Vim, Normal mode)	`c'a`
+List jump locations (Vim)	`:jumps` (or `:ju`)
+Go to newer position in jump list (Vim, Normal mode)	`Ctrl-i`
+Go to older position in jump list (Vim, Normal mode)	`Ctrl-o`
+List change locations (Vim)	`:changes`
+Go to newer position in change list (Vim, Normal mode)	`g,`
+Go to older position in change list (Vim, Normal mode)	`g;`
+Jump to tag under cursor (Vim, Normal mode)	`Ctrl-]`
+Start recording a macro into register a (Vim, Normal mode)	`qa`
+Stop recording a macro (Vim, Normal mode)	`q`
+Run macro a (Vim, Normal mode)	`@a`
+Re-run the last executed macro (Vim, Normal mode)	`@@`
+Yank from cursor to start of next word (Vim, Normal mode)	`yw`
+Yank inner word (Vim, Normal mode)	`yiw`
+Yank “a word” (includes surrounding space) (Vim, Normal mode)	`yaw`
+Yank to end of line (Vim, Normal mode)	`y$` (or `Y`)
+Paste after cursor and keep cursor after pasted text (Vim, Normal mode)	`gp`
+Paste before cursor and keep cursor after pasted text (Vim, Normal mode)	`gP`
+Delete inner word (Vim, Normal mode)	`diw`
+Delete “a word” (includes surrounding space) (Vim, Normal mode)	`daw`
+Delete lines 3 through 5 (Vim, Ex command)	`:3,5d`
+Delete from current line to end of file (Vim, Ex command)	`:.,$d`
+Delete all lines matching a pattern (Vim, Ex command)	`:g/{pattern}/d`
+Delete all lines NOT matching a pattern (Vim, Ex command)	`:g!/{pattern}/d`
+Indent a `{...}` or `(...)` block when cursor is on the brace (Vim, Normal mode)	`>%`
+De-indent a `{...}` or `(...)` block when cursor is on the brace (Vim, Normal mode)	`<%`
+Re-indent a `{...}` or `(...)` block when cursor is on the brace (Vim, Normal mode)	`=%`
+Indent inner `(...)` block (Vim, Normal mode)	`>ib`
+Re-indent inner `{...}` block (Vim, Normal mode)	`=iB`
+Indent an HTML/XML tag block (Vim, Normal mode)	`>at`
+Re-indent the next 3 lines (Vim, Normal mode)	`3==`
+Re-indent entire buffer (Vim, Normal mode)	`gg=G`
+Paste and auto-adjust indentation (Vim, Normal mode)	`]p`
+Use “very magic” search pattern mode (Vim search)	`\v{pattern}`
+Replace all `old` with `new` in the whole file (Vim)	`:%s/old/new/g`
+Replace with confirmation prompts (Vim)	`:%s/old/new/gc`
+Clear search highlight (Vim)	`:nohlsearch` (or `:noh`)
+Search forward for word under cursor (Vim, Normal mode)	`*`
+Search backward for word under cursor (Vim, Normal mode)	`#`
+Edit a file in the current window (Vim)	`:edit {file}` (or `:e {file}`)
+Go to next buffer (Vim)	`:bnext` (or `:bn`)
+Go to previous buffer (Vim)	`:bprevious` (or `:bp`)
+Delete (close) current buffer (Vim)	`:bdelete` (or `:bd`)
+Switch to buffer by number (Vim)	`:buffer {N}` (example: `:buffer 3`)
+Switch to buffer by name (Vim)	`:buffer {file}`
+List buffers (Vim)	`:ls` (or `:buffers`)
+Split window and edit file (horizontal) (Vim)	`:split {file}` (or `:sp {file}`)
+Split window and edit file (vertical) (Vim)	`:vsplit {file}` (or `:vs {file}`)
+Edit all buffers as vertical splits (Vim)	`:vertical ball`
+Edit all buffers as tabs (Vim)	`:tab ball`
+Split window (horizontal) (Vim, Normal mode)	`Ctrl-w s`
+Split window (vertical) (Vim, Normal mode)	`Ctrl-w v`
+Switch to next window (Vim, Normal mode)	`Ctrl-w w`
+Quit current window (Vim, Normal mode)	`Ctrl-w q`
+Exchange current window with next (Vim, Normal mode)	`Ctrl-w x`
+Make all windows equal size (Vim, Normal mode)	`Ctrl-w =`
+Move to left window (Vim, Normal mode)	`Ctrl-w h`
+Move to right window (Vim, Normal mode)	`Ctrl-w l`
+Move to window below (Vim, Normal mode)	`Ctrl-w j`
+Move to window above (Vim, Normal mode)	`Ctrl-w k`
+Move current window to far left (Vim, Normal mode)	`Ctrl-w H`
+Move current window to far right (Vim, Normal mode)	`Ctrl-w L`
+Move current window to bottom (Vim, Normal mode)	`Ctrl-w J`
+Move current window to top (Vim, Normal mode)	`Ctrl-w K`
+Open a new tab (empty or with file) (Vim)	`:tabnew` (or `:tabnew {file}`)
+Move current split into its own tab (Vim, Normal mode)	`Ctrl-w T`
+Next tab (Vim, Normal mode)	`gt` (or `:tabnext`)
+Previous tab (Vim, Normal mode)	`gT` (or `:tabprevious`)
+Go to tab number N (Vim, Normal mode)	`{N}gt`
+Move current tab to position N (0-indexed) (Vim)	`:tabmove {N}`
+Close current tab (Vim)	`:tabclose`
+Close all other tabs (Vim)	`:tabonly`
+Run an Ex command in every tab (Vim)	`:tabdo {command}`
+Edit file in a new tab (Vim)	`:tabedit {file}`
+Find file and open in a new tab (Vim)	`:tabfind {file}`
+List all tabs (Vim)	`:tabs`
+Go to first tab (Vim)	`:tabfirst`
+Go to last tab (Vim)	`:tablast`
+Resize current window to `{height}` lines (Vim, Normal mode)	`z{height}<CR>`
+Search for a pattern across files with vimgrep (Vim)	`:vimgrep /{pattern}/ **/*`
+Quickfix: jump to next match (Vim)	`:cnext` (or `:cn`)
+Quickfix: jump to previous match (Vim)	`:cprevious` (or `:cp`)
+Quickfix: open the quickfix window (Vim)	`:copen` (or `:cope`)
+Quickfix: close the quickfix window (Vim)	`:cclose` (or `:ccl`)
+Create a manual fold over a motion (Vim, Normal mode)	`zf{motion}`
+Delete fold under cursor (Vim, Normal mode)	`zd`
+Toggle fold under cursor (Vim, Normal mode)	`za`
+Open fold under cursor (Vim, Normal mode)	`zo`
+Close fold under cursor (Vim, Normal mode)	`zc`
+Open folds by one level (Vim, Normal mode)	`zr`
+Close folds by one level (Vim, Normal mode)	`zm`
+Toggle folding functionality (Vim, Normal mode)	`zi`
+Open fold recursively (Vim, Normal mode)	`zO`
+Close fold recursively (Vim, Normal mode)	`zC`
+Toggle fold recursively (Vim, Normal mode)	`zA`
+Open folds for current line (Vim, Normal mode)	`zv`
+Close all folds (Vim, Normal mode)	`zM`
+Open all folds (Vim, Normal mode)	`zR`
+Update folds (Vim, Normal mode)	`zx`
+Diff: next change (Vim, Normal mode)	`]c`
+Diff: previous change (Vim, Normal mode)	`[c`
+Diff: get change from other window (Vim, Normal mode)	`do`
+Diff: put change to other window (Vim, Normal mode)	`dp`
+Start diff for current window (Vim)	`:diffthis`
+Refresh diff highlighting (Vim)	`:diffupdate` (or `:dif`)
+Turn off diff mode for current window (Vim)	`:diffoff`
+Start Vim in diff mode from terminal (Vim)	`vimdiff {file1} {file2}`
+Start GUI Vim diff (Vim)	`gvimdiff file1 file2 [file3]`
+Quit current file (Vim)	`:q`
+Quit all files (Vim)	`:qa`
+Save file (Vim)	`:w`
+Save and close file (Vim)	`:wq` (or `:x`)
+Save and quit (Vim, Normal mode)	`ZZ`
+Quit without saving (Vim)	`:q!` (or `ZQ`)
+Quit all with error (Vim)	`:cq` (or `:cquit`)
+What are operators in Vim (Normal mode)?	Commands that act on a range defined by a following motion (e.g., `dw`, `yip`).
+What does the change operator `c` do (Vim)?	Deletes the text covered by a motion, then enters Insert mode.
+Operator `>` does what (Vim)?	Indents the text covered by a motion to the right.
+Operator `<` does what (Vim)?	Indents the text covered by a motion to the left.
+Operator `=` does what (Vim)?	Auto-indents the text covered by a motion.
+Operator `!` does what (Vim)?	Filters the text covered by a motion through an external command.
+Delete to beginning of word (Vim, Normal mode)	`db`
+What is a text object (Vim)?	A target like word/sentence/paragraph/quotes that operators and Visual mode can act on (e.g., `yip`, `ciw`).
+Text object: inner paragraph (Vim)	`ip`
+Text object: a paragraph (Vim)	`ap`
+Text object: inner sentence (Vim)	`is`
+Text object: a sentence (Vim)	`as`
+Text object: inner double-quoted string (Vim)	`i"`
+Text object: a double-quoted string (Vim)	`a"`
+Text object: inner single-quoted string (Vim)	`i'`
+Text object: a single-quoted string (Vim)	`a'`
+Select paragraph in Visual mode (Vim)	`vip`
+Yank inner paragraph (Vim)	`yip`
+Yank a paragraph (Vim)	`yap`
+Delete inner paragraph (Vim)	`dip`
+Change inner paragraph (Vim)	`cip`
+Go to file under cursor (Vim, Normal mode)	`gf`
+Jump to previous `(` (Vim, Normal mode)	`[(`
+Jump to next `)` (Vim, Normal mode)	`])`
+Jump to previous `{` (Vim, Normal mode)	`[{`
+Jump to next `}` (Vim, Normal mode)	`]}`
+Jump to previous `<` (Vim, Normal mode)	`[<`
+Jump to next `>` (Vim, Normal mode)	`]>`
+Jump to previous method start (Vim, Normal mode)	`[m`
+Jump to previous method end (Vim, Normal mode)	`[M`
+Increment number under cursor (Vim, Normal mode)	`Ctrl-a`
+Decrement number under cursor (Vim, Normal mode)	`Ctrl-x`
+Jump to first definition of tag name (Vim)	`:tag {name}`
+Show all tag matches for keyword under cursor (Vim)	`g]`
+Go back to last tag location (Vim, Normal mode)	`Ctrl-t`
+Select a tag match from a list (Vim)	`:tselect {name}`
+Jump to a tag match (auto-select if one) (Vim)	`:tjump {name}`
+Insert current word into command line (Vim, command-line mode)	`Ctrl-r Ctrl-w`
+Paste from the unnamed register into command line (Vim, command-line mode)	`Ctrl-r "`
+Insert-mode path completion (Vim)	`Ctrl-x Ctrl-f`
+Insert-mode calculator: evaluate expression and insert result (Vim)	`Ctrl-r=128/2` then `<CR>`
+Convert Windows line endings to Unix line endings (Vim)	`:set ff=unix`
+Center-align text (Vim Ex command)	`:center [width]`
+Right-align text (Vim Ex command)	`:right [width]`
+Left-align text (Vim Ex command)	`:left`
+Turn on spell checking (US English) (Vim)	`:set spell spelllang=en_us`
+Next misspelled word (Vim, Normal mode)	`]s`
+Previous misspelled word (Vim, Normal mode)	`[s`
+Suggest spellings for word under cursor (Vim, Normal mode)	`z=`
+Add word to spell list (Vim, Normal mode)	`zg`
+Mark word as misspelled (Vim, Normal mode)	`zw`
+Undo `zw` for word (Vim, Normal mode)	`zu`
