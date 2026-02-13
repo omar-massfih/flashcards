@@ -1,0 +1,23 @@
+What does `terraform destroy` do?	Terminates (destroys) the resources managed by the current Terraform project/state.
+Why destroy infrastructure when you no longer need it?	To reduce security exposure and costs (e.g., remove short-lived test/build environments).
+What is `terraform destroy` the “inverse” of (Terraform)?	`terraform apply`: apply creates/updates; destroy removes managed infrastructure.
+Does `terraform destroy` delete resources not managed by the current project?	No; it targets only the infrastructure tracked/managed by the current Terraform state.
+What does `terraform destroy` use to decide what to terminate?	The current state (local `terraform.tfstate` or remote backend state, depending on setup).
+What happens before Terraform destroys resources?	It generates an execution plan and asks for confirmation before making changes.
+In destroy plan output, what does `- destroy` indicate?	That the resource instance will be destroyed.
+In destroy plan output, what does `-> null` mean?	The attribute value will be removed because the resource is being destroyed.
+What does “Refreshing state...” mean during `terraform destroy`?	Terraform reads current real-world resource data to sync state before planning/destruction.
+What does the plan summary “Plan: 0 to add, 0 to change, N to destroy” mean?	Terraform intends to destroy N resources and make no creates/updates.
+Why does Terraform require typing `yes` to confirm destroy?	Destroy is irreversible (“no undo”), so Terraform requires explicit approval.
+What warning does Terraform give before destroying managed infrastructure?	There is no undo; only `yes` is accepted to confirm.
+Does Terraform destroy resources in arbitrary order?	No; it destroys in an order that respects dependencies.
+Why does destroy order matter (Terraform)?	Dependent resources must be destroyed before the resources they depend on (e.g., destroy VNet before resource group).
+How does Terraform figure out destroy order in complex setups?	It analyzes the dependency graph and chooses a suitable order.
+What two Azure resources are shown being destroyed in the tutorial example?	`azurerm_virtual_network.vnet` and `azurerm_resource_group.rg`.
+In the tutorial example, what plan symbol indicates the VNet will be destroyed?	`-` (destroy).
+After destroy finishes, what does Terraform print (high level)?	A completion message summarizing how many resources were destroyed.
+What does `terraform destroy` change besides cloud resources?	It updates Terraform state to reflect that managed resources no longer exist.
+What’s a safe point to abort if something looks wrong during destroy?	At the confirmation prompt—no changes happen until you approve.
+What is the key mental model behind `terraform destroy`?	Terraform compares desired actions to current state and then removes managed resources after approval.
+How is destroy planning similar to apply planning?	Terraform shows an execution plan, uses refresh/state, and waits for approval before acting.
+Why might you destroy a production environment (example from tutorial)?	If you remove it from service or rotate environments to limit risk/cost.
