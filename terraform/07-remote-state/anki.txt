@@ -1,0 +1,24 @@
+Why store Terraform state remotely (production)?	To keep state secure/encrypted and enable team collaboration via shared state access.
+What is HCP Terraform (high level)?	A hosted Terraform platform for collaboration (versioning/auditing runs), remote execution, and remote state storage.
+Why run Terraform in a remote environment (HCP Terraform)?	It provides shared access to state and a stable environment for long-running Terraform operations.
+How do you configure HCP Terraform in Terraform CLI workflow (HCL block)?	Use a `terraform { cloud { organization = "..."; workspaces { name = "..." } } }` block.
+What is an HCP Terraform workspace (conceptually)?	A named context that holds state and run history for a configuration.
+Why does the tutorial require Terraform `>= 1.1.0`?	The `cloud { ... }` block requires newer Terraform versions.
+If `cloud { ... }` isn’t supported, what older alternative is mentioned?	Use the `remote` backend block to configure the CLI workflow and migrate state.
+What does `terraform login` do (HCP Terraform)?	Authenticates the CLI to HCP Terraform by obtaining/storing an API token.
+Where does `terraform login` store the HCP Terraform token?	In `~/.terraform.d/credentials.tfrc.json` (stored in plain text).
+Why should you protect `credentials.tfrc.json`?	It contains an API token; anyone with the file can access HCP Terraform as you.
+After adding a `cloud` block, what Terraform command reinitializes and detects it?	`terraform init`.
+During `terraform init`, what does “migrate your existing state” mean?	Copy the latest local state snapshot into the configured HCP Terraform workspace.
+In the migration prompt, what does answering `yes` do?	Copies the local state snapshot to the HCP Terraform workspace.
+In the migration prompt, what does answering `no` do?	Activates the configured HCP Terraform workspace without copying local state.
+After migrating state to HCP Terraform, why delete the local `terraform.tfstate`?	To avoid keeping sensitive state on disk and to prevent using stale local state by mistake.
+What is the default execution mode for HCP Terraform CLI-driven workflow?	Remote execution (Terraform operations run in HCP Terraform).
+What does “local execution” mean with HCP Terraform (CLI-driven)?	Terraform runs locally but stores state remotely in HCP Terraform.
+Where should you set Azure `ARM_...` auth variables when using HCP Terraform?	In the HCP Terraform workspace Variables UI (not only as local shell exports).
+Which Azure auth value should be marked sensitive in HCP Terraform variables?	`ARM_CLIENT_SECRET`.
+How do you create an Azure service principal for Terraform access (Azure CLI)?	`az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<SUBSCRIPTION_ID>"`.
+After migrating state, what does “No changes. Infrastructure is up-to-date.” indicate?	Terraform found no diffs between configuration and real resources, so no actions are needed.
+What does the tutorial claim about how remote state is loaded when used?	Remote state is loaded only in memory when Terraform needs it.
+What two main workflows does HCP Terraform support (names)?	VCS-driven workflow and API-driven workflow.
+What triggers runs in an HCP Terraform VCS-driven workflow?	Commits/changes to the connected VCS repository queue plans/runs automatically.
