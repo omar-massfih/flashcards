@@ -1,0 +1,30 @@
+What does it mean to “change infrastructure” in Terraform?	Edit configuration, then run `terraform apply` to create/update resources to match the new desired state.
+How do you add a new resource in Terraform (conceptually)?	Add a new `resource "TYPE" "NAME" { ... }` block to your configuration.
+How do you reference another resource’s attribute in Terraform config?	Use `<TYPE>.<NAME>.<ATTRIBUTE>` (e.g., `azurerm_resource_group.rg.name`).
+What does referencing `azurerm_resource_group.rg.name` accomplish in another resource?	Uses the existing resource’s value and creates an implicit dependency between the resources.
+Why does Terraform create a dependency graph?	To ensure resources are created/updated in a valid order based on references.
+In Terraform plan output, what does `+ create` indicate?	A new resource will be created.
+In Terraform plan output, what does `~ update in-place` indicate?	An existing resource will be modified without replacing it.
+What does it mean to “update in-place” (Terraform)?	The resource is modified while keeping the same identity/address; it is not destroyed and recreated.
+In plan output, what does “(known after apply)” mean?	The value is computed by the provider during apply and isn’t known at plan time.
+What does “Refreshing state...” mean during `terraform apply`?	Terraform is reading current real-world resource data to synchronize state before planning/applying changes.
+Why can adding a reference create an implicit dependency without `depends_on`?	Because Terraform can infer ordering from the expression graph (data flow) in configuration.
+What Azure resource is added in this tutorial example?	An Azure virtual network resource (`azurerm_virtual_network`).
+What is the purpose of `resource_group_name = azurerm_resource_group.rg.name` (Azure example)?	Places the VNet in the same resource group and ties its lifecycle ordering to the resource group.
+What kind of value is `address_space` for an Azure VNet in Terraform?	A list of CIDR blocks (e.g., `["10.0.0.0/16"]`).
+What does a CIDR block like `10.0.0.0/16` represent (high level)?	An IP address range; `/16` indicates the prefix length (network size).
+Why should you avoid hardcoding values like `location` when they may differ by account/region?	Some regions may be unavailable; prefer configuration/variables when portability matters.
+What does it mean that a new resource “references your resource group” (tutorial phrasing)?	The new resource’s arguments use values from the resource group, so Terraform orders creation accordingly.
+After changing Terraform configuration, what command applies the change?	`terraform apply`.
+What does the `tags` block do on a Terraform resource (Azure example)?	Assigns metadata key/value tags to the resource.
+In HCL, what is the type/shape of `tags = { ... }`?	A map/object of keys to values (e.g., `Environment = "..."`).
+Why are tags useful in cloud infrastructure?	They help with organization, ownership, environment labeling, and cost/accounting policies.
+How does Terraform show tag additions in a plan?	As an in-place update (`~`) with new keys/values added under `tags`.
+What’s the difference between creating a new resource vs modifying an existing one (Terraform)?	Create adds a new managed object; modify changes attributes of an existing managed object (often in-place).
+What does the plan summary “Plan: 1 to add, 0 to change, 0 to destroy” mean?	Counts of create/change/destroy actions Terraform intends to take.
+What does the plan summary “Plan: 0 to add, 1 to change, 0 to destroy” mean?	Terraform will update one existing resource and create/destroy none.
+What does it mean that Terraform “only accepts ‘yes’” at the prompt?	`terraform apply` requires explicit confirmation before making changes.
+What does the resource address `azurerm_virtual_network.vnet` identify?	The specific managed resource instance: `<TYPE>.<NAME>`.
+What does `terraform show` help you verify after an apply?	It displays the current state values Terraform knows for managed resources (including updated tags).
+Why might Terraform show `id = (known after apply)` during planning?	IDs are assigned by the provider/cloud when the resource is created.
+What is the key mental model behind Terraform changes?	Terraform compares desired configuration to current tracked state and applies actions to converge them.
