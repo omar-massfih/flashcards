@@ -1,0 +1,80 @@
+Terraform language: what is HCL?	A configuration language Terraform’s native syntax is based on (also used by other HashiCorp tools).
+Terraform config syntax: what are the two core constructs?	Arguments and blocks.
+What is an argument in Terraform configuration syntax?	A name/value assignment like `image_id = "abc123"` where the value is an expression.
+In an argument, what is the part before `=`?	The argument name (an identifier).
+In an argument, what is the part after `=`?	An expression that produces the argument’s value.
+What determines what value types an argument can accept?	The context/schema where the argument appears (e.g., a resource type’s argument schema).
+Why does Terraform docs prefer the word “argument” over HCL’s “attribute”?	To avoid confusion with resource attributes like `id` that you can read but can’t assign in config.
+What is a block in Terraform configuration syntax?	A container with a block type, optional labels, and a `{ ... }` body containing arguments and nested blocks.
+What are “block labels” (Terraform/HCL)?	Quoted strings after the block type keyword that identify a particular instance (label count depends on block type).
+How is a block body delimited in Terraform configuration?	With `{` and `}`.
+Can blocks contain other blocks?	Yes; blocks can nest other blocks (and arguments) to form a hierarchy.
+For a `resource` block, what are the two labels (high level)?	The resource type (provider-specific) and the resource’s local name (arbitrary within the module).
+What is the purpose of the second label in `resource "TYPE" "NAME" { ... }`?	It uniquely names that instance so you can reference it (e.g., `TYPE.NAME`).
+What are “top-level blocks” in Terraform?	Block types that can appear outside any other block; most Terraform features are implemented as top-level blocks.
+Terraform syntax: can some nested blocks have zero labels?	Yes; some nested block types require no labels.
+What is an identifier in Terraform configuration?	A name token used for argument names, block types, and Terraform constructs (resources, variables, etc.).
+What characters can Terraform identifiers contain?	Letters; digits; underscores (`_`); hyphens (`-`).
+What identifier rule avoids ambiguity with numbers?	The first character of an identifier must not be a digit.
+What identifier character set does Terraform implement (high level)?	Unicode identifier syntax plus support for ASCII hyphen (`-`).
+What comment styles are supported in Terraform config?	`#` single-line; `//` single-line; `/* ... */` multi-line.
+Which comment style is idiomatic in Terraform?	`#` for single-line comments.
+What might `terraform fmt` do to `//` comments?	It may rewrite them to `#` because `//` is not idiomatic.
+What encoding must Terraform configuration files use?	UTF-8.
+Which line endings does Terraform accept in `.tf` files?	LF or CRLF, but LF is idiomatic and tools may normalize to LF.
+Does the resource label affect the real resource (Terraform)?	No; it’s only for Terraform state tracking and references (e.g., `TYPE.NAME`).
+Terraform resource `TYPE`: where does it come from?	From a provider’s resource types (or the built-in `terraform_data` type).
+What is `terraform_data` (Terraform)?	A built-in resource type that stores values and can trigger operations without creating real infrastructure.
+Terraform resource meta-argument: what does `count` do?	Provisions multiple instances of the same resource from one block.
+Can you use both `count` and `for_each` on the same resource (Terraform)?	No; they are mutually exclusive.
+Terraform resource meta-argument: what does `for_each` do?	Provisions multiple instances from one block, one per element in a map or set.
+What kinds of values can `for_each` take (Terraform)?	A map or a set of strings.
+Terraform resource meta-argument: what does `depends_on` do?	Forces Terraform to complete operations on listed upstream references before operating on this resource.
+Terraform resource meta-argument: what does `provider` do?	Selects a specific provider configuration (alias) to use for that resource.
+How do you point a resource at an aliased provider config (Terraform)?	Set `provider = <PROVIDER>.<ALIAS>` inside the resource block.
+What is the purpose of `lifecycle { ... }` on a resource (Terraform)?	Defines lifecycle rules controlling create/update/replace/destroy behavior.
+Terraform lifecycle: what does `create_before_destroy` do?	Creates the replacement resource before destroying the current one.
+Terraform lifecycle: what does `prevent_destroy` do?	Makes Terraform error if a plan would destroy the resource.
+Does `prevent_destroy` protect a resource if you remove its configuration (Terraform)?	No; removing the block removes the rule, so Terraform can plan to destroy it.
+Terraform lifecycle: what does `ignore_changes` do?	Tells Terraform to ignore diffs for listed attributes and not try to update them.
+Terraform lifecycle: what does `replace_triggered_by` do?	Forces replacement when the referenced resources/attributes change.
+Terraform lifecycle: what is a `precondition`?	A condition that must be true before creating the resource; otherwise Terraform errors with `error_message`.
+Terraform lifecycle: what is a `postcondition`?	A condition checked after creating the resource; otherwise Terraform errors with `error_message`.
+What values are allowed inside a `lifecycle` block (Terraform)?	Only literal values (Terraform processes lifecycle rules before evaluating arbitrary expressions).
+Terraform language: what is an expression?	Syntax that produces a value in configuration (e.g., literals, references, operators, conditionals, function calls).
+What is the simplest kind of Terraform expression?	A literal value (e.g., `"hello"` or `5`).
+What can Terraform expressions do besides literal values?	Reference values; do arithmetic; conditional evaluation; call built-in functions.
+What is a reference expression (Terraform)?	An expression that reads a value exported elsewhere (e.g., `var.<name>` or `<TYPE>.<NAME>.<ATTRIBUTE>`).
+Why can’t every Terraform expression be used everywhere?	Some contexts restrict expressions (e.g., require a literal value of a particular type or forbid certain references).
+Example restriction: what might a context require from an expression (Terraform)?	A literal value of a particular type (not an arbitrary computed expression).
+Example restriction: what might a context forbid in an expression (Terraform)?	References to certain values (e.g., resource attributes), depending on the language feature.
+What command opens Terraform’s expression console?	`terraform console`
+What is `terraform console` used for (Terraform)?	To experiment with and evaluate expressions interactively.
+Terraform expressions: what does an expression evaluate to?	A value (and every value has a type).
+Terraform values: what does a value’s type determine?	Where the value can be used and what transformations/conversions apply.
+Terraform type: what is `string`?	Unicode text, like `"hello"`.
+Terraform type: what is `number`?	A numeric value (can represent whole numbers and fractional values).
+Terraform type: what is `bool`?	A boolean value: `true` or `false`.
+Terraform type: what is `list`/`tuple` (high level)?	An ordered sequence you index with whole numbers starting at 0 (e.g., `["a", 15, true]`).
+Terraform type: what is `set` (high level)?	An unordered collection of unique values (no stable index ordering).
+Terraform type: what is `map`/`object` (high level)?	Values identified by string keys/labels, like `{ name = "Mabel", age = 52 }`.
+Terraform types: what are “primitive” vs “complex/collection” types?	Primitive: `string`, `number`, `bool`; complex/collection: lists/tuples, maps/objects (and `set` as a collection type).
+What special value has no type in Terraform?	`null`.
+What does `null` mean in Terraform configuration?	Absence/omission: setting an argument to `null` behaves as if the argument were omitted.
+If you set an argument to `null`, what does Terraform do with defaults/required args?	It uses the argument’s default if it has one; otherwise it errors if the argument is required.
+Why is `null` especially useful in Terraform expressions?	To conditionally omit an argument when a condition isn’t met.
+What is a literal expression (Terraform)?	An expression that directly represents a constant value.
+Terraform literal: how do you write a boolean literal?	`true` or `false` (unquoted).
+Terraform literal: how do you write the `null` literal?	`null` (unquoted).
+Terraform literal: how do you write a list/tuple literal?	`[value1, value2, ...]` (commas required; multiline allowed; trailing comma allowed).
+Why can’t you index directly into a `set` in Terraform?	Sets are unordered, so Terraform doesn’t support element access by numeric index.
+How do you access a set element “by index” in Terraform (pattern)?	Convert to a list first (e.g., `tolist(var.example_set)[0]`).
+Terraform literal: how do you write a map/object literal?	`{ key = value, ... }` (pairs can be separated by commas or line breaks).
+In a Terraform map/object literal, what are the rules for keys (high level)?	Keys must be strings; they can be unquoted if valid identifiers, otherwise quoted; non-literal keys can be written as `(expr) = value`.
+How do you access list/tuple elements vs map/object elements in Terraform expressions?	`seq[3]` uses a whole-number index; `map["key"]` uses a string key.
+When can you use dot-attribute notation on a map/object (Terraform)?	When the attribute name is a valid identifier (e.g., `local.object.attrname`).
+Terraform style: when should you prefer bracket indexing over dot notation for maps?	When keys may be arbitrary user-provided strings (use `local.map["keyname"]`).
+Terraform docs: when do “list vs tuple” and “map vs object” distinctions matter?	Usually they behave identically; distinctions mainly matter for type constraints/validation (module/provider authors).
+Terraform type conversion: when does Terraform automatically convert types?	When an argument expects a type and the given expression can be converted to it.
+Terraform type conversion: when does automatic conversion NOT occur?	When using the equality operator.
+What automatic string conversions does Terraform perform (examples)?	It converts `number`/`bool` to `string` when needed (`15` ↔ `"15"`; `true` ↔ `"true"`) and can parse valid strings into numbers/bools.
