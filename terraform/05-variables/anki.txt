@@ -1,0 +1,30 @@
+Why use input variables in Terraform?	To avoid hard-coded values and make configurations more flexible and reusable.
+What is an input variable (Terraform)?	A named value you can set from outside the config (or via defaults) and reference as `var.<name>`.
+Where do you commonly declare input variables (Terraform)?	In `.tf` files such as `variables.tf` using `variable "<name>" { ... }`.
+What is the basic syntax of an input variable block (Terraform)?	`variable "name" { ... }`.
+What does `default = "..."` do in a Terraform variable?	Makes the variable optional by providing a value when no input is given.
+When is a Terraform variable required input?	When it has no `default` and no value is provided via other mechanisms.
+How do you reference an input variable in Terraform configuration?	Use `var.<variable_name>` (e.g., `var.resource_group_name`).
+In the tutorial, what does `name = var.resource_group_name` accomplish?	It uses the input variable value for the resource group name instead of a hard-coded string.
+What file does the tutorial create to define `resource_group_name`?	`variables.tf`.
+How do you override a variable value for a single run (Terraform)?	Pass it on the CLI, e.g. `terraform apply -var "resource_group_name=NewName"`.
+Does `terraform apply -var ...` persist the value for future runs?	No; CLI-provided values are not saved automatically.
+If CLI `-var` values aren’t saved, how do you avoid retyping them?	Use other mechanisms like `.tfvars` files or environment variables.
+What is a `.tfvars` file used for (Terraform)?	To provide variable values from a file so you don’t have to pass them on the CLI each time.
+What environment-variable naming pattern can set Terraform variables?	`TF_VAR_<variable_name>` (e.g., `TF_VAR_resource_group_name`).
+In plan output, what does `-/+` mean?	Destroy and then create replacement (resource will be replaced).
+What does “must be replaced” mean in Terraform plan output?	The resource cannot be updated in-place for the change, so Terraform will replace it.
+What does “forces replacement” indicate in plan output?	That changing the attribute requires destroying and recreating the resource.
+Why is renaming an Azure resource group described as a destructive update in the tutorial?	Changing its name forces replacement, so Terraform recreates the resource instead of updating it in-place.
+Why can a dependent resource be replaced when its dependency is replaced?	Because it references attributes that change (e.g., `resource_group_name`), forcing it to be recreated too.
+How does Terraform know which resources depend on others?	It infers dependencies from references like `azurerm_resource_group.rg.name` in other resources.
+What does a plan showing both “to destroy” and “to add” often indicate?	Replacement: Terraform will destroy old instances and create new ones.
+How do you tell replacement apart from in-place update in plan symbols?	`~` is update in-place; `-/+` is destroy then create replacement.
+What does “known after apply” often indicate during replacement?	New IDs/values will be assigned when the replacement resource is created.
+In HCL, what type of data structure is `tags = { ... }`?	A map/object of key/value pairs.
+What is the key benefit of giving a variable a default value (Terraform)?	It lets config work without extra inputs while still allowing overrides.
+Why should you be cautious about putting secrets in variable defaults?	Defaults can end up in code/version control; prefer secret-safe inputs (env vars/secret managers).
+What’s a typical variable definition “shape” you’ll see in real configs?	`variable "x" { type = string; description = "..."; default = "..." }`.
+When should you add a `type` to a Terraform variable?	When you want stronger validation and clearer intent (e.g., `string`, `list(string)`).
+What does the plan summary “Plan: 2 to add, 0 to change, 2 to destroy” imply?	Terraform will replace resources (create new ones and destroy old ones).
+What’s the mental model for variable-driven changes in Terraform?	Changing inputs changes desired state; Terraform plans actions (update/replace) to converge real infra to that state.
