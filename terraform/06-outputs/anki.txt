@@ -1,0 +1,24 @@
+Why use output values in Terraform?	To avoid digging through many resource attributes by exposing only the values you care about.
+What is an output value (Terraform)?	A declared value (in an `output` block) that Terraform records and can display/query for the user.
+When does Terraform print output values?	After `terraform apply` completes (it prints an “Outputs” section).
+How do you query saved outputs from the CLI (Terraform)?	Run `terraform output`.
+How do you query a single output by name (Terraform)?	`terraform output <output_name>` (e.g., `terraform output resource_group_id`).
+Where do you typically define outputs (Terraform)?	In `.tf` files (often `outputs.tf`), using `output "..." { ... }`.
+What is the basic syntax of an output block (Terraform)?	`output "name" { value = <expression> }`.
+What does the output block name represent (Terraform)?	The output variable’s name (the key users query with `terraform output`).
+Why should output names follow Terraform identifier conventions?	So they can be referenced cleanly (e.g., as module outputs used by other configurations).
+How do you set an output’s value (Terraform)?	With `value = <expression>` inside the output block.
+How do you reference a resource attribute in an output (Terraform)?	Use `<TYPE>.<NAME>.<ATTRIBUTE>` (e.g., `azurerm_resource_group.rg.id`).
+Example: output a resource group ID (Terraform Azure)?	`value = azurerm_resource_group.rg.id`.
+Can you define multiple outputs (Terraform)?	Yes; you can add multiple `output` blocks.
+Do outputs change real infrastructure by themselves (Terraform)?	No; they expose values—`apply` may update state/outputs without changing resources.
+After adding an output to an already-applied config, what must you run to see it?	Re-run `terraform apply`.
+In plan output, what does “Changes to Outputs:” mean?	Terraform will update which outputs are recorded in state and shown after apply.
+Can `terraform apply` save new outputs without changing resources?	Yes; the plan can be `0 to add, 0 to change, 0 to destroy` while outputs change.
+Where are output values stored between runs (Terraform)?	In Terraform state (local `terraform.tfstate` or a remote backend state).
+Why are outputs useful in complex configurations?	They surface a few important values from hundreds/thousands of tracked attributes.
+How does a parent configuration reference a child module’s output (Terraform)?	`module.<module_name>.<output_name>`.
+What does `sensitive = true` do for an output (Terraform)?	Marks the output as sensitive so Terraform suppresses it in normal CLI output.
+Does marking an output as sensitive keep it out of state (Terraform)?	No; it can still be stored in state, so you must protect state access.
+What does `terraform output -json` provide?	Machine-readable JSON output for automation/scripts.
+What’s a common workflow to verify outputs after adding them?	Run `terraform apply`, then query with `terraform output` (or `terraform output <name>`).
