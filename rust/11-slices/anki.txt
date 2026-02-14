@@ -1,0 +1,21 @@
+What is a slice in Rust?	A reference to a contiguous sequence of elements in a collection (it does not own the data).
+Why can returning a `usize` index into a `String` be brittle (Rust)?	The number is only meaningful for that specific string state; the string can change and the index becomes invalid.
+What problem do string slices solve compared to returning indices (Rust)?	They tie the “substring” result to the underlying data via borrowing, so invalid states are rejected by the compiler.
+What is a string slice type in Rust?	`&str`.
+How do you create a string slice from a `String` (Rust)?	With range syntax: `&s[start..end]` (e.g., `&s[..2]`, `&s[3..]`, `&s[..]`).
+In Rust slice ranges like `a..b`, is `b` inclusive or exclusive?	Exclusive: `a..b` includes `a` up to but not including `b`.
+What does `&s[..]` mean for a `String` in Rust?	A slice of the entire string.
+What does omitting the start in a slice range mean (Rust)?	Start at index 0 (e.g., `&s[..n]`).
+What does omitting the end in a slice range mean (Rust)?	Go to the end (e.g., `&s[n..]`).
+What does a string slice store internally (high level)?	A pointer into the string data plus a length.
+What constraint applies to string-slice indices in Rust (`&s[a..b]`)?	They must be at valid UTF-8 character boundaries; slicing in the middle of a multibyte char will panic.
+Why is `fn f(s: &str)` more flexible than `fn f(s: &String)` (Rust)?	`&str` works with both string literals and `String` values (via deref coercions / slicing).
+What is the type of a string literal in Rust (e.g., `"Hello"`)?	`&'static str` (a string slice pointing into the binary).
+Why are Rust string literals immutable?	They are `&str` slices pointing to read-only data baked into the binary.
+How can you iterate over a `String` as bytes (Rust)?	Use `s.as_bytes()` to get a `&[u8]`.
+What does `enumerate()` add to an iterator (Rust)?	It yields `(index, item)` pairs.
+In `for (i, &b) in bytes.iter().enumerate()`, why use `&b` in the pattern (Rust)?	Because `iter()` yields `&u8`, and `&b` destructures/dereferences the reference to get the `u8` value.
+What is `b' '` in Rust?	A byte literal (here: the ASCII space byte).
+Why does Rust reject mutating a `String` while a slice into it is still used?	Borrowing rules: you can’t take a mutable borrow if an immutable borrow is still active and later used.
+What is an array/slice slice type in Rust (general case)?	`&[T]` (e.g., slicing an array gives `&[i32]`).
+How do you take a slice of an array in Rust?	With range syntax: `&a[start..end]` (e.g., `let s = &a[1..3];`).
