@@ -82,3 +82,66 @@ What does an `array` typecode specify (Python)?	The underlying C storage type fo
 What is `memoryview` used for (Python)?	To share/slice binary or numeric data without copying bytes (a shared-memory view).
 Why use `collections.deque` for a FIFO queue instead of a list?	`deque` supports fast append/pop from both ends; `list.pop(0)` is costly because it shifts elements.
 What happens when you append to a bounded `deque` that is full (Python)?	It discards an item from the opposite end to make room.
+Why are dicts so fundamental in Python (implementation)?	Class/instance attributes, module namespaces, and function keyword arguments are represented with dictionaries in memory.
+Where are Python built-ins stored (CPython, high level)?	In `__builtins__.__dict__` (a dict holding built-in types/objects/functions).
+What data structure underlies Python `dict` (high level)?	A hash table.
+Which built-in types are also based on hash tables (Python)?	`set` and `frozenset` (and `dict` itself).
+What is a dict comprehension (Python)?	An expression that builds a `dict` from an iterable of key/value data (key: value pairs).
+What does a dict comprehension look like (Python syntax)?	`{k: v for ...}` (optionally with `if` filters).
+What does mapping unpacking with `**` do in a function call (Python)?	It expands a mapping into keyword arguments (e.g., `f(**d)`).
+What restriction applies to mapping unpacking (`**`) in function calls (Python)?	Expanded keys must be strings, and duplicate keyword arguments are not allowed.
+What does `**` do inside a dict literal (Python ≥ 3.5)?	It unpacks another mapping into the new dict (e.g., `{**d1, **d2}`).
+In a dict literal with multiple `**` unpackings, what happens with duplicate keys (Python)?	Later occurrences overwrite earlier ones.
+How do you merge two dicts with `|` (Python ≥ 3.9)?	`d3 = d1 | d2` creates a new mapping with keys from both (right operand wins on conflicts).
+How do you merge dicts in place with `|=` (Python ≥ 3.9)?	`d1 |= d2` updates `d1` in place with items from `d2`.
+In `d1 | d2`, which values win if keys overlap (Python)?	The right operand’s values (from `d2`) overwrite.
+Pattern matching: what can mapping patterns match (Python ≥ 3.10)?	Instances of actual or virtual subclasses of `collections.abc.Mapping`.
+Do mapping patterns care about key order (Python match/case)?	No; key order in the pattern is irrelevant (even if the subject is an `OrderedDict`).
+Do mapping patterns require an exact match of all keys (Python match/case)?	No; mapping patterns succeed on partial matches (extra keys in the subject are allowed).
+How can you capture extra key/value pairs in a mapping pattern (Python match/case)?	Use `**rest` to bind remaining items as a dict (`**rest` must be last).
+In mapping pattern matching, does `defaultdict` create missing keys to satisfy a pattern?	No; pattern matching checks existing keys only (it uses `d.get(key, sentinel)`).
+What are `Mapping` and `MutableMapping` in Python?	ABCs in `collections.abc` that formalize mapping interfaces (useful for `isinstance` checks).
+Why prefer `isinstance(x, abc.Mapping)` over `type(x) is dict` (Python)?	It supports alternative mapping types, not just the concrete `dict`.
+What does it mean for a key to be “hashable” (Python)?	It has a hash code that doesn’t change during its lifetime and supports equality comparison (`__hash__` + `__eq__`).
+What must be true of equal hashable objects (Python)?	If `a == b`, then `hash(a) == hash(b)`.
+Which common types are hashable by default (Python examples)?	Numbers, `str`, and `bytes` (flat immutable types).
+When is a container type hashable (Python)?	If it’s immutable and all contained items are hashable (e.g., certain tuples).
+Why is `frozenset` always hashable (Python)?	Because it can contain only hashable elements.
+When is a `tuple` hashable (Python)?	Only if all its items are hashable (e.g., a tuple containing a list is unhashable).
+Are hash codes stable across Python runs (CPython)?	Not necessarily; hashing is salted for security, so hash codes are only guaranteed stable within one process.
+Why can a custom `__eq__` make hashability tricky (Python)?	To remain hashable, `__hash__` must stay consistent with `__eq__` and depend only on immutable state.
+What is `dict.get(k, default)` for (Python)?	Fetching `d[k]` with a default instead of raising `KeyError` when `k` is missing.
+Why can `dict.get` be suboptimal when updating a mutable value (Python)?	You may do a lookup, mutate, then do another lookup/store back—extra work and easy to write awkwardly.
+What does `dict.setdefault(k, default)` do (Python)?	If `k` exists, returns `d[k]`; otherwise sets `d[k] = default` and returns it.
+Why is `d.setdefault(k, []).append(x)` idiomatic (Python)?	It ensures a list exists at `k` with a single lookup, then appends.
+What is `collections.defaultdict` (Python)?	A dict-like mapping that creates a default value on missing `d[k]` lookups using a `default_factory`.
+What does `defaultdict.default_factory` do (Python)?	It’s a callable used to create and insert a default value when `__getitem__` sees a missing key.
+When does a `defaultdict` call `default_factory` (Python)?	Only on `d[k]` lookups via `__getitem__`, not on `d.get(k)` or `k in d`.
+What is the `__missing__` method for (Python mappings)?	A hook a `dict` subclass can define; `dict.__getitem__` calls it when a key is missing.
+Does `k in d` trigger `__missing__` in a `dict` subclass (Python)?	No; membership tests don’t fall back to `__missing__` unless you implement that logic yourself.
+Why must a `__missing__` implementation often special-case string keys (Python example)?	To avoid infinite recursion when `__missing__` retries lookup using a transformed key.
+Why is subclassing `collections.UserDict` often easier than subclassing `dict` (Python)?	UserDict uses composition (`self.data`), avoiding some built-in shortcuts that can make subclassing `dict` tricky.
+What is `types.MappingProxyType` (Python)?	A wrapper that provides a read-only, dynamic proxy view of an underlying mapping.
+Is a `mappingproxy` (from `MappingProxyType`) a snapshot (Python)?	No; it’s dynamic—changes to the original mapping are reflected in the proxy.
+What do `dict.keys()`, `dict.items()`, and `dict.values()` return (Python 3)?	View objects (`dict_keys`, `dict_items`, `dict_values`) that are dynamic projections.
+Are dict view objects subscriptable (Python)?	No; they’re iterable and sized, but you can’t do `values[0]`.
+Which dict views behave like sets (Python)?	`dict_keys` and `dict_items` support set operations like `&`, `|`, `-`, `^`.
+When do set operations on `dict_items` fail (Python)?	If any value is unhashable (because items are `(key, value)` pairs that must be hashable).
+How can dict key insertion order matter (Python ≥ 3.7)?	Iteration preserves insertion order as a language feature (implementation detail since CPython 3.6).
+What is `collections.OrderedDict` mainly used for today (Python)?	Backward compatibility and cases needing its extra reordering operations.
+How does `OrderedDict` equality differ from `dict` (Python)?	`OrderedDict` equality checks both keys/values and order.
+What does `OrderedDict.move_to_end(k)` do (Python)?	Repositions an existing key to one end (useful for LRU-like logic).
+What is `collections.ChainMap` (Python)?	A wrapper that searches multiple mappings in order as if they were one.
+Where do updates go in a `ChainMap` (Python)?	Assignments/updates affect only the first (leftmost) mapping.
+What is `collections.Counter` (Python)?	A mapping from keys to integer counts (useful for frequency counting / multiset behavior).
+What does `Counter.update(iterable)` do (Python)?	It adds counts for elements from the iterable (instead of overwriting like `dict.update`).
+What is a `set` in Python?	A collection of unique, hashable elements.
+How do you create an empty set literal in Python?	You can’t; use `set()` because `{}` is an empty dict.
+Why are set literals like `{1, 2, 3}` preferred over `set([1, 2, 3])` (Python)?	They’re more readable and avoid building an intermediate list (often faster).
+Is there a `frozenset` literal syntax in Python?	No; create one with `frozenset(...)`.
+What is a set comprehension (Python)?	An expression that builds a set: `{expr for ...}` (optionally with `if` filters).
+What do the main set operators mean (Python)?	Union `|`; intersection `&`; difference `-`; symmetric difference `^`.
+Do set infix operators like `a & b` accept any iterables (Python)?	No; infix operators require sets on both sides (methods like `.intersection(...)` accept iterables).
+How can you remove duplicates while preserving first-seen order (Python ≥ 3.7)?	Use a dict: `list(dict.fromkeys(items))` (dict preserves insertion order).
+Why is set membership testing fast (Python)?	Hash table lookup finds candidates by hash code with few probes on average.
+Why is set/dict element ordering unreliable for sets (Python)?	Hashing is salted and resizing/reinsertion can change iteration order as the table grows.
