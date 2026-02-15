@@ -306,3 +306,27 @@ What is `b' '` in Rust?	A byte literal (here: the ASCII space byte).
 Why does Rust reject mutating a `String` while a slice into it is still used?	Borrowing rules: you can’t take a mutable borrow if an immutable borrow is still active and later used.
 What is an array/slice slice type in Rust (general case)?	`&[T]` (e.g., slicing an array gives `&[i32]`).
 How do you take a slice of an array in Rust?	With range syntax: `&a[start..end]` (e.g., `let s = &a[1..3];`).
+What is a struct in Rust?	A custom data type that groups related values into named fields.
+Why use a struct instead of a tuple (Rust)?	Fields are named, so meaning doesn’t depend on position and code is clearer/flexible.
+How do you define a struct type in Rust?	With `struct Name { field: Type, ... }`.
+What are the pieces inside a struct definition called (Rust)?	Fields (each has a name and a type).
+How do you create a struct instance in Rust?	`Name { field1: value1, field2: value2, ... }`.
+Do you have to list struct fields in declaration order when instantiating (Rust)?	No; you can specify fields in any order.
+How do you access a field on a struct instance (Rust)?	Dot notation, e.g. `user.email`.
+To mutate a struct field, what must be true about the binding (Rust)?	The entire instance binding must be mutable (e.g., `let mut user = ...;`).
+Can you make only one field mutable in an otherwise immutable struct value (Rust)?	No; Rust requires the whole instance to be mutable to mutate any field.
+What is the field init shorthand in Rust?	When a variable name matches a field name, you can write `field` instead of `field: field`.
+What does struct update syntax `..other` do (Rust)?	Fills in unspecified fields from another instance of the same struct type.
+Where must `..other` appear in a struct literal (Rust)?	Last, after any explicitly set fields.
+Why can struct update syntax make the original instance unusable (Rust)?	It moves non-`Copy` fields (like `String`) from the source into the new value.
+When does struct update syntax copy instead of move fields (Rust)?	When the field type implements `Copy` (e.g., `bool`, integers).
+What is a tuple struct in Rust?	A struct type with unnamed fields, declared like `struct Name(T1, T2, ...)`.
+Why use a tuple struct (Rust)?	To give a tuple-like value a distinct type name without naming each field.
+How do you access a tuple struct field (Rust)?	With positional dot syntax like `.0`, `.1`, etc.
+How do you destructure a tuple struct (Rust)?	Use the type name in the pattern, e.g. `let Point(x, y, z) = origin;`.
+What is a unit-like struct in Rust?	A struct with no fields, declared like `struct Name;`.
+How do you instantiate a unit-like struct (Rust)?	Use the name as a value, e.g. `let x = Name;`.
+Why might you use a unit-like struct (Rust)?	To implement a trait on a type that carries no data.
+Why might a struct store `String` instead of `&str` (Rust)?	To own its data so it stays valid as long as the struct value exists.
+What’s required to store references in a struct (Rust)?	Lifetime parameters on the struct and reference fields (e.g., `struct User<'a> { name: &'a str }`).
+What compile error do you get if a struct has `&str` fields with no lifetimes (Rust)?	“missing lifetime specifier”.
