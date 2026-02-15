@@ -1,0 +1,40 @@
+Terraform named values: what are they (high level)?	Built-in names (expressions) that reference values like resources, variables, locals, modules, data sources, etc.
+Terraform named values: what are the main categories?	Resources; input variables; local values; child module outputs; data sources; filesystem/workspace info; block-local values.
+Terraform named values: why can’t you treat `aws_instance` like a collection you can iterate?	Named values aren’t real “parent objects”; you must reference exact addresses and can’t iterate over a provider type name.
+Terraform named values: can you replace the dots with `[...]` (e.g., `var["x"]` instead of `var.x`)?	No; named value addresses must be written exactly as documented (dot paths aren’t interchangeable with bracket syntax).
+Terraform resource reference: what does `<TYPE>.<NAME>` refer to?	A managed resource instance (or instances) of the given type and local name.
+If a resource uses neither `count` nor `for_each`, what is the type/shape of `<TYPE>.<NAME>`?	An object representing the resource, with attributes you can access (e.g., `<TYPE>.<NAME>.id`).
+If a resource uses `count`, what is the type/shape of `<TYPE>.<NAME>`?	A list of instance objects.
+If a resource uses `for_each`, what is the type/shape of `<TYPE>.<NAME>`?	A map of instance objects keyed by the `for_each` keys.
+Terraform variables: what does `var.<NAME>` refer to?	The value of the input variable named `<NAME>`.
+Why can you assume `var.<NAME>` matches its type constraint (Terraform)?	Terraform automatically converts the caller’s value to conform to the variable’s declared type constraint where possible.
+Variable object type constraints: what do they restrict (Terraform)?	Only the declared attributes are available in expressions, even if the caller provides extra attributes.
+Terraform locals: what does `local.<NAME>` refer to?	The value of the local value named `<NAME>`.
+Can locals reference other locals in the same `locals {}` block (Terraform)?	Yes, as long as you don’t create circular dependencies.
+Terraform child module: what does `module.<MODULE_NAME>` represent?	The result of a `module` block (its outputs exposed as a value).
+If a `module` block uses neither `count` nor `for_each`, what is `module.<MODULE_NAME>`?	An object with one attribute per child-module output (access via `module.<MODULE_NAME>.<OUTPUT_NAME>`).
+If a `module` block uses `for_each`, what is `module.<MODULE_NAME>`?	A map of objects keyed by the `for_each` keys, each object holding the module outputs.
+If a `module` block uses `count`, what is `module.<MODULE_NAME>`?	A list of objects, one per module instance, each object holding the module outputs.
+Terraform data sources: what does `data.<DATA_TYPE>.<NAME>` represent?	An object (or instances) for a data resource of that type and name.
+Data sources with `count` vs `for_each`: how does `data.<TYPE>.<NAME>` change?	With `count` it becomes a list of objects; with `for_each` it becomes a map of objects.
+Terraform paths: what is `path.module`?	The filesystem path of the module where the expression appears.
+Terraform paths: what is `path.root`?	The filesystem path of the root module of the configuration.
+Terraform paths: what is `path.cwd`?	The original working directory where Terraform was run (before any `-chdir`).
+Why is `path.cwd` risky for module portability (Terraform)?	It’s an absolute, environment-dependent path and can change across machines/directories, causing unwanted diffs.
+Why avoid `path.module` in write operations (Terraform)?	Local module calls can share the same source directory, so writes can clobber each other and create race conditions.
+Terraform workspaces: what is `terraform.workspace`?	The name of the currently selected workspace.
+Why can using `terraform.workspace` for namespacing break module composability?	It can prevent calling the same module more than once in a configuration (name collisions/assumptions).
+Block-local values: what is `count.index`?	The per-instance index available inside blocks that use `count`.
+Block-local values: what are `each.key` and `each.value`?	The per-instance key and value available inside blocks that use `for_each`.
+Block-local values: what is `self` used for?	A reference to the current resource in provisioner/connection blocks.
+How does Terraform infer dependencies between objects (high level)?	It analyzes references in expressions; referring to another resource/module/data creates an implicit dependency.
+Resource attributes: how do you reference an argument/attribute of a resource?	Use `<TYPE>.<NAME>.<ATTR>` (dot) or `<TYPE>.<NAME>["attr"]` when the resource value is an object.
+How do you reference a nested block argument across repeated blocks (Terraform)?	Use a splat expression like `<TYPE>.<NAME>.<BLOCK>[*].<ATTR>` to get a list.
+How do you reference a labeled nested block argument (Terraform)?	Use index syntax like `<TYPE>.<NAME>.<BLOCK>["label"].<ATTR>`.
+How do you build a map from labeled nested blocks (Terraform)?	Use a for-expression, e.g. `{for k, v in <TYPE>.<NAME>.<BLOCK> : k => v.<ATTR>}`.
+With `count`, how do you get an attribute of the first instance (Terraform)?	Index the list: `<TYPE>.<NAME>[0].id` (or similar).
+With `count`, how do you get a list of an attribute across instances (Terraform)?	Use splat: `<TYPE>.<NAME>[*].id`.
+With `for_each`, how do you access a particular instance attribute (Terraform)?	Index by key: `<TYPE>.<NAME>["key"].id`.
+With `for_each`, how do you collect an attribute across instances (Terraform)?	Use a for-expression, e.g. `[for v in <TYPE>.<NAME> : v.id]`.
+Why don’t splat expressions work directly on `for_each` resources (Terraform)?	Splats require a list; `for_each` resources are maps.
+How do you use a splat with a `for_each` resource anyway (Terraform)?	Convert instances to a list with `values(...)`, e.g. `values(<TYPE>.<NAME>)[*].id`.

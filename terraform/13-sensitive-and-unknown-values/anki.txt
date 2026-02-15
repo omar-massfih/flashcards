@@ -1,0 +1,12 @@
+Terraform sensitive attributes: what happens in plan output?	Terraform shows a placeholder (like `(sensitive value)`) instead of the actual value.
+If you derive a value from a sensitive resource attribute, how does Terraform treat it?	It typically marks derived values as sensitive too (so they’re also hidden in plan/apply output).
+If an output depends on a sensitive value, what must you do (Terraform)?	Mark the output itself as `sensitive = true` to confirm you intend to export it.
+Does Terraform still store sensitive values in state?	Yes; sensitive values can be recorded in state in cleartext, so state access must be protected.
+Terraform unknown values: what are they (high level)?	Placeholders for values Terraform can’t know during planning (until apply).
+How do unknown values propagate in expressions (Terraform)?	Operations that combine known + unknown usually produce unknown results.
+Where do unknown values show up in `terraform plan` output?	As `(known after apply)`.
+Why can’t `count` be unknown (Terraform)?	Terraform must know the instance count during planning to build the graph and addresses.
+What happens if a data source depends on unknown values (Terraform)?	It can’t be read during plan, so it’s deferred to apply and its results are unknown during planning.
+If a module input variable value is unknown, what happens inside the child module?	References to that variable in the child module are unknown too.
+If an output value is unknown, what happens for the parent module?	References to that output in the parent are unknown too.
+When might type errors involving unknown values be detected (Terraform)?	Sometimes only at apply time, because full validation may be deferred until values are known.
