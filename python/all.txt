@@ -145,3 +145,65 @@ Do set infix operators like `a & b` accept any iterables (Python)?	No; infix ope
 How can you remove duplicates while preserving first-seen order (Python ≥ 3.7)?	Use a dict: `list(dict.fromkeys(items))` (dict preserves insertion order).
 Why is set membership testing fast (Python)?	Hash table lookup finds candidates by hash code with few probes on average.
 Why is set/dict element ordering unreliable for sets (Python)?	Hashing is salted and resizing/reinsertion can change iteration order as the table grows.
+Python 3: what does `str` represent?	Unicode text (a sequence of Unicode characters/code points).
+Python 3: what does `bytes` represent?	An immutable sequence of bytes (integers 0–255).
+Python 3: what does `bytearray` represent?	A mutable sequence of bytes (integers 0–255).
+In Python 3, what does indexing a `bytes` or `bytearray` return?	An `int` (0–255), not a 1-character string.
+In Python 3, what does slicing a `bytes` or `bytearray` return?	A new binary sequence of the same type (even for length-1 slices).
+How do you create bytes from text in Python?	Encode a `str`, e.g. ``'café'.encode('utf-8')`` or ``bytes('café', encoding='utf-8')``.
+How do you convert bytes to text in Python?	Decode, e.g. ``b'caf\\xc3\\xa9'.decode('utf-8')``.
+What is a Unicode code point?	A number identifying a Unicode character (written like `U+0041`, up to `U+10FFFF`).
+What is an encoding (Unicode context)?	An algorithm mapping code points ↔ byte sequences (e.g., UTF-8, UTF-16LE).
+What is “encoding” vs “decoding”?	Encoding: code points → bytes; decoding: bytes → code points/text.
+Why is `len(str)` vs `len(bytes)` often different?	`len(str)` counts Unicode characters; `len(bytes)` counts raw bytes in a particular encoding.
+What is the literal syntax prefix for bytes in Python?	`b'...'` (a bytes literal).
+In a bytes literal repr, how are printable ASCII bytes typically shown?	As their ASCII characters (roughly codes 32–126).
+In a bytes literal repr, how are non-printable bytes typically shown?	With escapes like `\\xNN` (hex) or `\\t`, `\\n`, `\\r`, `\\\\`.
+What string-like methods work on `bytes`/`bytearray` (high level)?	Most `str` methods that don’t require Unicode data or formatting; they operate on bytes values.
+What’s a common gotcha for `bytes` methods vs `str` methods?	They generally expect `bytes` arguments (not `str`) for things like `.replace(...)`.
+What does `bytes.fromhex(...)` do (Python)?	Builds bytes by parsing pairs of hex digits (spaces optional).
+Name 3 common ways to build `bytes`/`bytearray` (Python).	From a `str` + encoding; from an iterable of ints 0–255; from a buffer-protocol object (copying its bytes).
+What happens when you create `bytes(...)` from a buffer-like object (Python)?	It copies the underlying bytes (it does not share memory).
+Which exception do you usually get when encoding `str` → `bytes` fails?	`UnicodeEncodeError`.
+Which exception do you usually get when decoding `bytes` → `str` fails?	`UnicodeDecodeError`.
+What does `errors='strict'` do in encode/decode (Python)?	Raises an exception on the first encoding/decoding error (the default).
+Why is `errors='ignore'` usually a bad idea when encoding?	It silently drops unencodable characters (data loss).
+What does `errors='replace'` do when encoding text (Python)?	Replaces unencodable characters with `?` (data loss, but visible).
+What does `errors='xmlcharrefreplace'` do when encoding (Python)?	Replaces unencodable characters with XML character references like `&#227;`.
+What does `errors='replace'` do when decoding bytes (Python)?	Replaces invalid byte sequences with `�` (U+FFFD REPLACEMENT CHARACTER).
+What is “mojibake”?	Garbled text caused by decoding bytes with the wrong encoding.
+Why can decoding with the wrong legacy 8-bit encoding be dangerous?	It can succeed without errors but produce mojibake (silent corruption).
+Can you reliably discover the encoding of arbitrary bytes?	Not in general; you usually must be told (metadata/protocol/file format).
+Heuristic: why is UTF-8 “hard to mis-decode” compared to many encodings?	Random/wrong bytes are unlikely to form valid UTF-8, so decoding often raises `UnicodeDecodeError` instead of mojibake.
+What is the “Unicode sandwich” best practice?	Decode bytes → `str` as early as possible; process text as `str`; encode to bytes as late as possible.
+Why should you pass `encoding=` when opening text files in Python?	Default encodings vary by platform/locale and can change, causing mojibake or errors.
+What does `open(..., 'rb')` return vs `open(..., 'r')`?	Binary mode returns bytes from a buffered binary stream; text mode returns `str` via a `TextIOWrapper` decoding bytes.
+In text mode, what does `file.write(text)` return (Python)?	The number of Unicode characters written (not the number of bytes on disk).
+Why can a file contain more bytes than characters written (UTF-8 example)?	Some characters encode to multiple bytes (e.g., `'é'` is 2 bytes in UTF-8).
+What determines the default encoding for `open()` in text mode (high level)?	Locale/user preferences (e.g., `locale.getpreferredencoding()`).
+Why do encoding defaults bite Windows users more often (high level)?	Different defaults may be used for files vs console vs redirected I/O, and many defaults are non-UTF code pages.
+What is a BOM (byte order mark)?	A leading byte sequence that signals endianness/encoding for multibyte encodings (notably UTF-16/UTF-32).
+Why does UTF-16 often start with extra bytes like `b'\\xff\\xfe'`?	That’s a BOM indicating little-endian byte order.
+Do `utf-16le` / `utf-16be` include a BOM by default?	No; they are explicit-endian variants that don’t emit a BOM.
+What is “UTF-8 with BOM” called in Python’s codec registry?	`utf-8-sig`.
+Why can a UTF-8 BOM be problematic for Unix scripts?	It breaks the `#!` shebang (the file must start with bytes `b'#!'`).
+Unicode normalization: why can visually identical strings compare unequal?	They can use different code point sequences (e.g., composed vs combining forms).
+What does `unicodedata.normalize('NFC', s)` do?	Composes characters to a canonical, typically shorter form (good for storage/comparison).
+What does `unicodedata.normalize('NFD', s)` do?	Decomposes characters into base chars + combining marks (useful for stripping marks).
+What’s the key risk of `NFKC` / `NFKD` normalization?	It applies compatibility decompositions that can lose/distort meaning (use for search/indexing, not storage).
+What is case folding in Python (`str.casefold()`)?	A stronger, Unicode-aware lowercasing for case-insensitive comparisons.
+Why can `casefold()` differ from `lower()` (example)?	It can map `'ß'` → `'ss'` and normalize some compatibility characters.
+How can you strip diacritics from text (high level)?	Normalize to NFD, remove combining marks, then normalize back to NFC.
+Why might you only strip diacritics for Latin letters?	To avoid mangling non-Latin scripts where removing marks changes the script more drastically.
+Why does naive Unicode sorting often look “wrong”?	Python compares strings by code point order, not locale/collation rules.
+How do you do locale-aware sorting with the standard library (Python)?	Set a locale and use `locale.strxfrm` as `key=` when sorting.
+Why is `locale.setlocale` tricky in libraries?	Locale is process-global and depends on OS-installed locale data.
+What is `pyuca` used for (Python)?	Locale-independent Unicode sorting using the Unicode Collation Algorithm (via a collation table).
+What does the Unicode database provide (high level)?	Character metadata (names, categories, numeric values, case folding data, etc.).
+What does `unicodedata.name(ch)` return?	The official Unicode name of a character (or a default/None if unassigned, depending on call).
+What does `unicodedata.numeric(ch)` provide?	The numeric value of a Unicode numeric character (e.g., fractions, numerals), if defined.
+Regex: how do `\\d` and `\\w` differ for `str` vs `bytes` patterns (Python)?	For `str`, they match Unicode digits/word chars; for `bytes`, they’re ASCII-only.
+In `re`, how can you force ASCII-only matching on `str` patterns?	Use the `re.ASCII` flag.
+Why do many `os` functions accept `str` or `bytes` paths (Python)?	To handle filenames that may not be decodable as Unicode text on some systems.
+What happens if you call `os.listdir(b'.')` (Python)?	It returns filenames as `bytes` (raw OS bytes), not `str`.
+What do `os.fsencode` / `os.fsdecode` do?	Convert between `str` and `bytes` filenames using the filesystem encoding (handling `PathLike` too).
