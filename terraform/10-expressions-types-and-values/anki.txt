@@ -1,0 +1,37 @@
+Terraform language: what is an expression?	Syntax that produces a value in configuration (e.g., literals, references, operators, conditionals, function calls).
+What is the simplest kind of Terraform expression?	A literal value (e.g., `"hello"` or `5`).
+What can Terraform expressions do besides literal values?	Reference values; do arithmetic; conditional evaluation; call built-in functions.
+What is a reference expression (Terraform)?	An expression that reads a value exported elsewhere (e.g., `var.<name>` or `<TYPE>.<NAME>.<ATTRIBUTE>`).
+Why can’t every Terraform expression be used everywhere?	Some contexts restrict expressions (e.g., require a literal value of a particular type or forbid certain references).
+Example restriction: what might a context require from an expression (Terraform)?	A literal value of a particular type (not an arbitrary computed expression).
+Example restriction: what might a context forbid in an expression (Terraform)?	References to certain values (e.g., resource attributes), depending on the language feature.
+What command opens Terraform’s expression console?	`terraform console`
+What is `terraform console` used for (Terraform)?	To experiment with and evaluate expressions interactively.
+Terraform expressions: what does an expression evaluate to?	A value (and every value has a type).
+Terraform values: what does a value’s type determine?	Where the value can be used and what transformations/conversions apply.
+Terraform type: what is `string`?	Unicode text, like `"hello"`.
+Terraform type: what is `number`?	A numeric value (can represent whole numbers and fractional values).
+Terraform type: what is `bool`?	A boolean value: `true` or `false`.
+Terraform type: what is `list`/`tuple` (high level)?	An ordered sequence you index with whole numbers starting at 0 (e.g., `["a", 15, true]`).
+Terraform type: what is `set` (high level)?	An unordered collection of unique values (no stable index ordering).
+Terraform type: what is `map`/`object` (high level)?	Values identified by string keys/labels, like `{ name = "Mabel", age = 52 }`.
+Terraform types: what are “primitive” vs “complex/collection” types?	Primitive: `string`, `number`, `bool`; complex/collection: lists/tuples, maps/objects (and `set` as a collection type).
+What special value has no type in Terraform?	`null`.
+What does `null` mean in Terraform configuration?	Absence/omission: setting an argument to `null` behaves as if the argument were omitted.
+If you set an argument to `null`, what does Terraform do with defaults/required args?	It uses the argument’s default if it has one; otherwise it errors if the argument is required.
+Why is `null` especially useful in Terraform expressions?	To conditionally omit an argument when a condition isn’t met.
+What is a literal expression (Terraform)?	An expression that directly represents a constant value.
+Terraform literal: how do you write a boolean literal?	`true` or `false` (unquoted).
+Terraform literal: how do you write the `null` literal?	`null` (unquoted).
+Terraform literal: how do you write a list/tuple literal?	`[value1, value2, ...]` (commas required; multiline allowed; trailing comma allowed).
+Why can’t you index directly into a `set` in Terraform?	Sets are unordered, so Terraform doesn’t support element access by numeric index.
+How do you access a set element “by index” in Terraform (pattern)?	Convert to a list first (e.g., `tolist(var.example_set)[0]`).
+Terraform literal: how do you write a map/object literal?	`{ key = value, ... }` (pairs can be separated by commas or line breaks).
+In a Terraform map/object literal, what are the rules for keys (high level)?	Keys must be strings; they can be unquoted if valid identifiers, otherwise quoted; non-literal keys can be written as `(expr) = value`.
+How do you access list/tuple elements vs map/object elements in Terraform expressions?	`seq[3]` uses a whole-number index; `map["key"]` uses a string key.
+When can you use dot-attribute notation on a map/object (Terraform)?	When the attribute name is a valid identifier (e.g., `local.object.attrname`).
+Terraform style: when should you prefer bracket indexing over dot notation for maps?	When keys may be arbitrary user-provided strings (use `local.map["keyname"]`).
+Terraform docs: when do “list vs tuple” and “map vs object” distinctions matter?	Usually they behave identically; distinctions mainly matter for type constraints/validation (module/provider authors).
+Terraform type conversion: when does Terraform automatically convert types?	When an argument expects a type and the given expression can be converted to it.
+Terraform type conversion: when does automatic conversion NOT occur?	When using the equality operator.
+What automatic string conversions does Terraform perform (examples)?	It converts `number`/`bool` to `string` when needed (`15` ↔ `"15"`; `true` ↔ `"true"`) and can parse valid strings into numbers/bools.

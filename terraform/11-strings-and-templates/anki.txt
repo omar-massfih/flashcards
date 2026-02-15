@@ -1,0 +1,23 @@
+Terraform strings: what is a quoted string literal?	A sequence of characters delimited by double quotes, e.g. `"hello"`.
+Terraform quoted strings: what does `\\n` represent?	A newline character.
+Terraform quoted strings: what does `\\r` represent?	A carriage return character.
+Terraform quoted strings: what does `\\t` represent?	A tab character.
+Terraform quoted strings: what does `\\\"` represent?	A literal `"` (quote) without ending the string.
+Terraform quoted strings: what does `\\\\` represent?	A literal backslash (`\\`).
+Terraform quoted strings: what does `\\uNNNN` represent?	A Unicode character from the basic multilingual plane (4 hex digits).
+Terraform quoted strings: what does `\\UNNNNNNNN` represent?	A Unicode character from supplementary planes (8 hex digits).
+Terraform strings: how do you write a literal `${` in a string?	Use `$${` (so it doesn’t start an interpolation).
+Terraform strings: how do you write a literal `%{` in a string?	Use `%%{` (so it doesn’t start a directive).
+Terraform strings: what is a heredoc string?	A multiline string literal introduced with `<<DELIM` (or `<<-DELIM`) and ended by `DELIM` on its own line.
+Terraform heredoc: what does the delimiter word do?	It marks where the heredoc ends (Terraform reads lines until a line that exactly matches the delimiter).
+Terraform heredoc: what does `<<-` mean (indented heredoc)?	Terraform trims common leading spaces from all lines (based on the least-indented line in the heredoc).
+Terraform heredoc: are backslash escapes interpreted?	No; backslashes are treated literally in heredocs.
+Terraform tip: should you use heredocs to generate JSON/YAML?	No; prefer `jsonencode(...)` / `yamlencode(...)` to guarantee valid syntax.
+Terraform templates: what sequences start template processing inside strings?	`${` starts interpolation; `%{` starts a directive.
+Terraform interpolation: what does `${ ... }` do?	Evaluates the expression, converts the result to a string if needed, and inserts it into the string.
+Terraform directives: what does `%{ ... }` enable?	Conditionals and iteration over collections to build strings.
+Terraform directive: what is the `%{if ...}` / `%{else}` / `%{endif}` pattern?	Choose between templates based on a boolean expression (the else is optional).
+Terraform `%{if}` directive: what happens if there is no `else` and the condition is false?	It produces an empty string for that directive block.
+Terraform directive: what is the `%{for name in collection}` / `%{endfor}` pattern?	Iterate over elements and concatenate the rendered template for each element.
+Terraform templates: what is the strip marker `~` for?	Whitespace stripping: it consumes literal whitespace (spaces/newlines) before or after a template sequence to avoid unwanted output.
+Terraform style: when should you prefer heredocs vs quoted strings for templates?	Use heredocs for directives (multi-line templates); quoted strings are usually best for simple interpolations.

@@ -1,0 +1,16 @@
+Terraform resource meta-argument: what does `count` do?	Provisions multiple instances of the same resource from one block.
+Can you use both `count` and `for_each` on the same resource (Terraform)?	No; they are mutually exclusive.
+Terraform resource meta-argument: what does `for_each` do?	Provisions multiple instances from one block, one per element in a map or set.
+What kinds of values can `for_each` take (Terraform)?	A map or a set of strings.
+Terraform resource meta-argument: what does `depends_on` do?	Forces Terraform to complete operations on listed upstream references before operating on this resource.
+Terraform resource meta-argument: what does `provider` do?	Selects a specific provider configuration (alias) to use for that resource.
+How do you point a resource at an aliased provider config (Terraform)?	Set `provider = <PROVIDER>.<ALIAS>` inside the resource block.
+What is the purpose of `lifecycle { ... }` on a resource (Terraform)?	Defines lifecycle rules controlling create/update/replace/destroy behavior.
+Terraform lifecycle: what does `create_before_destroy` do?	Creates the replacement resource before destroying the current one.
+Terraform lifecycle: what does `prevent_destroy` do?	Makes Terraform error if a plan would destroy the resource.
+Does `prevent_destroy` protect a resource if you remove its configuration (Terraform)?	No; removing the block removes the rule, so Terraform can plan to destroy it.
+Terraform lifecycle: what does `ignore_changes` do?	Tells Terraform to ignore diffs for listed attributes and not try to update them.
+Terraform lifecycle: what does `replace_triggered_by` do?	Forces replacement when the referenced resources/attributes change.
+Terraform lifecycle: what is a `precondition`?	A condition that must be true before creating the resource; otherwise Terraform errors with `error_message`.
+Terraform lifecycle: what is a `postcondition`?	A condition checked after creating the resource; otherwise Terraform errors with `error_message`.
+What values are allowed inside a `lifecycle` block (Terraform)?	Only literal values (Terraform processes lifecycle rules before evaluating arbitrary expressions).
