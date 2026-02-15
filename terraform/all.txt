@@ -23,17 +23,6 @@ What is a remote state backend used for?	To securely share state and coordinate 
 What problem do remote backends help prevent?	Race conditions when multiple people apply changes concurrently.
 What is HCP Terraform used for (high level)?	Hosted Terraform that can share state, run Terraform in a stable environment, and support collaboration.
 How can Terraform integrate with VCS (high level)?	Connect to GitHub/GitLab/etc. to propose infra changes when config changes are committed.
-Terraform Azure prerequisite (account): what do you need?	An Azure subscription/account with permissions to create resources.
-Terraform Azure prerequisite (tooling): what CLI is commonly used for auth?	The Azure CLI (used to authenticate locally).
-What does `az login` do (Azure CLI)?	Authenticates you to Azure and lets CLI/Terraform use your account context.
-How do you select the active Azure subscription in Azure CLI?	Use `az account set --subscription "<SUBSCRIPTION_ID>"`.
-What is an Azure “service principal” in Terraform auth context?	An Azure AD application identity Terraform can use to authenticate and manage resources.
-Why create a service principal for Terraform (Azure)?	To grant Terraform an identity with RBAC permissions to perform actions.
-What does `az ad sp create-for-rbac` do (high level)?	Creates a service principal and assigns it an RBAC role over a given scope.
-Security rule: what must you NOT do with service principal credentials?	Do not commit or share them (treat as secrets).
-Azure provider auth (env vars): which `ARM_...` vars are commonly used?	`ARM_CLIENT_ID`; `ARM_CLIENT_SECRET`; `ARM_SUBSCRIPTION_ID`; `ARM_TENANT_ID`.
-How do you set Azure provider auth env vars in macOS/Linux shell?	Use `export ARM_CLIENT_ID="..."` etc.
-Why prefer env vars over putting Azure credentials in Terraform config?	To reduce the chance of checking secrets into source control.
 What is the purpose of the `terraform { ... }` block?	Terraform settings like required providers and Terraform CLI version constraints.
 Where do you declare required providers in Terraform?	In `terraform { required_providers { ... } }`.
 What does a provider `source` address like `hashicorp/azurerm` specify?	Which provider to install (from the Terraform Registry by default).
