@@ -328,3 +328,32 @@ What happens if a data source depends on unknown values (Terraform)?	It can’t 
 If a module input variable value is unknown, what happens inside the child module?	References to that variable in the child module are unknown too.
 If an output value is unknown, what happens for the parent module?	References to that output in the parent are unknown too.
 When might type errors involving unknown values be detected (Terraform)?	Sometimes only at apply time, because full validation may be deferred until values are known.
+What is an operator (Terraform language)?	An expression form that transforms one value or combines two values to produce a result.
+How do binary operators appear in Terraform expressions?	Between two values (infix), e.g. `1 + 2`.
+How do unary operators appear in Terraform expressions?	Before a value (prefix), e.g. `!true` or `-1`.
+Terraform operator precedence: what is the order from highest to lowest?	`!` and unary `-`; `*` `/` `%`; `+` `-`; `>` `>=` `<` `<=`; `==` `!=`; `&&`; `||`.
+How do you override operator precedence in Terraform?	Use parentheses `(...)`.
+Without parentheses, how does Terraform parse `1 + 2 * 3`?	As `1 + (2 * 3)`.
+In Terraform, are `?` and `:` considered operators?	No; together they are part of the conditional expression syntax.
+What types do Terraform arithmetic operators expect?	`number` values (and they produce `number` results).
+What does `a + b` do (Terraform)?	Adds `a` and `b`.
+What does `a - b` do (Terraform)?	Subtracts `b` from `a`.
+What does `a * b` do (Terraform)?	Multiplies `a` and `b`.
+What does `a / b` do (Terraform)?	Divides `a` by `b`.
+What does `a % b` do (Terraform)?	Returns the remainder of dividing `a` by `b` (most useful with whole numbers).
+What does unary `-a` do (Terraform)?	Negates `a` (multiplies by `-1`).
+How do you compute exponents in Terraform (no operator)?	Use `pow(base, exponent)`.
+What types do Terraform equality operators expect and return?	They accept any types and return `bool`.
+What does `a == b` mean in Terraform?	True only if `a` and `b` have the same type and the same value.
+What does `a != b` mean in Terraform?	The negation of `a == b`.
+Terraform best practice: when should you use `==`/`!=`?	Prefer primitive values, or use explicit type conversions to make types match.
+Why can equality on structural types be surprising in Terraform?	Different structural types can look similar but never compare equal (e.g., an empty tuple literal `[]` vs an empty list value).
+Terraform idiom: how to check whether a list is empty?	Use `length(var.list) == 0` instead of `var.list == []`.
+What types do Terraform comparison operators expect and return?	They expect `number` values and return `bool`.
+What does `a < b` / `a <= b` / `a > b` / `a >= b` do (Terraform)?	Performs numeric comparisons and yields a boolean.
+What types do Terraform logical operators expect and return?	They expect `bool` values and return `bool`.
+What does `a || b` do (Terraform)?	True if either operand is true; false if both are false.
+What does `a && b` do (Terraform)?	True if both operands are true; false otherwise.
+What does `!a` do (Terraform)?	Logical NOT: true if `a` is false; false if `a` is true.
+Does Terraform have an XOR operator?	No; for boolean values, XOR is equivalent to `a != b`.
+How does Terraform handle wrong operand types for operators (high level)?	It tries automatic conversion to the required types; otherwise it produces an error.
