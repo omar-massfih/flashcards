@@ -22,3 +22,19 @@ Why might you use a unit-like struct (Rust)?	To implement a trait on a type that
 Why might a struct store `String` instead of `&str` (Rust)?	To own its data so it stays valid as long as the struct value exists.
 What’s required to store references in a struct (Rust)?	Lifetime parameters on the struct and reference fields (e.g., `struct User<'a> { name: &'a str }`).
 What compile error do you get if a struct has `&str` fields with no lifetimes (Rust)?	“missing lifetime specifier”.
+Why group related values into a single struct parameter instead of separate parameters (Rust)?	It makes the relationship explicit, improves readability, and reduces mixups by passing one named bundle.
+What’s a key drawback of using a tuple as a “record” (Rust)?	Tuple fields are unnamed, so you must use positional access like `.0`/`.1`, which is less self-documenting.
+How do you pass a struct to a function without transferring ownership (Rust)?	Take `&Type` in the signature and pass `&value` at the call site.
+Why prefer borrowing a struct argument instead of taking ownership (Rust)?	The caller keeps using the value; avoids unnecessary moves/clones.
+Can you move a non-`Copy` field out of `&Struct` (Rust)?	No; you can only borrow fields through a shared reference (moving out would be invalid).
+In `println!`, what does `{}` require from the value’s type (Rust)?	An implementation of `std::fmt::Display`.
+What is `std::fmt::Display` intended for (Rust)?	User-facing, “pretty” output.
+What is `std::fmt::Debug` intended for (Rust)?	Developer/debugging output (inspect internal state).
+How do you print a value using Debug formatting in `println!` (Rust)?	Use `{:?}`, e.g. ``println!("{value:?}")``.
+How do you pretty-print Debug output in `println!` (Rust)?	Use `{:#?}`, e.g. ``println!("{value:#?}")``.
+How do you add a default Debug implementation for a struct (Rust)?	Add `#[derive(Debug)]` above the struct definition.
+What does `dbg!(expr)` do (Rust)?	Prints file/line + the expression and its value (using `Debug`), and returns the expression’s value.
+Does `dbg!` print to stdout or stderr (Rust)?	Stderr.
+Why can `dbg!(value)` affect ownership (Rust)?	`dbg!` takes ownership of the expression result (so it can move non-`Copy` values).
+How do you use `dbg!` without moving a value (Rust)?	Debug-print a reference: `dbg!(&value)`.
+How do you attach behavior like `area` to a struct as a method (Rust)?	Use an `impl` block, e.g. ``impl Rectangle { fn area(&self) -> u32 { ... } }``.
