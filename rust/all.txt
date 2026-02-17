@@ -346,3 +346,21 @@ Does `dbg!` print to stdout or stderr (Rust)?	Stderr.
 Why can `dbg!(value)` affect ownership (Rust)?	`dbg!` takes ownership of the expression result (so it can move non-`Copy` values).
 How do you use `dbg!` without moving a value (Rust)?	Debug-print a reference: `dbg!(&value)`.
 How do you attach behavior like `area` to a struct as a method (Rust)?	Use an `impl` block, e.g. ``impl Rectangle { fn area(&self) -> u32 { ... } }``.
+What distinguishes a method from a free function (Rust)?	A method is defined in a type context (e.g., `impl`) and has a `self` receiver as its first parameter.
+Where do you define methods for a struct (Rust)?	Inside an `impl Type { ... }` block.
+What does the `self` parameter represent in a method (Rust)?	The instance the method is called on (the receiver).
+How do you call a method on a value (Rust)?	Use dot syntax: `value.method(args...)`.
+What is `&self` shorthand for in a method signature (Rust)?	`self: &Self`.
+What does `Self` mean inside an `impl Type` block (Rust)?	An alias for the type being implemented (`Type`).
+What are the three common receiver forms for methods (Rust)?	`&self` (borrow immutably); `&mut self` (borrow mutably); `self` (take ownership).
+Why is `&self` a common choice for many methods (Rust)?	It lets the method read data without taking ownership or mutating the receiver.
+When is a method with receiver `self` (takes ownership) typically used (Rust)?	When the method consumes/transforms the value and you want to prevent use of the original afterward.
+Why use methods instead of free functions (Rust, high level)?	Organization (capabilities live with the type) and ergonomic calls (no need to repeat the receiver type in every signature).
+Can methods take additional parameters besides `self` (Rust)?	Yes; parameters after `self` work like normal function parameters.
+How can a struct have a method with the same name as a field (Rust)?	Use `value.field` for the field and `value.field()` for the method.
+What is a “getter” method pattern (Rust)?	A method (often `&self`) that returns a field value, enabling controlled read-only access.
+Does Rust auto-generate getters for struct fields?	No; you write them yourself if you want that API.
+Why doesn’t Rust need a `->` operator for method calls?	Method calls use dot syntax plus automatic referencing/dereferencing for the receiver.
+What is “automatic referencing/dereferencing” in Rust method calls?	The compiler inserts `&`, `&mut`, or `*` so the receiver matches the method’s `self` type.
+What does a `can_hold(&self, other: &Rectangle) -> bool`-style method usually check (Rust)?	That `self`’s dimensions are greater than `other`’s (e.g., `self.width > other.width && self.height > other.height`).
+How do you define and call a constructor-like associated function (Rust)?	Define a function without `self` in an `impl` returning `Self` (often named `new`, but not special) and call it as `Type::function(...)` (e.g., `fn square(size: u32) -> Self { Self { ... } }`).
