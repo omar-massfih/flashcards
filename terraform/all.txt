@@ -357,3 +357,17 @@ What does `a && b` do (Terraform)?	True if both operands are true; false otherwi
 What does `!a` do (Terraform)?	Logical NOT: true if `a` is false; false if `a` is true.
 Does Terraform have an XOR operator?	No; for boolean values, XOR is equivalent to `a != b`.
 How does Terraform handle wrong operand types for operators (high level)?	It tries automatic conversion to the required types; otherwise it produces an error.
+Terraform: what are built-in functions used for in expressions?	To transform and combine values; they’re called with function-call syntax (see function reference for the full list).
+What is the general function call syntax in Terraform?	`FUNCTION_NAME(arg1, arg2, ...)`.
+What does each Terraform function define about its interface?	Expected argument count/types and the return value type.
+What does a Terraform function call expression evaluate to?	The function’s return value.
+Can Terraform functions take a variable number of arguments?	Yes; e.g. `min(55, 3453, 2)` returns the smallest number.
+How do you pass a list/tuple as separate function arguments in Terraform?	Use argument expansion with `...`, e.g. `min([55, 2453, 2]...)`.
+In Terraform, what exactly is the expansion symbol for function arguments?	Three ASCII periods `...` (not a Unicode ellipsis `…`).
+Where is `...` argument expansion allowed in Terraform?	Only in function calls (special syntax for expanding list/tuple arguments).
+What happens if you pass sensitive data into a Terraform function call?	The result is marked sensitive (conservatively, regardless of which function is called).
+Are most Terraform built-in functions “pure” (programming sense)?	Yes; results depend only on arguments, so call timing generally doesn’t matter.
+Name four special Terraform functions whose timing can matter.	`file`, `templatefile`, `timestamp`, `uuid`.
+When does Terraform evaluate `file(...)` and `templatefile(...)` (high level)?	During initial configuration validation, before planning/applying actions.
+What practical limitation follows from `file(...)`/`templatefile(...)` being evaluated during validation?	You can’t use them to read files generated dynamically during plan/apply.
+How do `timestamp()` and `uuid()` behave during plan vs apply (Terraform)?	They produce unknown values during plan; the real values are decided during apply (timestamp corresponds to when apply begins).
