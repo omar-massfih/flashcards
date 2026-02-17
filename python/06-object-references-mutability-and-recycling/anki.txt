@@ -1,0 +1,75 @@
+Python variables: are they “boxes” or “labels”?	Labels (names bound to objects), not boxes that contain copies.
+What does assignment do in Python (high level)?	Binds a name to an object; it does not copy the object.
+What is aliasing (Python)?	Multiple names bound to the same object.
+If `b = a` and `a` is a mutable object, what does mutating via `a` imply for `b`?	`b` observes the same mutation because both names reference the same object.
+In `x = <expr>`, what is evaluated first in Python?	The right-hand side expression is evaluated first; then `x` is bound.
+Why can `y = Gizmo() * 10` create an instance but still not bind `y`?	The RHS creates the object, then an error occurs before binding; `y` is never created.
+What’s a clearer verb than “assign” for Python names?	“Bind”: `x = ...` binds the name `x` to an object.
+Why is “the variable is bound to the object” more precise than “the object is assigned to the variable”?	The object must exist first; then a name can be bound to it.
+What are the three core properties every Python object has?	Identity, type, and value.
+Can an object’s identity change during its lifetime (Python)?	No; identity is stable for the life of the object.
+What does `id(obj)` return (Python, high level)?	An integer representing the object’s identity (implementation-dependent).
+In CPython, what is `id(obj)` typically?	The memory address of the object (implementation detail).
+What does `is` compare (Python)?	Object identity.
+What does `==` compare (Python)?	Object value/equality (typically via `__eq__`).
+Why is `is` typically faster than `==` (Python)?	`is` can’t be overloaded; it’s essentially an identity comparison.
+When is `is` the right tool in Python code?	Comparing to singletons like `None` or a sentinel object.
+Idiom: how do you test for `None` in Python?	`x is None` (and `x is not None`).
+How do you create a sentinel object for identity checks (Python)?	`SENTINEL = object()` and compare with `is`.
+Common pitfall: when is using `is` usually wrong?	For value equality like strings/integers/collections; use `==` instead.
+What does it mean that Python collections are “containers”?	They hold references to other objects.
+What does tuple immutability actually guarantee (Python)?	The tuple’s stored references don’t change; referenced mutable objects can still mutate.
+How can a tuple “value” appear to change even if the tuple is immutable?	If it references a mutable item that changes in place.
+In a tuple containing a mutable item, what about that item is stable from the tuple’s perspective?	The identity of the referenced item (the reference stored in the tuple).
+Why can a tuple be unhashable (Python)?	If it contains an unhashable/mutable item, its value may not be stable for hashing.
+What is a shallow copy (Python)?	A new outer container that shares references to the same inner items.
+How do you make a shallow copy of a list (common ways)?	`list(x)`, `x[:]`, or `x.copy()`.
+In a shallow copy, what happens if you mutate a shared inner list?	The mutation is visible through both the original and the shallow copy.
+What is a deep copy (Python)?	A copy that recursively copies nested objects so inner items are not shared.
+How do you make shallow vs deep copies of arbitrary objects (Python)?	`copy.copy(x)` vs `copy.deepcopy(x)`.
+Why can `deepcopy` handle cyclic references safely (Python)?	It memoizes objects already copied to avoid infinite recursion.
+Why can a deep copy be undesirable (Python)?	It may be too expensive or may copy things that shouldn’t be copied (resources/singletons).
+How can a class customize copying behavior (Python)?	Implement `__copy__` and `__deepcopy__`.
+What is Python’s parameter passing model called?	Call by sharing.
+Under call by sharing, what does a function receive for each argument?	A copy of the reference to the same object.
+What can a function do to a mutable argument under call by sharing?	Mutate the object, affecting the caller’s view.
+What can a function not do to the caller’s bindings under call by sharing?	It can’t rebind the caller’s name to a different object.
+Mutating vs rebinding: what’s the difference inside a function (Python)?	Mutation affects the shared object; rebinding only changes the local parameter name.
+Augmented assignment (`+=`): what’s the high-level rule for mutables vs immutables?	Mutables often change in place; immutables create a new object and rebind.
+Why can `a += b` differ for lists vs tuples (Python)?	Lists can mutate in place; tuples are immutable so a new tuple is created.
+When are default parameter values evaluated (Python)?	Once at function definition time (typically module import).
+Where are positional default parameter values stored (Python)?	On the function object (e.g., `func.__defaults__`).
+Why are mutable default arguments dangerous (Python)?	Mutations persist and affect future calls that use the default.
+Safe pattern for optional mutable parameters (Python)?	Default to `None`, then create a new list/dict inside the function.
+Why use `if x is None:` for optional parameters (Python)?	Distinguishes “argument omitted” from an empty container provided by the caller.
+If a default list is mutated, who observes that mutation later?	Any future call that relies on that default object.
+Defensive design: when should you copy a mutable argument received by an API?	When you don’t intend to mutate the caller’s object / to avoid surprising aliasing.
+Why can aliasing an argument violate “least astonishment”?	The caller sees their own data structure mutated as a side effect.
+How do you defensively create your own list from an iterable argument?	`list(iterable)`.
+Why is `list(iterable)` a flexible defensive-copy pattern?	It accepts any iterable and ensures you own a mutable list.
+Is `del` a function or a statement in Python?	A statement.
+What does `del name` actually delete (Python)?	The reference/binding, not the underlying object.
+When can an object be garbage-collected (Python, high level)?	When it becomes unreachable (no strong references).
+In CPython, what primary mechanism destroys most objects promptly?	Reference counting (plus a cycle detector for cyclic garbage).
+What problem does cyclic garbage collection address (CPython)?	Unreachable reference cycles that reference counting alone can’t free.
+Is destruction timing guaranteed across Python implementations?	No; you should not rely on immediate finalization.
+What is `__del__` for (Python)?	A finalizer hook when an object is about to be destroyed; tricky and rarely needed.
+Why is relying on `__del__`/GC timing risky?	Finalization may be delayed or behave differently across implementations/cycles.
+What is a weak reference (Python)?	A reference that doesn’t keep the target alive (doesn’t increase refcount).
+What does `weakref.finalize(obj, callback)` do (Python)?	Calls `callback` when `obj` is garbage-collected.
+Why doesn’t `weakref.finalize` keep the object alive?	It tracks the object via a weak reference.
+Best practice for files vs relying on GC to close them?	Use `with open(...) as f:` to guarantee closure even on errors.
+What does `tuple(t)` do if `t` is already a tuple?	Returns `t` itself (no copy).
+In CPython, what can a full slice `t[:]` do for a tuple `t`?	It may return the same tuple object (optimization); don’t rely on identity.
+What does `frozenset.copy()` typically return (Python)?	The same object (since it’s immutable).
+What is interning (Python, high level)?	Reusing identical immutable objects for efficiency.
+Why shouldn’t you rely on interning for program logic?	It’s an implementation detail; use `==` for value comparisons.
+What does `a is not b` express (Python)?	That `a` and `b` are different objects (different identity).
+Can two distinct objects compare equal with `==`?	Yes; they can have equal values but different identities.
+If a class doesn’t override `__eq__`, what does `==` typically compare?	Identity (via `object.__eq__`).
+Why can `==` be more expensive than `is` (Python)?	It can traverse/compare large or nested structures.
+In a shallow copy, are nested objects duplicated by default?	No; nested objects are typically shared (same references).
+Debugging tip: how to tell whether two similar-looking values are aliases?	Compare identity with `is` or compare `id(...)`.
+What is rebinding (Python)?	Binding a name to a different object than it previously referenced.
+In CPython, what often happens when the last reference to an object is removed?	The object is destroyed immediately (refcount reaches zero).
+Why is the “variables are boxes” metaphor misleading for Python assignment?	Because assignment binds names to existing objects; multiple names can refer to one object.
