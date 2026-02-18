@@ -1,0 +1,18 @@
+Terraform: what is a conditional expression used for?	Select one of two values based on a boolean condition.
+What is the syntax of a conditional expression (Terraform)?	`condition ? true_val : false_val`.
+How does `condition ? a : b` evaluate (Terraform)?	If `condition` is true, result is `a`; otherwise result is `b`.
+Common use: how do conditional expressions define defaults (Terraform)?	Example: `var.a == "" ? "default-a" : var.a`.
+What types of expressions usually appear in the condition part (Terraform)?	Any expression that evaluates to `bool` (often equality/comparison/logical operators).
+Why add custom conditions in Terraform configs (high level)?	To capture assumptions and produce earlier, clearer error messages (e.g., in variable validation or pre/postconditions).
+Conditional expressions: what constraint applies to the two result values (Terraform)?	They must have the same type, so Terraform can determine the expression’s result type.
+If the two conditional result expressions have different types, what does Terraform do (Terraform)?	It attempts to find a type both can convert to and applies automatic conversions if possible.
+Terraform recommendation: what should you do if the expected result type may be unclear?	Use explicit type conversion functions (e.g., `tostring(...)`) rather than relying on implicit conversion.
+Example: how do you explicitly force a conditional to return a string (Terraform)?	`var.example ? tostring(12) : "hello"`.
+Validation helper: how do you check membership in an allowed set (Terraform)?	`contains(["STAGE", "PROD"], var.environment)`.
+Validation helper: how do you require a non-empty list/map (Terraform)?	`length(var.items) != 0`.
+Why prefer `length(...)` checks over `== []` / `!= []` for empty collections (Terraform)?	Empty collection literals can be ambiguous in type; length-based checks express intent and avoid type-mismatch surprises.
+Collection-wide validation pattern: how do you check a condition holds for all elements (Terraform)?	Use a for-expression + `alltrue([...])`, e.g. `alltrue([for v in var.instances : <bool expr>])`.
+Collection-wide validation pattern: how do you check a condition holds for any element (Terraform)?	Use a for-expression + `anytrue([...])`.
+What does `can(expr)` do in Terraform conditions?	Returns true if `expr` evaluates without error; false if evaluating it produces an error.
+Example: how can `can` be used to validate a string with `regex` (Terraform)?	`can(regex("^[a-z]+$", var.name))` (because `regex` errors on non-match).
+In conditions, what are `self`, `each`, and `count` used for (Terraform)?	`self` refers to attributes of the instance under evaluation in postcondition blocks; `each`/`count` refer to per-instance values inside blocks using `for_each`/`count`.
