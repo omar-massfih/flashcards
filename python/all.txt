@@ -342,3 +342,73 @@ Debugging tip: how to tell whether two similar-looking values are aliases?	Compa
 What is rebinding (Python)?	Binding a name to a different object than it previously referenced.
 In CPython, what often happens when the last reference to an object is removed?	The object is destroyed immediately (refcount reaches zero).
 Why is the “variables are boxes” metaphor misleading for Python assignment?	Because assignment binds names to existing objects; multiple names can refer to one object.
+What does “functions are first-class objects” mean (Python)?	Functions can be created at runtime; assigned; stored; passed as args; returned from functions.
+What is a first-class object (PL definition, Python context)?	An entity you can create at runtime, bind to names, pass as arguments, and return as results.
+How do you confirm a Python function is an object (one attribute example)?	It has attributes like `__doc__` (docstring).
+What does `type(my_function)` typically show (Python)?	`<class 'function'>`.
+What does `__doc__` store on a function object (Python)?	The function’s docstring text (or `None` if absent).
+What tool commonly uses `__doc__` to display help (Python)?	`help(obj)` (and IDE/doc tools).
+Give one example of binding a function to another name (Python).	`alias = func` (then call `alias(...)`).
+What does `map(func, iterable)` do (Python)?	Returns an iterator yielding `func(x)` for each `x` in the iterable.
+What is a higher-order function (Python)?	A function that takes a function as an argument and/or returns a function.
+`sorted(..., key=...)`: what is `key` for (Python)?	A 1-arg function used to compute sort keys for each item.
+Why can `key=len` be useful with `sorted` (Python)?	It sorts items by their length without modifying the items.
+What does “functional style” often rely on (Python feature)?	Passing functions around (higher-order functions and callables).
+What happened to `apply` in Python 3 (vs Python 2)?	Removed; use `fn(*args, **kwargs)` instead.
+Modern Python: what often replaces `map` for building lists?	List comprehensions (or generator expressions for lazy pipelines).
+Modern Python: what often replaces `filter` for selecting items?	A comprehension with an `if` clause (listcomp/genexp).
+In Python 3, what do `map` and `filter` return?	Iterators (lazy results), not lists.
+Where is `reduce` found in Python 3?	`functools.reduce` (it’s no longer a built-in).
+What is the most common “reduce-like” task, and its preferred built-in (Python)?	Summation; use `sum(...)`.
+What is the high-level idea of “reducing” (Python/FP)?	Combine a series of values into one accumulated result.
+What do `all(iterable)` and `any(iterable)` do (Python)?	`all`: True if no falsy elements; `any`: True if any truthy element.
+What does `all([])` return (Python)?	`True`.
+What does `any([])` return (Python)?	`False`.
+What does `lambda` create (Python)?	An anonymous function object.
+What restriction applies to the body of a `lambda` (Python)?	It must be a single expression (no statements like `while`, `try`, `=` assignment).
+Why is `lambda` usually best kept small in Python?	Nontrivial lambdas get hard to read; prefer a named `def`.
+Refactoring tip: how to replace a hard-to-read lambda (Python)?	Describe it in a comment → name it → rewrite as `def` → delete comment.
+Is `lambda` fundamentally different from `def` (Python)?	No; both create function objects (lambda is syntax sugar for an unnamed function).
+What built-in checks whether an object can be called with `()` (Python)?	`callable(obj)`.
+Why is `callable(obj)` safer than checking types directly (Python)?	Many non-function objects are callable (classes, instances with `__call__`, etc.).
+What makes an instance callable (Python)?	Defining a `__call__(self, ...)` method on its class.
+Why are callable instances useful (Python)?	They can keep internal state across calls (function-like objects with memory).
+What is a common `__call__` pattern for a stateful object (Python)?	`__call__` delegates to a regular method (e.g., `return self.pick()`).
+Defensive practice: why copy an iterable in `__init__` (Python)?	To avoid unexpected side effects if the caller later mutates their list.
+Name the “nine flavors” of callable objects (Python data model, 3.9 list).	User-defined functions; built-in functions; built-in methods; methods; classes; instances with `__call__`; generator functions; native coroutine functions; async generator functions.
+When you call a class, which methods are involved (Python, high level)?	`__new__` creates the instance; `__init__` initializes it.
+What does calling a generator function return (Python)?	A generator object (an iterator), not the final application data.
+What does calling an `async def` function return (Python)?	A coroutine object.
+What does calling an async generator function return (Python)?	An async generator (used with `async for`).
+What is “method syntax” enabled by callables (Python)?	Using dot notation to call methods on an instance, e.g. `obj.method(...)`.
+What do `*args` capture in a function definition (Python)?	Extra positional arguments, collected into a tuple.
+What do `**kwargs` capture in a function definition (Python)?	Extra keyword arguments, collected into a dict.
+How do you unpack an iterable into positional arguments in a call (Python)?	Use `*iterable`, e.g. `fn(*args_list)`.
+How do you unpack a mapping into keyword arguments in a call (Python)?	Use `**mapping`, e.g. `fn(**kwargs_dict)`.
+What is a keyword-only argument (Python)?	A parameter that can only be passed by keyword, not position.
+How do you declare keyword-only parameters (Python)?	Place them after `*args` or after a bare `*` in the signature.
+How do you declare keyword-only params without `*args` (Python)?	Use a bare `*`, e.g. `def f(a, *, b): ...`.
+Can a keyword-only parameter be required (Python)?	Yes; omit its default value.
+Why do some APIs use `class_=` instead of `class=` (Python)?	`class` is a reserved keyword, so `class_` is a common workaround.
+Can you pass a keyword named `"class"` via `**attrs` despite `class` being reserved (Python)?	Yes; dict keys are strings and `fn(**{'class': 'x'})` is allowed.
+What are positional-only parameters (Python ≥ 3.8)?	Parameters that must be passed positionally, not by keyword.
+How do you declare positional-only parameters in Python (syntax)?	Use `/` in the parameter list; parameters left of `/` are positional-only.
+Why do positional-only parameters exist (common rationale)?	To match/lock an API and avoid exposing parameter names as part of the call contract.
+Which built-in is a classic example of positional-only args (Python)?	`divmod(a, b)` (can’t be called as `divmod(a=..., b=...)`).
+What module provides function equivalents for many operators (Python)?	`operator`.
+Why use `operator.mul` with `reduce` (Python)?	Avoid trivial lambdas like `lambda a,b: a*b`; improves readability.
+What does `operator.itemgetter(n)` produce (Python)?	A function that fetches item `obj[n]` from its argument.
+Why can `itemgetter` work with mappings too (Python)?	It uses `__getitem__`, which dicts and many other types support.
+What does `itemgetter(i, j, ...)` return (Python)?	A function returning a tuple of extracted items.
+What does `operator.attrgetter('name')` produce (Python)?	A function that reads the named attribute from its argument.
+What does dotted notation in `attrgetter` mean (Python)?	It traverses nested attributes, e.g. `'coord.lat'`.
+What does `attrgetter(a, b, ...)` return (Python)?	A function returning a tuple of extracted attributes.
+What does `operator.methodcaller('upper')` produce (Python)?	A function that calls `.upper()` on its argument.
+What does `methodcaller('replace', ' ', '-')` do (Python)?	Calls `.replace(' ', '-')` on its argument (freezes extra args).
+What do `operator.iadd`, `operator.imul`, etc. correspond to (Python)?	Augmented assignment operators like `+=`, `*=`.
+How do “i*” operator functions behave on mutables vs immutables (Python)?	They mutate in place if possible; otherwise behave like the non-`i` version and return a new value.
+What does `functools.partial(func, *args, **kwargs)` return (Python)?	A new callable with some arguments pre-bound.
+Why is `partial` useful (Python)?	Adapts a callable to an API expecting fewer/different arguments (callbacks).
+What attributes expose the wrapped callable and bound args on a `partial` object (Python)?	`.func`, `.args`, `.keywords`.
+What is `functools.partialmethod` for (Python)?	Partial application designed for methods (descriptor-friendly).
+How can `partial` help with repeated normalization patterns (Python example)?	Bind one arg of a function to create a specialized helper, e.g. `nfc = partial(unicodedata.normalize, 'NFC')`.
