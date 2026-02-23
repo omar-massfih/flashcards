@@ -33,3 +33,17 @@ What is `if let` used for (Rust)?	A concise way to run code when one pattern mat
 Example: how do you run code only when an `Option` is `Some` (Rust)?	`if let Some(v) = opt { ... }`.
 How do you handle the “otherwise” case with `if let` (Rust)?	Use `else`, e.g. `if let ... { ... } else { ... }`.
 When should you prefer `match` over `if let` (Rust)?	When you need to handle multiple variants/patterns (especially exhaustively).
+How is `match` different from `if` regarding the matched expression (Rust)?	`if` requires a `bool` condition; `match` can match on values of any type.
+In a `match`, what does the `=>` separate (Rust)?	The pattern (left) and the expression/block to run (right).
+In a `match`, how are arms separated (Rust)?	With commas (`,`) between arms.
+When do you need `{ ... }` in a match arm (Rust)?	When the arm runs multiple statements/lines; braces wrap a block expression.
+After a block arm (`=> { ... }`), is the trailing comma required (Rust)?	No; it’s optional after a block arm (but commas are still used to separate arms).
+In a `match`, are patterns checked in any special order (Rust)?	Yes; they’re checked top-to-bottom, and the first matching arm runs.
+In a `match`, what becomes the value of the entire `match` expression (Rust)?	The value of the expression/block in the matching arm.
+Pattern binding: what does `Coin::Quarter(state)` do in a `match` (Rust)?	Matches `Quarter(...)` and binds the inner `UsState` value to `state`.
+In `match dice_roll { 3 => ..., 7 => ..., other => ... }`, what does `other` do (Rust)?	It’s a catch-all pattern that binds the unmatched value for use in that arm.
+What’s the difference between `other => ...` and `_ => ...` in `match` (Rust)?	`other` matches and binds the value; `_` matches but does not bind (ignores it).
+Why must a catch-all arm go last in a `match` (Rust)?	Because it matches anything; later arms would be unreachable (Rust warns/errors about unreachable patterns).
+What does `_ => ()` mean in a `match` arm (Rust)?	Match all remaining cases and “do nothing” (evaluate to unit `()`).
+What compiler error do you get for a non-exhaustive `match` (Rust)?	A compile-time error for “non-exhaustive patterns” (e.g., `None` not covered).
+Why does Rust require `match` to be exhaustive (Rust)?	So every possible value is handled (or explicitly ignored with `_`), preventing missed cases.
