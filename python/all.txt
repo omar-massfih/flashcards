@@ -412,3 +412,70 @@ Why is `partial` useful (Python)?	Adapts a callable to an API expecting fewer/di
 What attributes expose the wrapped callable and bound args on a `partial` object (Python)?	`.func`, `.args`, `.keywords`.
 What is `functools.partialmethod` for (Python)?	Partial application designed for methods (descriptor-friendly).
 How can `partial` help with repeated normalization patterns (Python example)?	Bind one arg of a function to create a specialized helper, e.g. `nfc = partial(unicodedata.normalize, 'NFC')`.
+What is “gradual typing” (Python typing)?	Type hints are optional; unannotated code can be treated as `Any` by the checker; checking is static-only (no runtime enforcement).
+In gradual typing, what happens when the checker can’t determine a type (Python typing)?	It assumes `Any`.
+Do type hints prevent wrong types from being passed at runtime (Python)?	No; they’re ignored by the runtime and only used by tools (type checkers/IDEs/linters).
+Do type hints improve runtime performance (Python)?	No direct performance effect in CPython; they mainly help tooling.
+What does Mypy do with a function that has no annotations by default?	It typically ignores the function body/signature for type checking (unless configured to check untyped defs).
+What does `--disallow-untyped-defs` do (Mypy)?	Flags any function missing type hints for all parameters and return type.
+What does `--disallow-incomplete-defs` do (Mypy)?	Flags functions that have some hints but are missing annotations for one or more arguments/return type.
+Gradual typing workflow trick: how can you make Mypy start checking a specific function?	Add a return type annotation (e.g., `-> str`) so it’s no longer fully untyped.
+What return annotation should you add for a function that doesn’t return a value (Mypy/Python)?	`-> None`.
+What is a typical minimal `mypy.ini` setting to start gradual typing (conceptually)?	Enable `disallow_incomplete_defs = True` so partially annotated functions are checked without requiring full coverage everywhere.
+Common typing mistake: what’s wrong with `def f(color=str) -> ...`?	`color=str` sets a default value (the `str` class), not a type annotation; it should be `color: str`.
+Type hint style: where do spaces go around `:` and `=` in a typed parameter (Python)?	No space before `:`; one after `:`; spaces around `=` for defaults (e.g., `x: int = 0`).
+What does “types are defined by supported operations” mean (typing perspective)?	A type is characterized by what operations/methods are valid on values of that type.
+What is duck typing (Python concept)?	Correctness is determined at runtime by whether an object supports the operations you use (not by declared types).
+What is nominal typing (static type checking perspective)?	Variables/parameters have declared types; only operations defined on the declared type are considered valid by the checker.
+Why can static checking reject code that “works at runtime” (Python typing)?	The checker only trusts declared interfaces; runtime may pass a subtype that happens to support extra operations.
+What is `Any` (Python typing)?	The dynamic “wildcard” type; assumed when types are unknown; compatible with all types and allows all operations to type check.
+How is `Any` different from `object` (Python typing)?	`object` accepts any value but supports only `object`’s operations; `Any` is treated as supporting any operation.
+Why can annotating something as `Any` reduce the value of type checking?	It suppresses many errors because the checker assumes any operation is valid.
+What does “subtype-of” mean in nominal typing?	If `T2` is a subtype of `T1`, you can use a `T2` wherever `T1` is expected (Liskov substitution).
+What does “consistent-with” add beyond subtype-of (gradual typing)?	It includes subtype relationships, plus special rules that allow `Any` to match any type and any type to match `Any`.
+Consistent-with rule: what’s true of any type vs `Any` (Python typing)?	Every type is consistent-with `Any`.
+Consistent-with rule: what’s true of `Any` vs any type (Python typing)?	`Any` is consistent-with every type.
+PEP 484 numeric rule: which built-in numeric types are treated as consistent (Python typing)?	`int` is consistent-with `float`; `float` is consistent-with `complex` (so `int` is consistent-with `complex`).
+What does `Optional[T]` mean (Python typing)?	A value of type `T` or `None` (i.e., `T | None` / `Union[T, None]`).
+Does `Optional[T]` make a parameter optional by itself (Python typing)?	No; a parameter becomes optional only if it has a default value (e.g., `= None`).
+What is `Optional[T]` shorthand for (Python typing)?	`Union[T, None]` (or `T | None` in Python 3.10+).
+Python 3.10+: what does `T | U` mean in annotations?	A union type (equivalent to `Union[T, U]`).
+Why can returning `Union[...]` be annoying for callers (Python typing)?	Callers must narrow/check the runtime type before using the result safely.
+What does it mean that `Union` types “flatten” (Python typing)?	Nested unions are equivalent to a single union of all member types (e.g., `Union[A, Union[B, C]] == Union[A, B, C]`).
+Why is `Union[int, float]` usually redundant (Python typing)?	Because `int` is consistent-with `float`, so `float` alone typically accepts `int` values.
+Python 3.9+: what does `list[str]` mean in a return type annotation?	A list where every element is a `str` (generic type parameter is `str`).
+Python 3.7-3.8: how can you use `list[str]` syntax?	Add `from __future__ import annotations`.
+Python 3.5-3.6: how can you annotate `list[str]`-like types?	Use `typing.List[str]` (legacy typing aliases).
+How do you annotate a “record-like” tuple with fixed field types (Python typing)?	Use `tuple[T1, T2, ...]` (e.g., `tuple[float, float]`).
+How do you annotate a variable-length tuple of one element type (Python typing)?	Use `tuple[T, ...]` (ellipsis) for “any length” tuples of `T`.
+In tuple annotations, what does `...` mean (Python typing)?	Python’s ellipsis token indicating repetition/variable length (e.g., `tuple[int, ...]`).
+How do you annotate a mapping type (Python typing)?	`Mapping[KeyType, ValueType]` (or concrete `dict[KeyType, ValueType]` when you require `dict`).
+Why prefer `collections.abc.Mapping` over `dict` for a parameter (Python typing)?	It accepts more mapping implementations (e.g., `dict`, `defaultdict`, `ChainMap`, `UserDict`), improving caller flexibility.
+Why prefer concrete collection types for return annotations (Python typing)?	The function returns a concrete object; concrete return types are more informative and usable than vague abstractions.
+Why might you need to annotate a local variable even when the expression is obvious to you (Python typing)?	Type checkers may not infer the desired generic type; an explicit annotation can resolve “need type annotation” errors.
+What is a “type alias” (Python typing)?	A named alias for a type expression to improve readability (e.g., `FromTo = tuple[str, str]`).
+When should you annotate an input as `Iterable[T]` instead of `Sequence[T]` (Python typing)?	When you only need to iterate and want to accept generators/streams, not just sized/indexable sequences.
+When should you annotate an input as `Sequence[T]` instead of `Iterable[T]` (Python typing)?	When you need `len(...)` and/or indexing/slicing behavior.
+Why is `Iterable[T]` often too vague as a return type (Python typing)?	It doesn’t promise key properties (re-iterable vs one-shot, concrete container type), making downstream use less clear.
+What does `typing.TYPE_CHECKING` do (Python typing)?	It’s `False` at runtime but treated as `True` by type checkers to guard checker-only code.
+What is `reveal_type(x)` (Mypy)?	A checker-only debugging pseudo-function that reports Mypy’s inferred type of `x`.
+What is a `TypeVar` used for (Python typing)?	To define a type parameter so input types can be reflected in output types (parameterized generics).
+Why does Python need `TypeVar(...)` instead of just writing `list[T]` with an implicit `T` (Python typing)?	The name `T` must exist at runtime; `TypeVar` declares it in the module namespace.
+What is a restricted `TypeVar` (Python typing)?	A type variable constrained to one of a fixed set of types listed in `TypeVar(...)`.
+What is a bounded `TypeVar` (Python typing)?	A type variable constrained to be a subtype/consistent-with an upper bound declared via `bound=...`.
+Why is `TypeVar(..., bound=Hashable)` useful (Python typing)?	It ensures elements are hashable (usable in dict/Counter) while preserving the specific element type in the return type.
+What is `AnyStr` (Python typing)?	A predefined `TypeVar` constrained to `str` or `bytes`, used when output type should match the input text type.
+What is `typing.Protocol` for (Python typing)?	Defining structural interfaces so a type checker can verify “supports these methods” without requiring inheritance.
+What is “static duck typing” (Python typing)?	Using `Protocol` to express operation-based requirements (structural typing) for static type checkers.
+When is a concrete type consistent-with a protocol type (Python typing)?	When it implements the protocol’s required methods with compatible signatures.
+Why are protocols useful for annotating “supports operation X” (Python typing)?	ABCs may not include the needed method; a protocol can describe the exact operation (e.g., `__lt__`) the algorithm relies on.
+In a Protocol, what does a method body of `...` mean?	It’s a stub signature with no implementation (used only for type checking).
+What does `Callable[[A, B], R]` mean (Python typing)?	A callable that takes arguments of types `A` and `B` and returns type `R`.
+How do you annotate “any callable signature” (Python typing)?	Use `Callable[..., R]`.
+Callable variance: why is returning a subtype usually OK for a callback (Python typing)?	If code expects `float`, a callback returning `int` is OK because `int` values work where `float` is expected.
+Callable variance: why must callback parameter types usually be more general (Python typing)?	If code passes a `float`, the callback must accept at least `float` (e.g., accepting `complex` is OK; accepting only `int` is not).
+What is `NoReturn` used for (Python typing)?	Return annotation for functions that never return normally (e.g., always raise or call `sys.exit()`).
+Python 3.8+: how do you declare positional-only parameters?	Use `/` in the signature; parameters before `/` are positional-only.
+PEP 484 stub convention: how are positional-only parameters often named?	Prefix the parameter name with `__` (double underscore) in stub signatures.
+How do you annotate `*args` when all extra positional args share one type (Python typing)?	`*args: T` meaning each extra arg is `T` (inside the function it’s `tuple[T, ...]`).
+How do you annotate `**kwargs` when all extra keyword values share one type (Python typing)?	`**kwargs: T` meaning each kw value is `T` (inside the function it’s `dict[str, T]`).
