@@ -479,3 +479,72 @@ Python 3.8+: how do you declare positional-only parameters?	Use `/` in the signa
 PEP 484 stub convention: how are positional-only parameters often named?	Prefix the parameter name with `__` (double underscore) in stub signatures.
 How do you annotate `*args` when all extra positional args share one type (Python typing)?	`*args: T` meaning each extra arg is `T` (inside the function it’s `tuple[T, ...]`).
 How do you annotate `**kwargs` when all extra keyword values share one type (Python typing)?	`**kwargs: T` meaning each kw value is `T` (inside the function it’s `dict[str, T]`).
+What is a function decorator (Python)?	A callable that takes a function, does optional processing, and returns the same function or a replacement callable.
+Decorator desugaring: what does `@deco` mean (Python)?	It’s syntax sugar for rebinding: `func = deco(func)` right after `func` is defined.
+What can a decorator return (Python)?	The original function (unchanged) or a different callable (typically an inner wrapper function).
+Do decorators run at call time or at definition/import time (Python)?	At function definition time; usually during module import (module load), not when the function is later called.
+Import time vs runtime: what’s the difference (Python, decorators context)?	Import time is when module top-level code runs (decorators execute); runtime is when decorated functions are invoked later.
+What is a registration decorator used for (Python)?	To add functions to a registry (e.g., routing tables, plugin hooks) at import time.
+If a decorator returns the original function, can it still be useful (Python)?	Yes; it can perform side effects like registration/logging while leaving the function object unchanged.
+After decoration, what is the decorated name bound to (Python)?	Whatever callable the decorator returns (often a wrapper function).
+How can you confirm a decorator replaced a function (Python, introspection)?	Check attributes like `func.__name__`/`repr(func)`; a wrapper often has a different `__name__` (unless fixed with `wraps`).
+What is a stacked decorator (Python)?	Multiple decorators applied to one function using multiple `@...` lines.
+Stacked decorators: in `@a` above `@b`, which runs first (Python)?	`b` runs first; then `a` is applied to the result.
+Stacked decorators desugaring (Python)?	`@a` then `@b` is `func = a(b(func))`.
+In a wrapper decorator, why must the wrapper return the original result (Python)?	So the decorated function preserves the original API/behavior for callers (besides the added cross-cutting behavior).
+Why do naive decorators often break `__name__` and `__doc__` (Python)?	Because the wrapper replaces the function object, so its metadata becomes the wrapper’s metadata.
+What does `functools.wraps` do (Python)?	Helps write well-behaved decorators by copying metadata (e.g., `__name__`, `__doc__`) from the wrapped function to the wrapper.
+Where does `functools.wraps` go in a decorator (Python)?	On the inner wrapper: `@functools.wraps(func)` directly above `def wrapper(...): ...`.
+Why should a decorator wrapper accept `*args, **kwargs` (Python)?	To forward any positional/keyword arguments so the decorator works for many signatures.
+What does `*args, **kwargs` forwarding enable in a decorator (Python)?	The wrapper can call `func(*args, **kwargs)` without knowing the target function’s parameter list.
+Variable scope rule: when is a name local inside a function (Python)?	If it’s a parameter or it’s assigned anywhere in the function body (unless declared `global`/`nonlocal`).
+Why does `print(b); b = 9` raise `UnboundLocalError` (Python)?	Because assignment makes `b` local for the whole function, so `print(b)` reads an uninitialized local.
+What does `global x` do inside a function (Python)?	Makes `x` refer to the module-global binding (reads and assigns the global, not a local).
+What does `nonlocal x` do inside a nested function (Python)?	Makes `x` refer to the nearest enclosing function scope where `x` is defined (reads and assigns that binding).
+What is a closure (Python)?	A function that retains bindings of free variables from an enclosing function scope, so they remain available after the outer function returns.
+What is a free variable (Python, closures)?	A name referenced in a function body that is neither local to that function nor global; it comes from an enclosing function scope.
+When do closures matter (Python)?	When you define nested functions that read/write variables from an enclosing function’s local scope.
+In a closure, where are captured bindings stored (Python)?	In the returned function object’s closure cells (`fn.__closure__`), keyed by names in `fn.__code__.co_freevars`.
+What does `fn.__code__.co_freevars` show (Python)?	The names of free variables captured by the function (closure variables).
+What does `fn.__code__.co_varnames` show (Python)?	The function’s local variable names (including parameters).
+What is `fn.__closure__` (Python)?	A tuple of cell objects holding the captured values for free variables (or `None` if there are no free variables).
+In `fn.__closure__`, what is `cell_contents` (Python)?	The actual current value stored in a closure cell.
+Why does rebinding an outer-scope name require `nonlocal` (Python)?	Without `nonlocal`, an assignment makes the name local, so the closure binding won’t be updated.
+Why does `count += 1` inside a nested function create a local `count` without `nonlocal` (Python)?	Augmented assignment on immutables rebinding (`count = count + 1`) counts as assignment, so the compiler treats `count` as local.
+What’s the difference between mutating a captured list and rebinding a name (Python closures)?	`series.append(x)` mutates the same object (no rebinding); `count = count + 1` rebinds the name (needs `nonlocal` to target outer scope).
+Variable lookup order: where does Python look if a name isn’t local (Python)?	Enclosing function scopes (nonlocal) → module globals → `__builtins__` (if not found, `NameError`).
+What is the `dis` module used for (Python)?	Disassembling Python bytecode to inspect how the compiler treats names and operations.
+What typical bytecode clue shows a name is treated as local (Python)?	Ops like `LOAD_FAST`/`STORE_FAST` (locals) vs `LOAD_GLOBAL` (globals/builtins).
+What does `functools.cache` implement (Python)?	Memoization: caching results of function calls to avoid repeated computation for the same arguments.
+`functools.cache`: what’s the key requirement on arguments (Python)?	All arguments must be hashable, because the cache is keyed using a dict.
+What is a risk of using `functools.cache` in long-running processes (Python)?	Unbounded growth: it can consume a lot of memory if there are many distinct argument combinations.
+What does `functools.lru_cache` add compared with `cache` (Python)?	A bounded cache with eviction controlled by `maxsize` (least-recently-used policy).
+What does LRU mean in `lru_cache` (Python)?	Least Recently Used: evict entries that haven’t been accessed recently to make room for new ones.
+`lru_cache`: what does `maxsize` control (Python)?	The maximum number of cached entries (older entries are evicted once full).
+`lru_cache`: what does `typed=True` change (Python)?	Caches results separately for arguments of different types (e.g., treats `1` and `1.0` as distinct keys).
+`lru_cache`: what does `maxsize=None` do (Python)?	Disables LRU eviction (unbounded cache); that’s effectively what `functools.cache` provides.
+How can `lru_cache` be applied with default settings (Python)?	As `@lru_cache` or `@lru_cache()` (both use defaults).
+Why should `lru_cache` `maxsize` often be a power of 2 (Python)?	It’s recommended for cache implementation efficiency.
+What does memoization avoid (Python)?	Recomputing results for repeated calls with the same inputs.
+In a cached recursive function, why do repeated calls drop dramatically (Python)?	Once a subproblem result is cached, later calls reuse it instead of expanding recursion again.
+If you stack `@cache` above a timing decorator, what gets cached (Python)?	The wrapper function returned by the timing decorator is what `cache` memoizes (because decorators nest).
+What does `functools.singledispatch` create (Python)?	A single-dispatch generic function: multiple implementations chosen by the type of the first argument.
+In single dispatch, which argument is used to choose the implementation (Python)?	The first positional argument’s runtime type.
+What does `@singledispatch` decorate (Python)?	The base (fallback) implementation, which typically handles `object` as a catch-all.
+How do you register a specialized implementation (singledispatch, Python)?	Decorate it with `@<base>.register` (using a first-parameter annotation or passing an explicit type to `register`).
+In `singledispatch`, which implementation is chosen when multiple match (Python)?	The most specific matching type (best match in the type hierarchy), not the first one defined.
+Can `singledispatch` registrations be defined in other modules (Python)?	Yes; registrations can live anywhere, allowing modular extension.
+Why is `singledispatch` more extensible than an `if/elif` chain (Python)?	Because new types can register new implementations without editing the central dispatcher function.
+In `singledispatch`, can the registered function name matter (Python)?	No; the name is irrelevant (many examples use `_` to emphasize this).
+How do you register a type without annotating the first parameter (singledispatch, Python)?	Pass the type to the decorator: `@<base>.register(SomeType)`.
+How can one function implementation handle multiple types (singledispatch, Python)?	Stack multiple `@<base>.register(Type)` decorators on the same function.
+Why register ABCs instead of concrete types in `singledispatch` (Python)?	It supports a broader range of compatible types (including virtual subclasses) without listing each concrete class.
+What is a parameterized decorator (Python)?	A decorator that accepts extra arguments; implemented as a decorator factory that returns the actual decorator.
+How does Python apply `@deco(arg)` (Python)?	It calls the factory `deco(arg)` to get a decorator, then applies it: `func = deco(arg)(func)`.
+Decorator factory vs decorator: what does the factory return (Python)?	A decorator (a callable that takes a function and returns a function/callable).
+Why must `@factory()` be called even with default args (Python)?	Because the `@` syntax binds to the factory itself; you must call it to produce the real decorator to apply.
+How can a decorator factory enable toggling behavior like registration (Python)?	The factory captures parameters (e.g., `active`) in a closure and returns a decorator that acts based on those parameters.
+What are the typical nested layers in a parameterized decorator (Python)?	Factory (takes params) → decorator (takes func) → wrapper (takes func args).
+In a parameterized decorator, where do the parameters live at call time (Python)?	In the wrapper’s closure (captured from the factory call).
+Class-based decorator factory: what makes an instance act as a decorator (Python)?	Implementing `__call__(self, func)` so the instance can be used as the decorator.
+In a class-based decorator factory, where does the parameter get stored (Python)?	In instance attributes set by `__init__` (captured for use by `__call__`/wrapper).
