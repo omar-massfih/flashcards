@@ -407,3 +407,18 @@ Terraform for expressions: why convert a result to a set with `toset(...)` somet
 Terraform for expressions: what is “grouping mode” in object comprehensions?	Add `...` after the value expression to allow duplicate keys, producing a map of lists (multiple values per key).
 Terraform grouping mode: what does `role => name...` mean?	Group multiple `name` values under the same `role` key (value becomes a list of strings per role).
 Can Terraform for expressions generate nested blocks in resources?	No; for nested blocks use `dynamic` blocks (for expressions only construct values inside expressions).
+What is a splat expression for (Terraform)?	A concise way to map over a collection and extract nested attributes/indexes (often equivalent to a for-expression).
+Splat vs for-expression: what does `var.list[*].id` correspond to (Terraform)?	`[for o in var.list : o.id]`.
+What does the `[*]` operator do in a splat expression (Terraform)?	Iterates over all elements on the left and applies the access operations on the right to each element.
+Can splat expressions chain deeper attribute/index accesses (Terraform)?	Yes; e.g. `var.list[*].interfaces[0].name` applies `.interfaces[0].name` to each element.
+What collection types support splat expressions (Terraform)?	Lists, sets, and tuples.
+How do you get a “splat-like” result for a map/object (Terraform)?	Use a for-expression (splats don’t work on maps/objects).
+Why don’t splat expressions work on `for_each` resources (Terraform)?	`for_each` resources are maps of objects; splats require list/set/tuple.
+How do you get a list of attributes from a `for_each` resource anyway (Terraform)?	Convert to a list with `values(...)` and then splat, e.g. `values(aws_x.y)[*].id`.
+Splat special case: what happens if you apply `[*]` to a non-collection, non-null value (Terraform)?	It becomes a single-element tuple (a “single value as list” behavior).
+Splat special case: what does `[*]` return if the value is `null` (Terraform)?	An empty tuple.
+Common use: why use `var.obj[*]` for an optional object input (Terraform)?	To drive `for_each` in a `dynamic` block: 0 blocks if `null`, 1 block if set.
+Terraform guidance: where is the “single value as list” splat trick recommended (Terraform)?	In `for_each`-style contexts where a collection is expected; otherwise it can confuse readers.
+What is the legacy “attribute-only” splat syntax (Terraform)?	Use `.*.` (e.g., `var.list.*.attr`) instead of modern `[*]`.
+Why is legacy `.*` splat discouraged (Terraform)?	Its behavior is less consistent and can be surprising; prefer modern `[*]`.
+Legacy splat gotcha: how does indexing differ between `.*` and `[*]` (Terraform)?	In `.*`, indexes like `[0]` apply after the iteration result rather than per-element, unlike `[*]`.
