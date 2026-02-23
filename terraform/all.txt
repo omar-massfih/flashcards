@@ -389,3 +389,21 @@ Collection-wide validation pattern: how do you check a condition holds for any e
 What does `can(expr)` do in Terraform conditions?	Returns true if `expr` evaluates without error; false if evaluating it produces an error.
 Example: how can `can` be used to validate a string with `regex` (Terraform)?	`can(regex("^[a-z]+$", var.name))` (because `regex` errors on non-match).
 In conditions, what are `self`, `each`, and `count` used for (Terraform)?	`self` refers to attributes of the instance under evaluation in postcondition blocks; `each`/`count` refer to per-instance values inside blocks using `for_each`/`count`.
+What does a for expression do (Terraform)?	A for expression transforms one collection into another by evaluating an expression per element (optionally filtering elements out).
+Terraform for expression: what input types are allowed after `in`?	List, set, tuple, map, or object.
+Terraform for expression: what does `[for s in var.list : upper(s)]` produce?	A tuple of results in the same order as the input collection (after any implied ordering rules).
+Terraform for expression: what does the single symbol after `for` represent?	The element value for each item in the input collection.
+Terraform for expression: what does the two-symbol form `for k, v in ...` provide?	Two temporary symbols: key/index (`k`) and value (`v`) for each element.
+In a Terraform for expression over a list/tuple, what is the first symbol in `for i, v in ...`?	The zero-based index of each element.
+In a Terraform for expression over a map/object, what is the first symbol in `for k, v in ...`?	The key (map key) or attribute name (object attribute).
+Terraform for expression: what result type do `[...]` brackets produce?	A tuple.
+Terraform for expression: what result type do `{...}` braces produce, and what syntax is required?	An object; you must provide `key_expr => value_expr`.
+Terraform for expression: how do you filter elements?	Add `if <condition>` at the end (e.g., `[for s in var.list : upper(s) if s != \"\"]`).
+Terraform for expression: why might you split one collection into two with `if`?	To build separate collections by predicate (e.g., admins vs regular users).
+Terraform for expressions: what is the implied ordering for maps/objects when converting to an ordered result?	Sorted lexically by key/attribute name.
+Terraform for expressions: what is the implied ordering for a set of strings when converting to an ordered result?	Sorted lexically by string value.
+Terraform for expressions: what ordering is used for sets of non-strings?	Arbitrary ordering that may change between Terraform versions.
+Terraform for expressions: why convert a result to a set with `toset(...)` sometimes?	To make it explicit that the result is unordered (especially when the source is an unordered collection).
+Terraform for expressions: what is “grouping mode” in object comprehensions?	Add `...` after the value expression to allow duplicate keys, producing a map of lists (multiple values per key).
+Terraform grouping mode: what does `role => name...` mean?	Group multiple `name` values under the same `role` key (value becomes a list of strings per role).
+Can Terraform for expressions generate nested blocks in resources?	No; for nested blocks use `dynamic` blocks (for expressions only construct values inside expressions).
