@@ -12,6 +12,18 @@ What does “`if` is an expression” enable in Rust?	Using `if` on the right-ha
 When using `if` in `let`, what must be true about the result types of each arm?	All possible arm results must have the same type.
 Why must those arm result types match (Rust)?	A variable has a single compile-time type; Rust must know it definitively.
 What common compile error happens when `if` and `else` produce different types?	An error that the `if` and `else` have incompatible types (type mismatch).
+What problem does `if let` solve (Rust)?	Run code for one matching pattern without writing a full `match` with boilerplate like `_ => ()`.
+In `if let PATTERN = EXPR`, what separates the pattern and the expression (Rust)?	An equals sign: `if let <pattern> = <expr> { ... }`.
+In `if let Some(x) = opt { ... }`, where is `x` in scope (Rust)?	Only inside the `if let` block (and its `else` is a separate scope).
+Why can `if let` be considered syntax sugar for `match` (Rust)?	It’s like `match expr { PATTERN => { ... }, _ => () }` (optionally with an `else` arm).
+What tradeoff do you make by using `if let` instead of `match` (Rust)?	Conciseness vs losing `match`’s exhaustiveness checking.
+In `if let ... else { ... }`, what is the `else` block equivalent to in `match` terms (Rust)?	The `_ => { ... }` catch-all arm.
+What is `let...else` used for (Rust)?	Pattern-match to bind names in the outer scope on success; otherwise run an `else` that exits the current flow (“happy path”).
+What is the basic syntax shape of `let...else` (Rust)?	`let PATTERN = EXPR else { ... };`
+If the pattern matches in `let...else`, where do bindings live (Rust)?	In the surrounding scope after the `let...else` statement (not inside a success block).
+If the pattern does not match in `let...else`, what must the `else` block do (Rust)?	It must diverge (e.g., `return`, `break`, `continue`, or `panic!`), because execution can’t continue with missing bindings.
+Why does `let...else` “stay on the happy path” (Rust)?	The main logic continues unindented after the binding; non-matching cases exit early in `else`.
+When is `let...else` a good fit versus `if let { ... } else { return ... }` (Rust)?	When you want to bind a value for later code and handle the non-match with an early-exit `else` (clearer control flow).
 What are the three kinds of loops in Rust?	`loop`, `while`, and `for`.
 What is one practical use-case for an infinite-style loop besides “repeat forever”?	Retrying an operation until it succeeds / a condition is met.
 How can a `loop` produce a value (Rust)?	Use `break <expr>`; the loop expression evaluates to that value.
