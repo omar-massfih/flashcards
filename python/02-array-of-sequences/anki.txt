@@ -2,7 +2,7 @@ Why does Python treat many types uniformly as sequences (historical)?	It inherit
 What common operations do many Python sequences share?	Iteration; slicing; sorting; concatenation (across types like `str`, `list`, `bytes`, arrays, etc.).
 What is a container sequence (Python)?	A sequence that holds references to contained objects (can be heterogeneous and nested).
 What is a flat sequence (Python)?	A sequence that stores simple values in its own memory (typically one primitive machine type).
-Why are flat sequences usually more memory-efficient than container sequences?	They store packed values (fewer separate Python objects/headers and references).
+Why are flat sequences usually more memory-efficient than container sequences?	They store elements as packed values in contiguous memory, which avoids creating many separate Python objects with their own headers and references.
 Give examples of mutable sequences (Python).	`list`; `bytearray`; `array.array`; `collections.deque`.
 Give examples of immutable sequences (Python).	`tuple`; `str`; `bytes`.
 What is a list comprehension (Python)?	An expression that builds a new list by transforming and/or filtering an iterable.
