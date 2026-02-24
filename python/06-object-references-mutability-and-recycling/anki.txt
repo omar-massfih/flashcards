@@ -1,7 +1,7 @@
 Python variables: are they “boxes” or “labels”?	Labels (names bound to objects), not boxes that contain copies.
 What does assignment do in Python (high level)?	Binds a name to an object; it does not copy the object.
 What is aliasing (Python)?	Multiple names bound to the same object.
-If `b = a` and `a` is a mutable object, what does mutating via `a` imply for `b`?	`b` observes the same mutation because both names reference the same object.
+If b = a and a refers to a mutable object, what happens to b when you mutate through a?	b reflects the same change because both names reference the same object.
 In `x = <expr>`, what is evaluated first in Python?	The right-hand side expression is evaluated first; then `x` is bound.
 Why can `y = Gizmo() * 10` create an instance but still not bind `y`?	The RHS creates the object, then an error occurs before binding; `y` is never created.
 What’s a clearer verb than “assign” for Python names?	“Bind”: `x = ...` binds the name `x` to an object.
