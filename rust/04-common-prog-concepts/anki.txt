@@ -1,4 +1,3 @@
-What does Rust error `E0384` indicate?	You attempted to assign to an immutable binding (e.g., “cannot assign twice to immutable variable”).
 When does Rust catch attempts to reassign an immutable binding?	At compile time (a compile-time error).
 Why does Rust default to immutable bindings?	It nudges you toward safer, easier-to-reason-about code and supports safe concurrency.
 What kind of bug can immutability help prevent?	Code that assumes a value won’t change being broken by code that changes it (especially intermittently).
