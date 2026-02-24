@@ -88,7 +88,7 @@ What data structure underlies Python `dict` (high level)?	A hash table.
 Which built-in types are also based on hash tables (Python)?	`set` and `frozenset` (and `dict` itself).
 What is a dict comprehension (Python)?	An expression that builds a `dict` from an iterable of key/value data (key: value pairs).
 What does a dict comprehension look like (Python syntax)?	`{k: v for ...}` (optionally with `if` filters).
-What does mapping unpacking with `**` do in a function call (Python)?	It expands a mapping into keyword arguments (e.g., `f(**d)`).
+What does mapping unpacking with `**` do in a function call (Python)?	It expands a mapping into keyword arguments, so each key–value pair becomes a named argument, for example f(**d).
 What restriction applies to mapping unpacking (`**`) in function calls (Python)?	Expanded keys must be strings, and duplicate keyword arguments are not allowed.
 What does `**` do inside a dict literal (Python ≥ 3.5)?	It unpacks another mapping into the new dict (e.g., `{**d1, **d2}`).
 In a dict literal with multiple `**` unpackings, what happens with duplicate keys (Python)?	Later occurrences overwrite earlier ones.
