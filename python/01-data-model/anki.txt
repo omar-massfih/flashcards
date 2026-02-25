@@ -8,7 +8,7 @@ Why prefer built-ins over calling special methods directly?	Built-ins can add be
 How does `for x in obj:` start iteration?	It calls `iter(obj)`, which uses `obj.__iter__()` or may fall back to `obj.__getitem__()`.
 What two special methods are enough to make an object behave like a basic sequence?	`__len__` and `__getitem__`.
 What features do `__len__` + `__getitem__` typically enable?	__len__ enables len(obj), and __getitem__ enables indexing, slicing, and iteration over the object.
-How can implementing standard protocols help you use the standard library?	Stdlib functions that expect those protocols can work without custom adapters (e.g., choosing an item from a sequence).
+Why implement standard protocols in your class?	So standard library functions work with it directly, without adapters.
 How does `x in collection` work if `__contains__` is missing?	It can do a sequential scan using iteration.
 What is `__repr__` for?	Unambiguous representation for debugging/inspection; used by `repr()` and typically by the interactive console.
 What is `__str__` for?	User-friendly display string; used by `str()` and `print()`.

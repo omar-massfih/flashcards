@@ -1,4 +1,4 @@
-What is a function decorator (Python)?	A callable that takes a function, does optional processing, and returns the same function or a replacement callable.
+What is a function decorator (Python)?	A callable that takes a function, adds optional behavior, and returns the same function or a new callable.
 Decorator desugaring: what does `@deco` mean (Python)?	It’s syntax sugar for rebinding: `func = deco(func)` right after `func` is defined.
 What can a decorator return (Python)?	The original function (unchanged) or a different callable (typically an inner wrapper function).
 Do decorators run at call time or at definition/import time (Python)?	At function definition time; usually during module import (module load), not when the function is later called.

@@ -6,7 +6,7 @@ When do you write a `use ...;` statement?	To bring a module/type/trait into scop
 What does `::` mean in Rust paths?	It separates path segments (modules/types/traits) and is used to access associated items (e.g., `Type::function`).
 What is an associated function?	A function defined on a type and called with `Type::function`, not on an instance.
 Are variables mutable by default?	No; bindings are immutable by default.
-What does `mut` mean on a binding?	It allows reassignment of the binding and/or mutation through it (when the type supports mutation).
+What does `mut` mean on a binding?	It allows you to reassign the variable and modify the value it refers to, if the type supports mutation.
 What is `String` (std) in one phrase?	A growable, UTF-8–encoded owned string.
 What does `&T` mean?	A shared (immutable) reference to a value of type `T`.
 What does `&mut T` mean?	A mutable reference to a value of type `T` (allows mutation through the reference).

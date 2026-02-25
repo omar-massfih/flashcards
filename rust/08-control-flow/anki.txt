@@ -1,4 +1,3 @@
-What are the two main control-flow capabilities highlighted in this section?	Branching on conditions and repeating code (looping).
 What is an `if` expression used for (Rust)?	Branching: run a block when a condition is true; optionally run an `else` block when false.
 What type must a Rust `if` condition have?	`bool`.
 Does Rust perform truthy/falsy coercions for `if` conditions?	No; conditions must be explicitly boolean.

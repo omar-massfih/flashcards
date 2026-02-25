@@ -1,5 +1,4 @@
 Why do programmers write comments?	To add extra explanation for humans when code needs clarification.
-Do Rust comments affect compilation or program behavior?	No; the compiler ignores comments.
 What is the idiomatic single-line comment syntax in Rust?	Start with `//` (comment continues to the end of the line).
 How do you write a multi-line comment using `//` in Rust?	Use `//` at the start of each line.
 Where can `//` comments be placed in Rust code?	On their own line above code or at the end of a line containing code.
