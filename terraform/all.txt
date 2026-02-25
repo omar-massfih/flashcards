@@ -422,3 +422,21 @@ Terraform guidance: where is the “single value as list” splat trick recommen
 What is the legacy “attribute-only” splat syntax (Terraform)?	Use `.*.` (e.g., `var.list.*.attr`) instead of modern `[*]`.
 Why is legacy `.*` splat discouraged (Terraform)?	Its behavior is less consistent and can be surprising; prefer modern `[*]`.
 Legacy splat gotcha: how does indexing differ between `.*` and `[*]` (Terraform)?	In `.*`, indexes like `[0]` apply after the iteration result rather than per-element, unlike `[*]`.
+Why do you need `dynamic` blocks (Terraform)?	Some resource arguments are repeatable nested blocks that can’t be generated with expressions in `name = expr` form; `dynamic` generates nested blocks from data.
+What does a `dynamic` block produce (Terraform)?	Repeatable nested blocks (not a collection value), one nested block per element of the `for_each` collection.
+Where can you use `dynamic` blocks (Terraform)?	Inside `resource`, `data`, `provider`, and `provisioner` blocks.
+What does the label of a `dynamic` block mean (Terraform)?	The nested block type name to generate (e.g., `dynamic "setting"` generates `setting { ... }` blocks).
+In a `dynamic` block, what does `for_each` do (Terraform)?	Supplies the collection/structural value to iterate over; one nested block is generated per element.
+In a `dynamic` block, what does `content { ... }` define (Terraform)?	The body of each generated nested block.
+In a `dynamic` block, what does `iterator` control (Terraform)?	The name of the temporary variable for the current element; defaults to the dynamic label if omitted.
+What are `iterator.key` and `iterator.value` in a `dynamic` block (Terraform)?	`key` is map key or list index (for sets, `key == value` and shouldn’t be used); `value` is the element value.
+In a `dynamic` block iterating a set, what’s special about `.key` (Terraform)?	It’s identical to `.value`, so it’s not useful and should generally not be used.
+In a `dynamic` block, what does `labels` do (Terraform)?	Optional list of strings to set the generated block labels (in order); can use the iterator variable to compute labels.
+Can `dynamic` blocks generate meta-argument blocks like `lifecycle` (Terraform)?	No; they can only generate blocks belonging to the configured type (resource/data/provider/provisioner), not meta-argument blocks.
+Why can’t `dynamic` generate `lifecycle`/`provisioner` meta-argument blocks (Terraform)?	Terraform must process meta-arguments before it is safe to evaluate expressions that would generate them.
+Can you nest `dynamic` blocks (Terraform)?	Yes; you can generate multi-level nested block structures by putting `dynamic` blocks inside the `content` of outer ones.
+Nested dynamic blocks: what iterator pitfall should you watch for (Terraform)?	Inner and outer iterators differ (e.g., `origin_group.value` vs `origin.value`); choose iterator names carefully to avoid confusion.
+When should you set `iterator` explicitly in nested `dynamic` blocks (Terraform)?	When nested block type names collide or readability suffers; pick distinct iterator symbols.
+Best practice: when should you avoid `dynamic` blocks (Terraform)?	When you can write nested blocks literally; overuse hurts readability and maintainability.
+What’s a sign your module abstraction may be weak (Terraform `dynamic` blocks)?	If most resource arguments/blocks are just passed through from an input variable, the caller may be better off defining the resource directly.
+How can `dynamic` `for_each` use `for`/splat expressions (Terraform)?	Because `for_each` accepts any collection/structural value, you can transform data first with `for` expressions or splats and then iterate it.
