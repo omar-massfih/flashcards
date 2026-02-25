@@ -548,3 +548,66 @@ What are the typical nested layers in a parameterized decorator (Python)?	Factor
 In a parameterized decorator, where do the parameters live at call time (Python)?	In the wrapper’s closure (captured from the factory call).
 Class-based decorator factory: what makes an instance act as a decorator (Python)?	Implementing `__call__(self, func)` so the instance can be used as the decorator.
 In a class-based decorator factory, where does the parameter get stored (Python)?	In instance attributes set by `__init__` (captured for use by `__call__`/wrapper).
+What is a design pattern (software engineering)?	A general recipe for solving a common design problem.
+Do you need to know design patterns to use them well (pragmatic view)?	Not necessarily; many patterns describe solutions you may rediscover or apply implicitly.
+Why can a design pattern become “invisible” in a language (Python context)?	If the language has built-in features that directly support the pattern’s intent, you don’t need the classic OO “recipe”.
+Why might the classic Iterator pattern be unnecessary in Python (high level)?	Python’s iteration protocol and generators provide iteration without implementing the OO iterator-class pattern explicitly.
+Strategy pattern: what is it (GoF summary)?	Define a family of algorithms, encapsulate each one, and make them interchangeable so the algorithm can vary independently from clients.
+Strategy pattern: what problem does it solve (high level)?	Pluggable behavior: choose among alternative algorithms without changing the context that uses them.
+Strategy pattern: what is the Context role (Strategy)?	The object that uses a strategy to provide a service (e.g., `Order` applying a promotion).
+Strategy pattern: what is the Strategy role?	A common interface for alternative algorithms (e.g., a `Promotion` interface/ABC).
+Strategy pattern: what is a Concrete Strategy?	A specific implementation of the Strategy algorithm (e.g., fidelity/bulk/large-order discount).
+In Strategy, who typically selects which strategy to use (classic GoF)?	The client configures the context with a chosen strategy.
+Strategy example: what are the three discount rule types (ecommerce example)?	Fidelity points discount; bulk line-item discount; “many distinct items” order discount.
+Classic Strategy in Python: why use an ABC + `@abstractmethod`?	To make the pattern explicit and enforce that concrete strategies implement the required method.
+In the classic Strategy example, what does `Promotion.discount(order)` return?	The discount as a positive money amount (e.g., a `Decimal`).
+Function-oriented Strategy: when can you replace strategy classes with functions (Python)?	When each strategy has no internal state and effectively implements a single method (one algorithm).
+In function-oriented Strategy, what is the promotion type hint `Callable[[Order], Decimal]` saying?	The promotion is a callable that takes an `Order` and returns a `Decimal` discount.
+In function-oriented Strategy, why is promotion often `Optional[...]`?	Because an order may have no promotion; `None` means “no discount strategy”.
+Why does the function-oriented `Order.due` call `self.promotion(self)` (Python)?	`promotion` is a callable stored in an attribute, so you must pass the `Order` instance explicitly.
+Why doesn’t method auto-binding apply to a callable stored in an instance attribute (Python)?	Method binding is a descriptor feature of functions defined on the class; a plain callable attribute isn’t automatically bound.
+Strategy refactor benefit: why are functions “lighter” than strategy objects (Python)?	No single-method classes/instances are needed; functions are created once when the module loads and can be reused.
+What is `best_promo` (Strategy example)?	A “meta-strategy” that chooses the best available discount for a given order.
+How can `best_promo` compute the best discount (Python pattern)?	Apply each promotion to the order and return the maximum discount, e.g. `max(promo(order) for promo in promos)`.
+What’s a subtle maintenance bug in `best_promo` with a manual `promos` list?	You can add a new promotion function but forget to add it to `promos`, so `best_promo` silently ignores it.
+What does `globals()` return (Python)?	A dict representing the current module’s global symbol table.
+In a module, what does `globals()` refer to inside a function defined there (Python)?	The globals of the module where the function is defined (not where it is called from).
+How can you collect promo functions using `globals()` (Strategy pattern)?	Filter `globals().items()` by naming convention (e.g., names ending with `_promo`) and collect the callable values.
+Why must a `globals()`-based collector exclude `best_promo` itself?	Otherwise `best_promo` could be included and calling it would recurse infinitely while computing the best promo.
+What is a downside of collecting strategies by name convention (e.g., suffix `_promo`)?	It’s implicit and brittle: naming mistakes or unrelated functions can be accidentally included/excluded.
+Why can putting all strategy functions in a separate module help (Strategy pattern)?	It centralizes strategies and enables introspection without relying on naming conventions in unrelated code.
+What does `inspect.getmembers(obj, predicate)` do (Python)?	Returns an object’s attributes as `(name, value)` pairs, optionally filtered by a predicate.
+What does `inspect.isfunction` filter for (Python)?	Values that are user-defined function objects.
+How can you build a `promos` list by introspecting a `promotions` module (Python)?	Use `inspect.getmembers(promotions, inspect.isfunction)` and collect the returned functions.
+What is a risk of blindly collecting all functions from a module as strategies (Python)?	A function with the wrong signature can be included, causing runtime errors when applied as a strategy.
+What is a registration decorator (Python)?	A decorator that records/registers functions (e.g., appends them to a list) as a side effect at import time.
+In decorator-enhanced Strategy, what does `@promotion` do?	It registers the decorated promotion function (adds it to a `promos` list) and returns it unchanged.
+Why does a registration decorator often return the original function (Python)?	So the decorated function’s callable behavior stays the same while still being registered.
+Registration decorator benefit: why avoid name conventions for strategies?	Registration is explicit: strategies don’t need special suffixes and accidental inclusion is less likely.
+Registration decorator benefit: how can you disable a strategy quickly (Python)?	Comment out or remove the `@promotion` decorator on that function.
+Registration decorator benefit: can strategies be registered from other modules (Python)?	Yes; as long as they import and use the `@promotion` decorator, they’ll be registered when that module loads.
+Command pattern: what is its goal (GoF)?	Decouple an object that invokes an operation (invoker) from the object that knows how to perform it (receiver).
+Command pattern: who is the invoker and receiver (high level)?	Invoker triggers actions (e.g., menu item); receiver performs the work (e.g., document/app).
+Command pattern: what is the classic Command interface method name (GoF)?	Often `execute`.
+Command pattern: why is Command described as an OO replacement for callbacks (GoF)?	It packages an action as an object so it can be stored, passed around, and invoked later.
+In Python, what’s the simplest replacement for a single-method Command object?	Pass a function (or other callable) instead of a command instance.
+How would an invoker call a function-based command (Python)?	Call it directly: `command()` instead of `command.execute()`.
+What is a MacroCommand (Command pattern idea)?	A command that executes a sequence of commands.
+How can MacroCommand be implemented idiomatically in Python (high level)?	As a callable object (`__call__`) that loops over and calls stored command callables.
+Why might MacroCommand copy the command iterable into a list in `__init__` (Python)?	To ensure it’s iterable multiple times and to keep a local snapshot of the command references.
+In a callable object, what single-method interface does it implement (Python)?	`__call__` (so calling the instance runs its behavior).
+Why might you still use a class for Command instead of a function (Python)?	To keep state, provide extra methods (e.g., undo), and encapsulate more complex behavior than a single callback.
+What are two alternatives to classes for keeping state across calls (Python)?	A closure (captured free variables) or a callable instance (object with `__call__` + attributes).
+When should you consider a closure for Command-like state (Python)?	When you need small, hidden state tied to a function and a minimal public surface.
+When should you consider a callable instance for Command-like state (Python)?	When you want explicit, inspectable state and possibly extra methods beyond callability.
+In Strategy, why can strategies be reused across many contexts (Python)?	Strategies are typically stateless functions/callables, so the same callable can be applied to many orders.
+In the Strategy discount example, why is only one promotion applied (simplifying assumption)?	To keep the example simple; the system selects a single best discount rather than combining multiple discounts.
+Why is `Decimal` used for money computations (Python context)?	To avoid floating-point rounding issues when computing currency amounts.
+What does `sum(iterable, start=Decimal(0))` achieve in the Order total (Python)?	It ensures the sum starts as a `Decimal` so the result stays a `Decimal` even if the iterable is empty.
+Why prefer a concrete return type for `best_promo` (Python typing)?	It always returns a concrete discount amount (e.g., `Decimal`), which is easier for callers than unions/optionals.
+What is the “family of algorithms” in the Strategy discount example?	The different promotion/discount computations (fidelity, bulk item, large order, etc.).
+What is the “client” in Strategy pattern terms (discount example)?	The code that creates/configures an `Order` and chooses which promotion strategy (or meta-strategy) to apply.
+How do first-class functions reduce boilerplate in Strategy (Python)?	They replace single-method strategy classes/instances with plain functions passed around as values.
+How do first-class functions reduce boilerplate in Command (Python)?	They allow actions to be represented as callbacks (callables) without creating a Command class hierarchy.
+What does it mean that modules are first-class objects (Python)?	Modules are runtime objects whose attributes can be inspected and passed around (enabling module introspection patterns).
+What does it mean that functions are first-class objects (Python, pattern impact)?	You can store, pass, and return functions, enabling patterns like Strategy/Command without extra class scaffolding.
