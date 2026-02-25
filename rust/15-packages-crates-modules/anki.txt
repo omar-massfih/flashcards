@@ -1,0 +1,22 @@
+What is a crate in Rust?	The smallest compilation unit Rust considers; a crate is a tree of modules compiled together.
+What is a binary crate (Rust)?	A crate that compiles to an executable and must define `fn main()`.
+What is a library crate (Rust)?	A crate that provides reusable functionality; it has no `main` and doesn’t compile to an executable by itself.
+When Rustaceans say “crate”, what do they often mean?	Often a library crate (used like “library”).
+What is the crate root (Rust)?	The source file Rust starts from; it defines the root module of the crate.
+What is a package in Rust/Cargo?	A bundle of one or more crates described by a `Cargo.toml`.
+How many library crates can a single package contain (Cargo rule)?	At most one.
+How many binary crates can a package contain (Cargo rule)?	Any number.
+What is the minimum number of crates in a package?	At least one crate (binary and/or library).
+In a Cargo package, what file defines a library crate by convention?	`src/lib.rs`.
+In a Cargo package, what file defines the default binary crate by convention?	`src/main.rs`.
+In `cargo new my-project` (default), what crate do you get?	A binary crate with crate root `src/main.rs`.
+Why doesn’t `Cargo.toml` explicitly list `src/main.rs` in the default layout?	Cargo uses conventions to infer crate roots (`src/main.rs`, `src/lib.rs`).
+If a package has both `src/main.rs` and `src/lib.rs`, what does it contain?	Two crates: a binary and a library (both associated with the package name).
+How do you add multiple binary crates to one package (Cargo convention)?	Add files under `src/bin/`; each file is a separate binary crate.
+What does `src/bin/<name>.rs` represent (Cargo)?	A separate binary crate (an additional executable target).
+What is Cargo (in this chapter’s framing)?	A package: it includes the Cargo CLI binary crate and a library crate used by that binary.
+Can other projects depend on the Cargo package’s library crate (conceptually)?	Yes; other projects can depend on the library crate to reuse Cargo logic.
+Why split a growing project into modules/files (Rust)?	Organization: group related functionality, clarify where to change behavior, manage scope/privacy.
+What does “scope” mean (Rust module system context)?	The nested context that determines which names are in scope at a given point.
+Why can’t you have two items with the same name in the same scope (Rust)?	It would be ambiguous; you must use modules/paths/renaming to resolve conflicts.
+High level: what does the module system help you control (Rust)?	Organization, scope (what names mean where), and privacy (public API vs private details).
