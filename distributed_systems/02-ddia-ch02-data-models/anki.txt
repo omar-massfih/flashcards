@@ -1,0 +1,27 @@
+What is the key question at each layer of a data model stack?	How is this data represented in terms of the next-lower layer?
+What is the relational model?	Data organized into relations (tables) — unordered collections of tuples (rows); proposed by Edgar Codd in 1970
+What is the object-relational impedance mismatch?	The disconnect between object-oriented application code and the relational table/row/column model — requires a translation layer
+What is an ORM framework?	A library (e.g. ActiveRecord, Hibernate) that reduces translation boilerplate between objects and relational tables — but can't fully hide the differences
+What are the three main ways to represent one-to-many relationships in relational databases?	Separate tables with foreign keys; structured/XML/JSON datatype columns; or encoding as text in a single column (not queryable)
+Why use IDs rather than plain-text strings for values like region or industry?	IDs never change even if the human-meaningful value changes; duplicating text risks inconsistencies when updates are needed
+What is normalization in databases?	Removing duplication by storing each fact in exactly one place and referencing it by ID
+What was IBM's IMS, and how does it compare to document databases?	A 1960s hierarchical database storing data as nested records (like JSON) — worked for one-to-many but poorly handled many-to-many and had no joins
+What was the network model (CODASYL)?	A generalization of the hierarchical model where records could have multiple parents, linked by pointer-like chains called access paths
+What was the key problem with CODASYL access paths?	Programmers had to manually track all paths to reach data; changing access paths required rewriting all query code — very inflexible
+How did the relational model improve on the hierarchical and network models?	Laid all data in open tables (no nested structures); the query optimizer automatically selects access paths; adding new indexes/queries doesn't require rewriting code
+What is a query optimizer?	A component of a relational database that automatically decides which indexes and join methods to use and in which order — built once, benefits all queries
+When is the document model a good fit?	When data has a document-like structure (tree of one-to-many relationships) that is typically loaded all at once
+When does the document model become less appealing?	When the application requires many-to-many relationships — joins are weakly supported, and denormalization creates consistency work
+What is schema-on-read?	The data structure is implicit and only interpreted at read time (document databases) — analogous to dynamic/runtime type checking
+What is schema-on-write?	The schema is explicit and enforced by the database at write time (relational databases) — analogous to static/compile-time type checking
+When is schema-on-read advantageous over schema-on-write?	When items in a collection are heterogeneous (different structures), or when structure is determined by external systems you don't control
+What is the data locality advantage of document databases?	A document is stored as a single continuous string — fetching the whole document requires one query and no multi-table joins
+What are the downsides of document locality?	The entire document is loaded even when only part is needed; updates typically rewrite the whole document
+What is a declarative query language?	A language (like SQL) where you specify what data you want, not how to retrieve it — the system's optimizer decides execution
+What is an imperative query language?	A language where you specify step-by-step how to retrieve data — like IMS/CODASYL APIs
+Why are declarative languages generally better for databases?	More concise; hide engine implementation details allowing optimization; easier to parallelize; DB can improve performance without changing queries
+What is MapReduce?	A programming model for processing large amounts of data across many machines using map (emit key-value pairs) and reduce (aggregate) pure functions
+What restrictions apply to MapReduce map and reduce functions?	Must be pure functions: only use passed input, no additional DB queries, no side effects — enables re-running anywhere in any order
+What is MongoDB's aggregation pipeline?	A declarative, JSON-based query language added in MongoDB 2.2 as a more convenient alternative to hand-writing MapReduce
+What kinds of data are best modeled as a graph?	Highly interconnected data with complex many-to-many relationships — social networks, web links, road networks
+What are the two types of objects in a graph data model?	Vertices (also called nodes or entities) and edges (also called relationships or arcs)
