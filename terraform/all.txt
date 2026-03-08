@@ -241,7 +241,6 @@ Common use: why use `var.obj[*]` for an optional object input (Terraform)?	To dr
 What is the legacy “attribute-only” splat syntax (Terraform)?	Use `.*.` (e.g., `var.list.*.attr`) instead of modern `[*]`.
 Why is legacy `.*` splat discouraged (Terraform)?	Its behavior is less consistent and can be surprising; prefer modern `[*]`.
 Why do you need `dynamic` blocks (Terraform)?	Some resource arguments are repeatable nested blocks that can’t be generated with expressions in `name = expr` form; `dynamic` generates nested blocks from data.
-What does a `dynamic` block produce (Terraform)?	Repeatable nested blocks (not a collection value), one nested block per element of the `for_each` collection.
 Where can you use `dynamic` blocks (Terraform)?	Inside `resource`, `data`, `provider`, and `provisioner` blocks.
 What does the label of a `dynamic` block mean (Terraform)?	The nested block type name to generate (e.g., `dynamic "setting"` generates `setting { ... }` blocks).
 In a `dynamic` block, what does `for_each` do (Terraform)?	Supplies the collection/structural value to iterate over; one nested block is generated per element.
@@ -251,42 +250,25 @@ What are `iterator.key` and `iterator.value` in a `dynamic` block (Terraform)?	`
 In a `dynamic` block iterating a set, what’s special about `.key` (Terraform)?	It’s identical to `.value`, so it’s not useful and should generally not be used.
 In a `dynamic` block, what does `labels` do (Terraform)?	Optional list of strings to set the generated block labels (in order); can use the iterator variable to compute labels.
 Can `dynamic` blocks generate meta-argument blocks like `lifecycle` (Terraform)?	No; they can only generate blocks belonging to the configured type (resource/data/provider/provisioner), not meta-argument blocks.
-Why can’t `dynamic` generate `lifecycle`/`provisioner` meta-argument blocks (Terraform)?	Terraform must process meta-arguments before it is safe to evaluate expressions that would generate them.
-Can you nest `dynamic` blocks (Terraform)?	Yes; you can generate multi-level nested block structures by putting `dynamic` blocks inside the `content` of outer ones.
 Nested dynamic blocks: what iterator pitfall should you watch for (Terraform)?	Inner and outer iterators differ (e.g., `origin_group.value` vs `origin.value`); choose iterator names carefully to avoid confusion.
-When should you set `iterator` explicitly in nested `dynamic` blocks (Terraform)?	When nested block type names collide or readability suffers; pick distinct iterator symbols.
 Best practice: when should you avoid `dynamic` blocks (Terraform)?	When you can write nested blocks literally; overuse hurts readability and maintainability.
 What’s a sign your module abstraction may be weak (Terraform `dynamic` blocks)?	If most resource arguments/blocks are just passed through from an input variable, the caller may be better off defining the resource directly.
-How can `dynamic` `for_each` use `for`/splat expressions (Terraform)?	Because `for_each` accepts any collection/structural value, you can transform data first with `for` expressions or splats and then iterate it.
 What is the purpose of `terraform test`?	To validate that module configuration changes do not introduce breaking changes.
-What kind of resources do Terraform tests run against by default?	Test-specific, short-lived real infrastructure.
-Why are Terraform tests analogous to integration tests by default?	Because they create real infrastructure and validate behavior against it.
 How do you make a Terraform test run behave more like a unit test?	Set `command = plan` in the `run` block so it validates logic without creating infrastructure.
-What Terraform versions support the testing framework?	Terraform v1.6.0 and later.
-What Terraform version introduced provider mocking in tests?	Terraform v1.7.0.
 How does Terraform discover test files?	By the `.tftest.hcl` or `.tftest.json` file extension.
 What root-level block executes one test step in a Terraform test file?	A `run` block.
 What does a root-level `test` block configure in a Terraform test file?	How the framework executes runs for that test file.
-What does `parallel = true` in a Terraform `test` block do?	It allows eligible `run` blocks in that test file to execute simultaneously.
-What is the default command for a Terraform `run` block?	`apply`
-What does `command = plan` do in a Terraform `run` block?	It plans the configuration without creating new infrastructure for that run.
 What is the purpose of an `assert` block in a Terraform test `run` block?	To verify a condition and fail the run with an error message if it is false.
 What values can Terraform test assertions reference?	Named values from the main configuration plus outputs from current or previous run blocks.
 How do root-level `variables` and run-level `variables` differ in Terraform tests?	Root-level variables apply to all runs; run-level variables override them for that specific run.
 What precedence do variables defined in Terraform test files have?	They have the highest precedence over environment variables, variable files, and command-line input.
 What is the purpose of a root-level `provider` block in a Terraform test file?	To configure providers for the test runs instead of relying only on the main configuration defaults.
-What does the `providers` attribute in a Terraform test `run` block do?	It chooses which configured provider instances that run should use.
 What does the `module` block in a Terraform test `run` block do?	It tells that run to execute an alternate module instead of the main configuration under test.
-What sources are supported in a Terraform test `module` block?	Local modules and registry modules only.
 What is a common use of an alternate module in Terraform tests?	A setup module that creates prerequisite infrastructure for the configuration under test.
-What does `state_key` control in a Terraform test `run` block?	Which internal state file Terraform uses for that run.
-Why would you set `state_key` explicitly in Terraform tests?	To share or separate state between run blocks more precisely than the default behavior.
 How does Terraform destroy resources created during a test file?	It attempts to destroy them in reverse run-block order.
 What is `expect_failures` used for in Terraform tests?	To mark specific custom-condition failures as the expected success case for a run.
 When is `expect_failures` usually safest to use in Terraform tests?	With `command = plan`, because apply runs can fail earlier during planning.
 What kinds of failures can `expect_failures` cover in Terraform tests?	Only user-defined custom condition failures, not arbitrary type or runtime errors.
-When can two Terraform test run blocks execute in parallel?	When both have `parallel = true`, do not depend on each other’s outputs, and do not share the same state file.
-What effect does a `parallel = false` run have inside an otherwise parallel Terraform test file?	It creates a synchronization point: earlier runs must finish before it starts, and later runs wait for it to finish.
 What is the main purpose of validation in Terraform configuration?	To verify the configuration behaves as intended and surface clearer errors earlier.
 What Terraform version is required for input variable validation?	Terraform v0.13.0 or later.
 What Terraform version is required for preconditions and postconditions?	Terraform v1.2.0 or later.
