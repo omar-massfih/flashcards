@@ -1,0 +1,79 @@
+What is an operating system (high level)?	System software that manages hardware resources and provides services/interfaces to programs and users.
+What is the tradeoff an OS often manages?	Performance and functionality; plus the division of labor between hardware and software.
+Why is device management hard for an OS?	Devices differ widely in speed, access mode, and control interface.
+What is a device driver?	Device-specific software that talks to a device controller and translates OS requests into device-specific commands.
+Why are device drivers important to OS design?	They isolate device-specific control logic from the rest of the operating system.
+What is a shell?	A command interpreter that lets a user interact with the system, but is not usually considered part of the OS kernel itself.
+What is a system call?	A controlled entry from user-space code into the kernel to request an OS service.
+What is the system call interface?	The set of system calls through which programs access OS services.
+What is user space?	The execution domain for ordinary applications, with restricted privileges and no direct hardware control.
+What is kernel space?	The privileged execution domain where the OS can access hardware, memory, and privileged instructions directly.
+Why do OSes distinguish user mode and kernel mode?	For protection and security: applications should not directly control hardware or unrestricted memory.
+What restrictions typically apply in user mode?	No direct hardware/device-driver access; limited instructions; access only to assigned memory via the OS interface.
+What capabilities does kernel mode provide?	Access to all memory, privileged instructions, and direct hardware control.
+What is an interrupt?	An asynchronous signal that forces control transfer to an interrupt handler.
+What kinds of events commonly trigger interrupts?	Completed I/O operations; incoming network packets; timers; other asynchronous hardware events.
+What is an exception?	A synchronous control transfer caused by a condition detected while executing an instruction.
+What is a trap (OS/architecture)?	An exception caused by a condition the handler is expected to handle, such as a breakpoint or system call.
+What is a fault (OS/architecture)?	An exception caused by a problem the handler may be able to correct, after which execution may continue.
+What is an abort (OS/architecture)?	An exception caused by an unrecoverable error that terminates the affected process.
+Interrupt vs exception: what is the main difference?	Interrupts are typically asynchronous external events; exceptions are synchronous events caused during instruction execution.
+What is an interrupt descriptor table (IDT)?	A table that maps interrupts and exceptions to their handler routines.
+What does interrupt handling do at a high level?	Save current state; transfer control to the right handler; run it; restore state; resume execution.
+Why must an OS bootstrap during boot?	Because the OS initially resides on secondary storage and must be loaded into volatile memory before it can run.
+What is BIOS in the boot process?	Firmware that performs basic hardware initialization and starts the bootstrap process.
+What is the bootstrap process?	The sequence that loads and starts the operating system kernel.
+What is a monolithic kernel?	A kernel organization where most OS services run together inside one large kernel.
+What is a microkernel?	A kernel with minimal core functionality, while many other OS services run as user-space server processes.
+What is a key advantage of a monolithic kernel?	High efficiency because services do not need to cross many protection/message-passing boundaries.
+What is a key disadvantage of a monolithic kernel?	It is large and complex, so faults can more easily crash large parts of the system.
+What is a key advantage of a microkernel?	Smaller, more modular, more extensible components with stronger isolation between services.
+What is a key disadvantage of a microkernel?	Extra message passing and boundary crossings can reduce performance.
+What is a process (Operating systems)?	The execution of a program.
+Program vs process: what is the difference (Operating systems)?	A program is passive code; a process is a running execution of that code with its own state and resources.
+What is a process control block (PCB)?	The OS data structure that stores the information needed to manage and resume a process.
+What kinds of information are typically stored in a PCB?	PID; process state; CPU context; address-space info; and allocated resources.
+What does `fork()` conceptually do (Operating systems)?	It creates a new child process by duplicating the calling process.
+What does `fork()` return to the parent vs the child?	The parent gets the child PID; the child gets `0`.
+What does `fork()` copy at a high level?	The process state needed for execution, including virtual address space and open file descriptors.
+What does `execve()` conceptually do (Operating systems)?	It replaces the current process image with a new program.
+What is `wait()` used for (Operating systems)?	To make a process wait until one of its child processes terminates and collect its status.
+Why is exit status useful between processes?	It lets a terminating process report success or failure to its parent.
+What does `exit(status)` do (Operating systems)?	It terminates the calling process and returns a status code.
+What does `kill(pid, sig)` do at a high level?	It sends a signal to a process, often to request termination or other signal handling.
+What are the basic process states in the lecture?	Ready; running; and blocked.
+What is a context switch?	Switching the CPU from one running process or thread to another by saving one context and restoring another.
+What state is saved/restored during a context switch?	Execution state such as registers, instruction pointer/program counter, stack-related state, and other CPU context.
+Why are context switches necessary?	They make multitasking possible by letting multiple tasks share the CPU over time.
+Why are context switches costly?	They add overhead because the system must save/restore execution state instead of doing useful application work.
+What can trigger a context switch?	Scheduler decisions, time-slice expiration, interrupts, and some user/kernel transitions.
+Process vs thread: what is the main distinction?	A process is a resource-owning execution context; threads are execution units that share many resources within a process.
+What resources do threads in the same process typically share?	Address space and other process-wide resources.
+What state does each thread keep separately?	Its own registers, stack, program counter, and execution state.
+Why are thread switches often cheaper than process switches?	Threads share an address space, so switching between them usually changes less system state.
+What does a scheduler do?	It decides which ready task gets access to a resource, usually the CPU, and in what order.
+What does a dispatcher do?	It performs the actual handoff that starts the selected task running on the CPU.
+CPU-bound vs I/O-bound: what is the difference?	CPU-bound tasks spend most of their time computing; I/O-bound tasks frequently wait for I/O.
+Why can mixing CPU-bound and I/O-bound tasks improve utilization?	I/O waits from one task can overlap with CPU work from another task.
+What is FIFO/FCFS scheduling?	A scheduling policy that runs tasks in arrival order.
+What is a main drawback of FIFO scheduling?	Long waiting times, especially when a long job arrives before shorter ones.
+What is Shortest Job First (SJF)?	A policy that runs the task with the shortest processing requirement first.
+What is a key advantage of SJF?	It can improve average waiting and finishing time compared with FIFO.
+What is a key drawback of SJF?	It requires estimating job length and can starve long jobs if shorter jobs keep arriving.
+What is Round Robin (RR) scheduling?	A preemptive policy that gives each ready task a fixed time slice in turn.
+Why is Round Robin good for interactive workloads?	It gives each task frequent CPU access, improving responsiveness.
+What is a time slice or quantum?	The maximum CPU time a task may run before being preempted in policies like Round Robin.
+What is the main time-slice tradeoff in Round Robin?	Short slices improve responsiveness and help I/O-bound tasks, but increase context-switch overhead.
+Why do CPU-bound tasks often prefer longer time slices?	Longer slices reduce switching overhead and let them do more useful work per run.
+Why do I/O-bound tasks often benefit from shorter time slices?	They tend to need short bursts of CPU and benefit from quicker rescheduling.
+What are common scheduling goals in operating systems?	Fairness; utilization; throughput; response time; turnaround time; predictability; and meeting deadlines.
+Static vs dynamic scheduling: what is the difference?	Static scheduling is decided ahead of run time; dynamic scheduling makes decisions during execution.
+Preemptive vs non-preemptive scheduling: what is the difference?	Preemptive scheduling can interrupt a running task; non-preemptive scheduling lets it keep running until it blocks, yields, or finishes its slot.
+Why is preemptive scheduling useful?	It lets urgent or time-sensitive tasks run quickly instead of waiting for the current task to finish voluntarily.
+What is priority scheduling?	A policy that runs the highest-priority ready task first.
+What is a key risk of priority scheduling?	Starvation of low-priority tasks.
+What is Rate Monotonic (RM) scheduling?	A fixed-priority real-time algorithm where shorter-period tasks get higher priority.
+Why is RM considered a static-priority algorithm?	Task priorities are derived from periods and do not change at run time.
+What is Earliest Deadline First (EDF) scheduling?	A dynamic-priority real-time algorithm that runs the task with the nearest deadline first.
+Why is EDF considered a dynamic-priority algorithm?	Task priorities change over time as deadlines approach.
+Why can EDF schedule some task sets better than fixed-priority schemes?	Because it always prioritizes the most urgent deadline instead of obeying a fixed priority order.
