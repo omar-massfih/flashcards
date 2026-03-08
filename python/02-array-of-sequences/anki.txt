@@ -1,5 +1,3 @@
-Why does Python treat many types uniformly as sequences (historical)?	It inherited ideas from ABC: generic operations across different sequence types.
-What common operations do many Python sequences share?	Iteration; slicing; sorting; concatenation (across types like `str`, `list`, `bytes`, arrays, etc.).
 What is a container sequence (Python)?	A sequence that holds references to contained objects (can be heterogeneous and nested).
 What is a flat sequence (Python)?	A sequence that stores simple values in its own memory (typically one primitive machine type).
 Why are flat sequences usually more memory-efficient than container sequences?	They store elements as packed values in contiguous memory, which avoids creating many separate Python objects with their own headers and references.
@@ -7,18 +5,14 @@ Give examples of mutable sequences (Python).	`list`; `bytearray`; `array.array`;
 Give examples of immutable sequences (Python).	`tuple`; `str`; `bytes`.
 What is a list comprehension (Python)?	An expression that builds a new list by transforming and/or filtering an iterable.
 Why can a list comprehension be clearer than a for-loop when building a list?	Its intent is explicit: it always builds a new list (a for-loop can do many tasks).
-When should you avoid using a list comprehension (Python)?	When you only want side effects and don’t use the resulting list—use a plain `for` loop instead.
 Python syntax tip: why can list/dict/tuple literals and comps be multiline without backslashes?	Line breaks are ignored inside `[]`, `{}`, or `()`.
 Listcomps vs `map`/`filter`: why often prefer list comprehensions (Python)?	They’re usually more readable and avoid awkward `lambda` usage while doing the same job.
 Do list comprehension loop variables leak in Python 3?	No; comprehension variables have their own local scope (they don’t clobber outer names).
 How do you build a Cartesian product with a list comprehension?	Use multiple `for` clauses, e.g. `[(c, s) for c in colors for s in sizes]`.
 What is a generator expression (Python)?	A comprehension-like expression that yields items lazily via the iterator protocol (no intermediate list).
 Why use a generator expression instead of a list comprehension to feed another constructor/loop?	It saves memory by producing items one at a time.
-When can you omit parentheses around a generator expression in a function call?	When it’s the only positional argument (e.g., `tuple(x for x in it)`).
-When are parentheses around a generator expression required?	When the call has other arguments too (e.g., `array('I', (x for x in it))`).
 Tuples: what two roles do they play (Python)?	Records with positional fields, and immutable lists.
 Why are tuples useful as records (Python)?	Field order/length is fixed; unpacking avoids error-prone indexing.
-Tuple-as-immutable-list: what clarity does using a tuple provide?	Seeing a tuple signals its length won’t change.
 Why can tuples be smaller/faster than lists (high level)?	Fixed-size allocation and less overhead enable optimizations compared to growable lists.
 Why can a tuple’s value still change even though tuples are “immutable”?	If it contains references to mutable objects, those objects can mutate.
 When is a tuple hashable, and how can you quickly check?	Only if all items are hashable; `hash(t)` raises `TypeError` if it contains mutable/unhashable items.
@@ -26,22 +20,16 @@ What is iterable unpacking (Python)?	Assigning items from an iterable into multi
 How do you swap two variables idiomatically (Python)?	`a, b = b, a`.
 How do you pass a tuple as separate positional arguments (Python)?	Use `*t` in the call, e.g. `divmod(*t)`.
 In unpacking assignment, what does `*rest` do?	It captures any remaining items into a list.
-How many starred targets like `*rest` are allowed in one unpacking assignment?	At most one.
-Where can the starred target appear in unpacking assignment?	At the start, middle, or end.
 What is nested unpacking (Python)?	Unpacking nested structures by matching the nesting shape on the left-hand side.
 How can unpacking assert an iterable has exactly one item (Python)?	Use a 1-item target like `[record] = iterable` (it raises if not exactly one).
 What is structural pattern matching used for (Python ≥ 3.10)?	Matching data shapes and destructuring (binding parts) with `match`/`case`.
 When does a sequence pattern match in `match`/`case` (Python)?	The subject is a sequence; pattern and subject lengths match; corresponding items (including nested) match.
-In `match`/`case` patterns, what does `_` mean (Python)?	A wildcard that matches anything and is never bound to a value.
 In a sequence pattern, what does `*rest` (or `*_`) do (Python)?	`*rest` matches remaining items and binds them as a list; `*_` matches and ignores them.
-Are `str`, `bytes`, and `bytearray` treated as sequences in match/case patterns?	No; they’re treated as atomic values to avoid unintended matches.
 What is a guard in `match`/`case` (Python)?	An `if` condition that is evaluated only after the pattern matches.
 Why do Python slices/ranges exclude the stop index?	It makes lengths easy (`stop-start`) and allows clean splits like `s[:x]` and `s[x:]` without overlap.
 What does the slice step/stride do (Python)?	`seq[a:b:c]` skips by `c`; negative steps iterate in reverse.
 What does `seq[start:stop:step]` call under the hood (Python)?	`seq.__getitem__(slice(start, stop, step))`.
 How can naming `slice()` objects improve readability (Python)?	It lets you label fixed-width fields/ranges instead of scattering hardcoded indices.
-Slice assignment (Python): what must the RHS be, and what extra rule applies with a step?	RHS must be an iterable (even for one item); for stepped slices, RHS length must match the number of selected positions.
-Do `+` and `*` mutate their sequence operands (Python)?	No; they create a new sequence and don’t change the originals.
 Why is `[[...]] * n` (or `[['_']*m] * n`) a common bug pattern (Python)?	It repeats references to the same inner list, so one mutation affects multiple “rows”.
 What’s the safe way to build a list of independent inner lists (Python)?	Use a list comprehension, e.g. `[['_']*m for _ in range(n)]`.
 What determines whether `a += b` mutates in place (Python)?	If `__iadd__` exists it’s used (often in-place for mutables); otherwise Python falls back to `a = a + b` (new object).
