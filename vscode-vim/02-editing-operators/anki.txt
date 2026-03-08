@@ -1,0 +1,21 @@
+How do counts work with motions and operators (VS Code Vim)?	Prefix the command with a number to repeat it or extend its range, like `3w` or `2dd`.
+What are operators in VS Code Vim?	Commands that act on text selected by a following motion or text object, like `dw`, `ciw`, or `yap`.
+What does the delete operator `d` do (VS Code Vim)?	Deletes the text covered by the following motion or text object.
+What does the yank operator `y` do (VS Code Vim)?	Copies the text covered by the following motion or text object.
+What does the change operator `c` do (VS Code Vim)?	Deletes the target text and then enters Insert mode.
+Delete one character under the cursor (VS Code Vim, Normal mode)	`x`
+Delete the entire current line (VS Code Vim, Normal mode)	`dd`
+Delete to the end of the line (VS Code Vim, Normal mode)	`D`
+Change the entire current line (VS Code Vim, Normal mode)	`cc`
+Change to the end of the line (VS Code Vim, Normal mode)	`C`
+Change the current inner word (VS Code Vim, Normal mode)	`ciw`
+Substitute the character under the cursor and enter Insert mode (VS Code Vim, Normal mode)	`s`
+Yank the current line (VS Code Vim, Normal mode)	`yy`
+Paste after the cursor (VS Code Vim, Normal mode)	`p`
+Paste before the cursor (VS Code Vim, Normal mode)	`P`
+Undo the last change (VS Code Vim, Normal mode)	`u`
+Redo the last undone change (VS Code Vim, Normal mode)	`Ctrl-r`
+Repeat the last change (VS Code Vim, Normal mode)	`.`
+Join the line below onto the current line (VS Code Vim, Normal mode)	`J`
+Indent the current line to the right (VS Code Vim, Normal mode)	`>>`
+Indent the current line to the left (VS Code Vim, Normal mode)	`<<`
