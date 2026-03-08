@@ -444,3 +444,13 @@ Why split a growing project into modules/files (Rust)?	Organization: group relat
 What does “scope” mean (Rust module system context)?	The nested context that determines which names are in scope at a given point.
 Why can’t you have two items with the same name in the same scope (Rust)?	It would be ambiguous; you must use modules/paths/renaming to resolve conflicts.
 High level: what does the module system help you control (Rust)?	Organization, scope (what names mean where), and privacy (public API vs private details).
+Where does Rust look for a module declared with `mod garden;`?	Inline in the current file, in `src/garden.rs`, or in `src/garden/mod.rs`.
+Where does Rust look for a submodule declared with `mod vegetables;` inside `garden`?	Inline in the parent module, in `src/garden/vegetables.rs`, or in `src/garden/vegetables/mod.rs`.
+How do you refer to an item inside a module (Rust)?	Use its path, such as `crate::garden::vegetables::Asparagus`.
+What does `crate::` mean at the start of a path (Rust)?	It starts the path from the current crate’s root module.
+What is the default privacy rule for items in a module (Rust)?	Items are private to their parent modules unless marked `pub`.
+What does `pub mod name` change (Rust)?	It makes the module itself visible to parent and external code that can access the containing module.
+Why might you need `pub` on items inside a `pub mod` (Rust)?	A public module does not make its contents public automatically; each item is still private unless marked `pub`.
+What does `use` do within a scope (Rust module system)?	It creates a local shortcut to a path so you can refer to the item with a shorter name.
+What is a module tree (Rust)?	The hierarchical structure of modules and items rooted at the implicit `crate` module.
+In a Rust module tree, what do parent, child, and sibling mean?	A parent contains another module; a child is contained inside its parent; siblings share the same parent.
