@@ -1,11 +1,7 @@
 What components can Terraform version constraints apply to?	Modules, provider requirements, and Terraform itself via `required_version`.
-What is the basic syntax of a Terraform version constraint?	A string containing one or more version conditions, such as `\">= 1.2.0, < 2.0.0\"`.
-How are multiple Terraform version-constraint conditions combined?	With commas, and all conditions must be satisfied.
 What does `!=` mean in a Terraform version constraint?	Exclude one exact version.
 What does the Terraform pessimistic constraint operator `~>` do?	It allows only the right-most specified version component to increment.
-How do you force Terraform to select a pre-release version like `1.2.0-beta`?	Specify the exact pre-release version with `=` or by omitting the operator and giving that exact version.
 Do `>`, `>=`, `<`, `<=`, or `~>` match pre-release versions in Terraform?	No; pre-release versions are not matched by those operators.
 What is the recommended module-version practice for third-party Terraform modules?	Require specific versions so updates happen only when you choose.
-When are version ranges appropriate for Terraform modules?	When your organization uses semantic versioning consistently and follows a release process that avoids unwanted updates.
 How should reusable Terraform modules constrain Terraform core and provider versions?	Constrain only the minimum allowed versions, such as `>= 0.12.0`.
 How should root Terraform modules usually constrain provider versions?	Use `~>` to set both lower and upper bounds for each provider they depend on.

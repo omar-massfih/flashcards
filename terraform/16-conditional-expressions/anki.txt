@@ -1,7 +1,5 @@
-Terraform: what is a conditional expression used for?	Select one of two values based on a boolean condition.
 What is the syntax of a conditional expression (Terraform)?	`condition ? true_val : false_val`.
 Why add custom conditions in Terraform configs (high level)?	To capture assumptions and produce earlier, clearer error messages (e.g., in variable validation or pre/postconditions).
-Conditional expressions: what constraint applies to the two result values (Terraform)?	They must have the same type, so Terraform can determine the expression’s result type.
 Terraform recommendation: what should you do if the expected result type may be unclear?	Use explicit type conversion functions (e.g., `tostring(...)`) rather than relying on implicit conversion.
 Validation helper: how do you check membership in an allowed set (Terraform)?	`contains(["STAGE", "PROD"], var.environment)`.
 Collection-wide validation pattern: how do you check a condition holds for all elements (Terraform)?	Use a for-expression + `alltrue([...])`, e.g. `alltrue([for v in var.instances : <bool expr>])`.

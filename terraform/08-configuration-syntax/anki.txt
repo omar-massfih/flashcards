@@ -1,10 +1,5 @@
 Terraform language: what is HCL?	A configuration language Terraform’s native syntax is based on (also used by other HashiCorp tools).
-Terraform config syntax: what are the two core constructs?	Arguments and blocks.
-What is an argument in Terraform configuration syntax?	A name/value assignment like `image_id = "abc123"` where the value is an expression.
 What is a block in Terraform configuration syntax?	A container with a block type, optional labels, and a `{ ... }` body containing arguments and nested blocks.
 What are “block labels” (Terraform/HCL)?	Quoted strings after the block type keyword that identify a particular instance (label count depends on block type).
 For a `resource` block, what are the two labels (high level)?	The resource type (provider-specific) and the resource’s local name (arbitrary within the module).
 What is the purpose of the second label in `resource "TYPE" "NAME" { ... }`?	It uniquely names that instance so you can reference it (e.g., `TYPE.NAME`).
-What is an identifier in Terraform configuration?	A name token used for argument names, block types, and Terraform constructs (resources, variables, etc.).
-What characters can Terraform identifiers contain?	Letters; digits; underscores (`_`); hyphens (`-`).
-What identifier rule avoids ambiguity with numbers?	The first character of an identifier must not be a digit.

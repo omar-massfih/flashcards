@@ -1,4 +1,3 @@
-Why use input variables in Terraform?	To avoid hard-coded values and make configurations more flexible and reusable.
 What is an input variable (Terraform)?	A named value you can set from outside the config (or via defaults) and reference as `var.<name>`.
 Where do you commonly declare input variables (Terraform)?	In `.tf` files such as `variables.tf` using `variable "<name>" { ... }`.
 What does `default = "..."` do in a Terraform variable?	Makes the variable optional by providing a value when no input is given.
@@ -8,7 +7,6 @@ How do you override a variable value for a single run (Terraform)?	Pass it on th
 If CLI `-var` values aren’t saved, how do you avoid retyping them?	Use other mechanisms like `.tfvars` files or environment variables.
 What is a `.tfvars` file used for (Terraform)?	To provide variable values from a file so you don’t have to pass them on the CLI each time.
 What environment-variable naming pattern can set Terraform variables?	`TF_VAR_<variable_name>` (e.g., `TF_VAR_resource_group_name`).
-In plan output, what does `-/+` mean?	Destroy and then create replacement (resource will be replaced).
 What does “must be replaced” mean in Terraform plan output?	The resource cannot be updated in-place for the change, so Terraform will replace it.
 What does “forces replacement” indicate in plan output?	That changing the attribute requires destroying and recreating the resource.
 Why can a dependent resource be replaced when its dependency is replaced?	Because it references attributes that change (e.g., `resource_group_name`), forcing it to be recreated too.

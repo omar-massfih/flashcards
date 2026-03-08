@@ -1,9 +1,4 @@
 What does `terraform destroy` do?	Terminates (destroys) the resources managed by the current Terraform project/state.
-Why destroy infrastructure when you no longer need it?	To reduce security exposure and costs (e.g., remove short-lived test/build environments).
-Does `terraform destroy` delete resources not managed by the current project?	No; it targets only the infrastructure tracked/managed by the current Terraform state.
 What does `terraform destroy` use to decide what to terminate?	The current state (local `terraform.tfstate` or remote backend state, depending on setup).
-In destroy plan output, what does `- destroy` indicate?	That the resource instance will be destroyed.
-In destroy plan output, what does `-> null` mean?	The attribute value will be removed because the resource is being destroyed.
-What warning does Terraform give before destroying managed infrastructure?	There is no undo; only `yes` is accepted to confirm.
 Does Terraform destroy resources in arbitrary order?	No; it destroys in an order that respects dependencies.
 Why does destroy order matter (Terraform)?	Dependent resources must be destroyed before the resources they depend on (e.g., destroy VNet before resource group).

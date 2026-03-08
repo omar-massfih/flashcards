@@ -3,15 +3,11 @@ How do you add a new resource in Terraform (conceptually)?	Add a new `resource "
 How do you reference another resource’s attribute in Terraform config?	Use `<TYPE>.<NAME>.<ATTRIBUTE>` (e.g., `azurerm_resource_group.rg.name`).
 What does referencing `azurerm_resource_group.rg.name` accomplish in another resource?	Uses the existing resource’s value and creates an implicit dependency between the resources.
 Why does Terraform create a dependency graph?	To ensure resources are created/updated in a valid order based on references.
-In Terraform plan output, what does `+ create` indicate?	A new resource will be created.
-In Terraform plan output, what does `~ update in-place` indicate?	An existing resource will be modified without replacing it.
 What does it mean to “update in-place” (Terraform)?	The resource is modified while keeping the same identity/address; it is not destroyed and recreated.
 In plan output, what does “(known after apply)” mean?	The value is computed by the provider during apply and isn’t known at plan time.
 What does “Refreshing state...” mean during `terraform apply`?	Terraform is reading current real-world resource data to synchronize state before planning/applying changes.
 Why can adding a reference create an implicit dependency without `depends_on`?	Because Terraform can infer ordering from the expression graph (data flow) in configuration.
 What does the `tags` block do on a Terraform resource (Azure example)?	Assigns metadata key/value tags to the resource.
 In HCL, what is the type/shape of `tags = { ... }`?	A map/object of keys to values (e.g., `Environment = "..."`).
-Why are tags useful in cloud infrastructure?	They help with organization, ownership, environment labeling, and cost/accounting policies.
 How does Terraform show tag additions in a plan?	As an in-place update (`~`) with new keys/values added under `tags`.
-What does `terraform show` help you verify after an apply?	It displays the current state values Terraform knows for managed resources (including updated tags).
 Why might Terraform show `id = (known after apply)` during planning?	IDs are assigned by the provider/cloud when the resource is created.

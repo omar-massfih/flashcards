@@ -1,8 +1,5 @@
-What is the purpose of `terraform test`?	To validate that module configuration changes do not introduce breaking changes.
 How do you make a Terraform test run behave more like a unit test?	Set `command = plan` in the `run` block so it validates logic without creating infrastructure.
-How does Terraform discover test files?	By the `.tftest.hcl` or `.tftest.json` file extension.
 What root-level block executes one test step in a Terraform test file?	A `run` block.
-What does a root-level `test` block configure in a Terraform test file?	How the framework executes runs for that test file.
 What is the purpose of an `assert` block in a Terraform test `run` block?	To verify a condition and fail the run with an error message if it is false.
 What values can Terraform test assertions reference?	Named values from the main configuration plus outputs from current or previous run blocks.
 How do root-level `variables` and run-level `variables` differ in Terraform tests?	Root-level variables apply to all runs; run-level variables override them for that specific run.

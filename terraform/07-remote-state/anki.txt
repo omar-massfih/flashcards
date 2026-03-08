@@ -1,9 +1,7 @@
-Why store Terraform state remotely (production)?	To keep state secure/encrypted and enable team collaboration via shared state access.
 What is HCP Terraform (high level)?	A hosted Terraform platform for collaboration (versioning/auditing runs), remote execution, and remote state storage.
 Why run Terraform in a remote environment (HCP Terraform)?	It provides shared access to state and a stable environment for long-running Terraform operations.
 How do you configure HCP Terraform in Terraform CLI workflow (HCL block)?	Use a `terraform { cloud { organization = "..."; workspaces { name = "..." } } }` block.
 What is an HCP Terraform workspace (conceptually)?	A named context that holds state and run history for a configuration.
-What does `terraform login` do (HCP Terraform)?	Authenticates the CLI to HCP Terraform by obtaining/storing an API token.
 Why should you protect `credentials.tfrc.json`?	It contains an API token; anyone with the file can access HCP Terraform as you.
 What is the default execution mode for HCP Terraform CLI-driven workflow?	Remote execution (Terraform operations run in HCP Terraform).
 What does “local execution” mean with HCP Terraform (CLI-driven)?	Terraform runs locally but stores state remotely in HCP Terraform.

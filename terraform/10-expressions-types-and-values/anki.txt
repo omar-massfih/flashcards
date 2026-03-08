@@ -2,19 +2,12 @@ Terraform language: what is an expression?	Syntax that produces a value in confi
 What is a reference expression (Terraform)?	An expression that reads a value exported elsewhere (e.g., `var.<name>` or `<TYPE>.<NAME>.<ATTRIBUTE>`).
 What command opens Terraform’s expression console?	`terraform console`
 What is `terraform console` used for (Terraform)?	To experiment with and evaluate expressions interactively.
-Terraform type: what is `string`?	Unicode text, like `"hello"`.
-Terraform type: what is `number`?	A numeric value (can represent whole numbers and fractional values).
-Terraform type: what is `bool`?	A boolean value: `true` or `false`.
 Terraform type: what is `list`/`tuple` (high level)?	An ordered sequence you index with whole numbers starting at 0 (e.g., `["a", 15, true]`).
 Terraform type: what is `set` (high level)?	An unordered collection of unique values (no stable index ordering).
 Terraform type: what is `map`/`object` (high level)?	Values identified by string keys/labels, like `{ name = "Mabel", age = 52 }`.
 Terraform types: what are “primitive” vs “complex/collection” types?	Primitive: `string`, `number`, `bool`; complex/collection: lists/tuples, maps/objects (and `set` as a collection type).
-What special value has no type in Terraform?	`null`.
 What does `null` mean in Terraform configuration?	Absence/omission: setting an argument to `null` behaves as if the argument were omitted.
 If you set an argument to `null`, what does Terraform do with defaults/required args?	It uses the argument’s default if it has one; otherwise it errors if the argument is required.
 Why is `null` especially useful in Terraform expressions?	To conditionally omit an argument when a condition isn’t met.
-Terraform literal: how do you write a list/tuple literal?	`[value1, value2, ...]` (commas required; multiline allowed; trailing comma allowed).
-Terraform literal: how do you write a map/object literal?	`{ key = value, ... }` (pairs can be separated by commas or line breaks).
 How do you access list/tuple elements vs map/object elements in Terraform expressions?	`seq[3]` uses a whole-number index; `map["key"]` uses a string key.
 When can you use dot-attribute notation on a map/object (Terraform)?	When the attribute name is a valid identifier (e.g., `local.object.attrname`).
-Terraform type conversion: when does Terraform automatically convert types?	When an argument expects a type and the given expression can be converted to it.

@@ -4,4 +4,3 @@ How do you compute exponents in Terraform (no operator)?	Use `pow(base, exponent
 Terraform best practice: when should you use `==`/`!=`?	Prefer primitive values, or use explicit type conversions to make types match.
 Why can equality on structural types be surprising in Terraform?	Different structural types can look similar but never compare equal (e.g., an empty tuple literal `[]` vs an empty list value).
 Terraform idiom: how to check whether a list is empty?	Use `length(var.list) == 0` instead of `var.list == []`.
-Does Terraform have an XOR operator?	No; for boolean values, XOR is equivalent to `a != b`.
