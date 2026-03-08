@@ -1,27 +1,10 @@
 Terraform language: what is HCL?	A configuration language Terraform’s native syntax is based on (also used by other HashiCorp tools).
 Terraform config syntax: what are the two core constructs?	Arguments and blocks.
 What is an argument in Terraform configuration syntax?	A name/value assignment like `image_id = "abc123"` where the value is an expression.
-In an argument, what is the part before `=`?	The argument name (an identifier).
-In an argument, what is the part after `=`?	An expression that produces the argument’s value.
-What determines what value types an argument can accept?	The context/schema where the argument appears (e.g., a resource type’s argument schema).
-Why does Terraform docs prefer the word “argument” over HCL’s “attribute”?	To avoid confusion with resource attributes like `id` that you can read but can’t assign in config.
 What is a block in Terraform configuration syntax?	A container with a block type, optional labels, and a `{ ... }` body containing arguments and nested blocks.
 What are “block labels” (Terraform/HCL)?	Quoted strings after the block type keyword that identify a particular instance (label count depends on block type).
-How is a block body delimited in Terraform configuration?	With `{` and `}`.
-Can blocks contain other blocks?	Yes; blocks can nest other blocks (and arguments) to form a hierarchy.
 For a `resource` block, what are the two labels (high level)?	The resource type (provider-specific) and the resource’s local name (arbitrary within the module).
 What is the purpose of the second label in `resource "TYPE" "NAME" { ... }`?	It uniquely names that instance so you can reference it (e.g., `TYPE.NAME`).
-What are “top-level blocks” in Terraform?	Block types that can appear outside any other block; most Terraform features are implemented as top-level blocks.
-Terraform syntax: can some nested blocks have zero labels?	Yes; some nested block types require no labels.
 What is an identifier in Terraform configuration?	A name token used for argument names, block types, and Terraform constructs (resources, variables, etc.).
 What characters can Terraform identifiers contain?	Letters; digits; underscores (`_`); hyphens (`-`).
 What identifier rule avoids ambiguity with numbers?	The first character of an identifier must not be a digit.
-What identifier character set does Terraform implement (high level)?	Unicode identifier syntax plus support for ASCII hyphen (`-`).
-What comment styles are supported in Terraform config?	`#` single-line; `//` single-line; `/* ... */` multi-line.
-Which comment style is idiomatic in Terraform?	`#` for single-line comments.
-What might `terraform fmt` do to `//` comments?	It may rewrite them to `#` because `//` is not idiomatic.
-What encoding must Terraform configuration files use?	UTF-8.
-Which line endings does Terraform accept in `.tf` files?	LF or CRLF, but LF is idiomatic and tools may normalize to LF.
-Does the resource label affect the real resource (Terraform)?	No; it’s only for Terraform state tracking and references (e.g., `TYPE.NAME`).
-Terraform resource `TYPE`: where does it come from?	From a provider’s resource types (or the built-in `terraform_data` type).
-What is `terraform_data` (Terraform)?	A built-in resource type that stores values and can trigger operations without creating real infrastructure.
