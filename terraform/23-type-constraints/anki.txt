@@ -1,0 +1,32 @@
+What are Terraform type constraints used for?	To validate user-provided values for input variables and resource arguments more precisely.
+Where are Terraform type constraints valid in Terraform language syntax?	In the `type` argument of an input variable.
+What are the primitive types in Terraform?	`string`, `number`, and `bool`.
+What is a collection type in Terraform?	A complex type that groups multiple values of the same element type.
+What are the collection types in Terraform?	`list(...)`, `map(...)`, and `set(...)`.
+What is a structural type in Terraform?	A complex type that groups values with a defined schema, where different elements can have different types.
+What are the structural types in Terraform?	`object(...)` and `tuple(...)`.
+What does `list(string)` mean in Terraform?	A list whose elements must all be strings.
+Why is `list` without an element type discouraged in new Terraform code?	It is shorthand for `list(any)`, which is kept mainly for older configurations.
+Why is `map` without an element type discouraged in new Terraform code?	It is shorthand for `map(any)`, which is kept mainly for older configurations.
+What must an `object({...})` value contain to match its schema in Terraform?	All specified keys, with values matching the declared types.
+What happens to extra attributes when Terraform converts a value to an `object(...)` type?	Extra attributes are discarded during conversion.
+What must a `tuple([...])` value match in Terraform?	Exactly the declared number of elements and the declared type at each position.
+Can Terraform convert between similar complex types automatically?	Yes, when the provided value can be converted to the requested similar type.
+Which complex types are considered similar in Terraform conversions?	`map` and `object`; `list` and `tuple`; `set` is almost similar to lists and tuples.
+What happens when Terraform converts a list or tuple to a set?	Duplicates are discarded and element ordering is lost.
+What happens when Terraform converts a set to a list or tuple?	The elements come back in arbitrary order; for strings, Terraform uses lexicographical order.
+When can a list be converted to a tuple in Terraform?	Only when it has exactly the required number of elements.
+Why can `map -> object -> map` conversion be lossy in Terraform?	Because attributes not declared in the object schema are discarded.
+What does Terraform do with element values inside complex-type conversions?	It recursively converts element values when possible.
+Why can `list(string)` accept a value like `["a", 15, true]` in Terraform?	Terraform can convert the non-string elements to strings if they have valid string representations.
+When does automatic type conversion fail in Terraform?	When the provided value or one of its elements cannot be converted to the required type.
+What is `any` in Terraform type constraints?	A placeholder for a type Terraform will try to infer; it is not itself a concrete type.
+Why is `any` rarely the correct Terraform type constraint?	Because you should usually declare the exact type your module expects instead of leaving it dynamic.
+When is `any` an appropriate Terraform type constraint?	When the module treats the value as opaque and passes it through without inspecting its contents.
+How does Terraform interpret `list(any)`?	It tries to find one single element type that all elements can convert to.
+Why would Terraform reject `["a", [], "b"]` for `list(any)`?	Because there is no single element type that both strings and an empty tuple can all convert to.
+What does `optional(string)` mean in an object type constraint (Terraform)?	The object attribute may be omitted; if omitted, Terraform supplies `null` of that type by default.
+What does `optional(number, 127)` mean in an object type constraint (Terraform)?	The attribute is optional and defaults to `127` if omitted or set to `null`.
+What guarantee does an optional attribute with a non-null default provide in Terraform?	Inside the receiving module, that attribute will never be `null`.
+How does Terraform apply defaults for nested optional object attributes?	Top-down: it applies the outer optional default first, then nested defaults inside that value.
+How can a caller dynamically leave an optional object attribute unset in Terraform?	Use a conditional expression that returns `null` when you want Terraform to treat it as omitted.
