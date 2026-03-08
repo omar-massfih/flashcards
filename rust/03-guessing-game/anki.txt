@@ -1,10 +1,6 @@
 What does `loop { ... }` do?	Creates an infinite loop that runs until you exit it (e.g., with `break`).
 What is the Rust prelude?	A set of standard-library items automatically in scope in every program.
 When do you write a `use ...;` statement?	To bring a module/type/trait into scope when it isn’t already available (e.g., not in the prelude) or to shorten paths.
-What does `::` mean in Rust paths?	It separates path segments (modules/types/traits) and is used to access associated items (e.g., `Type::function`).
-What is an associated function?	A function defined on a type and called with `Type::function`, not on an instance.
-Are variables mutable by default?	No; bindings are immutable by default.
-What does `mut` mean on a binding?	It allows you to reassign the variable and modify the value it refers to, if the type supports mutation.
 What is `String` (std) in one phrase?	A growable, UTF-8–encoded owned string.
 What does `&mut T` mean?	A mutable reference to a value of type `T` (allows mutation through the reference).
 Why pass `&mut T` to a function?	So the function can mutate a caller-owned value without taking ownership of it.
@@ -12,7 +8,6 @@ What is `std::io::stdin()` conceptually?	A handle to standard input that you can
 What does `read_line(&mut String)` return?	A `Result` indicating success (`Ok(...)`) or failure (`Err(...)`).
 What does `read_line` do to the string buffer?	It appends the input line (including the trailing newline) to the `String`.
 What is `Result<T, E>`?	An enum that represents either success (`Ok(T)`) or failure (`Err(E)`).
-What is `match` used for?	Branching on patterns (often enum variants) in an exhaustive way and producing a value.
 What does the wildcard pattern `_` mean?	Match anything (catch-all), ignoring the matched value.
 What does `parse::<T>()` do?	Attempts to convert a string to type `T`, returning a `Result`.
 Why add a type annotation like `: u32`?	To guide type inference and choose the concrete type you want.
@@ -22,4 +17,3 @@ What is `std::cmp::Ordering` for?	Representing comparison outcomes: `Less`, `Gre
 What does `cmp(&other)` return?	An `Ordering` describing how two values compare.
 Difference between `start..end` and `start..=end`?	`start..end` excludes `end`; `start..=end` includes `end`.
 What is “turbofish” syntax `::<T>` used for?	To specify generic type parameters explicitly, e.g., `parse::<u32>()`.
-Why bring a trait into scope with `use`?	To make the trait’s methods available for method-call syntax on compatible types.
