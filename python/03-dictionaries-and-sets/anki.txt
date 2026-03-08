@@ -16,7 +16,6 @@ Which common types are hashable by default (Python examples)?	Numbers, `str`, an
 When is a container type hashable (Python)?	If it’s immutable and all contained items are hashable (e.g., certain tuples).
 Why is `frozenset` always hashable (Python)?	Because it can contain only hashable elements.
 Why can a custom `__eq__` make hashability tricky (Python)?	To remain hashable, `__hash__` must stay consistent with `__eq__` and depend only on immutable state.
-What is `dict.get(k, default)` for (Python)?	Fetching `d[k]` with a default instead of raising `KeyError` when `k` is missing.
 Why can `dict.get` be suboptimal when updating a mutable value (Python)?	You may do a lookup, mutate, then do another lookup/store back—extra work and easy to write awkwardly.
 What does `dict.setdefault(k, default)` do (Python)?	If `k` exists, returns `d[k]`; otherwise sets `d[k] = default` and returns it.
 Why is `d.setdefault(k, []).append(x)` idiomatic (Python)?	It ensures a list exists at `k` with a single lookup, then appends.
@@ -37,9 +36,7 @@ How does `OrderedDict` equality differ from `dict` (Python)?	`OrderedDict` equal
 What does `OrderedDict.move_to_end(k)` do (Python)?	Repositions an existing key to one end (useful for LRU-like logic).
 What is `collections.ChainMap` (Python)?	A wrapper that searches multiple mappings in order as if they were one.
 Where do updates go in a `ChainMap` (Python)?	Assignments/updates affect only the first (leftmost) mapping.
-What is `collections.Counter` (Python)?	A mapping from keys to integer counts (useful for frequency counting / multiset behavior).
 What does `Counter.update(iterable)` do (Python)?	It adds counts for elements from the iterable (instead of overwriting like `dict.update`).
-What is a `set` in Python?	A collection of unique, hashable elements.
 Why are set literals like `{1, 2, 3}` preferred over `set([1, 2, 3])` (Python)?	They’re more readable and avoid building an intermediate list (often faster).
 What is a set comprehension (Python)?	An expression that builds a set: `{expr for ...}` (optionally with `if` filters).
 Do set infix operators like `a & b` accept any iterables (Python)?	No; infix operators require sets on both sides (methods like `.intersection(...)` accept iterables).

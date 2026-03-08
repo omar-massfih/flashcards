@@ -7,13 +7,11 @@ What does “types are defined by supported operations” mean (typing perspecti
 What is duck typing (Python concept)?	Correctness is determined at runtime by whether an object supports the operations you use (not by declared types).
 What is nominal typing (static type checking perspective)?	Variables/parameters have declared types; only operations defined on the declared type are considered valid by the checker.
 Why can static checking reject code that “works at runtime” (Python typing)?	The checker only trusts declared interfaces; runtime may pass a subtype that happens to support extra operations.
-What is `Any` (Python typing)?	The dynamic “wildcard” type; assumed when types are unknown; compatible with all types and allows all operations to type check.
 How is `Any` different from `object` (Python typing)?	`object` accepts any value but supports only `object`’s operations; `Any` is treated as supporting any operation.
 Why can annotating something as `Any` reduce the value of type checking?	It suppresses many errors because the checker assumes any operation is valid.
 What does “subtype-of” mean in nominal typing?	If `T2` is a subtype of `T1`, you can use a `T2` wherever `T1` is expected (Liskov substitution).
 What does “consistent-with” add beyond subtype-of (gradual typing)?	It includes subtype relationships and also treats `Any` as matching every type in both directions.
 PEP 484 numeric rule: which built-in numeric types are treated as consistent (Python typing)?	`int` is consistent-with `float`; `float` is consistent-with `complex` (so `int` is consistent-with `complex`).
-What does `Optional[T]` mean (Python typing)?	A value of type `T` or `None` (i.e., `T | None` / `Union[T, None]`).
 Python 3.10+: what does `T | U` mean in annotations?	A union type (equivalent to `Union[T, U]`).
 Why can returning `Union[...]` be annoying for callers (Python typing)?	Callers must narrow/check the runtime type before using the result safely.
 Python 3.9+: what does `list[str]` mean in a return type annotation?	A list where every element is a `str` (generic type parameter is `str`).

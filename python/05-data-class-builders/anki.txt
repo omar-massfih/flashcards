@@ -37,8 +37,5 @@ How do you declare a typed class variable in a dataclass (Python)?	`from typing 
 What does `ClassVar[...]` signal to `@dataclass` (Python)?	It is not an instance field.
 What is an init-only variable in dataclasses (Python)?	A constructor argument that isn’t stored as a field.
 How do you declare an init-only variable (dataclass, Python)?	`from dataclasses import InitVar`; then `db: InitVar[DbType]`.
-What is the “Data Class” code smell (OOP)?	Classes with data but little/no behavior; logic lives elsewhere and manipulates them.
-Refactoring idea for the data class smell (high level)?	Move related behavior into the class to co-locate data and logic.
-How should intermediate-representation objects be treated (design)?	As immutable records; avoid mutating them in-place across boundaries.
 What do class patterns in `match`/`case` match (Python)?	Instances by type and optionally by attribute values.
 What enables positional class patterns for a class (Python)?	`__match_args__` listing attribute names in positional-match order.

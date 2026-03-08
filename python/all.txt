@@ -1,13 +1,10 @@
 What is the Python Data Model?	The set of protocols (special methods) that let objects support core language features and idiomatic syntax.
 What are “special methods” in Python?	Methods with `__double_underscores__` that the interpreter calls to implement language features.
-Should user code call special methods directly?	Usually no; prefer the related built-ins/syntax (e.g., `len(x)`, `iter(x)`, `str(x)`).
 Why prefer built-ins over calling special methods directly?	Built-ins can add behavior and may be faster (especially for built-in types).
 How does `for x in obj:` start iteration?	It calls `iter(obj)`, which uses `obj.__iter__()` or may fall back to `obj.__getitem__()`.
 What two special methods are enough to make an object behave like a basic sequence?	`__len__` and `__getitem__`.
 Why implement standard protocols in your class?	So standard library functions work with it directly, without adapters.
 How does `x in collection` work if `__contains__` is missing?	It can do a sequential scan using iteration.
-What is `__repr__` for?	Unambiguous representation for debugging/inspection; used by `repr()` and typically by the interactive console.
-What is `__str__` for?	User-friendly display string; used by `str()` and `print()`.
 If you implement only one, prefer `__repr__` or `__str__`?	`__repr__`.
 What’s a good rule of thumb for `__repr__`?	Make it unambiguous; if possible, make it resemble code to recreate the object.
 How do you force `repr` formatting in an f-string?	Use `!r`, e.g. ``f"{x!r}"``.
@@ -21,20 +18,16 @@ What is a flat sequence (Python)?	A sequence that stores simple values in its ow
 Why are flat sequences usually more memory-efficient than container sequences?	They store elements as packed values in contiguous memory, which avoids creating many separate Python objects with their own headers and references.
 Give examples of mutable sequences (Python).	`list`; `bytearray`; `array.array`; `collections.deque`.
 Give examples of immutable sequences (Python).	`tuple`; `str`; `bytes`.
-What is a list comprehension (Python)?	An expression that builds a new list by transforming and/or filtering an iterable.
 Why can a list comprehension be clearer than a for-loop when building a list?	Its intent is explicit: it always builds a new list (a for-loop can do many tasks).
 Python syntax tip: why can list/dict/tuple literals and comps be multiline without backslashes?	Line breaks are ignored inside `[]`, `{}`, or `()`.
 Listcomps vs `map`/`filter`: why often prefer list comprehensions (Python)?	They’re usually more readable and avoid awkward `lambda` usage while doing the same job.
 Do list comprehension loop variables leak in Python 3?	No; comprehension variables have their own local scope (they don’t clobber outer names).
 How do you build a Cartesian product with a list comprehension?	Use multiple `for` clauses, e.g. `[(c, s) for c in colors for s in sizes]`.
-What is a generator expression (Python)?	A comprehension-like expression that yields items lazily via the iterator protocol (no intermediate list).
 Why use a generator expression instead of a list comprehension to feed another constructor/loop?	It saves memory by producing items one at a time.
-Tuples: what two roles do they play (Python)?	Records with positional fields, and immutable lists.
 Why are tuples useful as records (Python)?	Field order/length is fixed; unpacking avoids error-prone indexing.
 Why can tuples be smaller/faster than lists (high level)?	Fixed-size allocation and less overhead enable optimizations compared to growable lists.
 Why can a tuple’s value still change even though tuples are “immutable”?	If it contains references to mutable objects, those objects can mutate.
 When is a tuple hashable, and how can you quickly check?	Only if all items are hashable; `hash(t)` raises `TypeError` if it contains mutable/unhashable items.
-What is iterable unpacking (Python)?	Assigning items from an iterable into multiple variables without indexing (works with iterators too).
 How do you swap two variables idiomatically (Python)?	`a, b = b, a`.
 How do you pass a tuple as separate positional arguments (Python)?	Use `*t` in the call, e.g. `divmod(*t)`.
 In unpacking assignment, what does `*rest` do?	It captures any remaining items into a list.
@@ -77,7 +70,6 @@ Which common types are hashable by default (Python examples)?	Numbers, `str`, an
 When is a container type hashable (Python)?	If it’s immutable and all contained items are hashable (e.g., certain tuples).
 Why is `frozenset` always hashable (Python)?	Because it can contain only hashable elements.
 Why can a custom `__eq__` make hashability tricky (Python)?	To remain hashable, `__hash__` must stay consistent with `__eq__` and depend only on immutable state.
-What is `dict.get(k, default)` for (Python)?	Fetching `d[k]` with a default instead of raising `KeyError` when `k` is missing.
 Why can `dict.get` be suboptimal when updating a mutable value (Python)?	You may do a lookup, mutate, then do another lookup/store back—extra work and easy to write awkwardly.
 What does `dict.setdefault(k, default)` do (Python)?	If `k` exists, returns `d[k]`; otherwise sets `d[k] = default` and returns it.
 Why is `d.setdefault(k, []).append(x)` idiomatic (Python)?	It ensures a list exists at `k` with a single lookup, then appends.
@@ -98,9 +90,7 @@ How does `OrderedDict` equality differ from `dict` (Python)?	`OrderedDict` equal
 What does `OrderedDict.move_to_end(k)` do (Python)?	Repositions an existing key to one end (useful for LRU-like logic).
 What is `collections.ChainMap` (Python)?	A wrapper that searches multiple mappings in order as if they were one.
 Where do updates go in a `ChainMap` (Python)?	Assignments/updates affect only the first (leftmost) mapping.
-What is `collections.Counter` (Python)?	A mapping from keys to integer counts (useful for frequency counting / multiset behavior).
 What does `Counter.update(iterable)` do (Python)?	It adds counts for elements from the iterable (instead of overwriting like `dict.update`).
-What is a `set` in Python?	A collection of unique, hashable elements.
 Why are set literals like `{1, 2, 3}` preferred over `set([1, 2, 3])` (Python)?	They’re more readable and avoid building an intermediate list (often faster).
 What is a set comprehension (Python)?	An expression that builds a set: `{expr for ...}` (optionally with `if` filters).
 Do set infix operators like `a & b` accept any iterables (Python)?	No; infix operators require sets on both sides (methods like `.intersection(...)` accept iterables).
@@ -191,19 +181,11 @@ How do you declare a typed class variable in a dataclass (Python)?	`from typing 
 What does `ClassVar[...]` signal to `@dataclass` (Python)?	It is not an instance field.
 What is an init-only variable in dataclasses (Python)?	A constructor argument that isn’t stored as a field.
 How do you declare an init-only variable (dataclass, Python)?	`from dataclasses import InitVar`; then `db: InitVar[DbType]`.
-What is the “Data Class” code smell (OOP)?	Classes with data but little/no behavior; logic lives elsewhere and manipulates them.
-Refactoring idea for the data class smell (high level)?	Move related behavior into the class to co-locate data and logic.
-How should intermediate-representation objects be treated (design)?	As immutable records; avoid mutating them in-place across boundaries.
 What do class patterns in `match`/`case` match (Python)?	Instances by type and optionally by attribute values.
 What enables positional class patterns for a class (Python)?	`__match_args__` listing attribute names in positional-match order.
 Python variables: are they “boxes” or “labels”?	Labels (names bound to objects), not boxes that contain copies.
-What does assignment do in Python (high level)?	Binds a name to an object; it does not copy the object.
-What is aliasing (Python)?	Multiple names bound to the same object.
 If b = a and a refers to a mutable object, what happens to b when you mutate through a?	b reflects the same change because both names reference the same object.
 Why can `y = Gizmo() * 10` create an instance but still not bind `y`?	The RHS creates the object, then an error occurs before binding; `y` is never created.
-What does `id(obj)` return (Python, high level)?	An integer representing the object’s identity (implementation-dependent).
-What does `is` compare (Python)?	Object identity.
-What does `==` compare (Python)?	Object value/equality (typically via `__eq__`).
 Why is `is` typically faster than `==` (Python)?	`is` can’t be overloaded; it’s essentially an identity comparison.
 When is `is` the right tool in Python code?	Comparing to singletons like `None` or a sentinel object.
 Idiom: how do you test for `None` in Python?	`x is None` (and `x is not None`).
@@ -211,10 +193,8 @@ How do you create a sentinel object for identity checks (Python)?	`SENTINEL = ob
 Common pitfall: when is using `is` usually wrong?	For value equality like strings/integers/collections; use `==` instead.
 What does tuple immutability actually guarantee (Python)?	The tuple’s stored references don’t change; referenced mutable objects can still mutate.
 How can a tuple “value” appear to change even if the tuple is immutable?	If it references a mutable item that changes in place.
-What is a shallow copy (Python)?	A new outer container that shares references to the same inner items.
 How do you make a shallow copy of a list (common ways)?	`list(x)`, `x[:]`, or `x.copy()`.
 In a shallow copy, what happens if you mutate a shared inner list?	The mutation is visible through both the original and the shallow copy.
-What is a deep copy (Python)?	A copy that recursively copies nested objects so inner items are not shared.
 How do you make shallow vs deep copies of arbitrary objects (Python)?	`copy.copy(x)` vs `copy.deepcopy(x)`.
 Why can `deepcopy` handle cyclic references safely (Python)?	It memoizes objects already copied to avoid infinite recursion.
 Why can a deep copy be undesirable (Python)?	It may be too expensive or may copy things that shouldn’t be copied (resources/singletons).
@@ -232,8 +212,6 @@ Why are mutable default arguments dangerous (Python)?	Mutations persist and affe
 Safe pattern for optional mutable parameters (Python)?	Default to `None`, then create a new list/dict inside the function.
 Why use `if x is None:` for optional parameters (Python)?	Distinguishes “argument omitted” from an empty container provided by the caller.
 If a default list is mutated, who observes that mutation later?	Any future call that relies on that default object.
-Defensive design: when should you copy a mutable argument received by an API?	When you don’t intend to mutate the caller’s object / to avoid surprising aliasing.
-Why can aliasing an argument violate “least astonishment”?	The caller sees their own data structure mutated as a side effect.
 How do you defensively create your own list from an iterable argument?	`list(iterable)`.
 Why is `list(iterable)` a flexible defensive-copy pattern?	It accepts any iterable and ensures you own a mutable list.
 What does `del name` actually delete (Python)?	The reference/binding, not the underlying object.
@@ -245,28 +223,19 @@ What is `__del__` for (Python)?	A finalizer hook when an object is about to be d
 Why is relying on `__del__`/GC timing risky?	Finalization may be delayed or behave differently across implementations/cycles.
 What is a weak reference (Python)?	A reference that doesn’t keep the target alive (doesn’t increase refcount).
 What does `weakref.finalize(obj, callback)` do (Python)?	Registers `callback` to run when `obj` is garbage-collected, without keeping `obj` alive.
-Best practice for files vs relying on GC to close them?	Use `with open(...) as f:` to guarantee closure even on errors.
 What is interning (Python, high level)?	Reusing identical immutable objects for efficiency.
 Why shouldn’t you rely on interning for program logic?	It’s an implementation detail; use `==` for value comparisons.
 What does “functions are first-class objects” mean (Python)?	Functions can be created at runtime; assigned; stored; passed as args; returned from functions.
-What does `map(func, iterable)` do (Python)?	Returns an iterator yielding `func(x)` for each `x` in the iterable.
-What is a higher-order function (Python)?	A function that takes a function as an argument and/or returns a function.
 `sorted(..., key=...)`: what is `key` for (Python)?	A 1-arg function used to compute sort keys for each item.
 What does “functional style” often rely on (Python feature)?	Passing functions around (higher-order functions and callables).
 Modern Python: what often replaces `map` for building lists?	List comprehensions (or generator expressions for lazy pipelines).
 Modern Python: what often replaces `filter` for selecting items?	A comprehension with an `if` clause (listcomp/genexp).
 In Python 3, what do `map` and `filter` return?	Iterators (lazy results), not lists.
-Where is `reduce` found in Python 3?	`functools.reduce` (it’s no longer a built-in).
 What is the most common “reduce-like” task, and its preferred built-in (Python)?	Summation; use `sum(...)`.
 What do `all(iterable)` and `any(iterable)` do (Python)?	`all`: True if no falsy elements; `any`: True if any truthy element.
-What does `all([])` return (Python)?	`True`.
-What does `any([])` return (Python)?	`False`.
-What does `lambda` create (Python)?	An anonymous function object.
 What restriction applies to the body of a `lambda` (Python)?	It must be a single expression (no statements like `while`, `try`, `=` assignment).
 Why is `lambda` usually best kept small in Python?	Nontrivial lambdas get hard to read; prefer a named `def`.
-Refactoring tip: how to replace a hard-to-read lambda (Python)?	Describe it in a comment → name it → rewrite as `def` → delete comment.
 What built-in checks whether an object can be called with `()` (Python)?	`callable(obj)`.
-Why is `callable(obj)` safer than checking types directly (Python)?	Many non-function objects are callable (classes, instances with `__call__`, etc.).
 What makes an instance callable (Python)?	Defining a `__call__(self, ...)` method on its class.
 Why are callable instances useful (Python)?	They can keep internal state across calls (function-like objects with memory).
 What is a common `__call__` pattern for a stateful object (Python)?	`__call__` delegates to a regular method (e.g., `return self.pick()`).
@@ -289,10 +258,7 @@ What does `operator.itemgetter(n)` produce (Python)?	A function that fetches ite
 Why can `itemgetter` work with mappings too (Python)?	It uses `__getitem__`, which dicts and many other types support.
 What does `itemgetter(i, j, ...)` return (Python)?	A function returning a tuple of extracted items.
 What does `operator.attrgetter('name')` produce (Python)?	A function that reads the named attribute from its argument.
-What does dotted notation in `attrgetter` mean (Python)?	It traverses nested attributes, e.g. `'coord.lat'`.
-What does `attrgetter(a, b, ...)` return (Python)?	A function returning a tuple of extracted attributes.
 What does `operator.methodcaller('upper')` produce (Python)?	A function that calls `.upper()` on its argument.
-What does `methodcaller('replace', ' ', '-')` do (Python)?	Calls `.replace(' ', '-')` on its argument (freezes extra args).
 What does `functools.partial(func, *args, **kwargs)` return (Python)?	A new callable with some arguments pre-bound.
 Why is `partial` useful (Python)?	Adapts a callable to an API expecting fewer/different arguments (callbacks).
 What is `functools.partialmethod` for (Python)?	Partial application designed for methods (descriptor-friendly).
@@ -306,13 +272,11 @@ What does “types are defined by supported operations” mean (typing perspecti
 What is duck typing (Python concept)?	Correctness is determined at runtime by whether an object supports the operations you use (not by declared types).
 What is nominal typing (static type checking perspective)?	Variables/parameters have declared types; only operations defined on the declared type are considered valid by the checker.
 Why can static checking reject code that “works at runtime” (Python typing)?	The checker only trusts declared interfaces; runtime may pass a subtype that happens to support extra operations.
-What is `Any` (Python typing)?	The dynamic “wildcard” type; assumed when types are unknown; compatible with all types and allows all operations to type check.
 How is `Any` different from `object` (Python typing)?	`object` accepts any value but supports only `object`’s operations; `Any` is treated as supporting any operation.
 Why can annotating something as `Any` reduce the value of type checking?	It suppresses many errors because the checker assumes any operation is valid.
 What does “subtype-of” mean in nominal typing?	If `T2` is a subtype of `T1`, you can use a `T2` wherever `T1` is expected (Liskov substitution).
 What does “consistent-with” add beyond subtype-of (gradual typing)?	It includes subtype relationships and also treats `Any` as matching every type in both directions.
 PEP 484 numeric rule: which built-in numeric types are treated as consistent (Python typing)?	`int` is consistent-with `float`; `float` is consistent-with `complex` (so `int` is consistent-with `complex`).
-What does `Optional[T]` mean (Python typing)?	A value of type `T` or `None` (i.e., `T | None` / `Union[T, None]`).
 Python 3.10+: what does `T | U` mean in annotations?	A union type (equivalent to `Union[T, U]`).
 Why can returning `Union[...]` be annoying for callers (Python typing)?	Callers must narrow/check the runtime type before using the result safely.
 Python 3.9+: what does `list[str]` mean in a return type annotation?	A list where every element is a `str` (generic type parameter is `str`).
@@ -342,24 +306,18 @@ What is `NoReturn` used for (Python typing)?	Return annotation for functions tha
 Python 3.8+: how do you declare positional-only parameters?	Use `/` in the signature; parameters before `/` are positional-only.
 How do you annotate `*args` when all extra positional args share one type (Python typing)?	`*args: T` meaning each extra arg is `T` (inside the function it’s `tuple[T, ...]`).
 How do you annotate `**kwargs` when all extra keyword values share one type (Python typing)?	`**kwargs: T` meaning each kw value is `T` (inside the function it’s `dict[str, T]`).
-What is a function decorator (Python)?	A callable that takes a function, adds optional behavior, and returns the same function or a new callable.
 Decorator desugaring: what does `@deco` mean (Python)?	It’s syntax sugar for rebinding: `func = deco(func)` right after `func` is defined.
 Do decorators run at call time or at definition/import time (Python)?	At function definition time; usually during module import (module load), not when the function is later called.
 Import time vs runtime: what’s the difference (Python, decorators context)?	Import time is when module top-level code runs (decorators execute); runtime is when decorated functions are invoked later.
 What is a registration decorator used for (Python)?	To add functions to a registry (e.g., routing tables, plugin hooks) at import time.
 What is a stacked decorator (Python)?	Multiple decorators applied to one function using multiple `@...` lines.
-Stacked decorators: in `@a` above `@b`, which runs first (Python)?	`b` runs first; then `a` is applied to the result.
 Stacked decorators desugaring (Python)?	`@a` then `@b` is `func = a(b(func))`.
 Why do naive decorators often break `__name__` and `__doc__` (Python)?	Because the wrapper replaces the function object, so its metadata becomes the wrapper’s metadata.
 What does `functools.wraps` do (Python)?	Helps write well-behaved decorators by copying metadata (e.g., `__name__`, `__doc__`) from the wrapped function to the wrapper.
-Where does `functools.wraps` go in a decorator (Python)?	On the inner wrapper: `@functools.wraps(func)` directly above `def wrapper(...): ...`.
 Why should a decorator wrapper accept `*args, **kwargs` (Python)?	To forward any positional/keyword arguments so the decorator works for many signatures.
 Variable scope rule: when is a name local inside a function (Python)?	If it’s a parameter or it’s assigned anywhere in the function body (unless declared `global`/`nonlocal`).
 Why does `print(b); b = 9` raise `UnboundLocalError` (Python)?	Because assignment makes `b` local for the whole function, so `print(b)` reads an uninitialized local.
-What does `global x` do inside a function (Python)?	Makes `x` refer to the module-global binding (reads and assigns the global, not a local).
 What does `nonlocal x` do inside a nested function (Python)?	Makes `x` refer to the nearest enclosing function scope where `x` is defined (reads and assigns that binding).
-What is a closure (Python)?	A function that retains bindings of free variables from an enclosing function scope, so they remain available after the outer function returns.
-What is a free variable (Python, closures)?	A name referenced in a function body that is neither local to that function nor global; it comes from an enclosing function scope.
 In a closure, where are captured bindings stored (Python)?	In the returned function object’s closure cells (`fn.__closure__`), keyed by names in `fn.__code__.co_freevars`.
 Why does rebinding an outer-scope name require `nonlocal` (Python)?	Without `nonlocal`, an assignment makes the name local, so the closure binding won’t be updated.
 Why does `count += 1` inside a nested function create a local `count` without `nonlocal` (Python)?	Augmented assignment on immutables rebinding (`count = count + 1`) counts as assignment, so the compiler treats `count` as local.
@@ -386,35 +344,16 @@ Why register ABCs instead of concrete types in `singledispatch` (Python)?	It sup
 What is a parameterized decorator (Python)?	A decorator that accepts extra arguments; implemented as a decorator factory that returns the actual decorator.
 How does Python apply `@deco(arg)` (Python)?	It calls the factory `deco(arg)` to get a decorator, then applies it: `func = deco(arg)(func)`.
 How can a decorator factory enable toggling behavior like registration (Python)?	The factory captures parameters (e.g., `active`) in a closure and returns a decorator that acts based on those parameters.
-What are the typical nested layers in a parameterized decorator (Python)?	Factory (takes params) → decorator (takes func) → wrapper (takes func args).
-In a parameterized decorator, where do the parameters live at call time (Python)?	In the wrapper’s closure (captured from the factory call).
 Class-based decorator factory: what makes an instance act as a decorator (Python)?	Implementing `__call__(self, func)` so the instance can be used as the decorator.
-What is a design pattern (software engineering)?	A general recipe for solving a common design problem.
-Do you need to know design patterns to use them well (pragmatic view)?	Not necessarily; many patterns describe solutions you may rediscover or apply implicitly.
-Why can a design pattern become “invisible” in a language (Python context)?	If the language has built-in features that directly support the pattern’s intent, you don’t need the classic OO “recipe”.
-Why might the classic Iterator pattern be unnecessary in Python (high level)?	Python’s iteration protocol and generators provide iteration without implementing the OO iterator-class pattern explicitly.
-Strategy pattern: what is it (GoF summary)?	Define a family of algorithms, encapsulate each one, and make them interchangeable so the algorithm can vary independently from clients.
-Strategy pattern: what problem does it solve (high level)?	Pluggable behavior: choose among alternative algorithms without changing the context that uses them.
-Strategy pattern: what is the Context role (Strategy)?	The object that uses a strategy to provide a service (e.g., `Order` applying a promotion).
-Strategy pattern: what is the Strategy role?	A common interface for alternative algorithms (e.g., a `Promotion` interface/ABC).
-Strategy pattern: what is a Concrete Strategy?	A specific implementation of the Strategy algorithm (e.g., fidelity/bulk/large-order discount).
-In Strategy, who typically selects which strategy to use (classic GoF)?	The client configures the context with a chosen strategy.
-Strategy example: what are the three discount rule types (ecommerce example)?	Fidelity points discount; bulk line-item discount; “many distinct items” order discount.
 Classic Strategy in Python: why use an ABC + `@abstractmethod`?	To make the pattern explicit and enforce that concrete strategies implement the required method.
-In the classic Strategy example, what does `Promotion.discount(order)` return?	The discount as a positive money amount (e.g., a `Decimal`).
 Function-oriented Strategy: when can you replace strategy classes with functions (Python)?	When each strategy has no internal state and effectively implements a single method (one algorithm).
 In function-oriented Strategy, what is the promotion type hint `Callable[[Order], Decimal]` saying?	The promotion is a callable that takes an `Order` and returns a `Decimal` discount.
 In function-oriented Strategy, why is promotion often `Optional[...]`?	Because an order may have no promotion; `None` means “no discount strategy”.
-Why does the function-oriented `Order.due` call `self.promotion(self)` (Python)?	`promotion` is a callable stored in an attribute, so you must pass the `Order` instance explicitly.
 Why doesn’t method auto-binding apply to a callable stored in an instance attribute (Python)?	Method binding is a descriptor feature of functions defined on the class; a plain callable attribute isn’t automatically bound.
-Strategy refactor benefit: why are functions “lighter” than strategy objects (Python)?	No single-method classes/instances are needed; functions are created once when the module loads and can be reused.
-What is `best_promo` (Strategy example)?	A “meta-strategy” that chooses the best available discount for a given order.
-How can `best_promo` compute the best discount (Python pattern)?	Apply each promotion to the order and return the maximum discount, e.g. `max(promo(order) for promo in promos)`.
 What’s a subtle maintenance bug in `best_promo` with a manual `promos` list?	You can add a new promotion function but forget to add it to `promos`, so `best_promo` silently ignores it.
 What does `globals()` return (Python)?	A dict representing the current module’s global symbol table.
 In a module, what does `globals()` refer to inside a function defined there (Python)?	The globals of the module where the function is defined (not where it is called from).
 How can you collect promo functions using `globals()` (Strategy pattern)?	Filter `globals().items()` by naming convention (e.g., names ending with `_promo`) and collect the callable values.
-Why must a `globals()`-based collector exclude `best_promo` itself?	Otherwise `best_promo` could be included and calling it would recurse infinitely while computing the best promo.
 What is a downside of collecting strategies by name convention (e.g., suffix `_promo`)?	It’s implicit and brittle: naming mistakes or unrelated functions can be accidentally included/excluded.
 Why can putting all strategy functions in a separate module help (Strategy pattern)?	It centralizes strategies and enables introspection without relying on naming conventions in unrelated code.
 What does `inspect.getmembers(obj, predicate)` do (Python)?	Returns an object’s attributes as `(name, value)` pairs, optionally filtered by a predicate.
@@ -427,27 +366,17 @@ Why does a registration decorator often return the original function (Python)?	S
 Registration decorator benefit: why avoid name conventions for strategies?	Registration is explicit: strategies don’t need special suffixes and accidental inclusion is less likely.
 Registration decorator benefit: how can you disable a strategy quickly (Python)?	Comment out or remove the `@promotion` decorator on that function.
 Registration decorator benefit: can strategies be registered from other modules (Python)?	Yes; as long as they import and use the `@promotion` decorator, they’ll be registered when that module loads.
-Command pattern: what is its goal (GoF)?	Decouple an object that invokes an operation (invoker) from the object that knows how to perform it (receiver).
-Command pattern: who is the invoker and receiver (high level)?	Invoker triggers actions (e.g., menu item); receiver performs the work (e.g., document/app).
-Command pattern: what is the classic Command interface method name (GoF)?	Often `execute`.
 Command pattern: why is Command described as an OO replacement for callbacks (GoF)?	It packages an action as an object so it can be stored, passed around, and invoked later.
 In Python, what’s the simplest replacement for a single-method Command object?	Pass a function (or other callable) instead of a command instance.
 How would an invoker call a function-based command (Python)?	Call it directly: `command()` instead of `command.execute()`.
 What is a MacroCommand (Command pattern idea)?	A command that executes a sequence of commands.
 How can MacroCommand be implemented idiomatically in Python (high level)?	As a callable object (`__call__`) that loops over and calls stored command callables.
-Why might MacroCommand copy the command iterable into a list in `__init__` (Python)?	To ensure it’s iterable multiple times and to keep a local snapshot of the command references.
 In a callable object, what single-method interface does it implement (Python)?	`__call__` (so calling the instance runs its behavior).
 Why might you still use a class for Command instead of a function (Python)?	To keep state, provide extra methods (e.g., undo), and encapsulate more complex behavior than a single callback.
 What are two alternatives to classes for keeping state across calls (Python)?	A closure (captured free variables) or a callable instance (object with `__call__` + attributes).
 When should you consider a closure for Command-like state (Python)?	When you need small, hidden state tied to a function and a minimal public surface.
 When should you consider a callable instance for Command-like state (Python)?	When you want explicit, inspectable state and possibly extra methods beyond callability.
-In Strategy, why can strategies be reused across many contexts (Python)?	Strategies are typically stateless functions/callables, so the same callable can be applied to many orders.
-In the Strategy discount example, why is only one promotion applied (simplifying assumption)?	To keep the example simple; the system selects a single best discount rather than combining multiple discounts.
-Why is `Decimal` used for money computations (Python context)?	To avoid floating-point rounding issues when computing currency amounts.
-What does `sum(iterable, start=Decimal(0))` achieve in the Order total (Python)?	It ensures the sum starts as a `Decimal` so the result stays a `Decimal` even if the iterable is empty.
 Why prefer a concrete return type for `best_promo` (Python typing)?	It always returns a concrete discount amount (e.g., `Decimal`), which is easier for callers than unions/optionals.
-What is the “family of algorithms” in the Strategy discount example?	The different promotion/discount computations (fidelity, bulk item, large order, etc.).
-What is the “client” in Strategy pattern terms (discount example)?	The code that creates/configures an `Order` and chooses which promotion strategy (or meta-strategy) to apply.
 How do first-class functions reduce boilerplate in Strategy (Python)?	They replace single-method strategy classes/instances with plain functions passed around as values.
 How do first-class functions reduce boilerplate in Command (Python)?	They allow actions to be represented as callbacks (callables) without creating a Command class hierarchy.
 What does it mean that modules are first-class objects (Python)?	Modules are runtime objects whose attributes can be inspected and passed around (enabling module introspection patterns).

@@ -1,21 +1,15 @@
-What is a function decorator (Python)?	A callable that takes a function, adds optional behavior, and returns the same function or a new callable.
 Decorator desugaring: what does `@deco` mean (Python)?	It’s syntax sugar for rebinding: `func = deco(func)` right after `func` is defined.
 Do decorators run at call time or at definition/import time (Python)?	At function definition time; usually during module import (module load), not when the function is later called.
 Import time vs runtime: what’s the difference (Python, decorators context)?	Import time is when module top-level code runs (decorators execute); runtime is when decorated functions are invoked later.
 What is a registration decorator used for (Python)?	To add functions to a registry (e.g., routing tables, plugin hooks) at import time.
 What is a stacked decorator (Python)?	Multiple decorators applied to one function using multiple `@...` lines.
-Stacked decorators: in `@a` above `@b`, which runs first (Python)?	`b` runs first; then `a` is applied to the result.
 Stacked decorators desugaring (Python)?	`@a` then `@b` is `func = a(b(func))`.
 Why do naive decorators often break `__name__` and `__doc__` (Python)?	Because the wrapper replaces the function object, so its metadata becomes the wrapper’s metadata.
 What does `functools.wraps` do (Python)?	Helps write well-behaved decorators by copying metadata (e.g., `__name__`, `__doc__`) from the wrapped function to the wrapper.
-Where does `functools.wraps` go in a decorator (Python)?	On the inner wrapper: `@functools.wraps(func)` directly above `def wrapper(...): ...`.
 Why should a decorator wrapper accept `*args, **kwargs` (Python)?	To forward any positional/keyword arguments so the decorator works for many signatures.
 Variable scope rule: when is a name local inside a function (Python)?	If it’s a parameter or it’s assigned anywhere in the function body (unless declared `global`/`nonlocal`).
 Why does `print(b); b = 9` raise `UnboundLocalError` (Python)?	Because assignment makes `b` local for the whole function, so `print(b)` reads an uninitialized local.
-What does `global x` do inside a function (Python)?	Makes `x` refer to the module-global binding (reads and assigns the global, not a local).
 What does `nonlocal x` do inside a nested function (Python)?	Makes `x` refer to the nearest enclosing function scope where `x` is defined (reads and assigns that binding).
-What is a closure (Python)?	A function that retains bindings of free variables from an enclosing function scope, so they remain available after the outer function returns.
-What is a free variable (Python, closures)?	A name referenced in a function body that is neither local to that function nor global; it comes from an enclosing function scope.
 In a closure, where are captured bindings stored (Python)?	In the returned function object’s closure cells (`fn.__closure__`), keyed by names in `fn.__code__.co_freevars`.
 Why does rebinding an outer-scope name require `nonlocal` (Python)?	Without `nonlocal`, an assignment makes the name local, so the closure binding won’t be updated.
 Why does `count += 1` inside a nested function create a local `count` without `nonlocal` (Python)?	Augmented assignment on immutables rebinding (`count = count + 1`) counts as assignment, so the compiler treats `count` as local.
@@ -42,6 +36,4 @@ Why register ABCs instead of concrete types in `singledispatch` (Python)?	It sup
 What is a parameterized decorator (Python)?	A decorator that accepts extra arguments; implemented as a decorator factory that returns the actual decorator.
 How does Python apply `@deco(arg)` (Python)?	It calls the factory `deco(arg)` to get a decorator, then applies it: `func = deco(arg)(func)`.
 How can a decorator factory enable toggling behavior like registration (Python)?	The factory captures parameters (e.g., `active`) in a closure and returns a decorator that acts based on those parameters.
-What are the typical nested layers in a parameterized decorator (Python)?	Factory (takes params) → decorator (takes func) → wrapper (takes func args).
-In a parameterized decorator, where do the parameters live at call time (Python)?	In the wrapper’s closure (captured from the factory call).
 Class-based decorator factory: what makes an instance act as a decorator (Python)?	Implementing `__call__(self, func)` so the instance can be used as the decorator.

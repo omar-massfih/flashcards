@@ -1,22 +1,14 @@
 What does “functions are first-class objects” mean (Python)?	Functions can be created at runtime; assigned; stored; passed as args; returned from functions.
-What does `map(func, iterable)` do (Python)?	Returns an iterator yielding `func(x)` for each `x` in the iterable.
-What is a higher-order function (Python)?	A function that takes a function as an argument and/or returns a function.
 `sorted(..., key=...)`: what is `key` for (Python)?	A 1-arg function used to compute sort keys for each item.
 What does “functional style” often rely on (Python feature)?	Passing functions around (higher-order functions and callables).
 Modern Python: what often replaces `map` for building lists?	List comprehensions (or generator expressions for lazy pipelines).
 Modern Python: what often replaces `filter` for selecting items?	A comprehension with an `if` clause (listcomp/genexp).
 In Python 3, what do `map` and `filter` return?	Iterators (lazy results), not lists.
-Where is `reduce` found in Python 3?	`functools.reduce` (it’s no longer a built-in).
 What is the most common “reduce-like” task, and its preferred built-in (Python)?	Summation; use `sum(...)`.
 What do `all(iterable)` and `any(iterable)` do (Python)?	`all`: True if no falsy elements; `any`: True if any truthy element.
-What does `all([])` return (Python)?	`True`.
-What does `any([])` return (Python)?	`False`.
-What does `lambda` create (Python)?	An anonymous function object.
 What restriction applies to the body of a `lambda` (Python)?	It must be a single expression (no statements like `while`, `try`, `=` assignment).
 Why is `lambda` usually best kept small in Python?	Nontrivial lambdas get hard to read; prefer a named `def`.
-Refactoring tip: how to replace a hard-to-read lambda (Python)?	Describe it in a comment → name it → rewrite as `def` → delete comment.
 What built-in checks whether an object can be called with `()` (Python)?	`callable(obj)`.
-Why is `callable(obj)` safer than checking types directly (Python)?	Many non-function objects are callable (classes, instances with `__call__`, etc.).
 What makes an instance callable (Python)?	Defining a `__call__(self, ...)` method on its class.
 Why are callable instances useful (Python)?	They can keep internal state across calls (function-like objects with memory).
 What is a common `__call__` pattern for a stateful object (Python)?	`__call__` delegates to a regular method (e.g., `return self.pick()`).
@@ -39,10 +31,7 @@ What does `operator.itemgetter(n)` produce (Python)?	A function that fetches ite
 Why can `itemgetter` work with mappings too (Python)?	It uses `__getitem__`, which dicts and many other types support.
 What does `itemgetter(i, j, ...)` return (Python)?	A function returning a tuple of extracted items.
 What does `operator.attrgetter('name')` produce (Python)?	A function that reads the named attribute from its argument.
-What does dotted notation in `attrgetter` mean (Python)?	It traverses nested attributes, e.g. `'coord.lat'`.
-What does `attrgetter(a, b, ...)` return (Python)?	A function returning a tuple of extracted attributes.
 What does `operator.methodcaller('upper')` produce (Python)?	A function that calls `.upper()` on its argument.
-What does `methodcaller('replace', ' ', '-')` do (Python)?	Calls `.replace(' ', '-')` on its argument (freezes extra args).
 What does `functools.partial(func, *args, **kwargs)` return (Python)?	A new callable with some arguments pre-bound.
 Why is `partial` useful (Python)?	Adapts a callable to an API expecting fewer/different arguments (callbacks).
 What is `functools.partialmethod` for (Python)?	Partial application designed for methods (descriptor-friendly).

@@ -3,20 +3,16 @@ What is a flat sequence (Python)?	A sequence that stores simple values in its ow
 Why are flat sequences usually more memory-efficient than container sequences?	They store elements as packed values in contiguous memory, which avoids creating many separate Python objects with their own headers and references.
 Give examples of mutable sequences (Python).	`list`; `bytearray`; `array.array`; `collections.deque`.
 Give examples of immutable sequences (Python).	`tuple`; `str`; `bytes`.
-What is a list comprehension (Python)?	An expression that builds a new list by transforming and/or filtering an iterable.
 Why can a list comprehension be clearer than a for-loop when building a list?	Its intent is explicit: it always builds a new list (a for-loop can do many tasks).
 Python syntax tip: why can list/dict/tuple literals and comps be multiline without backslashes?	Line breaks are ignored inside `[]`, `{}`, or `()`.
 Listcomps vs `map`/`filter`: why often prefer list comprehensions (Python)?	They’re usually more readable and avoid awkward `lambda` usage while doing the same job.
 Do list comprehension loop variables leak in Python 3?	No; comprehension variables have their own local scope (they don’t clobber outer names).
 How do you build a Cartesian product with a list comprehension?	Use multiple `for` clauses, e.g. `[(c, s) for c in colors for s in sizes]`.
-What is a generator expression (Python)?	A comprehension-like expression that yields items lazily via the iterator protocol (no intermediate list).
 Why use a generator expression instead of a list comprehension to feed another constructor/loop?	It saves memory by producing items one at a time.
-Tuples: what two roles do they play (Python)?	Records with positional fields, and immutable lists.
 Why are tuples useful as records (Python)?	Field order/length is fixed; unpacking avoids error-prone indexing.
 Why can tuples be smaller/faster than lists (high level)?	Fixed-size allocation and less overhead enable optimizations compared to growable lists.
 Why can a tuple’s value still change even though tuples are “immutable”?	If it contains references to mutable objects, those objects can mutate.
 When is a tuple hashable, and how can you quickly check?	Only if all items are hashable; `hash(t)` raises `TypeError` if it contains mutable/unhashable items.
-What is iterable unpacking (Python)?	Assigning items from an iterable into multiple variables without indexing (works with iterators too).
 How do you swap two variables idiomatically (Python)?	`a, b = b, a`.
 How do you pass a tuple as separate positional arguments (Python)?	Use `*t` in the call, e.g. `divmod(*t)`.
 In unpacking assignment, what does `*rest` do?	It captures any remaining items into a list.
