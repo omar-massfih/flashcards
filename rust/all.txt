@@ -283,11 +283,17 @@ In a Cargo package, what file defines the default binary crate by convention?	`s
 How do you add multiple binary crates to one package (Cargo convention)?	Add files under `src/bin/`; each file is a separate binary crate.
 What does `src/bin/<name>.rs` represent (Cargo)?	A separate binary crate (an additional executable target).
 Why split a growing project into modules/files (Rust)?	Organization: group related functionality, clarify where to change behavior, manage scope/privacy.
-High level: what does the module system help you control (Rust)?	Organization, scope (what names mean where), and privacy (public API vs private details).
 Where does Rust look for a module declared with `mod garden;`?	Inline in the current file, in `src/garden.rs`, or in `src/garden/mod.rs`.
 Where does Rust look for a submodule declared with `mod vegetables;` inside `garden`?	Inline in the parent module, in `src/garden/vegetables.rs`, or in `src/garden/vegetables/mod.rs`.
 How do you refer to an item inside a module (Rust)?	Use its path, such as `crate::garden::vegetables::Asparagus`.
 What is the default privacy rule for items in a module (Rust)?	Items are private to their parent modules unless marked `pub`.
 Why might you need `pub` on items inside a `pub mod` (Rust)?	A public module does not make its contents public automatically; each item is still private unless marked `pub`.
 What does `use` do within a scope (Rust module system)?	It creates a local shortcut to a path so you can refer to the item with a shorter name.
-In a Rust module tree, what do parent, child, and sibling mean?	A parent contains another module; a child is contained inside its parent; siblings share the same parent.
+What is an absolute path in Rust modules?	A path that starts at the crate root; for the current crate it begins with `crate`, and for external crates it begins with the crate name.
+What is a relative path in Rust modules?	A path that starts from the current module and uses `self`, `super`, or a name in the current module.
+What does `super` mean at the start of a Rust path?	It refers to the parent module of the current module.
+When is `super::...` especially useful in Rust?	When code is closely tied to its parent module and you want a relative path through the parent.
+What can parent modules do with child-module items by default (Rust privacy)?	They can refer to a child module only if the path is visible, but they cannot access the child’s private items.
+What can child modules do with items in ancestor modules (Rust privacy)?	Child modules can access items in their ancestor modules, subject to normal visibility rules.
+If a Rust struct is `pub`, are its fields automatically public?	No; each field is still private unless it is individually marked `pub`.
+If a Rust enum is `pub`, are its variants public?	Yes; making the enum public also makes its variants public.
