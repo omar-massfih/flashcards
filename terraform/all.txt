@@ -269,23 +269,13 @@ How does Terraform destroy resources created during a test file?	It attempts to 
 What is `expect_failures` used for in Terraform tests?	To mark specific custom-condition failures as the expected success case for a run.
 When is `expect_failures` usually safest to use in Terraform tests?	With `command = plan`, because apply runs can fail earlier during planning.
 What kinds of failures can `expect_failures` cover in Terraform tests?	Only user-defined custom condition failures, not arbitrary type or runtime errors.
-What is the main purpose of validation in Terraform configuration?	To verify the configuration behaves as intended and surface clearer errors earlier.
-What Terraform version is required for input variable validation?	Terraform v0.13.0 or later.
-What Terraform version is required for preconditions and postconditions?	Terraform v1.2.0 or later.
-What Terraform version is required for `check` blocks?	Terraform v1.5.0 or later.
 What does input variable validation verify (Terraform)?	That input variables meet required formats, ranges, or other constraints before planning continues.
 When does Terraform execute input variable validation?	Immediately, before generating a plan.
-What happens when input variable validation fails (Terraform)?	Terraform reports the `error_message`, errors, and stops the operation.
 What do preconditions validate in Terraform?	Assumptions about resources, data sources, or outputs before Terraform creates or exposes them.
 When does Terraform execute preconditions?	After generating a plan but before creating the associated resource, data source, or output.
-What takes precedence if a Terraform precondition fails?	The precondition error takes precedence over provider argument errors for that block.
-What can an output precondition prevent (Terraform)?	An invalid output value from being exposed or stored in state.
 What do postconditions validate in Terraform?	Guarantees that resources or data sources must satisfy after Terraform creates or reads them.
 When does Terraform execute postconditions?	After planning and applying changes to a resource, or after reading from a data source.
-What can a failed postcondition prevent (Terraform)?	Further downstream actions that depend on the affected resource or data source.
 What is the main difference between a precondition and a postcondition (Terraform)?	A precondition checks assumptions before the target block runs; a postcondition checks guarantees after it runs.
-When should you prefer a precondition over a postcondition (Terraform)?	When you want to validate an assumption before Terraform tries to create the target block.
-When should you prefer a postcondition over a precondition (Terraform)?	When you want to validate a guarantee about the resulting resource or data after it is available.
 What does a `check` block validate in Terraform?	Infrastructure behavior or conditions outside the normal resource lifecycle.
 When does Terraform execute `check` blocks?	At the end of `plan` and `apply` operations.
 What happens when a Terraform `check` assertion fails?	Terraform reports a warning and continues the current operation.
@@ -293,9 +283,6 @@ How do `check` blocks differ from variable validation and pre/postconditions (Te
 What is continuous validation in HCP Terraform?	Regularly re-running checks, preconditions, and postconditions to verify infrastructure over time.
 When does HCP Terraform continuous validation run `check` blocks?	Whenever workspace health assessments run, in addition to normal plan/apply execution.
 What order does Terraform generally use for validation?	Input variable validation first; then preconditions; then postconditions; then checks.
-What must Terraform validations include to explain failures?	An `error_message` argument.
-What kinds of expressions can `error_message` use in Terraform validations?	Any expression that evaluates to a string.
-What style is recommended for Terraform validation error messages?	One or more full sentences written similarly to Terraform’s own error messages.
 What is the purpose of policy enforcement in HCP Terraform?	To validate that Terraform plans comply with security rules and best practices.
 What can HCP Terraform policies enforce besides infrastructure rules?	Organizational workflow standards, such as restricting when deployments may run.
 What policy frameworks can HCP Terraform use for custom policies?	Sentinel and OPA.
