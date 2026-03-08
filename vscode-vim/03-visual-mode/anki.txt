@@ -1,0 +1,6 @@
+Enter Visual mode (characterwise) (VS Code Vim)	`v`
+Enter Visual Line mode (VS Code Vim)	`V`
+Enter Visual Block mode (VS Code Vim)	`Ctrl-v`
+Indent the current Visual selection to the right (VS Code Vim)	`>`
+Indent the current Visual selection to the left (VS Code Vim)	`<`
+Swap the active end of the Visual selection (VS Code Vim)	`o`
