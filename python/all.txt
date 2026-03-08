@@ -403,3 +403,24 @@ How do class attributes behave when accessed through an instance (Python)?	They 
 What happens when you assign to an instance attribute that shadows a class attribute (Python)?	The instance gets its own attribute, leaving the class attribute unchanged.
 How can you customize a default class attribute for all instances in Python?	Set it on the class or define a subclass that overrides it.
 Why is `type(self).__name__` useful in `__repr__` (Python)?	It lets inherited `__repr__` methods display the actual subclass name automatically.
+What is the minimal sequence protocol in Python?	Implement `__len__` and `__getitem__`.
+Why can a user-defined class behave like a sequence without inheriting from a sequence base class?	Python relies on protocols: if the required methods are present with the expected behavior, the object can be used as a sequence.
+For a user-defined sequence type, why is composition often preferable to inheritance?	You can store data in an underlying built-in sequence and implement only the protocol methods you need.
+What constructor style is considered best practice for a Python sequence type?	Take a single iterable argument rather than arbitrary positional items.
+Why is `reprlib.repr` useful in a collection type’s `__repr__`?	It produces a safe abbreviated representation for large collections.
+What is a key rule for implementing `__repr__`?	It should never raise an exception; it should always return some useful debugging representation.
+What does duck typing mean in Python?	What matters is whether an object supports the operations you need, not whether it inherits from a particular type.
+Why can implementing only part of a protocol still be acceptable in Python?	If a specific use case needs only a subset of the protocol, supporting just that subset can be enough.
+How does `obj[1:4]` reach a user-defined `__getitem__` method?	Python passes a `slice(1, 4, None)` object to `__getitem__`.
+What attributes does a `slice` object expose?	`start`, `stop`, and `step`.
+What does `slice.indices(len)` do?	It returns normalized nonnegative `(start, stop, step)` values for a sequence of the given length.
+Why is `slice.indices()` useful when implementing slicing?	It handles missing, negative, and out-of-range bounds the same way built-in sequences do.
+How should a Pythonic sequence type usually handle slicing?	A slice should return a new instance of the same sequence type, not an unrelated container type.
+Why is `operator.index(x)` better than `int(x)` for validating sequence indexes?	It accepts only objects that are valid integer indexes, whereas `int(x)` may coerce values like floats.
+When is `__getattr__` called in Python?	Only as a fallback when normal attribute lookup fails.
+Why can implementing `__getattr__` without `__setattr__` cause inconsistent behavior?	Assigning an instance attribute can bypass the fallback lookup and shadow the virtual attribute logic.
+When is it common to implement `__setattr__` together with `__getattr__`?	When virtual or computed attributes should remain read-only or behave consistently.
+How can `functools.reduce` be used in a sequence `__hash__` implementation?	Reduce the hashes of all components into one aggregate hash, such as with `operator.xor`.
+What is a key pitfall of `zip` in Python?	It stops at the shortest iterable without warning.
+Why should an equality check using `zip` usually compare lengths first?	Because `zip` alone can ignore extra items in the longer operand.
+How can `all(a == b for a, b in zip(self, other))` improve a sequence `__eq__` implementation?	It compares items lazily and stops at the first mismatch.
