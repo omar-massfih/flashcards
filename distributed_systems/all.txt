@@ -1,11 +1,8 @@
 What is a data-intensive application?	An application where bottlenecks are usually data volume/complexity/change rate rather than raw CPU.
 Name common building blocks of data-intensive applications.	Databases (storage); caches; search indexes; stream processing; batch processing.
-Why don’t app teams typically build a new storage engine from scratch?	Data systems are a successful abstraction; reuse is usually cheaper and safer.
 Why are there many different database systems?	Different applications have different requirements and access patterns; tradeoffs differ.
 Why use the umbrella term “data systems”?	Tool boundaries blur; apps increasingly combine multiple tools into composite systems.
 In a composite data system, what keeps caches/indexes in sync?	Application code often updates/invalidates external caches and indexes to match the primary store.
-What does a service API typically do when multiple tools are combined behind it?	Hides implementation details while exposing the guarantees the composite system provides.
-When you stitch multiple data tools together, what new role do you take on?	You become a data system designer (not just an application developer).
 What 3 cross-cutting concerns does DDIA Ch. 1 emphasize?	Reliability; scalability; maintainability.
 Define reliability (DDIA framing).	Continuing to work correctly (correct function at required performance) even when things go wrong.
 Define scalability (DDIA framing).	Reasonable ways to handle growth in load/data/complexity; add resources while keeping performance acceptable.
@@ -26,7 +23,6 @@ Name practical techniques to reduce impact of software faults.	Thorough testing;
 What is an example of a runtime self-check for correctness?	Continuously check an invariant/guarantee and alert on discrepancies (e.g., message counts in/out).
 Why are human errors a major reliability risk?	Operators and developers make mistakes; config/change errors are common causes of outages.
 How can interfaces reduce human error?	Good abstractions/APIs/admin UIs make the right thing easy and discourage risky actions.
-Why can overly restrictive operational interfaces backfire?	People work around them, negating safety benefits.
 What is the purpose of non-production sandbox environments?	Safe experimentation with realistic conditions without impacting real users.
 Name techniques for fast recovery from human errors.	Roll back config quickly; gradual rollout; recompute data; tooling for recovery.
 Why is monitoring/telemetry important for reliability?	Early warning signals; validate assumptions/constraints; faster diagnosis during incidents.
@@ -36,21 +32,16 @@ What are load parameters?	Quantitative measures describing load (e.g., RPS, read
 Why do the “right” load parameters depend on the system?	They must reflect architecture, access patterns, and what bottlenecks dominate (avg vs extremes).
 What is fan-out in scalability discussions?	The amount of downstream work/calls/writes triggered by one incoming request (one-to-many effects).
 What is the tradeoff between “compute on read” vs “compute on write”?	Compute on read: cheaper writes, expensive reads; compute on write: more work at write time, faster reads.
-Why can a hybrid approach help with fan-out-heavy workloads?	Eager fan-out for typical cases; handle extreme fan-out cases differently to keep performance predictable.
 In batch systems, what performance metric is commonly emphasized?	Throughput (records/sec) or job runtime for a dataset.
 In online systems, what performance metric is commonly emphasized?	Response time (client-visible time from request to response).
-What is the difference between response time and latency?	Response time includes service time plus network and queueing delays; latency is time waiting to be served.
 Why is response time best treated as a distribution?	Requests vary; outliers matter; a single average hides user experience variance.
-Why can the mean be misleading for “typical” response time?	Skew/outliers distort it; it doesn’t show how many users experience slow requests.
 What is the median response time (p50)?	The 50th percentile; half of requests are faster and half are slower.
 What does p95 (or p99/p999) response time mean?	A threshold where 95% (or 99%/99.9%) of requests are faster than that value.
 What are tail latencies?	High-percentile response times (e.g., p99/p999) representing the slow tail/outliers.
 Why can tail latencies matter disproportionately?	A few slow requests can dominate user experience and multi-call request latency.
 What is head-of-line blocking?	A small number of slow requests block later requests in queues, inflating their response times.
 Why measure response times from the client side?	Queueing and network delays contribute to what users see; server-side timing can miss them.
-What load-test client behavior can skew latency measurements?	Closed-loop tests (wait for response before next request) keep queues shorter than reality.
 What is tail latency amplification?	If a request fans out to multiple backends, overall latency is gated by the slowest sub-request.
-Why is averaging percentiles across machines/time mathematically wrong?	Percentiles don’t aggregate by averaging; you must combine distributions (e.g., merge histograms).
 What are two high-level scaling approaches?	Vertical scaling (scale up) and horizontal scaling (scale out across machines).
 What is a shared-nothing architecture?	Horizontal scaling by distributing load/state across independent machines (no shared central bottleneck).
 What is elasticity vs manual scaling?	Elastic systems auto-add resources; manual scaling relies on human capacity planning.
@@ -62,15 +53,12 @@ Define evolvability.	Make it easy to change/adapt the system for new requirement
 What is accidental complexity?	Complexity from implementation choices, not inherent to the user’s problem.
 Why is abstraction a key tool for simplicity?	It hides implementation details behind a clean interface; reuse concentrates quality improvements.
 Give examples of abstractions that hide complexity.	High-level languages hide machine details; SQL hides storage/concurrency/crash recovery details.
-What is the key question at each layer of a data model stack?	How is this data represented in terms of the next-lower layer?
 What is the relational model?	Data organized into relations (tables) — unordered collections of tuples (rows); proposed by Edgar Codd in 1970
 What is the object-relational impedance mismatch?	The disconnect between object-oriented application code and the relational table/row/column model — requires a translation layer
 What is an ORM framework?	A library (e.g. ActiveRecord, Hibernate) that reduces translation boilerplate between objects and relational tables — but can't fully hide the differences
 What are the three main ways to represent one-to-many relationships in relational databases?	Separate tables with foreign keys; structured/XML/JSON datatype columns; or encoding as text in a single column (not queryable)
 Why use IDs rather than plain-text strings for values like region or industry?	IDs never change even if the human-meaningful value changes; duplicating text risks inconsistencies when updates are needed
 What is normalization in databases?	Removing duplication by storing each fact in exactly one place and referencing it by ID
-What was IBM's IMS, and how does it compare to document databases?	A 1960s hierarchical database storing data as nested records (like JSON) — worked for one-to-many but poorly handled many-to-many and had no joins
-What was the network model (CODASYL)?	A generalization of the hierarchical model where records could have multiple parents, linked by pointer-like chains called access paths
 What was the key problem with CODASYL access paths?	Programmers had to manually track all paths to reach data; changing access paths required rewriting all query code — very inflexible
 How did the relational model improve on the hierarchical and network models?	Laid all data in open tables (no nested structures); the query optimizer automatically selects access paths; adding new indexes/queries doesn't require rewriting code
 What is a query optimizer?	A component of a relational database that automatically decides which indexes and join methods to use and in which order — built once, benefits all queries
@@ -82,10 +70,6 @@ When is schema-on-read advantageous over schema-on-write?	When items in a collec
 What is the data locality advantage of document databases?	A document is stored as a single continuous string — fetching the whole document requires one query and no multi-table joins
 What are the downsides of document locality?	The entire document is loaded even when only part is needed; updates typically rewrite the whole document
 What is a declarative query language?	A language (like SQL) where you specify what data you want, not how to retrieve it — the system's optimizer decides execution
-What is an imperative query language?	A language where you specify step-by-step how to retrieve data — like IMS/CODASYL APIs
 Why are declarative languages generally better for databases?	More concise; hide engine implementation details allowing optimization; easier to parallelize; DB can improve performance without changing queries
 What is MapReduce?	A programming model for processing large amounts of data across many machines using map (emit key-value pairs) and reduce (aggregate) pure functions
-What restrictions apply to MapReduce map and reduce functions?	Must be pure functions: only use passed input, no additional DB queries, no side effects — enables re-running anywhere in any order
-What is MongoDB's aggregation pipeline?	A declarative, JSON-based query language added in MongoDB 2.2 as a more convenient alternative to hand-writing MapReduce
 What kinds of data are best modeled as a graph?	Highly interconnected data with complex many-to-many relationships — social networks, web links, road networks
-What are the two types of objects in a graph data model?	Vertices (also called nodes or entities) and edges (also called relationships or arcs)
