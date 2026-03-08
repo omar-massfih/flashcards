@@ -1,0 +1,10 @@
+What is a text object in VS Code Vim?	A target such as a word, paragraph, quotes, or brackets that an operator or Visual mode can act on.
+Select `inner word` (VS Code Vim, operator or Visual mode)	`iw`
+Select `a word` including surrounding space when useful (VS Code Vim, operator or Visual mode)	`aw`
+Select `inner paragraph` (VS Code Vim, operator or Visual mode)	`ip`
+Select `inner double-quoted string` (VS Code Vim, operator or Visual mode)	`i"`
+Select `inner single-quoted string` (VS Code Vim, operator or Visual mode)	`i'`
+Select `inner parentheses block` (VS Code Vim, operator or Visual mode)	`ib`
+Select `a parentheses block` (VS Code Vim, operator or Visual mode)	`ab`
+Select `inner braces block` (VS Code Vim, operator or Visual mode)	`iB`
+Select `a braces block` (VS Code Vim, operator or Visual mode)	`aB`
