@@ -316,17 +316,8 @@ How can a caller dynamically leave an optional object attribute unset in Terrafo
 What components can Terraform version constraints apply to?	Modules, provider requirements, and Terraform itself via `required_version`.
 What is the basic syntax of a Terraform version constraint?	A string containing one or more version conditions, such as `\">= 1.2.0, < 2.0.0\"`.
 How are multiple Terraform version-constraint conditions combined?	With commas, and all conditions must be satisfied.
-What does `=` or no operator mean in a Terraform version constraint?	Allow exactly one specific version only.
-Can an exact-version Terraform constraint be combined with other conditions?	No.
 What does `!=` mean in a Terraform version constraint?	Exclude one exact version.
-What do `>`, `>=`, `<`, and `<=` mean in Terraform version constraints?	They compare versions and allow only versions for which the comparison is true.
 What does the Terraform pessimistic constraint operator `~>` do?	It allows only the right-most specified version component to increment.
-What does `~> 1.0.4` mean in a Terraform version constraint?	Allow versions `>= 1.0.4` and `< 1.1.0`.
-What does `~> 1.1` mean in a Terraform version constraint?	Allow versions `>= 1.1.0` and `< 2.0.0`.
-How does Terraform choose among acceptable provider or module versions?	It uses the newest installed or downloadable version that satisfies all applicable constraints.
-What does Terraform do if it lacks an acceptable provider or module version?	It attempts to download the newest version that satisfies the constraints.
-What happens if Terraform cannot obtain an acceptable version of itself, a provider, or a module?	It does not proceed with plan, apply, or state operations.
-How does Terraform treat provider and Terraform-version constraints from root and child modules?	All constraints are considered together, and Terraform proceeds only if all are satisfied.
 How do you force Terraform to select a pre-release version like `1.2.0-beta`?	Specify the exact pre-release version with `=` or by omitting the operator and giving that exact version.
 Do `>`, `>=`, `<`, `<=`, or `~>` match pre-release versions in Terraform?	No; pre-release versions are not matched by those operators.
 What is the recommended module-version practice for third-party Terraform modules?	Require specific versions so updates happen only when you choose.
