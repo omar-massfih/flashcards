@@ -1,12 +1,20 @@
-Terraform: what is a provider?	A plugin that lets Terraform interact with a platform/service via its API.
-Terraform: what is a resource (conceptually)?	An individual unit of infrastructure managed by Terraform (e.g., compute instance, network).
-Terraform: what is a module?	A reusable Terraform configuration composed from resources (possibly across providers).
-Terraform workflow: what are the core steps?	Scope; Author; Initialize; Plan; Apply.
-Terraform workflow: what does “Initialize” do?	Install the plugins/providers Terraform needs to manage infrastructure.
-Terraform workflow: what does “Plan” do?	Preview the changes Terraform will make to match the configuration.
-Terraform workflow: what does “Apply” do?	Make the planned changes to reach the desired state.
-What is Terraform state (purpose)?	A state file that tracks real infrastructure and acts as a source of truth.
-How does Terraform use state during deployments?	It compares desired config to state to decide what changes to make.
-What is a remote state backend used for?	To securely share state and coordinate access for team collaboration.
-What is HCP Terraform used for (high level)?	Hosted Terraform that can share state, run Terraform in a stable environment, and support collaboration.
-How can Terraform integrate with VCS (high level)?	Connect to GitHub/GitLab/etc. to propose infra changes when config changes are committed.
+What is infrastructure as code (IaC)?	Defining, deploying, updating, and destroying infrastructure through code rather than manual steps.
+What is a snowflake server?	A server with a subtly unique configuration caused by manual changes or configuration drift.
+What is configuration drift?	Servers that were meant to match gradually diverge because of repeated in-place changes.
+What is a configuration management tool used for?	Installing and managing software on existing servers.
+What is a server templating tool used for?	Creating reusable machine images that capture a preconfigured server or application environment.
+What is an orchestration tool used for?	Managing deployment, scaling, healing, and networking for running servers or containers.
+What is a provisioning tool used for?	Creating the infrastructure itself, such as servers, databases, load balancers, and networking resources.
+What does immutable infrastructure mean?	You replace servers with newly built images instead of modifying existing servers in place.
+Mutable vs immutable infrastructure: what is the main tradeoff?	Mutable infrastructure updates servers in place; immutable infrastructure replaces servers with newly built ones.
+Why can immutable infrastructure reduce configuration-drift bugs?	Each deployment starts from a fresh image, so servers don’t accumulate unique change histories.
+Configuration management vs provisioning: what is the key distinction?	Configuration management changes software on existing servers; provisioning creates the infrastructure resources those servers run on.
+Terraform: how does it work at a high level?	It reads configuration files, builds a plan, and translates the desired state into API calls to providers.
+What command shows what Terraform intends to change before applying it?	`terraform plan`
+Why is Terraform considered declarative?	You describe the desired end state, and Terraform figures out how to reach it.
+Procedural vs declarative IaC: what is the main difference?	Procedural code specifies step-by-step actions; declarative code specifies the target end state.
+Why is declarative IaC often easier to reuse and maintain?	The code describes the current desired state directly, instead of encoding a sequence of history-dependent steps.
+What problem does Terraform state solve for declarative IaC?	It lets Terraform know what infrastructure already exists so it can compute the changes needed to reach the desired state.
+General-purpose language vs DSL for IaC: what is the tradeoff?	GPLs offer more flexibility and ecosystem support; DSLs are usually simpler, more concise, and more uniform for infrastructure tasks.
+Why is Terraform often described as masterless and agentless?	It runs as a client and talks directly to provider APIs instead of relying on a separate master server or per-server agent.
+What is one reason Terraform does not provide transparent portability across cloud providers?	Different providers expose different infrastructure primitives and features, so “the same” infrastructure usually cannot be mapped exactly across clouds.
