@@ -1,0 +1,7 @@
+Search forward for text (VS Code Vim, Normal mode)	`/text`
+Jump to the next search match (VS Code Vim, Normal mode)	`n`
+Jump to the previous search match (VS Code Vim, Normal mode)	`N`
+Search forward for the word under the cursor (VS Code Vim, Normal mode)	`*`
+Center the current line on screen (VS Code Vim, Normal mode)	`zz`
+Scroll half a screen down (VS Code Vim, Normal mode)	`Ctrl-d`
+Scroll half a screen up (VS Code Vim, Normal mode)	`Ctrl-u`
