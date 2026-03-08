@@ -117,12 +117,6 @@ What does `()` represent as a return value?	The unit value (an “empty” value
 Why does `x + 1;` often cause a return-type mismatch in Rust functions?	The semicolon makes it a statement, so it yields `()` instead of the numeric value.
 What kind of compiler error often appears when a function’s body yields `()` but the signature says it returns a non-`()` type?	A “mismatched types” error (expected the declared return type, found `()`).
 How can a block expression be used with `let`?	You can bind a block’s value: `let x = { ... tail_expression ... };`.
-Why do programmers write comments?	To add extra explanation for humans when code needs clarification.
-What is the idiomatic single-line comment syntax in Rust?	Start with `//` (comment continues to the end of the line).
-How do you write a multi-line comment using `//` in Rust?	Use `//` at the start of each line.
-Where can `//` comments be placed in Rust code?	On their own line above code or at the end of a line containing code.
-Which comment placement is more commonly seen in Rust style: end-of-line or above-line?	More often on a separate line above the code it annotates.
-What does “the comment continues until the end of the line” mean?	Everything after `//` on that line is treated as comment text.
 Besides `//` comments, what other kind of comment does Rust have?	Documentation comments (covered later in TRPL, e.g., publishing a crate).
 What is an `if` expression used for (Rust)?	Branching: run a block when a condition is true; optionally run an `else` block when false.
 What type must a Rust `if` condition have?	`bool`.
