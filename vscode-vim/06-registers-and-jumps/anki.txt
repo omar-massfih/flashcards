@@ -1,0 +1,11 @@
+What does the unnamed register `"` usually contain (VS Code Vim)?	The most recent delete or yank.
+What does register `0` usually contain (VS Code Vim)?	The most recent yank.
+What is a named register useful for in VS Code Vim?	Storing text explicitly so later deletes do not overwrite the text you want to paste.
+What is the black-hole register `_` used for (VS Code Vim)?	Delete or change text without overwriting the unnamed register.
+Yank to the system clipboard register (VS Code Vim)	`"+y{motion}`
+Paste from the system clipboard register (VS Code Vim)	`"+p`
+Set mark `a` at the current cursor position (VS Code Vim, Normal mode)	`ma`
+Jump to mark `a` at its exact position (VS Code Vim, Normal mode)	`` `a` ``
+Backtick vs apostrophe for marks (VS Code Vim): what is the difference?	Backtick jumps to the exact column; apostrophe jumps to the start of the marked line.
+Go to an older location in the jump list (VS Code Vim, Normal mode)	`Ctrl-o`
+Go to a newer location in the jump list (VS Code Vim, Normal mode)	`Ctrl-i`
