@@ -1,25 +1,16 @@
 What is an enum in Rust?	A type defined by enumerating its possible variants (a value is exactly one variant at a time).
-How do you define an enum type in Rust?	`enum Name { Variant1, Variant2, ... }`.
-What is an enum variant (Rust)?	One of the possible forms/values of an enum type.
 How do you refer to/construct a variant value (Rust)?	`EnumName::Variant` (optionally with payload arguments).
 Why do enum variants use `Enum::Variant` (Rust)?	Variants are namespaced under the enum type, avoiding name collisions.
 Why are enums a better fit than structs for “one of several cases” (Rust)?	An enum enforces “exactly one of these variants” while keeping a single type for all cases.
-Can an enum value be multiple variants at the same time (Rust)?	No; an enum value is exactly one variant at a time.
 How do you attach data to an enum variant (Rust)?	Put data in the variant definition, e.g. `V4(String)` or `Move { x: i32, y: i32 }`.
 What are the three common enum-variant shapes (Rust)?	Unit-like (no data), tuple-like (unnamed fields), and struct-like (named fields).
-What is a unit-like enum variant (Rust)?	A variant with no associated data, e.g. `Quit`.
-What is a tuple-like enum variant (Rust)?	A variant with unnamed fields, e.g. `Write(String)`.
-What is a struct-like enum variant (Rust)?	A variant with named fields, e.g. `Move { x: i32, y: i32 }`.
 Can different enum variants carry different types/amounts of data (Rust)?	Yes; each variant can define its own payload.
-Why is “data in variants” often nicer than `struct { kind, data }` (Rust)?	More concise and keeps each payload tied to its variant.
-Why can’t a single struct naturally model “either 4 u8s or a String” (Rust)?	Struct fields have fixed types; enums are designed for alternative payload shapes.
 In Rust, why is an enum variant like `IpAddr::V4(...)` described as a constructor?	Each tuple/struct-like variant is a value constructor that builds the enum value.
 Can you define methods on an enum (Rust)?	Yes; use `impl EnumName { fn ... }`.
 What is `Option<T>` in Rust?	An enum representing an optional value: `Some(T)` or `None`.
 Does Rust have `null`?	No; absence is represented explicitly with `Option<T>`.
 Why is `Option<T>` safer than nulls (Rust)?	`Option<T>` is a distinct type, so the compiler forces you to handle the “no value” case.
 Do you need to `use` `Option`/`Some`/`None` in most Rust code?	No; they’re in the prelude, so they’re usually already in scope.
-Can you write `Some(x)` and `None` without `Option::` (Rust)?	Yes (because the variants are in the prelude too).
 What does the `T` in `Option<T>` mean (Rust)?	A generic type parameter: the type inside `Some(T)`.
 Are `Option<i32>` and `Option<char>` the same type (Rust)?	No; substituting a different `T` produces a different concrete type.
 Why does `let x = None;` often need a type annotation (Rust)?	`None` alone doesn’t provide enough information to infer `T`.
@@ -31,14 +22,7 @@ In a `match`, what does a pattern like `Some(v)` do (Rust)?	Matches the `Some` v
 In a `match` on `Option<T>`, how do you handle the “no value” case (Rust)?	Add a `None => ...` arm.
 What is `if let` used for (Rust)?	A concise way to run code when one pattern matches (common with enums).
 Example: how do you run code only when an `Option` is `Some` (Rust)?	`if let Some(v) = opt { ... }`.
-How do you handle the “otherwise” case with `if let` (Rust)?	Use `else`, e.g. `if let ... { ... } else { ... }`.
-When should you prefer `match` over `if let` (Rust)?	When you need to handle multiple variants/patterns (especially exhaustively).
-How is `match` different from `if` regarding the matched expression (Rust)?	`if` requires a `bool` condition; `match` can match on values of any type.
-In a `match`, what does the `=>` separate (Rust)?	The pattern (left) and the expression/block to run (right).
-In a `match`, how are arms separated (Rust)?	With commas (`,`) between arms.
 When do you need `{ ... }` in a match arm (Rust)?	When the arm runs multiple statements/lines; braces wrap a block expression.
-After a block arm (`=> { ... }`), is the trailing comma required (Rust)?	No; it’s optional after a block arm (but commas are still used to separate arms).
-In a `match`, are patterns checked in any special order (Rust)?	Yes; they’re checked top-to-bottom, and the first matching arm runs.
 In a `match`, what becomes the value of the entire `match` expression (Rust)?	The value of the expression/block in the matching arm.
 Pattern binding: what does `Coin::Quarter(state)` do in a `match` (Rust)?	Matches `Quarter(...)` and binds the inner `UsState` value to `state`.
 In `match dice_roll { 3 => ..., 7 => ..., other => ... }`, what does `other` do (Rust)?	It’s a catch-all pattern that binds the unmatched value for use in that arm.
