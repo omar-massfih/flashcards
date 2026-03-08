@@ -5,7 +5,6 @@ Move cursor right (VS Code Vim, Normal mode)	`l`
 Move to start of line (VS Code Vim, Normal mode)	`0`
 Move to first non-blank character on the line (VS Code Vim, Normal mode)	`^`
 Move to end of line (VS Code Vim, Normal mode)	`$`
-Move to last non-blank character on the line (VS Code Vim, Normal mode)	`g_`
 Move one word forward (VS Code Vim, Normal mode)	`w`
 Move one word backward (VS Code Vim, Normal mode)	`b`
 Move to end of word (VS Code Vim, Normal mode)	`e`
@@ -14,11 +13,9 @@ Move one WORD backward (whitespace-separated) (VS Code Vim, Normal mode)	`B`
 Move to end of WORD (whitespace-separated) (VS Code Vim, Normal mode)	`E`
 Go to first line of file (VS Code Vim, Normal mode)	`gg`
 Go to last line of file (VS Code Vim, Normal mode)	`G`
-Go to line N (VS Code Vim, Normal mode)	`{N}G` or `{N}gg`
 Find the next occurrence of a character on the line (VS Code Vim, Normal mode)	`f{char}`
 Move before the next occurrence of a character on the line (VS Code Vim, Normal mode)	`t{char}`
 Find the previous occurrence of a character on the line (VS Code Vim, Normal mode)	`F{char}`
-Move after the previous occurrence of a character on the line (VS Code Vim, Normal mode)	`T{char}`
 Repeat the last character-find in the same direction (VS Code Vim, Normal mode)	`;`
 Repeat the last character-find in the opposite direction (VS Code Vim, Normal mode)	`,`
 Jump to the matching bracket, brace, or parenthesis (VS Code Vim, Normal mode)	`%`
@@ -28,17 +25,13 @@ What does the delete operator `d` do (VS Code Vim)?	Deletes the text covered by 
 What does the yank operator `y` do (VS Code Vim)?	Copies the text covered by the following motion or text object.
 What does the change operator `c` do (VS Code Vim)?	Deletes the target text and then enters Insert mode.
 Delete one character under the cursor (VS Code Vim, Normal mode)	`x`
-Delete from the cursor to the start of the next word (VS Code Vim, Normal mode)	`dw`
-Delete to the beginning of the current word (VS Code Vim, Normal mode)	`db`
 Delete the entire current line (VS Code Vim, Normal mode)	`dd`
-Delete two lines (VS Code Vim, Normal mode)	`2dd`
-Delete to the end of the line (VS Code Vim, Normal mode)	`D` or `d$`
+Delete to the end of the line (VS Code Vim, Normal mode)	`D`
 Change the entire current line (VS Code Vim, Normal mode)	`cc`
-Change to the end of the line (VS Code Vim, Normal mode)	`C` or `c$`
+Change to the end of the line (VS Code Vim, Normal mode)	`C`
 Change the current inner word (VS Code Vim, Normal mode)	`ciw`
 Substitute the character under the cursor and enter Insert mode (VS Code Vim, Normal mode)	`s`
 Yank the current line (VS Code Vim, Normal mode)	`yy`
-Yank from the cursor to the end of the line (VS Code Vim, Normal mode)	`y$`
 Paste after the cursor (VS Code Vim, Normal mode)	`p`
 Paste before the cursor (VS Code Vim, Normal mode)	`P`
 Undo the last change (VS Code Vim, Normal mode)	`u`
@@ -50,21 +43,13 @@ Indent the current line to the left (VS Code Vim, Normal mode)	`<<`
 Enter Visual mode (characterwise) (VS Code Vim)	`v`
 Enter Visual Line mode (VS Code Vim)	`V`
 Enter Visual Block mode (VS Code Vim)	`Ctrl-v`
-Exit Visual mode (VS Code Vim)	`Esc`
-Delete the current Visual selection (VS Code Vim)	`d`
-Yank the current Visual selection (VS Code Vim)	`y`
-Change the current Visual selection (VS Code Vim)	`c`
-Replace the current Visual selection and enter Insert mode (VS Code Vim)	`s`
 Indent the current Visual selection to the right (VS Code Vim)	`>`
 Indent the current Visual selection to the left (VS Code Vim)	`<`
 Swap the active end of the Visual selection (VS Code Vim)	`o`
-Swap to the other corner of a Visual block selection (VS Code Vim)	`O`
 Search forward for text (VS Code Vim, Normal mode)	`/text`
-Search backward for text (VS Code Vim, Normal mode)	`?text`
 Jump to the next search match (VS Code Vim, Normal mode)	`n`
 Jump to the previous search match (VS Code Vim, Normal mode)	`N`
 Search forward for the word under the cursor (VS Code Vim, Normal mode)	`*`
-Search backward for the word under the cursor (VS Code Vim, Normal mode)	`#`
 Center the current line on screen (VS Code Vim, Normal mode)	`zz`
 Scroll half a screen down (VS Code Vim, Normal mode)	`Ctrl-d`
 Scroll half a screen up (VS Code Vim, Normal mode)	`Ctrl-u`
@@ -72,33 +57,20 @@ What is a text object in VS Code Vim?	A target such as a word, paragraph, quotes
 Select `inner word` (VS Code Vim, operator or Visual mode)	`iw`
 Select `a word` including surrounding space when useful (VS Code Vim, operator or Visual mode)	`aw`
 Select `inner paragraph` (VS Code Vim, operator or Visual mode)	`ip`
-Select `a paragraph` (VS Code Vim, operator or Visual mode)	`ap`
 Select `inner double-quoted string` (VS Code Vim, operator or Visual mode)	`i"`
-Select `a double-quoted string` (VS Code Vim, operator or Visual mode)	`a"`
 Select `inner single-quoted string` (VS Code Vim, operator or Visual mode)	`i'`
-Select `a single-quoted string` (VS Code Vim, operator or Visual mode)	`a'`
 Select `inner parentheses block` (VS Code Vim, operator or Visual mode)	`ib`
 Select `a parentheses block` (VS Code Vim, operator or Visual mode)	`ab`
 Select `inner braces block` (VS Code Vim, operator or Visual mode)	`iB`
 Select `a braces block` (VS Code Vim, operator or Visual mode)	`aB`
-Delete the current inner word (VS Code Vim, Normal mode)	`diw`
-Delete `a word` including surrounding space when useful (VS Code Vim, Normal mode)	`daw`
-Yank the current inner word (VS Code Vim, Normal mode)	`yiw`
-Change the current inner paragraph (VS Code Vim, Normal mode)	`cip`
 What does the unnamed register `"` usually contain (VS Code Vim)?	The most recent delete or yank.
 What does register `0` usually contain (VS Code Vim)?	The most recent yank.
 What is a named register useful for in VS Code Vim?	Storing text explicitly so later deletes do not overwrite the text you want to paste.
-Yank into a named register (VS Code Vim)	`"{register}y{motion}` like `"ayw`
-Paste from a named register (VS Code Vim)	`"{register}p`
 What is the black-hole register `_` used for (VS Code Vim)?	Delete or change text without overwriting the unnamed register.
-Delete into the black-hole register (VS Code Vim)	`"_d{motion}`
 Yank to the system clipboard register (VS Code Vim)	`"+y{motion}`
 Paste from the system clipboard register (VS Code Vim)	`"+p`
 Set mark `a` at the current cursor position (VS Code Vim, Normal mode)	`ma`
 Jump to mark `a` at its exact position (VS Code Vim, Normal mode)	`` `a` ``
-Jump to mark `a` at the start of its line (VS Code Vim, Normal mode)	`'a`
 Backtick vs apostrophe for marks (VS Code Vim): what is the difference?	Backtick jumps to the exact column; apostrophe jumps to the start of the marked line.
 Go to an older location in the jump list (VS Code Vim, Normal mode)	`Ctrl-o`
 Go to a newer location in the jump list (VS Code Vim, Normal mode)	`Ctrl-i`
-Go to an older location in the change list (VS Code Vim, Normal mode)	`g;`
-Go to a newer location in the change list (VS Code Vim, Normal mode)	`g,`

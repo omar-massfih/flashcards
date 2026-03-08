@@ -1,0 +1,21 @@
+Move cursor left (VS Code Vim, Normal mode)	`h`
+Move cursor down (VS Code Vim, Normal mode)	`j`
+Move cursor up (VS Code Vim, Normal mode)	`k`
+Move cursor right (VS Code Vim, Normal mode)	`l`
+Move to start of line (VS Code Vim, Normal mode)	`0`
+Move to first non-blank character on the line (VS Code Vim, Normal mode)	`^`
+Move to end of line (VS Code Vim, Normal mode)	`$`
+Move one word forward (VS Code Vim, Normal mode)	`w`
+Move one word backward (VS Code Vim, Normal mode)	`b`
+Move to end of word (VS Code Vim, Normal mode)	`e`
+Move one WORD forward (whitespace-separated) (VS Code Vim, Normal mode)	`W`
+Move one WORD backward (whitespace-separated) (VS Code Vim, Normal mode)	`B`
+Move to end of WORD (whitespace-separated) (VS Code Vim, Normal mode)	`E`
+Go to first line of file (VS Code Vim, Normal mode)	`gg`
+Go to last line of file (VS Code Vim, Normal mode)	`G`
+Find the next occurrence of a character on the line (VS Code Vim, Normal mode)	`f{char}`
+Move before the next occurrence of a character on the line (VS Code Vim, Normal mode)	`t{char}`
+Find the previous occurrence of a character on the line (VS Code Vim, Normal mode)	`F{char}`
+Repeat the last character-find in the same direction (VS Code Vim, Normal mode)	`;`
+Repeat the last character-find in the opposite direction (VS Code Vim, Normal mode)	`,`
+Jump to the matching bracket, brace, or parenthesis (VS Code Vim, Normal mode)	`%`
