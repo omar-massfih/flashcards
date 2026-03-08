@@ -1,0 +1,45 @@
+What two broad storage-engine families does DDIA chapter 3 focus on first?	Log-structured storage engines and page-oriented engines such as B-trees.
+What is an append-only log in database storage?	An append-only sequence of records; new writes are added at the end rather than overwriting old ones.
+Why does a naive append-only key-value store have slow reads?	Lookup is O(n): it may need to scan the whole file to find the latest value for a key.
+What is an index in a database?	An additional structure derived from primary data that helps locate records faster.
+What is the key write/read tradeoff with indexes?	Indexes speed up reads but add overhead to writes because they must also be maintained.
+What is a hash index for an append-only log?	An in-memory hash map from key to byte offset in the data file.
+What workload is a Bitcask-style hash index well suited for?	Frequent updates to a limited number of distinct keys, where all keys fit in memory.
+Why do hash indexes not support range queries well?	Hash tables are optimized for exact-key lookup, not ordered scans across key ranges.
+Why split an append-only log into segments?	So old segments can be compacted and merged without rewriting the entire log.
+What is compaction in a log-structured key-value store?	Discarding obsolete values so only the latest value for each key is kept.
+What is a tombstone in log-structured storage?	A special deletion record that tells compaction to discard older values for a deleted key.
+Why is crash recovery needed for in-memory indexes?	Because the in-memory index is lost on restart and must be rebuilt or restored.
+Why is an append-only design helpful for crash recovery and concurrency?	Immutable segments avoid in-place corruption risks and allow concurrent reads more easily.
+What is an SSTable?	A Sorted String Table: a segment file whose key-value pairs are sorted by key and contain each key at most once per segment.
+Why are SSTables easier to merge than unsorted log segments?	Sorted files can be merged efficiently like mergesort while keeping the newest value for duplicate keys.
+Why can SSTables use a sparse in-memory index instead of indexing every key?	Because sorted order lets the engine jump near a key and scan a short range from there.
+What is a memtable?	An in-memory sorted structure that buffers writes before flushing them to disk as an SSTable.
+How does an LSM-tree handle incoming writes?	Writes go to an in-memory memtable, which is later flushed to SSTables and compacted in the background.
+What problem do Bloom filters help solve in LSM-trees?	They avoid unnecessary disk reads when a key is not present.
+What is a B-tree?	A page-oriented balanced tree that stores sorted key ranges in fixed-size pages.
+What is the branching factor of a B-tree?	The number of child-page references a page can contain.
+How does a B-tree stay balanced when a page fills up?	The page splits and the parent is updated to reflect the new key-range boundaries.
+Why do B-trees often use a write-ahead log (WAL)?	To recover to a consistent state if a crash happens during multi-page updates.
+What is the core design difference between B-trees and log-structured indexes?	B-trees overwrite fixed-size pages in place; log-structured indexes append new data and merge later.
+Why are LSM-trees often attractive for write-heavy workloads?	They turn many writes into sequential disk operations and can sustain high write throughput.
+Why can B-trees be preferable for some read-heavy or latency-sensitive workloads?	They often provide more predictable reads because data is not spread across many compaction stages.
+What is write amplification?	One logical write causing multiple physical writes over time.
+Why can compaction hurt LSM-tree performance?	It competes with foreground reads and writes for finite disk bandwidth.
+What is a secondary index?	An index on a non-primary-key field that helps find rows/documents by other attributes.
+What is a clustered index?	An index that stores the actual row data within the index itself.
+What is a covering index?	An index that stores enough columns to answer some queries without fetching the base row separately.
+What is a concatenated multi-column index?	An index that combines multiple columns into one ordered key, typically in a specified column order.
+Why are specialized multidimensional indexes useful?	They can narrow by multiple dimensions at once, such as time plus temperature or latitude plus longitude.
+What is an in-memory database?	A database that serves reads from memory and uses disk or replication mainly for durability.
+Why can an in-memory database be faster even if disk-based systems also use caches?	It avoids much of the overhead of encoding and managing disk-centric storage structures.
+What is OLTP?	Online transaction processing: low-latency reads and writes on a small number of records per query.
+What is OLAP?	Online analytic processing: large scans and aggregations for analysis and decision support.
+What is a data warehouse?	A separate analytical database containing cleaned, transformed copies of data from operational systems.
+What is a star schema?	A warehouse schema with a central fact table linked to surrounding dimension tables.
+Why is column-oriented storage good for analytics?	Queries often need only a few columns across many rows, so reading columns separately reduces I/O.
+Why does column-oriented storage compress well?	Values in a column are often repetitive or low-cardinality, making techniques like bitmap and run-length encoding effective.
+What is vectorized processing?	Processing chunks of column data in tight loops, often directly on compressed data, to use CPU caches and SIMD efficiently.
+Why can sort order matter in column stores?	Sorting by commonly filtered columns improves pruning and often improves compression.
+What is a materialized view?	A precomputed query result stored on disk to speed up repeated reads.
+What is a data cube?	A multidimensional materialized aggregate that precomputes summaries across combinations of dimensions.
