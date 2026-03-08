@@ -1,0 +1,36 @@
+Why do data formats need forward and backward compatibility?	Because old and new code and old and new data formats often coexist during rolling upgrades and delayed client updates.
+Why is forward compatibility often harder than backward compatibility?	Older code must ignore or safely handle fields added by newer code.
+Why is language-specific serialization usually a poor long-term choice?	It ties data to one language, often has security/versioning problems, and may be inefficient.
+Why can language-specific deserialization be a security risk?	Decoding arbitrary byte sequences may instantiate arbitrary classes and enable code execution or other attacks.
+What is a key weakness of JSON, XML, and CSV compared with schema-driven binary formats?	They are more ambiguous about types and typically less compact.
+Why can numbers be problematic in JSON/XML/CSV?	Precision and numeric type interpretation can be ambiguous, especially for large integers.
+Why are binary strings awkward in JSON and XML?	They usually must be encoded as text such as Base64, which is hacky and increases size.
+What is the main idea behind Thrift and Protocol Buffers?	Use an explicit schema with field tags so encoded data can omit field names and stay compact.
+Why are field tags critical in Thrift and Protocol Buffers?	Encoded data identifies fields by tag number, so changing a tag breaks compatibility with existing data.
+What schema change is safe in Thrift or Protocol Buffers?	Adding a new field with a new tag number, as long as it is optional or has a default value.
+Why must newly added fields in Thrift or Protocol Buffers not be required?	New code must still be able to read old data that does not contain the new field.
+What restriction applies when removing a field in Thrift or Protocol Buffers?	The field should be optional, and its tag number must never be reused.
+Why can changing a field’s datatype in Thrift or Protocol Buffers be risky?	Old and new code may interpret the value differently, causing truncation or loss of precision.
+What is Avro’s key difference from Thrift and Protocol Buffers?	Avro’s binary encoding does not use field tags; it relies on schema resolution between writer and reader schemas.
+What are the writer’s schema and reader’s schema in Avro?	The writer’s schema is used to encode data; the reader’s schema is what the decoder expects and resolves against.
+How does Avro match fields during schema resolution?	By field name, not by field position or tag number.
+What happens in Avro if the writer has a field the reader does not know?	The reader ignores that field.
+What happens in Avro if the reader expects a field missing from the writer’s schema?	The reader fills it with the default value from the reader’s schema.
+What field changes are compatible in Avro?	Adding or removing fields that have default values.
+Why is Avro friendly to dynamically generated schemas?	It identifies fields by name rather than manually assigned tag numbers.
+What is a major benefit of schema-driven binary encodings over ad hoc textual formats?	They provide explicit compatibility rules, compact data, and useful schema documentation.
+What does it mean that data often outlives code?	Old data may remain stored for years, long after the code that wrote it has been replaced.
+Why do databases often require both backward and forward compatibility?	New and old application versions may read and write the same database during rolling upgrades.
+What application-level risk exists when old code rewrites data written by new code?	Unknown fields may be lost if the old code decodes and reencodes the record without preserving them.
+What is a key difference between databases and services as dataflow mechanisms?	Databases allow later reading of stored data, while services expose an application-specific API over the network.
+REST vs SOAP: what is the high-level contrast?	REST is a simpler HTTP-oriented design style; SOAP is a more complex XML-based protocol stack.
+What is the core problem with making RPC look like a local function call?	Remote calls have failure modes, latency, retries, and serialization costs that local calls do not.
+Why are network requests fundamentally less predictable than local function calls?	Requests or responses may be lost, delayed, timed out, or retried due to failures outside the caller’s control.
+Why can retrying an RPC be dangerous?	The original request may already have been processed, so retries can perform the action multiple times unless it is idempotent.
+Why is REST often easier to experiment with and debug than custom RPC?	It works with standard tools such as browsers and `curl` and has a broad ecosystem of HTTP infrastructure.
+Why do public or cross-organizational service APIs often need long-term compatibility?	The service owner cannot force all clients to upgrade at the same time.
+What is a message broker?	An intermediary that temporarily stores messages and delivers them from producers to consumers.
+What are advantages of a message broker over direct RPC?	It can buffer overload, retry delivery, decouple sender from recipient, and support one-to-many delivery.
+What is the key communication difference between message passing and RPC?	Message passing is usually asynchronous and one-way, while RPC typically expects an immediate reply.
+What is the actor model?	A concurrency model where independent actors hold local state and communicate by asynchronous messages.
+Why does location transparency fit the actor model better than classic RPC?	Actor systems already assume asynchronous message passing and possible message loss, so local and remote communication are less mismatched.
