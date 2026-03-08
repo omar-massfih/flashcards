@@ -1,0 +1,34 @@
+What is a block-structured language (Programming languages)?	A language where code is organized into nested blocks that can introduce declarations with limited scope.
+What is scope (Programming languages)?	The region of program text where a declaration is visible.
+What is lifetime (Programming languages)?	The period of execution during which storage for a value or variable location is allocated.
+Why is lifetime not the same as scope?	A variable’s storage can remain allocated during execution even when some parts of its scope are temporarily hidden.
+What does it mean for an inner declaration to hide an outer one?	The inner declaration takes precedence within its scope, creating a hole in the outer declaration’s scope.
+What is an activation record?	A run-time stack data structure that stores the information needed for one active block or function call.
+What kinds of data can an activation record contain for an in-line block?	Local variables, temporary/intermediate results, and a link to the previous record.
+What is the environment pointer?	A pointer to the current activation record on the run-time stack.
+What is a control link (dynamic link)?	A pointer from one activation record to the previous active record on the stack.
+Why may an activation record need temporary-result storage?	Expressions can require intermediate values during evaluation in addition to named variables.
+What can happen to uninitialized local variables in some languages?	They may have undefined or arbitrary values unless the language guarantees default initialization or forbids such use.
+What is static scope?	A scoping rule where a name refers to the declaration in the closest enclosing lexical block.
+What is dynamic scope?	A scoping rule where a name refers to the most recent active binding found in the current chain of activations.
+When do static and dynamic scope differ most clearly?	When functions are called from contexts other than the one where they were declared.
+What must a function-call activation record typically contain?	Parameters, local variables, return address, return-value location, links, and any temporary results.
+What is the return address in an activation record?	The code location execution should continue at after the function returns.
+What is the return-result address?	The location where the callee should place its return value for the caller.
+Why does recursion require a new activation record per call?	Each call needs its own parameter values, locals, temporaries, and return state.
+What is the difference between a control link and an access link?	The control link points to the caller’s record; the access link points to the statically enclosing scope’s record.
+What is an access link (static link)?	A pointer in an activation record to the record for the closest enclosing lexical scope.
+Why are access links useful under static scoping?	They let a function find nonlocal variables in enclosing lexical scopes.
+How are access links set for a function body?	They point to the activation record of the block where the function was declared.
+What is call-by-value?	A parameter-passing mode where the callee receives the value of the argument, not the caller’s variable location.
+What is call-by-reference?	A parameter-passing mode where the callee receives the address/location of the caller’s variable.
+Why can call-by-reference introduce aliasing?	Multiple parameter names can refer to the same storage location.
+What is aliasing in parameter passing?	A situation where two or more names refer to the same memory location.
+What is call-by-name?	A parameter-passing mode where the actual argument expression is re-evaluated each time the formal parameter is used.
+Why is call-by-name unusual in many modern languages?	It is less predictable and more complex than value- or reference-based passing.
+What is call-by-result?	A parameter-passing mode where a local parameter is copied back to the caller only when the callee returns.
+What is call-by-value-result?	A parameter-passing mode where the argument is copied in at call time and copied back out at return.
+How does call-by-value-result differ from call-by-reference?	Value-result copies in and out through a local copy; reference works on the caller’s location directly during execution.
+Why can aliasing make by-reference calls hard to reason about?	Updating one parameter can unexpectedly change the value observed through another aliased parameter.
+What is an L-value in parameter passing?	A storage location or address that can appear on the left side of an assignment.
+What is an R-value in parameter passing?	A value or contents read from a location, rather than the location itself.
