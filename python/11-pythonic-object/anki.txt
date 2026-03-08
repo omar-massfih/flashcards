@@ -1,0 +1,22 @@
+What uses `obj.__format__(format_spec)` in Python?	F-strings, `format()`, and `str.format()`.
+How can a class support unpacking like `x, y = obj` (Python)?	By implementing `__iter__` so the object is iterable.
+What is an alternative constructor in Python?	A class-level constructor, often implemented as a `@classmethod`, that builds instances in a different way than `__init__`.
+Why is `@classmethod` useful for alternative constructors (Python)?	It receives the class as the first argument, so it can construct instances of the actual class being called.
+What does `@staticmethod` change about a method call (Python)?	It removes automatic binding; the method receives no special first argument.
+What is the format specification mini-language in Python?	The notation used after `:` in f-strings, `format()`, and `str.format()` to control formatting.
+How can a user-defined class support custom formatting codes in Python?	By implementing `__format__` and interpreting `format_spec` however the class chooses.
+What makes an object hashable in Python?	It has a stable hash value during its lifetime and an equality relation consistent with that hash.
+What is a common pattern for implementing `__hash__` on a value object (Python)?	Hash a tuple of the attributes that define equality, e.g. `hash((self.x, self.y))`.
+How can read-only properties help a Python object act immutable?	They allow attribute reads but prevent normal reassignment after initialization.
+What does `__match_args__` do in Python pattern matching?	It defines which attributes are used, and in what order, for positional class patterns.
+What is name mangling in Python?	The rewriting of attributes like `__x` to `_ClassName__x` to reduce accidental name clashes.
+What does `__slots__` do in a Python class?	It declares a fixed set of instance attributes and can replace per-instance `__dict__` storage with a more memory-efficient layout.
+What is the main benefit of `__slots__` in Python?	Lower memory usage for large numbers of instances.
+What limitation does `__slots__` impose on instances (Python)?	They can only have the attributes named in `__slots__`, unless `'__dict__'` is also included.
+What must a subclass do if it also wants `__slots__` behavior (Python)?	Declare its own `__slots__`; otherwise subclass instances usually get a `__dict__`.
+Why might you add `'__dict__'` to `__slots__` (Python)?	To allow dynamic attributes while still slotting the declared ones.
+Why might you add `'__weakref__'` to `__slots__` (Python)?	To allow instances to be targets of weak references.
+How do class attributes behave when accessed through an instance (Python)?	They act as default attribute values unless the instance has its own attribute of the same name.
+What happens when you assign to an instance attribute that shadows a class attribute (Python)?	The instance gets its own attribute, leaving the class attribute unchanged.
+How can you customize a default class attribute for all instances in Python?	Set it on the class or define a subclass that overrides it.
+Why is `type(self).__name__` useful in `__repr__` (Python)?	It lets inherited `__repr__` methods display the actual subclass name automatically.
