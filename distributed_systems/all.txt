@@ -1,15 +1,9 @@
-What is a data-intensive application?	An application where bottlenecks are usually data volume/complexity/change rate rather than raw CPU.
-Name common building blocks of data-intensive applications.	Databases (storage); caches; search indexes; stream processing; batch processing.
 Why are there many different database systems?	Different applications have different requirements and access patterns; tradeoffs differ.
-Why use the umbrella term “data systems”?	Tool boundaries blur; apps increasingly combine multiple tools into composite systems.
-In a composite data system, what keeps caches/indexes in sync?	Application code often updates/invalidates external caches and indexes to match the primary store.
-What 3 cross-cutting concerns does DDIA Ch. 1 emphasize?	Reliability; scalability; maintainability.
 Define reliability (DDIA framing).	Continuing to work correctly (correct function at required performance) even when things go wrong.
 Define scalability (DDIA framing).	Reasonable ways to handle growth in load/data/complexity; add resources while keeping performance acceptable.
 Define maintainability (DDIA framing).	Enable teams to work productively over time while maintaining and evolving the system.
 What is a fault vs a failure (DDIA)?	Fault: a component deviates from spec; failure: the system as a whole stops providing required service.
 What is fault tolerance (resilience)?	Mechanisms that prevent certain faults from turning into user-visible failures.
-Why can deliberate fault injection improve reliability?	It exercises fault-handling paths so poor error handling is discovered before real incidents.
 Name three broad categories of faults discussed in DDIA Ch. 1.	Hardware faults; software errors; human errors.
 Why are hardware faults often treated as random/uncorrelated?	One disk/host failing usually doesn’t imply others fail at the same time (weak correlations aside).
 How does redundancy help with hardware faults?	Redundant components can take over while broken parts are replaced, reducing downtime.
@@ -20,16 +14,10 @@ What makes systematic software faults especially dangerous?	They are correlated 
 Give examples of systematic software faults (DDIA Ch. 1).	Bug on bad input; runaway resource usage; dependency slowdown/corruption; cascading failures.
 Why can software bugs lie dormant for a long time?	They’re triggered only under unusual circumstances when hidden assumptions break.
 Name practical techniques to reduce impact of software faults.	Thorough testing; process isolation; crash/restart; monitoring/analysis in prod; careful design of assumptions.
-What is an example of a runtime self-check for correctness?	Continuously check an invariant/guarantee and alert on discrepancies (e.g., message counts in/out).
-Why are human errors a major reliability risk?	Operators and developers make mistakes; config/change errors are common causes of outages.
 How can interfaces reduce human error?	Good abstractions/APIs/admin UIs make the right thing easy and discourage risky actions.
-What is the purpose of non-production sandbox environments?	Safe experimentation with realistic conditions without impacting real users.
 Name techniques for fast recovery from human errors.	Roll back config quickly; gradual rollout; recompute data; tooling for recovery.
 Why is monitoring/telemetry important for reliability?	Early warning signals; validate assumptions/constraints; faster diagnosis during incidents.
-When might teams consciously sacrifice reliability?	To reduce dev/ops cost (e.g., prototypes) but it should be an explicit, conscious tradeoff.
-Why is “X is scalable” not meaningful by itself?	Scalability depends on how load grows and what resources/architecture changes you can make.
 What are load parameters?	Quantitative measures describing load (e.g., RPS, read/write ratio, active users, cache hit rate).
-Why do the “right” load parameters depend on the system?	They must reflect architecture, access patterns, and what bottlenecks dominate (avg vs extremes).
 What is fan-out in scalability discussions?	The amount of downstream work/calls/writes triggered by one incoming request (one-to-many effects).
 What is the tradeoff between “compute on read” vs “compute on write”?	Compute on read: cheaper writes, expensive reads; compute on write: more work at write time, faster reads.
 In batch systems, what performance metric is commonly emphasized?	Throughput (records/sec) or job runtime for a dataset.
@@ -40,26 +28,21 @@ What does p95 (or p99/p999) response time mean?	A threshold where 95% (or 99%/99
 What are tail latencies?	High-percentile response times (e.g., p99/p999) representing the slow tail/outliers.
 Why can tail latencies matter disproportionately?	A few slow requests can dominate user experience and multi-call request latency.
 What is head-of-line blocking?	A small number of slow requests block later requests in queues, inflating their response times.
-Why measure response times from the client side?	Queueing and network delays contribute to what users see; server-side timing can miss them.
 What is tail latency amplification?	If a request fans out to multiple backends, overall latency is gated by the slowest sub-request.
 What are two high-level scaling approaches?	Vertical scaling (scale up) and horizontal scaling (scale out across machines).
 What is a shared-nothing architecture?	Horizontal scaling by distributing load/state across independent machines (no shared central bottleneck).
 What is elasticity vs manual scaling?	Elastic systems auto-add resources; manual scaling relies on human capacity planning.
 Why is scaling stateless services easier than scaling stateful data systems?	State distribution/consistency adds complexity; stateless replicas can be load-balanced more directly.
-What 3 principles does DDIA Ch. 1 highlight for maintainability?	Operability; simplicity; evolvability.
 Define operability.	Make it easy to keep the system running smoothly in production (monitor, deploy, diagnose, maintain).
 Define simplicity (DDIA maintainability principle).	Reduce accidental complexity so engineers can understand and reason about the system.
 Define evolvability.	Make it easy to change/adapt the system for new requirements over time.
 What is accidental complexity?	Complexity from implementation choices, not inherent to the user’s problem.
 Why is abstraction a key tool for simplicity?	It hides implementation details behind a clean interface; reuse concentrates quality improvements.
-Give examples of abstractions that hide complexity.	High-level languages hide machine details; SQL hides storage/concurrency/crash recovery details.
 What is the relational model?	Data organized into relations (tables) — unordered collections of tuples (rows); proposed by Edgar Codd in 1970
 What is the object-relational impedance mismatch?	The disconnect between object-oriented application code and the relational table/row/column model — requires a translation layer
-What is an ORM framework?	A library (e.g. ActiveRecord, Hibernate) that reduces translation boilerplate between objects and relational tables — but can't fully hide the differences
 What are the three main ways to represent one-to-many relationships in relational databases?	Separate tables with foreign keys; structured/XML/JSON datatype columns; or encoding as text in a single column (not queryable)
 Why use IDs rather than plain-text strings for values like region or industry?	IDs never change even if the human-meaningful value changes; duplicating text risks inconsistencies when updates are needed
 What is normalization in databases?	Removing duplication by storing each fact in exactly one place and referencing it by ID
-What was the key problem with CODASYL access paths?	Programmers had to manually track all paths to reach data; changing access paths required rewriting all query code — very inflexible
 How did the relational model improve on the hierarchical and network models?	Laid all data in open tables (no nested structures); the query optimizer automatically selects access paths; adding new indexes/queries doesn't require rewriting code
 What is a query optimizer?	A component of a relational database that automatically decides which indexes and join methods to use and in which order — built once, benefits all queries
 When is the document model a good fit?	When data has a document-like structure (tree of one-to-many relationships) that is typically loaded all at once
@@ -83,7 +66,6 @@ What workload is a Bitcask-style hash index well suited for?	Frequent updates to
 Why do hash indexes not support range queries well?	Hash tables are optimized for exact-key lookup, not ordered scans across key ranges.
 Why split an append-only log into segments?	So old segments can be compacted and merged without rewriting the entire log.
 What is compaction in a log-structured key-value store?	Discarding obsolete values so only the latest value for each key is kept.
-What is a tombstone in log-structured storage?	A special deletion record that tells compaction to discard older values for a deleted key.
 Why is crash recovery needed for in-memory indexes?	Because the in-memory index is lost on restart and must be rebuilt or restored.
 Why is an append-only design helpful for crash recovery and concurrency?	Immutable segments avoid in-place corruption risks and allow concurrent reads more easily.
 What is an SSTable?	A Sorted String Table: a segment file whose key-value pairs are sorted by key and contain each key at most once per segment.
@@ -93,7 +75,6 @@ What is a memtable?	An in-memory sorted structure that buffers writes before flu
 How does an LSM-tree handle incoming writes?	Writes go to an in-memory memtable, which is later flushed to SSTables and compacted in the background.
 What problem do Bloom filters help solve in LSM-trees?	They avoid unnecessary disk reads when a key is not present.
 What is a B-tree?	A page-oriented balanced tree that stores sorted key ranges in fixed-size pages.
-What is the branching factor of a B-tree?	The number of child-page references a page can contain.
 How does a B-tree stay balanced when a page fills up?	The page splits and the parent is updated to reflect the new key-range boundaries.
 Why do B-trees often use a write-ahead log (WAL)?	To recover to a consistent state if a crash happens during multi-page updates.
 What is the core design difference between B-trees and log-structured indexes?	B-trees overwrite fixed-size pages in place; log-structured indexes append new data and merge later.
@@ -117,4 +98,3 @@ Why does column-oriented storage compress well?	Values in a column are often rep
 What is vectorized processing?	Processing chunks of column data in tight loops, often directly on compressed data, to use CPU caches and SIMD efficiently.
 Why can sort order matter in column stores?	Sorting by commonly filtered columns improves pruning and often improves compression.
 What is a materialized view?	A precomputed query result stored on disk to speed up repeated reads.
-What is a data cube?	A multidimensional materialized aggregate that precomputes summaries across combinations of dimensions.

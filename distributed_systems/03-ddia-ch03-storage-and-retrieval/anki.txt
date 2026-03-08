@@ -8,7 +8,6 @@ What workload is a Bitcask-style hash index well suited for?	Frequent updates to
 Why do hash indexes not support range queries well?	Hash tables are optimized for exact-key lookup, not ordered scans across key ranges.
 Why split an append-only log into segments?	So old segments can be compacted and merged without rewriting the entire log.
 What is compaction in a log-structured key-value store?	Discarding obsolete values so only the latest value for each key is kept.
-What is a tombstone in log-structured storage?	A special deletion record that tells compaction to discard older values for a deleted key.
 Why is crash recovery needed for in-memory indexes?	Because the in-memory index is lost on restart and must be rebuilt or restored.
 Why is an append-only design helpful for crash recovery and concurrency?	Immutable segments avoid in-place corruption risks and allow concurrent reads more easily.
 What is an SSTable?	A Sorted String Table: a segment file whose key-value pairs are sorted by key and contain each key at most once per segment.
@@ -18,7 +17,6 @@ What is a memtable?	An in-memory sorted structure that buffers writes before flu
 How does an LSM-tree handle incoming writes?	Writes go to an in-memory memtable, which is later flushed to SSTables and compacted in the background.
 What problem do Bloom filters help solve in LSM-trees?	They avoid unnecessary disk reads when a key is not present.
 What is a B-tree?	A page-oriented balanced tree that stores sorted key ranges in fixed-size pages.
-What is the branching factor of a B-tree?	The number of child-page references a page can contain.
 How does a B-tree stay balanced when a page fills up?	The page splits and the parent is updated to reflect the new key-range boundaries.
 Why do B-trees often use a write-ahead log (WAL)?	To recover to a consistent state if a crash happens during multi-page updates.
 What is the core design difference between B-trees and log-structured indexes?	B-trees overwrite fixed-size pages in place; log-structured indexes append new data and merge later.
@@ -42,4 +40,3 @@ Why does column-oriented storage compress well?	Values in a column are often rep
 What is vectorized processing?	Processing chunks of column data in tight loops, often directly on compressed data, to use CPU caches and SIMD efficiently.
 Why can sort order matter in column stores?	Sorting by commonly filtered columns improves pruning and often improves compression.
 What is a materialized view?	A precomputed query result stored on disk to speed up repeated reads.
-What is a data cube?	A multidimensional materialized aggregate that precomputes summaries across combinations of dimensions.

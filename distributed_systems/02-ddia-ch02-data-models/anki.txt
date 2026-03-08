@@ -1,10 +1,8 @@
 What is the relational model?	Data organized into relations (tables) — unordered collections of tuples (rows); proposed by Edgar Codd in 1970
 What is the object-relational impedance mismatch?	The disconnect between object-oriented application code and the relational table/row/column model — requires a translation layer
-What is an ORM framework?	A library (e.g. ActiveRecord, Hibernate) that reduces translation boilerplate between objects and relational tables — but can't fully hide the differences
 What are the three main ways to represent one-to-many relationships in relational databases?	Separate tables with foreign keys; structured/XML/JSON datatype columns; or encoding as text in a single column (not queryable)
 Why use IDs rather than plain-text strings for values like region or industry?	IDs never change even if the human-meaningful value changes; duplicating text risks inconsistencies when updates are needed
 What is normalization in databases?	Removing duplication by storing each fact in exactly one place and referencing it by ID
-What was the key problem with CODASYL access paths?	Programmers had to manually track all paths to reach data; changing access paths required rewriting all query code — very inflexible
 How did the relational model improve on the hierarchical and network models?	Laid all data in open tables (no nested structures); the query optimizer automatically selects access paths; adding new indexes/queries doesn't require rewriting code
 What is a query optimizer?	A component of a relational database that automatically decides which indexes and join methods to use and in which order — built once, benefits all queries
 When is the document model a good fit?	When data has a document-like structure (tree of one-to-many relationships) that is typically loaded all at once
