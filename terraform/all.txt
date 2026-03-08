@@ -284,18 +284,14 @@ What is continuous validation in HCP Terraform?	Regularly re-running checks, pre
 When does HCP Terraform continuous validation run `check` blocks?	Whenever workspace health assessments run, in addition to normal plan/apply execution.
 What order does Terraform generally use for validation?	Input variable validation first; then preconditions; then postconditions; then checks.
 What is the purpose of policy enforcement in HCP Terraform?	To validate that Terraform plans comply with security rules and best practices.
-What can HCP Terraform policies enforce besides infrastructure rules?	Organizational workflow standards, such as restricting when deployments may run.
 What policy frameworks can HCP Terraform use for custom policies?	Sentinel and OPA.
-What pre-written policy option does HashiCorp provide for HCP Terraform?	Pre-written Sentinel policies maintained by HashiCorp.
 What is a policy set in HCP Terraform?	A collection of policies applied globally or to specific projects and workspaces.
 When does HCP Terraform evaluate a policy set?	For each run in the selected workspaces.
 Can a single HCP Terraform policy set mix Sentinel and OPA policies?	No; a policy set can contain policies from only one framework.
 Can the same HCP Terraform workspace use both Sentinel and OPA policy sets?	Yes; you can attach Sentinel and OPA policy sets to the same workspace.
 How can you create a policy set in HCP Terraform?	From the UI, the API, or by connecting HCP Terraform to a version control system.
 What does excluding a workspace from a global or project-scoped policy set do?	It prevents HCP Terraform from enforcing that policy set on runs in that workspace.
-Where does HCP Terraform show policy results?	In the HCP Terraform UI for each policy set applied to the workspace.
 What determines whether failed policies stop a run in HCP Terraform?	The policy’s enforcement level.
-Can failed policies be overridden in HCP Terraform?	Yes, if the user has the required permissions.
 What are Terraform type constraints used for?	To validate user-provided values for input variables and resource arguments more precisely.
 Where are Terraform type constraints valid in Terraform language syntax?	In the `type` argument of an input variable.
 What are the primitive types in Terraform?	`string`, `number`, and `bool`.
