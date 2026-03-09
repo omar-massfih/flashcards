@@ -134,3 +134,42 @@ What are advantages of a message broker over direct RPC?	It can buffer overload,
 What is the key communication difference between message passing and RPC?	Message passing is usually asynchronous and one-way, while RPC typically expects an immediate reply.
 What is the actor model?	A concurrency model where independent actors hold local state and communicate by asynchronous messages.
 Why does location transparency fit the actor model better than classic RPC?	Actor systems already assume asynchronous message passing and possible message loss, so local and remote communication are less mismatched.
+What is replication in distributed systems?	Keeping copies of the same data on multiple network-connected machines.
+Why replicate data across multiple machines?	To reduce latency, improve availability, and increase read throughput.
+What is leader-based replication?	A replication model where one leader accepts writes and followers copy changes from it.
+What is the main tradeoff between synchronous and asynchronous replication?	Synchronous replication improves durability but can block writes; asynchronous replication improves availability but can lose unreplicated writes on leader failure.
+What is semi-synchronous replication?	A setup where at least one follower is replicated synchronously while others are asynchronous.
+How is a new follower typically initialized in leader-based replication?	By copying a consistent snapshot and then replaying changes from a known position in the replication log.
+How does a follower usually recover after a temporary failure?	It reconnects and catches up from the last replication-log position it had processed.
+What is failover in leader-based replication?	Promoting a follower to leader and reconfiguring the system after the old leader fails.
+Why is failover hard in leader-based replication?	Because leader failure detection, stale replicas, reconfiguration, and split-brain risks can all cause data loss or inconsistency.
+What is split brain in replication?	A fault where two nodes both believe they are the leader and may accept conflicting writes.
+What is statement-based replication?	Replicating writes by forwarding the original write statements to replicas.
+Why can statement-based replication be unsafe?	Nondeterministic functions, side effects, and ordering differences can make replicas diverge.
+What is write-ahead log shipping for replication?	Replicating low-level storage-engine log records from leader to followers.
+What is a logical replication log?	A replication log that describes row-level data changes independently of storage-engine internals.
+Why is a logical replication log useful?	It decouples replication from storage internals and is easier for external systems to consume.
+What is trigger-based replication?	Using database triggers and application logic to capture and replicate changes.
+What problem does read-after-write consistency prevent?	A user failing to see their own successful write on a subsequent read.
+What problem do monotonic reads prevent?	A user seeing newer data and then later seeing older data from another replica.
+What problem do consistent prefix reads prevent?	Seeing causally related writes in the wrong order, such as an answer before the question.
+What is multi-leader replication?	A replication model where multiple nodes accept writes and replicate changes to each other.
+When is multi-leader replication most useful?	For multi-datacenter setups, offline-capable clients, or collaborative editing.
+Why does multi-leader replication create write conflicts?	Because different leaders can accept concurrent writes to the same data.
+What is conflict avoidance in multi-leader replication?	Routing all writes for a given record through one leader so concurrent conflicts cannot occur.
+What does convergent conflict resolution require?	All replicas must eventually settle on the same final value after a conflict.
+What is leaderless replication?	A replication model where clients write to and read from multiple replicas without a leader.
+What is read repair in leaderless replication?	Fixing a stale replica during a read by writing back a newer value discovered from other replicas.
+What is anti-entropy in leaderless replication?	A background process that compares replicas and copies missing updates between them.
+In leaderless replication, what do `n`, `w`, and `r` mean, and what does `w + r > n` aim to guarantee?	`n` is the number of replicas for a value, `w` is the write quorum, and `r` is the read quorum; `w + r > n` aims to make reads overlap writes on at least one up-to-date replica.
+Why can quorum systems still return stale reads?	Concurrent writes, sloppy quorums, failures, and repair timing can still break the ideal guarantee.
+What is a sloppy quorum?	A write or read quorum that uses temporarily reachable nodes outside the normal home replica set.
+What is hinted handoff?	Later transferring data from temporary sloppy-quorum nodes back to the intended home replicas.
+What is last-write-wins conflict resolution?	Choosing the write with the latest timestamp or ordering value and discarding the others.
+Why can last-write-wins lose data?	Concurrent writes that were all accepted may still be discarded except for one.
+When are two operations concurrent in a distributed system?	When neither happened before the other.
+What does “happens-before” mean in distributed systems?	One operation knew about, depended on, or built upon another earlier operation.
+Why doesn’t concurrency depend on exact clock time?	Because distributed systems care about causal dependence, not perfectly synchronized timestamps.
+What are sibling values in leaderless replication?	Concurrent versions of the same value that must later be merged.
+Why may applications need to merge sibling values?	Because the database preserves concurrent writes instead of silently discarding them.
+What is a version vector?	A set of per-replica version counters used to track causal relationships between writes across replicas.
