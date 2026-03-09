@@ -1,0 +1,24 @@
+What is a higher-order function (Programming languages)?	A function that takes functions as arguments, returns functions, or both.
+Why are higher-order functions useful?	They let behavior be passed and reused as a value instead of hardcoding one specific operation.
+Why does a function value need environment information at run time?	A nested function may reference nonlocal variables from the scope where it was declared.
+What is a closure (Programming languages)?	A function value represented as a pair of code and the environment needed by that code.
+What does it mean that a closure "closes over" its environment?	It captures bindings from its declaring scope so the function can use them later.
+How is a closure call set up at run time?	The call creates a new activation record and sets its access link from the closure's saved environment.
+Why can a nested function passed as an argument still access nonlocal variables?	The function value carries the environment of its declaration with it.
+Why is returning a nested function harder than passing one as an argument?	The returned function may outlive the call that created it, so its environment must remain available afterward.
+When must an activation record outlive the function call that created it?	When a returned closure still needs variables stored in that activation record.
+Why are closure environments often stored on the heap?	Because stack allocation alone cannot support environments that must survive after a function returns.
+How can a returned closure provide private state?	It captures local variables that remain accessible only through that returned function.
+What does it mean for functions to be first-class values?	They can be passed as arguments, returned as results, and stored like other values.
+Where are object references typically stored at run time?	In activation records or other ordinary variables that hold pointers to objects.
+Where are objects themselves typically stored at run time?	On the heap rather than directly on the run-time stack.
+What data is usually stored with each object?	The object's instance-specific state, such as its field values.
+What runtime data is usually shared rather than stored separately in every object?	Common class-level functionality such as method tables, templates, or static members.
+Why are methods usually stored in shared class-level structures?	Because the code is common across many instances and should not be duplicated per object.
+What is the runtime difference between a method call and a plain nested function call in JavaScript?	A method call binds `this` to the receiver object, while a plain function call does not preserve that object binding.
+Why can `var that = this` fix a nested-function `this` problem in JavaScript?	The nested function's closure captures `that`, preserving access to the original receiver object.
+What is hoisting for `var` declarations in JavaScript?	`var` declarations are treated as if they were moved to the top of the enclosing function scope.
+Why does traditional `var` not provide block scope in JavaScript?	A `var` declaration belongs to the enclosing function scope, not to the nearest block.
+What does `let` change about scope in JavaScript?	It introduces block-scoped bindings instead of function-scoped `var` bindings.
+Why is block scope often preferable to function scope?	It limits a binding's visibility to the block where it is needed and avoids accidental reuse across a whole function.
+Why is exact closure behavior a runtime-organization issue?	The implementation must preserve both code and the right environment across calls, returns, and object interactions.
