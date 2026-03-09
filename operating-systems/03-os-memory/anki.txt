@@ -1,0 +1,38 @@
+What is memory management concerned with (Operating systems)?	Managing memory resources: allocation, protection, virtual memory, and hierarchy control.
+Why do computer systems use a memory hierarchy?	Because smaller and faster memory is more expensive per byte, so systems trade speed, capacity, and cost across levels.
+What is absolute addressing?	Addressing memory by fixed physical byte locations.
+What is relative addressing?	Addressing memory relative to a base location instead of an absolute physical address.
+Why is relative addressing more convenient for processes?	It lets code work independently of where the process is physically loaded in memory.
+What is dynamic address translation?	Converting a relative or virtual address into an absolute physical address at run time.
+What is the text/code segment of a process?	The memory region holding executable program instructions, often read-only and shareable.
+What does the initialized data segment contain?	Global or static variables with explicit initial values.
+What does the uninitialized data segment (BSS) contain?	Global or static variables without explicit initial values.
+What is the heap in a process memory layout?	The region used for dynamic memory allocation, typically growing toward higher addresses.
+What is the stack in a process memory layout?	The region used for function call state, local variables, and return information, typically growing toward lower addresses.
+Why is multiprogramming a memory-management challenge?	Many processes compete for memory at once, and each process’s memory needs can change over time.
+What is swapping?	Moving an entire process and its state out of main memory to secondary storage and later bringing it back.
+What are overlays in memory management?	A manual technique where programmers replace parts of code or data in memory as needed.
+What is fixed partitioning?	Dividing memory into partitions of predetermined size before programs are loaded.
+What is internal fragmentation?	Wasted space inside an allocated memory region because the region is larger than the process needs.
+What is dynamic partitioning?	Creating and removing memory partitions at run time based on process needs.
+What is external fragmentation?	Free memory exists, but it is split into small noncontiguous holes that are hard to use.
+What is compaction in memory management?	Moving allocated memory blocks to combine fragmented free space into larger contiguous regions.
+What is first-fit allocation?	Choosing the first free region large enough for the request.
+What is best-fit allocation?	Choosing the smallest free region that can satisfy the request.
+What is the buddy system?	A memory-allocation scheme that splits and merges power-of-two-sized blocks.
+What is segmentation?	Dividing a process into variable-sized logical parts and placing those parts separately in memory.
+What is an advantage of segmentation?	It avoids internal fragmentation and can reduce external fragmentation compared with large contiguous allocation.
+What is a disadvantage of segmentation?	It adds another step to address translation.
+What is paging?	Dividing memory into fixed-size pages and frames so a process can be stored in noncontiguous physical memory.
+What fragmentation property does paging have?	It removes external fragmentation and leaves only limited internal fragmentation.
+What is virtual memory?	A memory system where virtual addresses are translated to physical memory, while some pages may reside on disk until needed.
+Why is virtual memory useful?	It lets a process use a larger address space than currently fits in physical memory and load only needed parts.
+What is a page table?	A data structure that maps virtual pages to physical frames and records page status.
+What is a page fault?	An exception raised when a process accesses a page that is not currently present in physical memory.
+What happens at a high level during page fault handling?	The OS traps to the kernel, locates the needed page, selects a victim page if needed, loads the missing page, updates tables, and resumes execution.
+What is a page replacement algorithm?	The policy the OS uses to choose which page to evict when bringing in another page.
+What is FIFO page replacement?	Replacing the page that has been in memory the longest.
+What is second-chance page replacement?	A FIFO-like policy that gives referenced pages another chance before replacement.
+What is LRU page replacement?	Replacing the page that has gone the longest time since last use.
+Why is LRU attractive in principle?	Recently used pages are likely to be used again soon, so keeping them often reduces page faults.
+Why is exact LRU expensive to implement?	It requires tracking memory-reference recency very closely.
