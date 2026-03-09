@@ -424,3 +424,24 @@ How can `functools.reduce` be used in a sequence `__hash__` implementation?	Redu
 What is a key pitfall of `zip` in Python?	It stops at the shortest iterable without warning.
 Why should an equality check using `zip` usually compare lengths first?	Because `zip` alone can ignore extra items in the longer operand.
 How can `all(a == b for a, b in zip(self, other))` improve a sequence `__eq__` implementation?	It compares items lazily and stops at the first mismatch.
+What is goose typing (Python)?	Runtime type checking against abstract base classes (ABCs) instead of concrete classes.
+What is a static protocol (Python)?	An explicit structural interface defined with a `typing.Protocol` subclass for static type checkers.
+Dynamic protocol vs static protocol: what is one key difference?	A dynamic protocol can still be useful when only partly implemented; a static protocol must provide every required member to satisfy the checker.
+Why can Python iterate over some objects that only implement `__getitem__`?	As a fallback, the interpreter tries successive integer indexes starting at 0 when `__iter__` is missing.
+Why can the `in` operator work on some objects without `__contains__`?	Python can fall back to iteration, and sequence-like objects may be iterated via `__getitem__`.
+What is monkey patching (Python)?	Changing a module, class, or function at runtime to add or alter behavior without editing its original source.
+Why can monkey patching make an object support a protocol at runtime?	Protocols depend on available methods, so adding the needed method can make existing code accept the object.
+Why is `list(iterable)` a useful fail-fast pattern in Python?	It immediately verifies the argument is iterable and gives you a concrete list to store or process.
+When is `iter(x)` a good fail-fast check in Python?	When any iterable is acceptable and you want an immediate error if `x` is not iterable.
+When is an `isinstance` check against an ABC reasonable in Python?	When you need to enforce an interface contract at runtime without tying the code to one concrete class.
+What is a virtual subclass of an ABC (Python)?	A class recognized by an ABC through registration even though it does not inherit from that ABC.
+What does `ABC.register(SomeClass)` do (Python)?	It makes `SomeClass` a virtual subclass for `isinstance` and `issubclass` checks.
+What does a virtual subclass of an ABC not get from registration?	It does not inherit methods, attributes, or appear in the normal method resolution order of the ABC.
+Why are the ABCs in `collections.abc` useful?	They provide explicit runtime interfaces, reusable mixin methods, and better abstraction for type hints than concrete collection classes.
+What is `__subclasshook__` used for in an ABC?	To let an ABC recognize structurally compatible classes as subclasses without explicit inheritance or registration.
+How can an ABC support structural typing at runtime?	By implementing `__subclasshook__` to approve classes that provide the required methods.
+Why should `__subclasshook__` usually be used sparingly in custom ABCs?	Method-name checks alone are often too weak to guarantee the intended semantics of a richer interface.
+What does `@runtime_checkable` do for a `typing.Protocol`?	It allows the protocol to be used with `isinstance` and `issubclass` at runtime.
+What is a limitation of runtime checks against static protocols?	They usually check only whether the required attributes exist, not whether signatures or type annotations are actually compatible.
+Why are narrow static protocols often better than broad ones?	They are easier to satisfy, easier to reuse, and impose fewer unnecessary requirements on clients.
+Numeric ABCs vs numeric static protocols: what is the main tradeoff in Python?	`numbers` ABCs are useful for runtime checks, while `typing` numeric protocols work better with static type checkers.
