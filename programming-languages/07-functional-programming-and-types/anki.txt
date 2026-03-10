@@ -1,0 +1,12 @@
+Why is implicit numeric coercion often restricted in strongly typed languages?	To avoid hidden conversions that weaken type clarity and safety.
+What is destructuring in a value declaration?	Binding parts of a composite value directly to names by matching its structure.
+What is pattern matching in function definitions?	Choosing behavior by matching argument values against ordered structural patterns.
+Why does clause order matter in pattern matching?	The first matching case is the one that is taken.
+What is an algebraic data type?	A type built from named variants, where each variant may optionally carry associated data.
+What is a constructor in an algebraic data type?	A named way to build one variant of the datatype.
+What is the difference between a type abbreviation and a new datatype?	A type abbreviation gives another name to an existing type, while a new datatype creates new constructors and a distinct type.
+What is a case expression?	An expression that computes a result by matching a value against several patterns.
+What is tail recursion?	Recursion where the recursive call is the last operation in the function.
+Why is tail recursion often more efficient than ordinary recursion?	It can be executed with iterative stack usage instead of needing a new stack frame for each step.
+What is a curried function?	A function represented as a chain of one-argument functions.
+Why does currying enable partial application?	Supplying fewer than all arguments yields another function waiting for the remaining arguments.
