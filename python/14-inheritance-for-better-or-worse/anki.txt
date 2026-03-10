@@ -1,0 +1,33 @@
+What is the recommended way to call an overridden superclass method in Python?	Use `super()` instead of naming the base class directly.
+Why is `super()` preferred over calling a superclass method by class name in Python?	It avoids hardcoding a specific base class and supports multiple inheritance correctly.
+Why is calling `super().__init__(...)` especially important in Python subclasses?	Python does not automatically call a superclass initializer, so subclasses must do it explicitly when needed.
+What does `super()` return in Python?	A dynamic proxy that finds the next matching method in the method resolution order and binds it to the current receiver.
+What do the optional arguments to `super(type, object_or_type)` represent in Python?	The class where lookup should start and the instance or class the resolved method should bind to.
+What problem does `super()` help solve in multiple inheritance?	It lets methods cooperate along the method resolution order instead of hardwiring one parent call path.
+Why is subclassing built-in types like `dict` or `list` directly tricky in CPython?	Built-in methods often bypass user-defined overrides when delegating internally.
+Why can overriding `__setitem__` in a `dict` subclass fail to affect `dict.__init__` or `dict.update`?	Those built-in methods may operate through C-level implementations that do not call the override.
+Why can overriding `__getitem__` in a `dict` subclass fail to affect `dict.update`?	The built-in update logic may bypass late-bound method lookup and read the underlying data directly.
+Why are `UserDict`, `UserList`, and `UserString` often better subclassing targets than built-ins?	They are designed for extension and cooperate with Python-level method overrides.
+What object-oriented principle is violated when built-in methods bypass subclass overrides?	Late binding, where method lookup should start from the receiver's actual class.
+What is multiple inheritance in Python?	The ability of a class to inherit from more than one base class.
+What problem must a language solve when supporting multiple inheritance?	It must resolve conflicts when several base classes provide attributes or methods with the same name.
+What is the method resolution order (MRO) in Python?	The ordered sequence of classes Python searches when looking up methods and attributes.
+Where can you inspect a class's MRO in Python?	In the class `__mro__` attribute.
+What determines method activation order in cooperative multiple inheritance?	The class MRO plus whether each implementation calls `super()`.
+What is a cooperative method in Python inheritance?	A method that calls `super()` so other implementations in the MRO can participate.
+Why can a noncooperative method break multiple inheritance?	It can stop the call chain early and prevent later classes in the MRO from running.
+What signature requirement helps cooperative multiple inheritance work?	Cooperative methods should have compatible signatures because different classes may be called in different orders.
+Why can changing the order of base classes change behavior in Python multiple inheritance?	The base-class order affects the MRO and therefore which method `super()` reaches next.
+Why can `super()` appear dynamic or surprising in Python?	It follows the MRO of the actual receiver class at runtime, not just the lexical superclass of the current class.
+What is a mixin class in Python?	A class meant to be combined with other base classes to add a focused behavior, not used as the sole concrete base class.
+What is the main purpose of a mixin class?	Code reuse by adding a small, specific behavior to unrelated classes.
+Why should a mixin usually appear before other concrete bases in a Python class definition?	So its methods appear early enough in the MRO to intercept and delegate behavior as intended.
+Why should mixins usually avoid keeping internal instance state?	State makes them harder to combine safely with unrelated classes in multiple inheritance.
+Why is the `Mixin` suffix recommended in Python class names?	It makes the class's intended role explicit to readers and users.
+What is an aggregate class in a multiple-inheritance design?	A class that mostly combines mixins or base classes into a ready-to-use package without much new behavior of its own.
+Why can aggregate classes be useful to library users?	They hide tricky base-class ordering and expose a sensible precomposed class.
+Why should interfaces be explicit with ABCs or protocols in modern Python?	It makes subtype intent clearer than relying on concrete inheritance alone.
+Why is inheritance for code reuse often weaker than composition?	Inheritance tightly couples classes, while composition can reuse behavior with less brittleness.
+Why is subclassing concrete classes riskier than subclassing ABCs or mixins?	Concrete classes often have internal state and assumptions that method overrides can break.
+What is a common design warning sign in inheritance-heavy code?	Tall or complex class hierarchies that are hard to understand and fragile to change.
+What is the practical guidance for inheritance in Python applications?	Avoid it when composition or functions are sufficient, and subclass mainly where frameworks or explicit extension points expect it.
