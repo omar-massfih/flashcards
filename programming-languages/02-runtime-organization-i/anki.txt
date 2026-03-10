@@ -1,4 +1,3 @@
-What is a block-structured language (Programming languages)?	A language where code is organized into nested blocks that can introduce declarations with limited scope.
 What is scope (Programming languages)?	The region of program text where a declaration is visible.
 What is lifetime (Programming languages)?	The period of execution during which storage for a value or variable location is allocated.
 Why is lifetime not the same as scope?	A variable’s storage can remain allocated during execution even when some parts of its scope are temporarily hidden.
@@ -24,11 +23,7 @@ What is call-by-value?	A parameter-passing mode where the callee receives the va
 What is call-by-reference?	A parameter-passing mode where the callee receives the address/location of the caller’s variable.
 Why can call-by-reference introduce aliasing?	Multiple parameter names can refer to the same storage location.
 What is aliasing in parameter passing?	A situation where two or more names refer to the same memory location.
-What is call-by-name?	A parameter-passing mode where the actual argument expression is re-evaluated each time the formal parameter is used.
-Why is call-by-name unusual in many modern languages?	It is less predictable and more complex than value- or reference-based passing.
 What is call-by-result?	A parameter-passing mode where a local parameter is copied back to the caller only when the callee returns.
 What is call-by-value-result?	A parameter-passing mode where the argument is copied in at call time and copied back out at return.
 How does call-by-value-result differ from call-by-reference?	Value-result copies in and out through a local copy; reference works on the caller’s location directly during execution.
 Why can aliasing make by-reference calls hard to reason about?	Updating one parameter can unexpectedly change the value observed through another aliased parameter.
-What is an L-value in parameter passing?	A storage location or address that can appear on the left side of an assignment.
-What is an R-value in parameter passing?	A value or contents read from a location, rather than the location itself.

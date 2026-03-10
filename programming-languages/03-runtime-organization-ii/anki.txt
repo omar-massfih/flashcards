@@ -11,8 +11,5 @@ How can a returned closure provide private state?	It captures local variables th
 What data is usually stored with each object?	The object's instance-specific state, such as its field values.
 What runtime data is usually shared rather than stored separately in every object?	Common class-level functionality such as method tables, templates, or static members.
 What is the runtime difference between a method call and a plain nested function call in JavaScript?	A method call binds `this` to the receiver object, while a plain function call does not preserve that object binding.
-Why can `var that = this` fix a nested-function `this` problem in JavaScript?	The nested function's closure captures `that`, preserving access to the original receiver object.
-What is hoisting for `var` declarations in JavaScript?	`var` declarations are treated as if they were moved to the top of the enclosing function scope.
-Why does traditional `var` not provide block scope in JavaScript?	A `var` declaration belongs to the enclosing function scope, not to the nearest block.
 What does `let` change about scope in JavaScript?	It introduces block-scoped bindings instead of function-scoped `var` bindings.
 Why is block scope often preferable to function scope?	It limits a binding's visibility to the block where it is needed and avoids accidental reuse across a whole function.

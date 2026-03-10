@@ -26,7 +26,6 @@ What variance on overridden method parameter types is type-safe?	Contravariant p
 Why do many mainstream OO languages use stricter rules than full variance in method overriding?	Stricter rules are simpler to specify/check and avoid confusing edge cases even when some variance would be type-safe.
 Why can covariant parameter types be unsafe in method overriding?	They can break substitutability by rejecting arguments that were valid for the supertype method.
 Why can contravariant parameter types be safe in method overriding?	The overriding method accepts at least the inputs the original method accepted, preserving substitutability.
-What is a block-structured language (Programming languages)?	A language where code is organized into nested blocks that can introduce declarations with limited scope.
 What is scope (Programming languages)?	The region of program text where a declaration is visible.
 What is lifetime (Programming languages)?	The period of execution during which storage for a value or variable location is allocated.
 Why is lifetime not the same as scope?	A variable’s storage can remain allocated during execution even when some parts of its scope are temporarily hidden.
@@ -52,14 +51,10 @@ What is call-by-value?	A parameter-passing mode where the callee receives the va
 What is call-by-reference?	A parameter-passing mode where the callee receives the address/location of the caller’s variable.
 Why can call-by-reference introduce aliasing?	Multiple parameter names can refer to the same storage location.
 What is aliasing in parameter passing?	A situation where two or more names refer to the same memory location.
-What is call-by-name?	A parameter-passing mode where the actual argument expression is re-evaluated each time the formal parameter is used.
-Why is call-by-name unusual in many modern languages?	It is less predictable and more complex than value- or reference-based passing.
 What is call-by-result?	A parameter-passing mode where a local parameter is copied back to the caller only when the callee returns.
 What is call-by-value-result?	A parameter-passing mode where the argument is copied in at call time and copied back out at return.
 How does call-by-value-result differ from call-by-reference?	Value-result copies in and out through a local copy; reference works on the caller’s location directly during execution.
 Why can aliasing make by-reference calls hard to reason about?	Updating one parameter can unexpectedly change the value observed through another aliased parameter.
-What is an L-value in parameter passing?	A storage location or address that can appear on the left side of an assignment.
-What is an R-value in parameter passing?	A value or contents read from a location, rather than the location itself.
 What is a higher-order function (Programming languages)?	A function that takes functions as arguments, returns functions, or both.
 Why does a function value need environment information at run time?	A nested function may reference nonlocal variables from the scope where it was declared.
 What is a closure (Programming languages)?	A function value represented as a pair of code and the environment needed by that code.
@@ -73,9 +68,6 @@ How can a returned closure provide private state?	It captures local variables th
 What data is usually stored with each object?	The object's instance-specific state, such as its field values.
 What runtime data is usually shared rather than stored separately in every object?	Common class-level functionality such as method tables, templates, or static members.
 What is the runtime difference between a method call and a plain nested function call in JavaScript?	A method call binds `this` to the receiver object, while a plain function call does not preserve that object binding.
-Why can `var that = this` fix a nested-function `this` problem in JavaScript?	The nested function's closure captures `that`, preserving access to the original receiver object.
-What is hoisting for `var` declarations in JavaScript?	`var` declarations are treated as if they were moved to the top of the enclosing function scope.
-Why does traditional `var` not provide block scope in JavaScript?	A `var` declaration belongs to the enclosing function scope, not to the nearest block.
 What does `let` change about scope in JavaScript?	It introduces block-scoped bindings instead of function-scoped `var` bindings.
 Why is block scope often preferable to function scope?	It limits a binding's visibility to the block where it is needed and avoids accidental reuse across a whole function.
 What does static typing mean?	Types are checked on program syntax before execution, rejecting programs that do not type-check.
@@ -103,10 +95,7 @@ Why is adding a new variant often harder in algebraic-data-type or pattern-match
 What is a trait (Programming languages)?	A composable unit of behavior that groups methods for reuse separately from object instantiation.
 What is the difference between provided and required trait methods?	Provided methods have implementations; required methods specify functionality that must be supplied elsewhere.
 How do traits differ from ordinary classes?	Traits package reusable behavior, while classes create objects and hold instance state.
-What is a virtual class?	A class mechanism where certain nested or associated types can be specialized within subclasses.
 Why are virtual classes interesting compared with ordinary generics?	They tie type specialization to the inheritance structure instead of treating it as a separate parameterization mechanism.
-What is a package template?	A reusable collection of interdependent classes that can be instantiated and adapted as a unit.
-How are package templates typically instantiated?	At compile time, producing an adapted local copy of the template contents.
 Why can unrestricted composition be problematic for encapsulation?	Internal component objects may be exposed, replaced, or reused in ways that break the intended whole-object abstraction.
 What is aspect-oriented programming (AOP)?	A style that modularizes crosscutting concerns separately from the main class or function structure.
 What is a crosscutting concern?	A concern such as logging, security, or auditing that affects many otherwise separate parts of a program.
@@ -114,8 +103,6 @@ What is an aspect in AOP?	A module that encapsulates advice and the places where
 What is advice in aspect-oriented programming?	Behavior that is inserted at selected join points in a program.
 What is static dispatch (Programming languages)?	Method or function selection determined from compile-time information rather than a receiver's runtime type.
 Why is covariant array subtyping unsafe in mutable languages?	A reference typed as an array of supertypes can store a wrong element type into an array whose actual runtime element type is more specific.
-What is retrofit-style extension in OO languages?	Adding or replacing methods in an existing class without modifying the original source code.
-Why is retrofit-style extension hard to implement safely?	It can create conflicts with existing methods, break separate reasoning about code, and undermine type or behavioral guarantees.
 Why is implicit numeric coercion often restricted in strongly typed languages?	To avoid hidden conversions that weaken type clarity and safety.
 What is destructuring in a value declaration?	Binding parts of a composite value directly to names by matching its structure.
 What is pattern matching in function definitions?	Choosing behavior by matching argument values against ordered structural patterns.
