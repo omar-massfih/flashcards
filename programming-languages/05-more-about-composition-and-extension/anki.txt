@@ -1,0 +1,17 @@
+What is the expression problem (Programming languages)?	The challenge of extending a system with new data variants and new operations without modifying existing code and while preserving static type safety.
+Why is adding a new subtype often easy in OO solutions to the expression problem?	Behavior for the new type can be added by defining a new subclass with the required methods.
+Why is adding a new operation often harder in classic OO designs?	The new operation typically must be added to every existing class in the hierarchy.
+Why is adding a new operation often easy in algebraic-data-type or pattern-matching styles?	You can define a new function over the existing variants without changing the existing data definitions.
+Why is adding a new variant often harder in algebraic-data-type or pattern-matching styles?	Every existing operation must be updated to handle the new case.
+What is a trait (Programming languages)?	A composable unit of behavior that groups methods for reuse separately from object instantiation.
+What is the difference between provided and required trait methods?	Provided methods have implementations; required methods specify functionality that must be supplied elsewhere.
+How do traits differ from ordinary classes?	Traits package reusable behavior, while classes create objects and hold instance state.
+What is a virtual class?	A class mechanism where certain nested or associated types can be specialized within subclasses.
+Why are virtual classes interesting compared with ordinary generics?	They tie type specialization to the inheritance structure instead of treating it as a separate parameterization mechanism.
+What is a package template?	A reusable collection of interdependent classes that can be instantiated and adapted as a unit.
+How are package templates typically instantiated?	At compile time, producing an adapted local copy of the template contents.
+Why can unrestricted composition be problematic for encapsulation?	Internal component objects may be exposed, replaced, or reused in ways that break the intended whole-object abstraction.
+What is aspect-oriented programming (AOP)?	A style that modularizes crosscutting concerns separately from the main class or function structure.
+What is a crosscutting concern?	A concern such as logging, security, or auditing that affects many otherwise separate parts of a program.
+What is an aspect in AOP?	A module that encapsulates advice and the places where that advice should apply.
+What is advice in aspect-oriented programming?	Behavior that is inserted at selected join points in a program.
