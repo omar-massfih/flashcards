@@ -1,11 +1,5 @@
-What is a type (Programming languages)?	A set of values that share a set of operations.
 What is nominal type checking?	Type compatibility is based on explicit type names or declared relationships.
 What is structural type checking?	Type compatibility is based on having the required structure/signature rather than the same name.
-What is a simple type (Programming languages)?	A type not built from other types, such as integer or boolean.
-What is a composite type (Programming languages)?	A type built from other simple or composite types.
-What are common examples of composite types (Programming languages)?	Records/structs; arrays; unions; abstract data types; classes.
-What is a record or struct type?	A composite type that groups named fields into one value.
-What is an array type (Programming languages)?	A mapping from an index domain to element values, often with bounds as part of the type.
 What is a union type?	A type whose value may take one of several alternative representations.
 What is a discriminated union?	A union with an explicit tag/discriminator used to tell which alternative is currently stored.
 Why is a discriminator useful in a union type?	It makes it possible to check which variant is present before accessing variant-specific data.
@@ -13,13 +7,11 @@ What is an abstract data type (ADT)?	A user-defined type that defines both repre
 What is the main advantage of an ADT?	It separates interface from implementation and protects representation invariants.
 What is a key limitation of ADTs compared with classes?	They are less naturally extensible in subtype/class hierarchies.
 Why is a class method call semantically different from an ADT operation?	Method meaning depends on the receiver object and can vary via dynamic dispatch.
-What is type compatibility?	The rule for when a value of one type may be used where another type is expected.
 What is subtyping?	A relation where a subtype value can be used wherever a supertype value is expected without type errors.
 Subtype vs subclass: what is the difference?	A subclass is an inheritance relation in a class system; a subtype is a type-compatibility relation, and the two need not always coincide.
 Why can subclassing and subtyping diverge?	Inheritance is a code-organization mechanism, while substitutability is a type-safety/interface property.
 What is behavioral subtyping?	The requirement that a subtype preserve the expected behavior/contracts of the supertype.
 Can a compiler generally enforce full behavioral subtyping?	No; behavioral substitutability cannot in general be fully checked by the type system alone.
-What is subtype polymorphism?	Using a common supertype interface to work with values of multiple subtype implementations.
 What is dynamic dispatch?	Method selection at runtime based on the receiver’s runtime type.
 What is single dispatch?	Dynamic dispatch based on the runtime type of the receiver object only.
 What is multiple dispatch?	Dynamic dispatch based on the runtime types of more than one argument.
@@ -69,7 +61,6 @@ Why can aliasing make by-reference calls hard to reason about?	Updating one para
 What is an L-value in parameter passing?	A storage location or address that can appear on the left side of an assignment.
 What is an R-value in parameter passing?	A value or contents read from a location, rather than the location itself.
 What is a higher-order function (Programming languages)?	A function that takes functions as arguments, returns functions, or both.
-Why are higher-order functions useful?	They let behavior be passed and reused as a value instead of hardcoding one specific operation.
 Why does a function value need environment information at run time?	A nested function may reference nonlocal variables from the scope where it was declared.
 What is a closure (Programming languages)?	A function value represented as a pair of code and the environment needed by that code.
 What does it mean that a closure "closes over" its environment?	It captures bindings from its declaring scope so the function can use them later.
@@ -79,16 +70,61 @@ Why is returning a nested function harder than passing one as an argument?	The r
 When must an activation record outlive the function call that created it?	When a returned closure still needs variables stored in that activation record.
 Why are closure environments often stored on the heap?	Because stack allocation alone cannot support environments that must survive after a function returns.
 How can a returned closure provide private state?	It captures local variables that remain accessible only through that returned function.
-What does it mean for functions to be first-class values?	They can be passed as arguments, returned as results, and stored like other values.
-Where are object references typically stored at run time?	In activation records or other ordinary variables that hold pointers to objects.
-Where are objects themselves typically stored at run time?	On the heap rather than directly on the run-time stack.
 What data is usually stored with each object?	The object's instance-specific state, such as its field values.
 What runtime data is usually shared rather than stored separately in every object?	Common class-level functionality such as method tables, templates, or static members.
-Why are methods usually stored in shared class-level structures?	Because the code is common across many instances and should not be duplicated per object.
 What is the runtime difference between a method call and a plain nested function call in JavaScript?	A method call binds `this` to the receiver object, while a plain function call does not preserve that object binding.
 Why can `var that = this` fix a nested-function `this` problem in JavaScript?	The nested function's closure captures `that`, preserving access to the original receiver object.
 What is hoisting for `var` declarations in JavaScript?	`var` declarations are treated as if they were moved to the top of the enclosing function scope.
 Why does traditional `var` not provide block scope in JavaScript?	A `var` declaration belongs to the enclosing function scope, not to the nearest block.
 What does `let` change about scope in JavaScript?	It introduces block-scoped bindings instead of function-scoped `var` bindings.
 Why is block scope often preferable to function scope?	It limits a binding's visibility to the block where it is needed and avoids accidental reuse across a whole function.
-Why is exact closure behavior a runtime-organization issue?	The implementation must preserve both code and the right environment across calls, returns, and object interactions.
+What does static typing mean?	Types are checked on program syntax before execution, rejecting programs that do not type-check.
+What does dynamic typing mean?	Types are checked at run time as values are used during execution.
+Why are static type systems conservative?	They can reject some programs that would run correctly because they prove absence of some errors, not overall correctness.
+What is a key tradeoff in type-system design?	Stronger safety usually reduces expressivity, while more flexibility usually allows more run-time errors.
+What is parametric polymorphism?	Writing code with type variables so the same definition works for many concrete types.
+How does subtype polymorphism differ from parametric polymorphism?	Subtype polymorphism relies on subtype substitution, while parametric polymorphism relies on type variables and one definition working uniformly for many types.
+Why might a language want constraints on type parameters?	To guarantee that generic code only uses operations supported by the allowed argument types.
+Why is array covariance risky in mainstream languages?	It permits assignments that look type-compatible statically but can still fail at run time when storing the wrong element type.
+What does an upper-bounded wildcard like `? extends T` mean conceptually?	A value whose element type is some unknown subtype of `T`, making it safe to read as `T`.
+What does a lower-bounded wildcard like `? super T` mean conceptually?	A value whose element type is some unknown supertype of `T`, making it safe to write `T` values into it.
+What is the producer/consumer intuition for generic variance?	Use upper bounds when mainly reading produced values, and lower bounds when mainly writing consumed values.
+Why is behavioral subtyping harder than structural subtyping?	Matching signatures is not enough; the subtype must also preserve the expected behavior and contract.
+Why does subclassing not guarantee behavioral substitutability?	A subclass can override behavior in ways that violate the assumptions clients rely on for the superclass.
+What is the diamond problem in multiple inheritance?	A derived class can inherit the same ancestor through multiple paths, creating ambiguity about shared state or inherited behavior.
+What is an inner class?	A class defined inside another class, often with access to the enclosing instance's context.
+What is an anonymous inner class?	A one-off class definition written inline where an object is created.
+What is a functional interface?	An interface with a single abstract method that can be implemented by a lambda or similar function value.
+What is the expression problem (Programming languages)?	The challenge of extending a system with new data variants and new operations without modifying existing code and while preserving static type safety.
+Why is adding a new subtype often easy in OO solutions to the expression problem?	Behavior for the new type can be added by defining a new subclass with the required methods.
+Why is adding a new operation often harder in classic OO designs?	The new operation typically must be added to every existing class in the hierarchy.
+Why is adding a new operation often easy in algebraic-data-type or pattern-matching styles?	You can define a new function over the existing variants without changing the existing data definitions.
+Why is adding a new variant often harder in algebraic-data-type or pattern-matching styles?	Every existing operation must be updated to handle the new case.
+What is a trait (Programming languages)?	A composable unit of behavior that groups methods for reuse separately from object instantiation.
+What is the difference between provided and required trait methods?	Provided methods have implementations; required methods specify functionality that must be supplied elsewhere.
+How do traits differ from ordinary classes?	Traits package reusable behavior, while classes create objects and hold instance state.
+What is a virtual class?	A class mechanism where certain nested or associated types can be specialized within subclasses.
+Why are virtual classes interesting compared with ordinary generics?	They tie type specialization to the inheritance structure instead of treating it as a separate parameterization mechanism.
+What is a package template?	A reusable collection of interdependent classes that can be instantiated and adapted as a unit.
+How are package templates typically instantiated?	At compile time, producing an adapted local copy of the template contents.
+Why can unrestricted composition be problematic for encapsulation?	Internal component objects may be exposed, replaced, or reused in ways that break the intended whole-object abstraction.
+What is aspect-oriented programming (AOP)?	A style that modularizes crosscutting concerns separately from the main class or function structure.
+What is a crosscutting concern?	A concern such as logging, security, or auditing that affects many otherwise separate parts of a program.
+What is an aspect in AOP?	A module that encapsulates advice and the places where that advice should apply.
+What is advice in aspect-oriented programming?	Behavior that is inserted at selected join points in a program.
+What is static dispatch (Programming languages)?	Method or function selection determined from compile-time information rather than a receiver's runtime type.
+Why is covariant array subtyping unsafe in mutable languages?	A reference typed as an array of supertypes can store a wrong element type into an array whose actual runtime element type is more specific.
+What is retrofit-style extension in OO languages?	Adding or replacing methods in an existing class without modifying the original source code.
+Why is retrofit-style extension hard to implement safely?	It can create conflicts with existing methods, break separate reasoning about code, and undermine type or behavioral guarantees.
+Why is implicit numeric coercion often restricted in strongly typed languages?	To avoid hidden conversions that weaken type clarity and safety.
+What is destructuring in a value declaration?	Binding parts of a composite value directly to names by matching its structure.
+What is pattern matching in function definitions?	Choosing behavior by matching argument values against ordered structural patterns.
+Why does clause order matter in pattern matching?	The first matching case is the one that is taken.
+What is an algebraic data type?	A type built from named variants, where each variant may optionally carry associated data.
+What is a constructor in an algebraic data type?	A named way to build one variant of the datatype.
+What is the difference between a type abbreviation and a new datatype?	A type abbreviation gives another name to an existing type, while a new datatype creates new constructors and a distinct type.
+What is a case expression?	An expression that computes a result by matching a value against several patterns.
+What is tail recursion?	Recursion where the recursive call is the last operation in the function.
+Why is tail recursion often more efficient than ordinary recursion?	It can be executed with iterative stack usage instead of needing a new stack frame for each step.
+What is a curried function?	A function represented as a chain of one-argument functions.
+Why does currying enable partial application?	Supplying fewer than all arguments yields another function waiting for the remaining arguments.
