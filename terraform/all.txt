@@ -18,8 +18,6 @@ What problem does Terraform state solve for declarative IaC?	It lets Terraform k
 General-purpose language vs DSL for IaC: what is the tradeoff?	GPLs offer more flexibility and ecosystem support; DSLs are usually simpler, more concise, and more uniform for infrastructure tasks.
 Why is Terraform often described as masterless and agentless?	It runs as a client and talks directly to provider APIs instead of relying on a separate master server or per-server agent.
 What is one reason Terraform does not provide transparent portability across cloud providers?	Different providers expose different infrastructure primitives and features, so “the same” infrastructure usually cannot be mapped exactly across clouds.
-What is the purpose of the `terraform { ... }` block?	Terraform settings like required providers and Terraform CLI version constraints.
-What does a provider `source` address like `hashicorp/azurerm` specify?	Which provider to install (from the Terraform Registry by default).
 Why add a provider version constraint in `required_providers`?	To avoid unplanned upgrades that may introduce breaking changes.
 What does the Terraform version constraint `required_version` do?	Prevents using Terraform CLI versions that don’t satisfy the constraint.
 What is a Terraform `provider` block used for?	Configure a provider plugin (credentials, features, regions, etc.).
@@ -30,24 +28,16 @@ What does `terraform init` do?	Initializes the working directory (downloads prov
 What does `terraform plan` do?	Shows a preview of changes needed to reach the desired state.
 What does `terraform apply` do?	Applies the planned changes to create/update/destroy infrastructure.
 What file does Terraform use to record deployed infrastructure state by default?	`terraform.tfstate`.
-Why must you protect `terraform.tfstate`?	It can contain sensitive data in plaintext; don’t share or commit it.
-What does `terraform state list` do?	Lists resource addresses tracked in the current state.
-What does it mean to “change infrastructure” in Terraform?	Edit configuration, then run `terraform apply` to create/update resources to match the new desired state.
-How do you add a new resource in Terraform (conceptually)?	Add a new `resource "TYPE" "NAME" { ... }` block to your configuration.
 How do you reference another resource’s attribute in Terraform config?	Use `<TYPE>.<NAME>.<ATTRIBUTE>` (e.g., `azurerm_resource_group.rg.name`).
 What does referencing `azurerm_resource_group.rg.name` accomplish in another resource?	Uses the existing resource’s value and creates an implicit dependency between the resources.
 Why does Terraform create a dependency graph?	To ensure resources are created/updated in a valid order based on references.
 What does it mean to “update in-place” (Terraform)?	The resource is modified while keeping the same identity/address; it is not destroyed and recreated.
 In plan output, what does “(known after apply)” mean?	The value is computed by the provider during apply and isn’t known at plan time.
-What does “Refreshing state...” mean during `terraform apply`?	Terraform is reading current real-world resource data to synchronize state before planning/applying changes.
 Why can adding a reference create an implicit dependency without `depends_on`?	Because Terraform can infer ordering from the expression graph (data flow) in configuration.
 What does the `tags` block do on a Terraform resource (Azure example)?	Assigns metadata key/value tags to the resource.
 In HCL, what is the type/shape of `tags = { ... }`?	A map/object of keys to values (e.g., `Environment = "..."`).
 How does Terraform show tag additions in a plan?	As an in-place update (`~`) with new keys/values added under `tags`.
-Why might Terraform show `id = (known after apply)` during planning?	IDs are assigned by the provider/cloud when the resource is created.
 What does `terraform destroy` do?	Terminates (destroys) the resources managed by the current Terraform project/state.
-What does `terraform destroy` use to decide what to terminate?	The current state (local `terraform.tfstate` or remote backend state, depending on setup).
-Does Terraform destroy resources in arbitrary order?	No; it destroys in an order that respects dependencies.
 Why does destroy order matter (Terraform)?	Dependent resources must be destroyed before the resources they depend on (e.g., destroy VNet before resource group).
 What is an input variable (Terraform)?	A named value you can set from outside the config (or via defaults) and reference as `var.<name>`.
 Where do you commonly declare input variables (Terraform)?	In `.tf` files such as `variables.tf` using `variable "<name>" { ... }`.
@@ -74,7 +64,6 @@ How do you reference a resource attribute in an output (Terraform)?	Use `<TYPE>.
 How does a parent configuration reference a child module’s output (Terraform)?	`module.<module_name>.<output_name>`.
 What does `sensitive = true` do for an output (Terraform)?	Marks the output as sensitive so Terraform suppresses it in normal CLI output.
 Does marking an output as sensitive keep it out of state (Terraform)?	No; it can still be stored in state, so you must protect state access.
-What does `terraform output -json` provide?	Machine-readable JSON output for automation/scripts.
 What is HCP Terraform (high level)?	A hosted Terraform platform for collaboration (versioning/auditing runs), remote execution, and remote state storage.
 Why run Terraform in a remote environment (HCP Terraform)?	It provides shared access to state and a stable environment for long-running Terraform operations.
 How do you configure HCP Terraform in Terraform CLI workflow (HCL block)?	Use a `terraform { cloud { organization = "..."; workspaces { name = "..." } } }` block.
@@ -106,8 +95,6 @@ Terraform lifecycle: what is a `precondition`?	A condition that must be true bef
 Terraform lifecycle: what is a `postcondition`?	A condition checked after creating the resource; otherwise Terraform errors with `error_message`.
 Terraform language: what is an expression?	Syntax that produces a value in configuration (e.g., literals, references, operators, conditionals, function calls).
 What is a reference expression (Terraform)?	An expression that reads a value exported elsewhere (e.g., `var.<name>` or `<TYPE>.<NAME>.<ATTRIBUTE>`).
-What command opens Terraform’s expression console?	`terraform console`
-What is `terraform console` used for (Terraform)?	To experiment with and evaluate expressions interactively.
 Terraform type: what is `list`/`tuple` (high level)?	An ordered sequence you index with whole numbers starting at 0 (e.g., `["a", 15, true]`).
 Terraform type: what is `set` (high level)?	An unordered collection of unique values (no stable index ordering).
 Terraform type: what is `map`/`object` (high level)?	Values identified by string keys/labels, like `{ name = "Mabel", age = 52 }`.
@@ -117,15 +104,10 @@ If you set an argument to `null`, what does Terraform do with defaults/required 
 Why is `null` especially useful in Terraform expressions?	To conditionally omit an argument when a condition isn’t met.
 How do you access list/tuple elements vs map/object elements in Terraform expressions?	`seq[3]` uses a whole-number index; `map["key"]` uses a string key.
 When can you use dot-attribute notation on a map/object (Terraform)?	When the attribute name is a valid identifier (e.g., `local.object.attrname`).
-Terraform strings: what is a heredoc string?	A multiline string literal introduced with `<<DELIM` (or `<<-DELIM`) and ended by `DELIM` on its own line.
 Terraform heredoc: what does `<<-` mean (indented heredoc)?	Terraform trims common leading spaces from all lines (based on the least-indented line in the heredoc).
 Terraform tip: should you use heredocs to generate JSON/YAML?	No; prefer `jsonencode(...)` / `yamlencode(...)` to guarantee valid syntax.
 Terraform interpolation: what does `${ ... }` do?	Evaluates the expression, converts the result to a string if needed, and inserts it into the string.
 Terraform directives: what does `%{ ... }` enable?	Conditionals and iteration over collections to build strings.
-Terraform directive: what is the `%{if ...}` / `%{else}` / `%{endif}` pattern?	Choose between templates based on a boolean expression (the else is optional).
-Terraform directive: what is the `%{for name in collection}` / `%{endfor}` pattern?	Iterate over elements and concatenate the rendered template for each element.
-Terraform templates: what is the strip marker `~` for?	Whitespace stripping: it consumes literal whitespace (spaces/newlines) before or after a template sequence to avoid unwanted output.
-Terraform style: when should you prefer heredocs vs quoted strings for templates?	Use heredocs for directives (multi-line templates); quoted strings are usually best for simple interpolations.
 Terraform named values: what are the main categories?	Resources; input variables; local values; child module outputs; data sources; filesystem/workspace info; block-local values.
 Terraform resource reference: what does `<TYPE>.<NAME>` refer to?	A managed resource instance (or instances) of the given type and local name.
 If a resource uses neither `count` nor `for_each`, what is the type/shape of `<TYPE>.<NAME>`?	An object representing the resource, with attributes you can access (e.g., `<TYPE>.<NAME>.id`).
@@ -186,27 +168,20 @@ What does a for expression do (Terraform)?	A for expression transforms one colle
 Terraform for expression: what does the two-symbol form `for k, v in ...` provide?	Two temporary symbols: key/index (`k`) and value (`v`) for each element.
 In a Terraform for expression over a list/tuple, what is the first symbol in `for i, v in ...`?	The zero-based index of each element.
 In a Terraform for expression over a map/object, what is the first symbol in `for k, v in ...`?	The key (map key) or attribute name (object attribute).
-Terraform for expression: what result type do `[...]` brackets produce?	A tuple.
 Terraform for expression: what result type do `{...}` braces produce, and what syntax is required?	An object; you must provide `key_expr => value_expr`.
 Terraform for expression: how do you filter elements?	Add `if <condition>` at the end (e.g., `[for s in var.list : upper(s) if s != \"\"]`).
-Terraform for expressions: what is “grouping mode” in object comprehensions?	Add `...` after the value expression to allow duplicate keys, producing a map of lists (multiple values per key).
-Terraform grouping mode: what does `role => name...` mean?	Group multiple `name` values under the same `role` key (value becomes a list of strings per role).
-Can Terraform for expressions generate nested blocks in resources?	No; for nested blocks use `dynamic` blocks (for expressions only construct values inside expressions).
 What is a splat expression for (Terraform)?	A concise way to map over a collection and extract nested attributes/indexes (often equivalent to a for-expression).
 What does the `[*]` operator do in a splat expression (Terraform)?	Iterates over all elements on the left and applies the access operations on the right to each element.
 Can splat expressions chain deeper attribute/index accesses (Terraform)?	Yes; e.g. `var.list[*].interfaces[0].name` applies `.interfaces[0].name` to each element.
 What collection types support splat expressions (Terraform)?	Lists, sets, and tuples.
 How do you get a “splat-like” result for a map/object (Terraform)?	Use a for-expression (splats don’t work on maps/objects).
-Splat special case: what happens if you apply `[*]` to a non-collection, non-null value (Terraform)?	It becomes a single-element tuple (a “single value as list” behavior).
 Common use: why use `var.obj[*]` for an optional object input (Terraform)?	To drive `for_each` in a `dynamic` block: 0 blocks if `null`, 1 block if set.
 Why do you need `dynamic` blocks (Terraform)?	Some resource arguments are repeatable nested blocks that can’t be generated with expressions in `name = expr` form; `dynamic` generates nested blocks from data.
 Where can you use `dynamic` blocks (Terraform)?	Inside `resource`, `data`, `provider`, and `provisioner` blocks.
-What does the label of a `dynamic` block mean (Terraform)?	The nested block type name to generate (e.g., `dynamic "setting"` generates `setting { ... }` blocks).
 In a `dynamic` block, what does `for_each` do (Terraform)?	Supplies the collection/structural value to iterate over; one nested block is generated per element.
 In a `dynamic` block, what does `content { ... }` define (Terraform)?	The body of each generated nested block.
 In a `dynamic` block, what does `iterator` control (Terraform)?	The name of the temporary variable for the current element; defaults to the dynamic label if omitted.
 What are `iterator.key` and `iterator.value` in a `dynamic` block (Terraform)?	`key` is map key or list index (for sets, `key == value` and shouldn’t be used); `value` is the element value.
-In a `dynamic` block iterating a set, what’s special about `.key` (Terraform)?	It’s identical to `.value`, so it’s not useful and should generally not be used.
 In a `dynamic` block, what does `labels` do (Terraform)?	Optional list of strings to set the generated block labels (in order); can use the iterator variable to compute labels.
 Nested dynamic blocks: what iterator pitfall should you watch for (Terraform)?	Inner and outer iterators differ (e.g., `origin_group.value` vs `origin.value`); choose iterator names carefully to avoid confusion.
 How do you make a Terraform test run behave more like a unit test?	Set `command = plan` in the `run` block so it validates logic without creating infrastructure.
@@ -241,16 +216,13 @@ What policy frameworks can HCP Terraform use for custom policies?	Sentinel and O
 When does HCP Terraform evaluate a policy set?	For each run in the selected workspaces.
 What determines whether failed policies stop a run in HCP Terraform?	The policy’s enforcement level.
 What are Terraform type constraints used for?	To validate user-provided values for input variables and resource arguments more precisely.
-What is a collection type in Terraform?	A complex type that groups multiple values of the same element type.
 What are the collection types in Terraform?	`list(...)`, `map(...)`, and `set(...)`.
-What is a structural type in Terraform?	A complex type that groups values with a defined schema, where different elements can have different types.
 What are the structural types in Terraform?	`object(...)` and `tuple(...)`.
 What must an `object({...})` value contain to match its schema in Terraform?	All specified keys, with values matching the declared types.
 What happens to extra attributes when Terraform converts a value to an `object(...)` type?	Extra attributes are discarded during conversion.
 What must a `tuple([...])` value match in Terraform?	Exactly the declared number of elements and the declared type at each position.
 What happens when Terraform converts a list or tuple to a set?	Duplicates are discarded and element ordering is lost.
 What happens when Terraform converts a set to a list or tuple?	The elements come back in arbitrary order; for strings, Terraform uses lexicographical order.
-What is `any` in Terraform type constraints?	A placeholder for a type Terraform will try to infer; it is not itself a concrete type.
 When is `any` an appropriate Terraform type constraint?	When the module treats the value as opaque and passes it through without inspecting its contents.
 Why would Terraform reject `["a", [], "b"]` for `list(any)`?	Because there is no single element type that both strings and an empty tuple can all convert to.
 What does `optional(string)` mean in an object type constraint (Terraform)?	The object attribute may be omitted; if omitted, Terraform supplies `null` of that type by default.
@@ -264,12 +236,9 @@ Do `>`, `>=`, `<`, `<=`, or `~>` match pre-release versions in Terraform?	No; pr
 What is the recommended module-version practice for third-party Terraform modules?	Require specific versions so updates happen only when you choose.
 How should reusable Terraform modules constrain Terraform core and provider versions?	Constrain only the minimum allowed versions, such as `>= 0.12.0`.
 How should root Terraform modules usually constrain provider versions?	Use `~>` to set both lower and upper bounds for each provider they depend on.
-What is “programmatic access” for an AWS IAM user?	It provides access keys that tools such as Terraform can use to call AWS APIs.
 What is EC2 User Data used for in Terraform/AWS?	To run initialization commands when an EC2 instance boots for the first time.
 Why can changing EC2 User Data require instance replacement?	User Data normally runs only on first boot, so an existing instance may need to be replaced to rerun it.
 What is an AWS security group used for?	To control inbound and outbound traffic rules for AWS resources such as EC2 instances and load balancers.
-What does the CIDR block `0.0.0.0/0` mean in an AWS security rule?	It allows traffic from any IPv4 address.
-Why is a single server a single point of failure?	If that server crashes or is overloaded, the service becomes unavailable.
 What does an Auto Scaling Group do in AWS?	It manages a fleet of EC2 instances by launching, replacing, and resizing them automatically.
 Why is `create_before_destroy` useful with an Auto Scaling Group launch configuration?	It lets Terraform create a replacement launch configuration before deleting the old one, avoiding reference conflicts.
 What is a Terraform data source used for?	To read existing provider data without creating or managing a new resource.

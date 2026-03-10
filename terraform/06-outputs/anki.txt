@@ -6,4 +6,3 @@ How do you reference a resource attribute in an output (Terraform)?	Use `<TYPE>.
 How does a parent configuration reference a child module’s output (Terraform)?	`module.<module_name>.<output_name>`.
 What does `sensitive = true` do for an output (Terraform)?	Marks the output as sensitive so Terraform suppresses it in normal CLI output.
 Does marking an output as sensitive keep it out of state (Terraform)?	No; it can still be stored in state, so you must protect state access.
-What does `terraform output -json` provide?	Machine-readable JSON output for automation/scripts.

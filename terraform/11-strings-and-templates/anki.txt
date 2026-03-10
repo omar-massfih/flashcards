@@ -1,9 +1,4 @@
-Terraform strings: what is a heredoc string?	A multiline string literal introduced with `<<DELIM` (or `<<-DELIM`) and ended by `DELIM` on its own line.
 Terraform heredoc: what does `<<-` mean (indented heredoc)?	Terraform trims common leading spaces from all lines (based on the least-indented line in the heredoc).
 Terraform tip: should you use heredocs to generate JSON/YAML?	No; prefer `jsonencode(...)` / `yamlencode(...)` to guarantee valid syntax.
 Terraform interpolation: what does `${ ... }` do?	Evaluates the expression, converts the result to a string if needed, and inserts it into the string.
 Terraform directives: what does `%{ ... }` enable?	Conditionals and iteration over collections to build strings.
-Terraform directive: what is the `%{if ...}` / `%{else}` / `%{endif}` pattern?	Choose between templates based on a boolean expression (the else is optional).
-Terraform directive: what is the `%{for name in collection}` / `%{endfor}` pattern?	Iterate over elements and concatenate the rendered template for each element.
-Terraform templates: what is the strip marker `~` for?	Whitespace stripping: it consumes literal whitespace (spaces/newlines) before or after a template sequence to avoid unwanted output.
-Terraform style: when should you prefer heredocs vs quoted strings for templates?	Use heredocs for directives (multi-line templates); quoted strings are usually best for simple interpolations.

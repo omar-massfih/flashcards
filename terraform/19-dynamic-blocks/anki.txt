@@ -1,10 +1,8 @@
 Why do you need `dynamic` blocks (Terraform)?	Some resource arguments are repeatable nested blocks that can’t be generated with expressions in `name = expr` form; `dynamic` generates nested blocks from data.
 Where can you use `dynamic` blocks (Terraform)?	Inside `resource`, `data`, `provider`, and `provisioner` blocks.
-What does the label of a `dynamic` block mean (Terraform)?	The nested block type name to generate (e.g., `dynamic "setting"` generates `setting { ... }` blocks).
 In a `dynamic` block, what does `for_each` do (Terraform)?	Supplies the collection/structural value to iterate over; one nested block is generated per element.
 In a `dynamic` block, what does `content { ... }` define (Terraform)?	The body of each generated nested block.
 In a `dynamic` block, what does `iterator` control (Terraform)?	The name of the temporary variable for the current element; defaults to the dynamic label if omitted.
 What are `iterator.key` and `iterator.value` in a `dynamic` block (Terraform)?	`key` is map key or list index (for sets, `key == value` and shouldn’t be used); `value` is the element value.
-In a `dynamic` block iterating a set, what’s special about `.key` (Terraform)?	It’s identical to `.value`, so it’s not useful and should generally not be used.
 In a `dynamic` block, what does `labels` do (Terraform)?	Optional list of strings to set the generated block labels (in order); can use the iterator variable to compute labels.
 Nested dynamic blocks: what iterator pitfall should you watch for (Terraform)?	Inner and outer iterators differ (e.g., `origin_group.value` vs `origin.value`); choose iterator names carefully to avoid confusion.

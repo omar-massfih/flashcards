@@ -1,7 +1,5 @@
 Terraform language: what is an expression?	Syntax that produces a value in configuration (e.g., literals, references, operators, conditionals, function calls).
 What is a reference expression (Terraform)?	An expression that reads a value exported elsewhere (e.g., `var.<name>` or `<TYPE>.<NAME>.<ATTRIBUTE>`).
-What command opens Terraform’s expression console?	`terraform console`
-What is `terraform console` used for (Terraform)?	To experiment with and evaluate expressions interactively.
 Terraform type: what is `list`/`tuple` (high level)?	An ordered sequence you index with whole numbers starting at 0 (e.g., `["a", 15, true]`).
 Terraform type: what is `set` (high level)?	An unordered collection of unique values (no stable index ordering).
 Terraform type: what is `map`/`object` (high level)?	Values identified by string keys/labels, like `{ name = "Mabel", age = 52 }`.

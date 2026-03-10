@@ -1,9 +1,6 @@
-What is “programmatic access” for an AWS IAM user?	It provides access keys that tools such as Terraform can use to call AWS APIs.
 What is EC2 User Data used for in Terraform/AWS?	To run initialization commands when an EC2 instance boots for the first time.
 Why can changing EC2 User Data require instance replacement?	User Data normally runs only on first boot, so an existing instance may need to be replaced to rerun it.
 What is an AWS security group used for?	To control inbound and outbound traffic rules for AWS resources such as EC2 instances and load balancers.
-What does the CIDR block `0.0.0.0/0` mean in an AWS security rule?	It allows traffic from any IPv4 address.
-Why is a single server a single point of failure?	If that server crashes or is overloaded, the service becomes unavailable.
 What does an Auto Scaling Group do in AWS?	It manages a fleet of EC2 instances by launching, replacing, and resizing them automatically.
 Why is `create_before_destroy` useful with an Auto Scaling Group launch configuration?	It lets Terraform create a replacement launch configuration before deleting the old one, avoiding reference conflicts.
 What is a Terraform data source used for?	To read existing provider data without creating or managing a new resource.

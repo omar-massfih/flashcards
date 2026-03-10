@@ -1,5 +1,3 @@
-What is the purpose of the `terraform { ... }` block?	Terraform settings like required providers and Terraform CLI version constraints.
-What does a provider `source` address like `hashicorp/azurerm` specify?	Which provider to install (from the Terraform Registry by default).
 Why add a provider version constraint in `required_providers`?	To avoid unplanned upgrades that may introduce breaking changes.
 What does the Terraform version constraint `required_version` do?	Prevents using Terraform CLI versions that don’t satisfy the constraint.
 What is a Terraform `provider` block used for?	Configure a provider plugin (credentials, features, regions, etc.).
@@ -10,5 +8,3 @@ What does `terraform init` do?	Initializes the working directory (downloads prov
 What does `terraform plan` do?	Shows a preview of changes needed to reach the desired state.
 What does `terraform apply` do?	Applies the planned changes to create/update/destroy infrastructure.
 What file does Terraform use to record deployed infrastructure state by default?	`terraform.tfstate`.
-Why must you protect `terraform.tfstate`?	It can contain sensitive data in plaintext; don’t share or commit it.
-What does `terraform state list` do?	Lists resource addresses tracked in the current state.

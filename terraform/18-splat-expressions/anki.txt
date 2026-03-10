@@ -3,5 +3,4 @@ What does the `[*]` operator do in a splat expression (Terraform)?	Iterates over
 Can splat expressions chain deeper attribute/index accesses (Terraform)?	Yes; e.g. `var.list[*].interfaces[0].name` applies `.interfaces[0].name` to each element.
 What collection types support splat expressions (Terraform)?	Lists, sets, and tuples.
 How do you get a “splat-like” result for a map/object (Terraform)?	Use a for-expression (splats don’t work on maps/objects).
-Splat special case: what happens if you apply `[*]` to a non-collection, non-null value (Terraform)?	It becomes a single-element tuple (a “single value as list” behavior).
 Common use: why use `var.obj[*]` for an optional object input (Terraform)?	To drive `for_each` in a `dynamic` block: 0 blocks if `null`, 1 block if set.
