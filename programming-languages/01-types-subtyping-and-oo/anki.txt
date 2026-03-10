@@ -1,11 +1,5 @@
-What is a type (Programming languages)?	A set of values that share a set of operations.
 What is nominal type checking?	Type compatibility is based on explicit type names or declared relationships.
 What is structural type checking?	Type compatibility is based on having the required structure/signature rather than the same name.
-What is a simple type (Programming languages)?	A type not built from other types, such as integer or boolean.
-What is a composite type (Programming languages)?	A type built from other simple or composite types.
-What are common examples of composite types (Programming languages)?	Records/structs; arrays; unions; abstract data types; classes.
-What is a record or struct type?	A composite type that groups named fields into one value.
-What is an array type (Programming languages)?	A mapping from an index domain to element values, often with bounds as part of the type.
 What is a union type?	A type whose value may take one of several alternative representations.
 What is a discriminated union?	A union with an explicit tag/discriminator used to tell which alternative is currently stored.
 Why is a discriminator useful in a union type?	It makes it possible to check which variant is present before accessing variant-specific data.
@@ -13,13 +7,11 @@ What is an abstract data type (ADT)?	A user-defined type that defines both repre
 What is the main advantage of an ADT?	It separates interface from implementation and protects representation invariants.
 What is a key limitation of ADTs compared with classes?	They are less naturally extensible in subtype/class hierarchies.
 Why is a class method call semantically different from an ADT operation?	Method meaning depends on the receiver object and can vary via dynamic dispatch.
-What is type compatibility?	The rule for when a value of one type may be used where another type is expected.
 What is subtyping?	A relation where a subtype value can be used wherever a supertype value is expected without type errors.
 Subtype vs subclass: what is the difference?	A subclass is an inheritance relation in a class system; a subtype is a type-compatibility relation, and the two need not always coincide.
 Why can subclassing and subtyping diverge?	Inheritance is a code-organization mechanism, while substitutability is a type-safety/interface property.
 What is behavioral subtyping?	The requirement that a subtype preserve the expected behavior/contracts of the supertype.
 Can a compiler generally enforce full behavioral subtyping?	No; behavioral substitutability cannot in general be fully checked by the type system alone.
-What is subtype polymorphism?	Using a common supertype interface to work with values of multiple subtype implementations.
 What is dynamic dispatch?	Method selection at runtime based on the receiver’s runtime type.
 What is single dispatch?	Dynamic dispatch based on the runtime type of the receiver object only.
 What is multiple dispatch?	Dynamic dispatch based on the runtime types of more than one argument.
