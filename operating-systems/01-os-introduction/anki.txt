@@ -3,11 +3,8 @@ What is the tradeoff an OS often manages?	Performance and functionality; plus th
 Why is device management hard for an OS?	Devices differ widely in speed, access mode, and control interface.
 What is a device driver?	Device-specific software that talks to a device controller and translates OS requests into device-specific commands.
 Why are device drivers important to OS design?	They isolate device-specific control logic from the rest of the operating system.
-What is a shell?	A command interpreter that lets a user interact with the system, but is not usually considered part of the OS kernel itself.
 What is a system call?	A controlled entry from user-space code into the kernel to request an OS service.
 What is the system call interface?	The set of system calls through which programs access OS services.
-What is user space?	The execution domain for ordinary applications, with restricted privileges and no direct hardware control.
-What is kernel space?	The privileged execution domain where the OS can access hardware, memory, and privileged instructions directly.
 Why do OSes distinguish user mode and kernel mode?	For protection and security: applications should not directly control hardware or unrestricted memory.
 What restrictions typically apply in user mode?	No direct hardware/device-driver access; limited instructions; access only to assigned memory via the OS interface.
 What capabilities does kernel mode provide?	Access to all memory, privileged instructions, and direct hardware control.

@@ -7,18 +7,13 @@ What is transfer time on a disk?	The time needed for the requested sectors to pa
 Why is seek time often the dominant cost for HDD I/O?	Head movement is mechanically expensive compared with actually transferring one nearby block.
 Why can a slower algorithm with fewer disk accesses beat a faster one with many accesses?	Because disk I/O cost can dominate CPU time.
 What is disk scheduling?	Choosing the next disk request based on disk position and pending requests to reduce access cost.
-What does FCFS disk scheduling do?	It serves disk requests in arrival order.
-What is the main drawback of FCFS disk scheduling?	It can cause long total head movement and poor seek efficiency.
 What does SSTF disk scheduling do?	It serves the pending request closest to the current head position.
 What is the main drawback of SSTF?	Far-away requests can starve if nearer requests keep arriving.
 What does SCAN disk scheduling do?	It moves the head across the disk in one direction, serving requests on the way, then reverses.
 Why is SCAN often a good compromise?	It improves seek efficiency while avoiding some of SSTF's starvation problems.
-What does C-SCAN do?	It serves requests in one direction only and then jumps back to the start.
-Why can C-SCAN improve fairness over SCAN?	Requests are treated more uniformly because service does not depend as much on sweep direction.
 Why do modern disks reduce how much control the OS has over scheduling?	The device firmware often hides physical layout and does its own internal scheduling and remapping.
 What is buffer caching?	Keeping disk blocks in memory so repeated accesses can avoid physical disk I/O.
 What is read-ahead or prefetching?	Fetching likely-needed future blocks before the process explicitly requests them.
-What is an unstructured file from the OS point of view?	A sequence of bytes whose interpretation is left to applications.
 What is file management in a file system?	Mechanisms for naming, sharing, protecting, and accessing files and directories.
 What is storage management in a file system?	Allocating and locating file data on persistent storage.
 What is chaining in the media for file allocation?	Each file block points to the next block on disk.
@@ -28,9 +23,5 @@ What is an inode-style table of pointers?	Metadata stores direct and indirect po
 What is an advantage of inode-style block pointers?	They support efficient random and sequential access while keeping the main metadata structure small.
 What is extent-based allocation?	Representing a file as runs of consecutive blocks instead of many separate block pointers.
 Why can extent-based allocation improve performance?	It reduces metadata and lookups while improving locality for large sequential reads.
-What is striping across disks?	Spreading data across multiple disks so they can serve one request in parallel.
-What is the main benefit of striping?	Higher aggregate data throughput than a single disk can provide.
 What is RAID?	A family of disk organizations that trade off performance, capacity, and fault tolerance across multiple disks.
-What is network-attached storage (NAS)?	Remote storage exposed through a file-oriented network protocol.
-What is a storage area network (SAN)?	Remote storage presented more like attached block devices than ordinary network files.
 Why do SSDs change storage-system assumptions?	They greatly reduce seek and rotational costs, changing the relative importance of scheduling and locality decisions.

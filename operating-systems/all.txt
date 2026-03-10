@@ -3,11 +3,8 @@ What is the tradeoff an OS often manages?	Performance and functionality; plus th
 Why is device management hard for an OS?	Devices differ widely in speed, access mode, and control interface.
 What is a device driver?	Device-specific software that talks to a device controller and translates OS requests into device-specific commands.
 Why are device drivers important to OS design?	They isolate device-specific control logic from the rest of the operating system.
-What is a shell?	A command interpreter that lets a user interact with the system, but is not usually considered part of the OS kernel itself.
 What is a system call?	A controlled entry from user-space code into the kernel to request an OS service.
 What is the system call interface?	The set of system calls through which programs access OS services.
-What is user space?	The execution domain for ordinary applications, with restricted privileges and no direct hardware control.
-What is kernel space?	The privileged execution domain where the OS can access hardware, memory, and privileged instructions directly.
 Why do OSes distinguish user mode and kernel mode?	For protection and security: applications should not directly control hardware or unrestricted memory.
 What restrictions typically apply in user mode?	No direct hardware/device-driver access; limited instructions; access only to assigned memory via the OS interface.
 What capabilities does kernel mode provide?	Access to all memory, privileged instructions, and direct hardware control.
@@ -29,19 +26,14 @@ What is a key advantage of a monolithic kernel?	High efficiency because services
 What is a key disadvantage of a monolithic kernel?	It is large and complex, so faults can more easily crash large parts of the system.
 What is a key advantage of a microkernel?	Smaller, more modular, more extensible components with stronger isolation between services.
 What is a key disadvantage of a microkernel?	Extra message passing and boundary crossings can reduce performance.
-What is a process (Operating systems)?	The execution of a program.
-Program vs process: what is the difference (Operating systems)?	A program is passive code; a process is a running execution of that code with its own state and resources.
 What is a process control block (PCB)?	The OS data structure that stores the information needed to manage and resume a process.
-What kinds of information are typically stored in a PCB?	PID; process state; CPU context; address-space info; and allocated resources.
 What does `fork()` conceptually do (Operating systems)?	It creates a new child process by duplicating the calling process.
 What does `fork()` return to the parent vs the child?	The parent gets the child PID; the child gets `0`.
 What does `fork()` copy at a high level?	The process state needed for execution, including virtual address space and open file descriptors.
 What does `execve()` conceptually do (Operating systems)?	It replaces the current process image with a new program.
 What is `wait()` used for (Operating systems)?	To make a process wait until one of its child processes terminates and collect its status.
 Why is exit status useful between processes?	It lets a terminating process report success or failure to its parent.
-What does `exit(status)` do (Operating systems)?	It terminates the calling process and returns a status code.
 What does `kill(pid, sig)` do at a high level?	It sends a signal to a process, often to request termination or other signal handling.
-What are the basic process states in the lecture?	Ready; running; and blocked.
 What is a context switch?	Switching the CPU from one running process or thread to another by saving one context and restoring another.
 What state is saved/restored during a context switch?	Execution state such as registers, instruction pointer/program counter, stack-related state, and other CPU context.
 Why are context switches necessary?	They make multitasking possible by letting multiple tasks share the CPU over time.
@@ -62,11 +54,9 @@ What is a key advantage of SJF?	It can improve average waiting and finishing tim
 What is a key drawback of SJF?	It requires estimating job length and can starve long jobs if shorter jobs keep arriving.
 What is Round Robin (RR) scheduling?	A preemptive policy that gives each ready task a fixed time slice in turn.
 Why is Round Robin good for interactive workloads?	It gives each task frequent CPU access, improving responsiveness.
-What is a time slice or quantum?	The maximum CPU time a task may run before being preempted in policies like Round Robin.
 What is the main time-slice tradeoff in Round Robin?	Short slices improve responsiveness and help I/O-bound tasks, but increase context-switch overhead.
 Why do CPU-bound tasks often prefer longer time slices?	Longer slices reduce switching overhead and let them do more useful work per run.
 Why do I/O-bound tasks often benefit from shorter time slices?	They tend to need short bursts of CPU and benefit from quicker rescheduling.
-What are common scheduling goals in operating systems?	Fairness; utilization; throughput; response time; turnaround time; predictability; and meeting deadlines.
 Static vs dynamic scheduling: what is the difference?	Static scheduling is decided ahead of run time; dynamic scheduling makes decisions during execution.
 Preemptive vs non-preemptive scheduling: what is the difference?	Preemptive scheduling can interrupt a running task; non-preemptive scheduling lets it keep running until it blocks, yields, or finishes its slot.
 Why is preemptive scheduling useful?	It lets urgent or time-sensitive tasks run quickly instead of waiting for the current task to finish voluntarily.
@@ -124,18 +114,13 @@ What is transfer time on a disk?	The time needed for the requested sectors to pa
 Why is seek time often the dominant cost for HDD I/O?	Head movement is mechanically expensive compared with actually transferring one nearby block.
 Why can a slower algorithm with fewer disk accesses beat a faster one with many accesses?	Because disk I/O cost can dominate CPU time.
 What is disk scheduling?	Choosing the next disk request based on disk position and pending requests to reduce access cost.
-What does FCFS disk scheduling do?	It serves disk requests in arrival order.
-What is the main drawback of FCFS disk scheduling?	It can cause long total head movement and poor seek efficiency.
 What does SSTF disk scheduling do?	It serves the pending request closest to the current head position.
 What is the main drawback of SSTF?	Far-away requests can starve if nearer requests keep arriving.
 What does SCAN disk scheduling do?	It moves the head across the disk in one direction, serving requests on the way, then reverses.
 Why is SCAN often a good compromise?	It improves seek efficiency while avoiding some of SSTF's starvation problems.
-What does C-SCAN do?	It serves requests in one direction only and then jumps back to the start.
-Why can C-SCAN improve fairness over SCAN?	Requests are treated more uniformly because service does not depend as much on sweep direction.
 Why do modern disks reduce how much control the OS has over scheduling?	The device firmware often hides physical layout and does its own internal scheduling and remapping.
 What is buffer caching?	Keeping disk blocks in memory so repeated accesses can avoid physical disk I/O.
 What is read-ahead or prefetching?	Fetching likely-needed future blocks before the process explicitly requests them.
-What is an unstructured file from the OS point of view?	A sequence of bytes whose interpretation is left to applications.
 What is file management in a file system?	Mechanisms for naming, sharing, protecting, and accessing files and directories.
 What is storage management in a file system?	Allocating and locating file data on persistent storage.
 What is chaining in the media for file allocation?	Each file block points to the next block on disk.
@@ -145,9 +130,5 @@ What is an inode-style table of pointers?	Metadata stores direct and indirect po
 What is an advantage of inode-style block pointers?	They support efficient random and sequential access while keeping the main metadata structure small.
 What is extent-based allocation?	Representing a file as runs of consecutive blocks instead of many separate block pointers.
 Why can extent-based allocation improve performance?	It reduces metadata and lookups while improving locality for large sequential reads.
-What is striping across disks?	Spreading data across multiple disks so they can serve one request in parallel.
-What is the main benefit of striping?	Higher aggregate data throughput than a single disk can provide.
 What is RAID?	A family of disk organizations that trade off performance, capacity, and fault tolerance across multiple disks.
-What is network-attached storage (NAS)?	Remote storage exposed through a file-oriented network protocol.
-What is a storage area network (SAN)?	Remote storage presented more like attached block devices than ordinary network files.
 Why do SSDs change storage-system assumptions?	They greatly reduce seek and rotational costs, changing the relative importance of scheduling and locality decisions.

@@ -1,16 +1,11 @@
-What is a process (Operating systems)?	The execution of a program.
-Program vs process: what is the difference (Operating systems)?	A program is passive code; a process is a running execution of that code with its own state and resources.
 What is a process control block (PCB)?	The OS data structure that stores the information needed to manage and resume a process.
-What kinds of information are typically stored in a PCB?	PID; process state; CPU context; address-space info; and allocated resources.
 What does `fork()` conceptually do (Operating systems)?	It creates a new child process by duplicating the calling process.
 What does `fork()` return to the parent vs the child?	The parent gets the child PID; the child gets `0`.
 What does `fork()` copy at a high level?	The process state needed for execution, including virtual address space and open file descriptors.
 What does `execve()` conceptually do (Operating systems)?	It replaces the current process image with a new program.
 What is `wait()` used for (Operating systems)?	To make a process wait until one of its child processes terminates and collect its status.
 Why is exit status useful between processes?	It lets a terminating process report success or failure to its parent.
-What does `exit(status)` do (Operating systems)?	It terminates the calling process and returns a status code.
 What does `kill(pid, sig)` do at a high level?	It sends a signal to a process, often to request termination or other signal handling.
-What are the basic process states in the lecture?	Ready; running; and blocked.
 What is a context switch?	Switching the CPU from one running process or thread to another by saving one context and restoring another.
 What state is saved/restored during a context switch?	Execution state such as registers, instruction pointer/program counter, stack-related state, and other CPU context.
 Why are context switches necessary?	They make multitasking possible by letting multiple tasks share the CPU over time.
@@ -31,11 +26,9 @@ What is a key advantage of SJF?	It can improve average waiting and finishing tim
 What is a key drawback of SJF?	It requires estimating job length and can starve long jobs if shorter jobs keep arriving.
 What is Round Robin (RR) scheduling?	A preemptive policy that gives each ready task a fixed time slice in turn.
 Why is Round Robin good for interactive workloads?	It gives each task frequent CPU access, improving responsiveness.
-What is a time slice or quantum?	The maximum CPU time a task may run before being preempted in policies like Round Robin.
 What is the main time-slice tradeoff in Round Robin?	Short slices improve responsiveness and help I/O-bound tasks, but increase context-switch overhead.
 Why do CPU-bound tasks often prefer longer time slices?	Longer slices reduce switching overhead and let them do more useful work per run.
 Why do I/O-bound tasks often benefit from shorter time slices?	They tend to need short bursts of CPU and benefit from quicker rescheduling.
-What are common scheduling goals in operating systems?	Fairness; utilization; throughput; response time; turnaround time; predictability; and meeting deadlines.
 Static vs dynamic scheduling: what is the difference?	Static scheduling is decided ahead of run time; dynamic scheduling makes decisions during execution.
 Preemptive vs non-preemptive scheduling: what is the difference?	Preemptive scheduling can interrupt a running task; non-preemptive scheduling lets it keep running until it blocks, yields, or finishes its slot.
 Why is preemptive scheduling useful?	It lets urgent or time-sensitive tasks run quickly instead of waiting for the current task to finish voluntarily.
