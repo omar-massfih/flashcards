@@ -4,7 +4,6 @@ Define scalability (DDIA framing).	Reasonable ways to handle growth in load/data
 Define maintainability (DDIA framing).	Enable teams to work productively over time while maintaining and evolving the system.
 What is a fault vs a failure (DDIA)?	Fault: a component deviates from spec; failure: the system as a whole stops providing required service.
 What is fault tolerance (resilience)?	Mechanisms that prevent certain faults from turning into user-visible failures.
-Name three broad categories of faults discussed in DDIA Ch. 1.	Hardware faults; software errors; human errors.
 Why are hardware faults often treated as random/uncorrelated?	One disk/host failing usually doesn’t imply others fail at the same time (weak correlations aside).
 How does redundancy help with hardware faults?	Redundant components can take over while broken parts are replaced, reducing downtime.
 Why do large fleets increase the rate of hardware faults you must handle?	More machines means failures happen more frequently in absolute terms.
@@ -23,7 +22,6 @@ What is the tradeoff between “compute on read” vs “compute on write”?	Co
 In batch systems, what performance metric is commonly emphasized?	Throughput (records/sec) or job runtime for a dataset.
 In online systems, what performance metric is commonly emphasized?	Response time (client-visible time from request to response).
 Why is response time best treated as a distribution?	Requests vary; outliers matter; a single average hides user experience variance.
-What is the median response time (p50)?	The 50th percentile; half of requests are faster and half are slower.
 What does p95 (or p99/p999) response time mean?	A threshold where 95% (or 99%/99.9%) of requests are faster than that value.
 What are tail latencies?	High-percentile response times (e.g., p99/p999) representing the slow tail/outliers.
 Why can tail latencies matter disproportionately?	A few slow requests can dominate user experience and multi-call request latency.

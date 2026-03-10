@@ -31,10 +31,7 @@ What is a concatenated multi-column index?	An index that combines multiple colum
 Why are specialized multidimensional indexes useful?	They can narrow by multiple dimensions at once, such as time plus temperature or latitude plus longitude.
 What is an in-memory database?	A database that serves reads from memory and uses disk or replication mainly for durability.
 Why can an in-memory database be faster even if disk-based systems also use caches?	It avoids much of the overhead of encoding and managing disk-centric storage structures.
-What is OLTP?	Online transaction processing: low-latency reads and writes on a small number of records per query.
-What is OLAP?	Online analytic processing: large scans and aggregations for analysis and decision support.
 What is a data warehouse?	A separate analytical database containing cleaned, transformed copies of data from operational systems.
-What is a star schema?	A warehouse schema with a central fact table linked to surrounding dimension tables.
 Why is column-oriented storage good for analytics?	Queries often need only a few columns across many rows, so reading columns separately reduces I/O.
 Why does column-oriented storage compress well?	Values in a column are often repetitive or low-cardinality, making techniques like bitmap and run-length encoding effective.
 What is vectorized processing?	Processing chunks of column data in tight loops, often directly on compressed data, to use CPU caches and SIMD efficiently.

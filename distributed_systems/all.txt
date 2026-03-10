@@ -4,7 +4,6 @@ Define scalability (DDIA framing).	Reasonable ways to handle growth in load/data
 Define maintainability (DDIA framing).	Enable teams to work productively over time while maintaining and evolving the system.
 What is a fault vs a failure (DDIA)?	Fault: a component deviates from spec; failure: the system as a whole stops providing required service.
 What is fault tolerance (resilience)?	Mechanisms that prevent certain faults from turning into user-visible failures.
-Name three broad categories of faults discussed in DDIA Ch. 1.	Hardware faults; software errors; human errors.
 Why are hardware faults often treated as random/uncorrelated?	One disk/host failing usually doesn’t imply others fail at the same time (weak correlations aside).
 How does redundancy help with hardware faults?	Redundant components can take over while broken parts are replaced, reducing downtime.
 Why do large fleets increase the rate of hardware faults you must handle?	More machines means failures happen more frequently in absolute terms.
@@ -23,7 +22,6 @@ What is the tradeoff between “compute on read” vs “compute on write”?	Co
 In batch systems, what performance metric is commonly emphasized?	Throughput (records/sec) or job runtime for a dataset.
 In online systems, what performance metric is commonly emphasized?	Response time (client-visible time from request to response).
 Why is response time best treated as a distribution?	Requests vary; outliers matter; a single average hides user experience variance.
-What is the median response time (p50)?	The 50th percentile; half of requests are faster and half are slower.
 What does p95 (or p99/p999) response time mean?	A threshold where 95% (or 99%/99.9%) of requests are faster than that value.
 What are tail latencies?	High-percentile response times (e.g., p99/p999) representing the slow tail/outliers.
 Why can tail latencies matter disproportionately?	A few slow requests can dominate user experience and multi-call request latency.
@@ -54,7 +52,6 @@ What is the data locality advantage of document databases?	A document is stored 
 What are the downsides of document locality?	The entire document is loaded even when only part is needed; updates typically rewrite the whole document
 What is a declarative query language?	A language (like SQL) where you specify what data you want, not how to retrieve it — the system's optimizer decides execution
 Why are declarative languages generally better for databases?	More concise; hide engine implementation details allowing optimization; easier to parallelize; DB can improve performance without changing queries
-What is MapReduce?	A programming model for processing large amounts of data across many machines using map (emit key-value pairs) and reduce (aggregate) pure functions
 What kinds of data are best modeled as a graph?	Highly interconnected data with complex many-to-many relationships — social networks, web links, road networks
 What two broad storage-engine families does DDIA chapter 3 focus on first?	Log-structured storage engines and page-oriented engines such as B-trees.
 What is an append-only log in database storage?	An append-only sequence of records; new writes are added at the end rather than overwriting old ones.
@@ -89,10 +86,7 @@ What is a concatenated multi-column index?	An index that combines multiple colum
 Why are specialized multidimensional indexes useful?	They can narrow by multiple dimensions at once, such as time plus temperature or latitude plus longitude.
 What is an in-memory database?	A database that serves reads from memory and uses disk or replication mainly for durability.
 Why can an in-memory database be faster even if disk-based systems also use caches?	It avoids much of the overhead of encoding and managing disk-centric storage structures.
-What is OLTP?	Online transaction processing: low-latency reads and writes on a small number of records per query.
-What is OLAP?	Online analytic processing: large scans and aggregations for analysis and decision support.
 What is a data warehouse?	A separate analytical database containing cleaned, transformed copies of data from operational systems.
-What is a star schema?	A warehouse schema with a central fact table linked to surrounding dimension tables.
 Why is column-oriented storage good for analytics?	Queries often need only a few columns across many rows, so reading columns separately reduces I/O.
 Why does column-oriented storage compress well?	Values in a column are often repetitive or low-cardinality, making techniques like bitmap and run-length encoding effective.
 What is vectorized processing?	Processing chunks of column data in tight loops, often directly on compressed data, to use CPU caches and SIMD efficiently.

@@ -14,5 +14,4 @@ What is the data locality advantage of document databases?	A document is stored 
 What are the downsides of document locality?	The entire document is loaded even when only part is needed; updates typically rewrite the whole document
 What is a declarative query language?	A language (like SQL) where you specify what data you want, not how to retrieve it — the system's optimizer decides execution
 Why are declarative languages generally better for databases?	More concise; hide engine implementation details allowing optimization; easier to parallelize; DB can improve performance without changing queries
-What is MapReduce?	A programming model for processing large amounts of data across many machines using map (emit key-value pairs) and reduce (aggregate) pure functions
 What kinds of data are best modeled as a graph?	Highly interconnected data with complex many-to-many relationships — social networks, web links, road networks
