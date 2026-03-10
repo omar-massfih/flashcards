@@ -1,0 +1,17 @@
+What does static typing mean?	Types are checked on program syntax before execution, rejecting programs that do not type-check.
+What does dynamic typing mean?	Types are checked at run time as values are used during execution.
+Why are static type systems conservative?	They can reject some programs that would run correctly because they prove absence of some errors, not overall correctness.
+What is a key tradeoff in type-system design?	Stronger safety usually reduces expressivity, while more flexibility usually allows more run-time errors.
+What is parametric polymorphism?	Writing code with type variables so the same definition works for many concrete types.
+How does subtype polymorphism differ from parametric polymorphism?	Subtype polymorphism relies on subtype substitution, while parametric polymorphism relies on type variables and one definition working uniformly for many types.
+Why might a language want constraints on type parameters?	To guarantee that generic code only uses operations supported by the allowed argument types.
+Why is array covariance risky in mainstream languages?	It permits assignments that look type-compatible statically but can still fail at run time when storing the wrong element type.
+What does an upper-bounded wildcard like `? extends T` mean conceptually?	A value whose element type is some unknown subtype of `T`, making it safe to read as `T`.
+What does a lower-bounded wildcard like `? super T` mean conceptually?	A value whose element type is some unknown supertype of `T`, making it safe to write `T` values into it.
+What is the producer/consumer intuition for generic variance?	Use upper bounds when mainly reading produced values, and lower bounds when mainly writing consumed values.
+Why is behavioral subtyping harder than structural subtyping?	Matching signatures is not enough; the subtype must also preserve the expected behavior and contract.
+Why does subclassing not guarantee behavioral substitutability?	A subclass can override behavior in ways that violate the assumptions clients rely on for the superclass.
+What is the diamond problem in multiple inheritance?	A derived class can inherit the same ancestor through multiple paths, creating ambiguity about shared state or inherited behavior.
+What is an inner class?	A class defined inside another class, often with access to the enclosing instance's context.
+What is an anonymous inner class?	A one-off class definition written inline where an object is created.
+What is a functional interface?	An interface with a single abstract method that can be implemented by a lambda or similar function value.
