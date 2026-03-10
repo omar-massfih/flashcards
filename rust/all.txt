@@ -276,8 +276,6 @@ What is a binary crate (Rust)?	A crate that compiles to an executable and must d
 What is a library crate (Rust)?	A crate that provides reusable functionality; it has no `main` and doesn’t compile to an executable by itself.
 What is the crate root (Rust)?	The source file Rust starts from; it defines the root module of the crate.
 What is a package in Rust/Cargo?	A bundle of one or more crates described by a `Cargo.toml`.
-How many library crates can a single package contain (Cargo rule)?	At most one.
-How many binary crates can a package contain (Cargo rule)?	Any number.
 In a Cargo package, what file defines a library crate by convention?	`src/lib.rs`.
 In a Cargo package, what file defines the default binary crate by convention?	`src/main.rs`.
 How do you add multiple binary crates to one package (Cargo convention)?	Add files under `src/bin/`; each file is a separate binary crate.
@@ -287,7 +285,6 @@ How do you refer to an item inside a module (Rust)?	Use its path, such as `crate
 What is the default privacy rule for items in a module (Rust)?	Items are private to their parent modules unless marked `pub`.
 Why might you need `pub` on items inside a `pub mod` (Rust)?	A public module does not make its contents public automatically; each item is still private unless marked `pub`.
 What does `use` do within a scope (Rust module system)?	It creates a local shortcut to a path so you can refer to the item with a shorter name.
-Does a `use` statement in one scope automatically apply in child modules (Rust)?	No; `use` only creates a shortcut in the scope where it appears.
 What is an absolute path in Rust modules?	A path that starts at the crate root; for the current crate it begins with `crate`, and for external crates it begins with the crate name.
 What is a relative path in Rust modules?	A path that starts from the current module and uses `self`, `super`, or a name in the current module.
 What does `super` mean at the start of a Rust path?	It refers to the parent module of the current module.
@@ -297,7 +294,13 @@ What does `as` do in a Rust `use` statement?	It gives an imported item a differe
 Why is re-exporting with `pub use` useful in Rust?	It lets you expose a public API that differs from your internal module layout.
 How do you use items from an external crate in Rust?	Add the crate to `Cargo.toml`, then use paths starting with the crate name.
 What are nested paths in a Rust `use` statement for?	They let you bring multiple items with the same path prefix into scope in one statement.
-What does `self` mean inside a nested Rust `use` path?	It imports the parent path itself alongside other items from that path.
 What does a glob import like `use path::*;` do in Rust?	It brings all public items from that path into the current scope.
 If a Rust struct is `pub`, are its fields automatically public?	No; each field is still private unless it is individually marked `pub`.
 If a Rust enum is `pub`, are its variants public?	Yes; making the enum public also makes its variants public.
+What does `mod name;` mean when a Rust module body is moved to another file?	It declares the module in the tree and tells the compiler to load that module's body from the corresponding file.
+Where should the file for a child module live in Rust?	Under a directory named for its parent module path, so the file layout mirrors the module tree.
+Why would a child module like `hosting` live in `src/front_of_house/hosting.rs` instead of `src/hosting.rs`?	Because it is a child of `front_of_house`, not a crate-root module, so its file path follows the parent module path.
+Why is `mod` not like a textual `include` in Rust?	`mod` declares a module once in the module tree; other code refers to that module by path instead of reloading the file.
+After a Rust module has been declared with `mod`, how should other files refer to its items?	By using the module path where it was declared, not by repeating the `mod` declaration.
+Does moving Rust module code into another file change the module tree or item paths?	No; it only changes where the code is stored, not the module's place in the tree.
+What are the two supported file-path styles for an out-of-line Rust module?	The direct-file style like `src/foo.rs` or `src/foo/bar.rs`, and the older `mod.rs` style like `src/foo/mod.rs` or `src/foo/bar/mod.rs`.
