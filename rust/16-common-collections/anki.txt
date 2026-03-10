@@ -1,0 +1,35 @@
+What are collections in Rust?	Data structures that can hold multiple values and whose data is typically stored on the heap.
+How do Rust collections differ from arrays and tuples?	Collections can grow or shrink at runtime, while arrays and tuples have a fixed size known at compile time.
+What is `Vec<T>` in Rust?	A growable, heap-allocated collection of values of one type stored next to each other in memory.
+When might `Vec::new()` need a type annotation (Rust)?	When the vector is empty and Rust has not yet seen any elements that reveal the element type.
+What does the `vec!` macro do in Rust?	It creates a vector initialized with the values you provide.
+What does `push` do on a Rust vector?	It appends a new element to the end of the vector.
+What is the difference between indexing and `get` on a vector (Rust)?	Indexing returns a reference and panics if out of bounds; `get` returns an `Option` instead.
+Why might `v.get(i)` be preferable to `v[i]` in Rust?	It lets you handle missing elements explicitly instead of panicking.
+Why can’t you push to a vector while holding a reference to one of its elements (Rust)?	Growing the vector may reallocate its storage and invalidate existing references, so the borrow checker rejects that pattern.
+What does iterating with `for x in &v` yield for a Rust vector?	Immutable references to the vector's elements.
+What does iterating with `for x in &mut v` yield for a Rust vector?	Mutable references to the vector's elements.
+Why do you need `*x` to change an element while iterating with `&mut v` (Rust)?	Because the loop variable is a mutable reference, so you must dereference it to modify the underlying value.
+How can Rust store multiple logical value kinds in one vector?	By using a vector of an enum whose variants represent the allowed kinds.
+What happens to a vector's elements when the vector is dropped in Rust?	The vector's contents are dropped too.
+What is the difference between `String` and `&str` in Rust?	`String` is an owned, growable UTF-8 string; `&str` is a borrowed string slice.
+What does `String::from(...)` do in Rust?	It creates an owned `String` from string data such as a string literal.
+What is the difference between `push_str` and `push` on a Rust `String`?	`push_str` appends a string slice, while `push` appends a single `char`.
+What happens to the left operand in `s1 + &s2` (Rust)?	The left `String` is moved and reused to build the result.
+Why can `s1 + &s2` accept `&String` on the right when `add` expects `&str` (Rust)?	Rust applies deref coercion from `&String` to `&str`.
+Why is `format!` often preferable to repeated `+` for strings in Rust?	It is easier to read and does not take ownership of its arguments.
+Why doesn’t Rust allow string indexing like `s[0]`?	Strings are UTF-8, so byte positions do not reliably match characters, and finding the nth character cannot guarantee O(1) access.
+How can the same Rust string be viewed in multiple ways?	As bytes, as Unicode scalar values (`char`s), or as grapheme clusters.
+What does a string slice like `&s[a..b]` mean in Rust?	A borrowed `&str` containing the bytes in that range, as long as the bounds are on valid UTF-8 character boundaries.
+What happens if you slice a Rust string at a non-character boundary?	The program panics at runtime.
+When should you use `.chars()` on a Rust string?	When you want to iterate over Unicode scalar values.
+When should you use `.bytes()` on a Rust string?	When you want to iterate over the raw UTF-8 bytes.
+Why doesn't Rust's standard library provide grapheme-cluster iteration directly?	Grapheme clustering is more complex than byte or scalar-value iteration and is left to external crates.
+What is `HashMap<K, V>` in Rust?	A hash map that stores key-value pairs using a hashing function.
+What does `insert` do on a Rust `HashMap`?	It inserts a key-value pair, replacing the old value if the key already exists.
+What does `get` return on a Rust `HashMap`?	An `Option<&V>` for the requested key.
+What should you remember about iterating over a Rust `HashMap`?	Key-value pairs are visited in arbitrary order.
+What happens when you insert owned `String` keys or values into a Rust `HashMap`?	They are moved into the hash map, which becomes their owner.
+What does `entry(key).or_insert(value)` do on a Rust `HashMap`?	It inserts the value only if the key is absent and returns a mutable reference to the entry's value.
+How can `entry(...).or_insert(...)` support updates based on an old value in Rust?	It returns a mutable reference to the stored value, which you can modify in place.
+What is the default hashing tradeoff for Rust's `HashMap`?	It uses SipHash for better resistance to hash-table DoS attacks at some performance cost.
