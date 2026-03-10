@@ -1,0 +1,4 @@
+What is static dispatch (Programming languages)?	Method or function selection determined from compile-time information rather than a receiver's runtime type.
+Why is covariant array subtyping unsafe in mutable languages?	A reference typed as an array of supertypes can store a wrong element type into an array whose actual runtime element type is more specific.
+What is retrofit-style extension in OO languages?	Adding or replacing methods in an existing class without modifying the original source code.
+Why is retrofit-style extension hard to implement safely?	It can create conflicts with existing methods, break separate reasoning about code, and undermine type or behavioral guarantees.
