@@ -23,7 +23,6 @@ Python syntax tip: why can list/dict/tuple literals and comps be multiline witho
 Listcomps vs `map`/`filter`: why often prefer list comprehensions (Python)?	They’re usually more readable and avoid awkward `lambda` usage while doing the same job.
 Do list comprehension loop variables leak in Python 3?	No; comprehension variables have their own local scope (they don’t clobber outer names).
 How do you build a Cartesian product with a list comprehension?	Use multiple `for` clauses, e.g. `[(c, s) for c in colors for s in sizes]`.
-Why use a generator expression instead of a list comprehension to feed another constructor/loop?	It saves memory by producing items one at a time.
 Why are tuples useful as records (Python)?	Field order/length is fixed; unpacking avoids error-prone indexing.
 Why can tuples be smaller/faster than lists (high level)?	Fixed-size allocation and less overhead enable optimizations compared to growable lists.
 Why can a tuple’s value still change even though tuples are “immutable”?	If it contains references to mutable objects, those objects can mutate.
@@ -55,7 +54,6 @@ What happens when you append to a bounded `deque` that is full (Python)?	It disc
 Why are dicts so fundamental in Python (implementation)?	Class/instance attributes, module namespaces, and function keyword arguments are represented with dictionaries in memory.
 What data structure underlies Python `dict` (high level)?	A hash table.
 Which built-in types are also based on hash tables (Python)?	`set` and `frozenset` (and `dict` itself).
-What is a dict comprehension (Python)?	An expression that builds a `dict` from an iterable of key/value data (key: value pairs).
 What does `**` do inside a dict literal (Python ≥ 3.5)?	It unpacks another mapping into the new dict (e.g., `{**d1, **d2}`).
 In a dict literal with multiple `**` unpackings, what happens with duplicate keys (Python)?	Later occurrences overwrite earlier ones.
 In `d1 | d2`, which values win if keys overlap (Python)?	The right operand’s values (from `d2`) overwrite.
@@ -80,7 +78,6 @@ What is the `__missing__` method for (Python mappings)?	A hook a `dict` subclass
 Does `k in d` trigger `__missing__` in a `dict` subclass (Python)?	No; membership tests don’t fall back to `__missing__` unless you implement that logic yourself.
 Why must a `__missing__` implementation often special-case string keys (Python example)?	To avoid infinite recursion when `__missing__` retries lookup using a transformed key.
 Why is subclassing `collections.UserDict` often easier than subclassing `dict` (Python)?	UserDict uses composition (`self.data`), avoiding some built-in shortcuts that can make subclassing `dict` tricky.
-What is `types.MappingProxyType` (Python)?	A wrapper that provides a read-only, dynamic proxy view of an underlying mapping.
 Is a `mappingproxy` (from `MappingProxyType`) a snapshot (Python)?	No; it’s dynamic—changes to the original mapping are reflected in the proxy.
 What do `dict.keys()`, `dict.items()`, and `dict.values()` return (Python 3)?	View objects (`dict_keys`, `dict_items`, `dict_values`) that are dynamic projections.
 Which dict views behave like sets (Python)?	`dict_keys` and `dict_items` support set operations like `&`, `|`, `-`, `^`.
@@ -92,7 +89,6 @@ What is `collections.ChainMap` (Python)?	A wrapper that searches multiple mappin
 Where do updates go in a `ChainMap` (Python)?	Assignments/updates affect only the first (leftmost) mapping.
 What does `Counter.update(iterable)` do (Python)?	It adds counts for elements from the iterable (instead of overwriting like `dict.update`).
 Why are set literals like `{1, 2, 3}` preferred over `set([1, 2, 3])` (Python)?	They’re more readable and avoid building an intermediate list (often faster).
-What is a set comprehension (Python)?	An expression that builds a set: `{expr for ...}` (optionally with `if` filters).
 Do set infix operators like `a & b` accept any iterables (Python)?	No; infix operators require sets on both sides (methods like `.intersection(...)` accept iterables).
 How can you remove duplicates while preserving first-seen order (Python ≥ 3.7)?	Use a dict: `list(dict.fromkeys(items))` (dict preserves insertion order).
 Why is set membership testing fast (Python)?	Hash table lookup finds candidates by hash code with few probes on average.
@@ -113,7 +109,6 @@ What happens when you create `bytes(...)` from a buffer-like object (Python)?	It
 Which exception do you usually get when encoding `str` → `bytes` fails?	`UnicodeEncodeError`.
 Which exception do you usually get when decoding `bytes` → `str` fails?	`UnicodeDecodeError`.
 Why is `errors='ignore'` usually a bad idea when encoding?	It silently drops unencodable characters (data loss).
-What does `errors='replace'` do in encode/decode (Python)?	Encoding replaces unencodable characters with `?`; decoding replaces invalid byte sequences with `�` (U+FFFD).
 What is “mojibake”?	Garbled text caused by decoding bytes with the wrong encoding.
 Why can decoding with the wrong legacy 8-bit encoding be dangerous?	It can succeed without errors but produce mojibake (silent corruption).
 Can you reliably discover the encoding of arbitrary bytes?	Not in general; you usually must be told (metadata/protocol/file format).
@@ -124,8 +119,6 @@ Why can a file contain more bytes than characters written (UTF-8 example)?	Some 
 What determines the default encoding for `open()` in text mode (high level)?	Locale/user preferences (e.g., `locale.getpreferredencoding()`).
 Why do encoding defaults bite Windows users more often (high level)?	Different defaults may be used for files vs console vs redirected I/O, and many defaults are non-UTF code pages.
 What is a BOM (byte order mark)?	A leading byte sequence that signals endianness/encoding for multibyte encodings (notably UTF-16/UTF-32).
-Why does UTF-16 often start with extra bytes like `b'\\xff\\xfe'`?	That’s a BOM indicating little-endian byte order.
-What is “UTF-8 with BOM” called in Python’s codec registry?	`utf-8-sig`.
 Unicode normalization: why can visually identical strings compare unequal?	They can use different code point sequences (e.g., composed vs combining forms).
 What does `unicodedata.normalize('NFC', s)` do?	Composes characters to a canonical, typically shorter form (good for storage/comparison).
 What does `unicodedata.normalize('NFD', s)` do?	Decomposes characters into base chars + combining marks (useful for stripping marks).
@@ -214,7 +207,6 @@ Why use `if x is None:` for optional parameters (Python)?	Distinguishes “argum
 If a default list is mutated, who observes that mutation later?	Any future call that relies on that default object.
 How do you defensively create your own list from an iterable argument?	`list(iterable)`.
 Why is `list(iterable)` a flexible defensive-copy pattern?	It accepts any iterable and ensures you own a mutable list.
-What does `del name` actually delete (Python)?	The reference/binding, not the underlying object.
 When can an object be garbage-collected (Python, high level)?	When it becomes unreachable (no strong references).
 In CPython, what primary mechanism destroys most objects promptly?	Reference counting (plus a cycle detector for cyclic garbage).
 What problem does cyclic garbage collection address (CPython)?	Unreachable reference cycles that reference counting alone can’t free.
@@ -230,12 +222,9 @@ What does “functions are first-class objects” mean (Python)?	Functions can b
 What does “functional style” often rely on (Python feature)?	Passing functions around (higher-order functions and callables).
 Modern Python: what often replaces `map` for building lists?	List comprehensions (or generator expressions for lazy pipelines).
 Modern Python: what often replaces `filter` for selecting items?	A comprehension with an `if` clause (listcomp/genexp).
-In Python 3, what do `map` and `filter` return?	Iterators (lazy results), not lists.
 What is the most common “reduce-like” task, and its preferred built-in (Python)?	Summation; use `sum(...)`.
-What do `all(iterable)` and `any(iterable)` do (Python)?	`all`: True if no falsy elements; `any`: True if any truthy element.
 What restriction applies to the body of a `lambda` (Python)?	It must be a single expression (no statements like `while`, `try`, `=` assignment).
 Why is `lambda` usually best kept small in Python?	Nontrivial lambdas get hard to read; prefer a named `def`.
-What built-in checks whether an object can be called with `()` (Python)?	`callable(obj)`.
 What makes an instance callable (Python)?	Defining a `__call__(self, ...)` method on its class.
 Why are callable instances useful (Python)?	They can keep internal state across calls (function-like objects with memory).
 What is a common `__call__` pattern for a stateful object (Python)?	`__call__` delegates to a regular method (e.g., `return self.pick()`).
@@ -257,17 +246,12 @@ Why use `operator.mul` with `reduce` (Python)?	Avoid trivial lambdas like `lambd
 What does `operator.itemgetter(n)` produce (Python)?	A function that fetches item `obj[n]` from its argument.
 Why can `itemgetter` work with mappings too (Python)?	It uses `__getitem__`, which dicts and many other types support.
 What does `itemgetter(i, j, ...)` return (Python)?	A function returning a tuple of extracted items.
-What does `operator.attrgetter('name')` produce (Python)?	A function that reads the named attribute from its argument.
-What does `operator.methodcaller('upper')` produce (Python)?	A function that calls `.upper()` on its argument.
 What does `functools.partial(func, *args, **kwargs)` return (Python)?	A new callable with some arguments pre-bound.
 Why is `partial` useful (Python)?	Adapts a callable to an API expecting fewer/different arguments (callbacks).
-What is `functools.partialmethod` for (Python)?	Partial application designed for methods (descriptor-friendly).
 How can `partial` help with repeated normalization patterns (Python example)?	Bind one arg of a function to create a specialized helper, e.g. `nfc = partial(unicodedata.normalize, 'NFC')`.
 What is “gradual typing” (Python typing)?	Type hints are optional; unannotated code can be treated as `Any` by the checker; checking is static-only (no runtime enforcement).
 In gradual typing, what happens when the checker can’t determine a type (Python typing)?	It assumes `Any`.
 Do type hints prevent wrong types from being passed at runtime (Python)?	No; they’re ignored by the runtime and only used by tools (type checkers/IDEs/linters).
-What does Mypy do with a function that has no annotations by default?	It typically ignores the function body/signature for type checking (unless configured to check untyped defs).
-Common typing mistake: what’s wrong with `def f(color=str) -> ...`?	`color=str` sets a default value (the `str` class), not a type annotation; it should be `color: str`.
 What does “types are defined by supported operations” mean (typing perspective)?	A type is characterized by what operations/methods are valid on values of that type.
 What is duck typing (Python concept)?	Correctness is determined at runtime by whether an object supports the operations you use (not by declared types).
 What is nominal typing (static type checking perspective)?	Variables/parameters have declared types; only operations defined on the declared type are considered valid by the checker.
@@ -276,7 +260,6 @@ How is `Any` different from `object` (Python typing)?	`object` accepts any value
 Why can annotating something as `Any` reduce the value of type checking?	It suppresses many errors because the checker assumes any operation is valid.
 What does “subtype-of” mean in nominal typing?	If `T2` is a subtype of `T1`, you can use a `T2` wherever `T1` is expected (Liskov substitution).
 What does “consistent-with” add beyond subtype-of (gradual typing)?	It includes subtype relationships and also treats `Any` as matching every type in both directions.
-PEP 484 numeric rule: which built-in numeric types are treated as consistent (Python typing)?	`int` is consistent-with `float`; `float` is consistent-with `complex` (so `int` is consistent-with `complex`).
 Python 3.10+: what does `T | U` mean in annotations?	A union type (equivalent to `Union[T, U]`).
 Why can returning `Union[...]` be annoying for callers (Python typing)?	Callers must narrow/check the runtime type before using the result safely.
 Python 3.9+: what does `list[str]` mean in a return type annotation?	A list where every element is a `str` (generic type parameter is `str`).
@@ -290,12 +273,10 @@ What is a “type alias” (Python typing)?	A named alias for a type expression 
 When should you annotate an input as `Iterable[T]` instead of `Sequence[T]` (Python typing)?	When you only need to iterate and want to accept generators/streams, not just sized/indexable sequences.
 When should you annotate an input as `Sequence[T]` instead of `Iterable[T]` (Python typing)?	When you need `len(...)` and/or indexing/slicing behavior.
 Why is `Iterable[T]` often too vague as a return type (Python typing)?	It doesn’t promise key properties (re-iterable vs one-shot, concrete container type), making downstream use less clear.
-What is `reveal_type(x)` (Mypy)?	A checker-only debugging pseudo-function that reports Mypy’s inferred type of `x`.
 What is a `TypeVar` used for (Python typing)?	To define a type parameter so input types can be reflected in output types (parameterized generics).
 What is a restricted `TypeVar` (Python typing)?	A type variable constrained to one of a fixed set of types listed in `TypeVar(...)`.
 What is a bounded `TypeVar` (Python typing)?	A type variable constrained to be a subtype/consistent-with an upper bound declared via `bound=...`.
 Why is `TypeVar(..., bound=Hashable)` useful (Python typing)?	It ensures elements are hashable (usable in dict/Counter) while preserving the specific element type in the return type.
-What is `AnyStr` (Python typing)?	A predefined `TypeVar` constrained to `str` or `bytes`, used when output type should match the input text type.
 What is `typing.Protocol` for (Python typing)?	Defining structural interfaces so a type checker can verify “supports these methods” without requiring inheritance.
 What is “static duck typing” (Python typing)?	Using `Protocol` to express operation-based requirements (structural typing) for static type checkers.
 When is a concrete type consistent-with a protocol type (Python typing)?	When it implements the protocol’s required methods with compatible signatures.
@@ -304,8 +285,6 @@ What does `Callable[[A, B], R]` mean (Python typing)?	A callable that takes argu
 How do you annotate “any callable signature” (Python typing)?	Use `Callable[..., R]`.
 What is `NoReturn` used for (Python typing)?	Return annotation for functions that never return normally (e.g., always raise or call `sys.exit()`).
 Python 3.8+: how do you declare positional-only parameters?	Use `/` in the signature; parameters before `/` are positional-only.
-How do you annotate `*args` when all extra positional args share one type (Python typing)?	`*args: T` meaning each extra arg is `T` (inside the function it’s `tuple[T, ...]`).
-How do you annotate `**kwargs` when all extra keyword values share one type (Python typing)?	`**kwargs: T` meaning each kw value is `T` (inside the function it’s `dict[str, T]`).
 Decorator desugaring: what does `@deco` mean (Python)?	It’s syntax sugar for rebinding: `func = deco(func)` right after `func` is defined.
 Do decorators run at call time or at definition/import time (Python)?	At function definition time; usually during module import (module load), not when the function is later called.
 Import time vs runtime: what’s the difference (Python, decorators context)?	Import time is when module top-level code runs (decorators execute); runtime is when decorated functions are invoked later.
@@ -313,11 +292,9 @@ What is a registration decorator used for (Python)?	To add functions to a regist
 What is a stacked decorator (Python)?	Multiple decorators applied to one function using multiple `@...` lines.
 Stacked decorators desugaring (Python)?	`@a` then `@b` is `func = a(b(func))`.
 Why do naive decorators often break `__name__` and `__doc__` (Python)?	Because the wrapper replaces the function object, so its metadata becomes the wrapper’s metadata.
-What does `functools.wraps` do (Python)?	Helps write well-behaved decorators by copying metadata (e.g., `__name__`, `__doc__`) from the wrapped function to the wrapper.
 Why should a decorator wrapper accept `*args, **kwargs` (Python)?	To forward any positional/keyword arguments so the decorator works for many signatures.
 Variable scope rule: when is a name local inside a function (Python)?	If it’s a parameter or it’s assigned anywhere in the function body (unless declared `global`/`nonlocal`).
 Why does `print(b); b = 9` raise `UnboundLocalError` (Python)?	Because assignment makes `b` local for the whole function, so `print(b)` reads an uninitialized local.
-What does `nonlocal x` do inside a nested function (Python)?	Makes `x` refer to the nearest enclosing function scope where `x` is defined (reads and assigns that binding).
 In a closure, where are captured bindings stored (Python)?	In the returned function object’s closure cells (`fn.__closure__`), keyed by names in `fn.__code__.co_freevars`.
 Why does rebinding an outer-scope name require `nonlocal` (Python)?	Without `nonlocal`, an assignment makes the name local, so the closure binding won’t be updated.
 Why does `count += 1` inside a nested function create a local `count` without `nonlocal` (Python)?	Augmented assignment on immutables rebinding (`count = count + 1`) counts as assignment, so the compiler treats `count` as local.
@@ -328,9 +305,7 @@ What does `functools.cache` implement (Python)?	Memoization: caching results of 
 `functools.cache`: what’s the key requirement on arguments (Python)?	All arguments must be hashable, because the cache is keyed using a dict.
 What is a risk of using `functools.cache` in long-running processes (Python)?	Unbounded growth: it can consume a lot of memory if there are many distinct argument combinations.
 What does `functools.lru_cache` add compared with `cache` (Python)?	A bounded cache with eviction controlled by `maxsize` (least-recently-used policy).
-What does LRU mean in `lru_cache` (Python)?	Least Recently Used: evict entries that haven’t been accessed recently to make room for new ones.
 `lru_cache`: what does `maxsize` control (Python)?	The maximum number of cached entries (older entries are evicted once full).
-`lru_cache`: what does `typed=True` change (Python)?	Caches results separately for arguments of different types (e.g., treats `1` and `1.0` as distinct keys).
 What does `functools.singledispatch` create (Python)?	A single-dispatch generic function: multiple implementations chosen by the type of the first argument.
 In single dispatch, which argument is used to choose the implementation (Python)?	The first positional argument’s runtime type.
 What does `@singledispatch` decorate (Python)?	The base (fallback) implementation, which typically handles `object` as a catch-all.
@@ -351,15 +326,11 @@ In function-oriented Strategy, what is the promotion type hint `Callable[[Order]
 In function-oriented Strategy, why is promotion often `Optional[...]`?	Because an order may have no promotion; `None` means “no discount strategy”.
 Why doesn’t method auto-binding apply to a callable stored in an instance attribute (Python)?	Method binding is a descriptor feature of functions defined on the class; a plain callable attribute isn’t automatically bound.
 What’s a subtle maintenance bug in `best_promo` with a manual `promos` list?	You can add a new promotion function but forget to add it to `promos`, so `best_promo` silently ignores it.
-What does `globals()` return (Python)?	A dict representing the current module’s global symbol table.
-In a module, what does `globals()` refer to inside a function defined there (Python)?	The globals of the module where the function is defined (not where it is called from).
 How can you collect promo functions using `globals()` (Strategy pattern)?	Filter `globals().items()` by naming convention (e.g., names ending with `_promo`) and collect the callable values.
 What is a downside of collecting strategies by name convention (e.g., suffix `_promo`)?	It’s implicit and brittle: naming mistakes or unrelated functions can be accidentally included/excluded.
 Why can putting all strategy functions in a separate module help (Strategy pattern)?	It centralizes strategies and enables introspection without relying on naming conventions in unrelated code.
 What does `inspect.getmembers(obj, predicate)` do (Python)?	Returns an object’s attributes as `(name, value)` pairs, optionally filtered by a predicate.
-What does `inspect.isfunction` filter for (Python)?	Values that are user-defined function objects.
 How can you build a `promos` list by introspecting a `promotions` module (Python)?	Use `inspect.getmembers(promotions, inspect.isfunction)` and collect the returned functions.
-What is a risk of blindly collecting all functions from a module as strategies (Python)?	A function with the wrong signature can be included, causing runtime errors when applied as a strategy.
 What is a registration decorator (Python)?	A decorator that records/registers functions (e.g., appends them to a list) as a side effect at import time.
 In decorator-enhanced Strategy, what does `@promotion` do?	It registers the decorated promotion function (adds it to a `promos` list) and returns it unchanged.
 Why does a registration decorator often return the original function (Python)?	So the decorated function’s callable behavior stays the same while still being registered.
@@ -368,10 +339,7 @@ Registration decorator benefit: how can you disable a strategy quickly (Python)?
 Registration decorator benefit: can strategies be registered from other modules (Python)?	Yes; as long as they import and use the `@promotion` decorator, they’ll be registered when that module loads.
 Command pattern: why is Command described as an OO replacement for callbacks (GoF)?	It packages an action as an object so it can be stored, passed around, and invoked later.
 In Python, what’s the simplest replacement for a single-method Command object?	Pass a function (or other callable) instead of a command instance.
-How would an invoker call a function-based command (Python)?	Call it directly: `command()` instead of `command.execute()`.
-What is a MacroCommand (Command pattern idea)?	A command that executes a sequence of commands.
 How can MacroCommand be implemented idiomatically in Python (high level)?	As a callable object (`__call__`) that loops over and calls stored command callables.
-In a callable object, what single-method interface does it implement (Python)?	`__call__` (so calling the instance runs its behavior).
 Why might you still use a class for Command instead of a function (Python)?	To keep state, provide extra methods (e.g., undo), and encapsulate more complex behavior than a single callback.
 What are two alternatives to classes for keeping state across calls (Python)?	A closure (captured free variables) or a callable instance (object with `__call__` + attributes).
 When should you consider a closure for Command-like state (Python)?	When you need small, hidden state tied to a function and a minimal public surface.
@@ -385,8 +353,6 @@ What uses `obj.__format__(format_spec)` in Python?	F-strings, `format()`, and `s
 How can a class support unpacking like `x, y = obj` (Python)?	By implementing `__iter__` so the object is iterable.
 What is an alternative constructor in Python?	A class-level constructor, often implemented as a `@classmethod`, that builds instances in a different way than `__init__`.
 Why is `@classmethod` useful for alternative constructors (Python)?	It receives the class as the first argument, so it can construct instances of the actual class being called.
-What does `@staticmethod` change about a method call (Python)?	It removes automatic binding; the method receives no special first argument.
-What is the format specification mini-language in Python?	The notation used after `:` in f-strings, `format()`, and `str.format()` to control formatting.
 How can a user-defined class support custom formatting codes in Python?	By implementing `__format__` and interpreting `format_spec` however the class chooses.
 What makes an object hashable in Python?	It has a stable hash value during its lifetime and an equality relation consistent with that hash.
 What is a common pattern for implementing `__hash__` on a value object (Python)?	Hash a tuple of the attributes that define equality, e.g. `hash((self.x, self.y))`.
@@ -460,18 +426,15 @@ What is multiple inheritance in Python?	The ability of a class to inherit from m
 What problem must a language solve when supporting multiple inheritance?	It must resolve conflicts when several base classes provide attributes or methods with the same name.
 What is the method resolution order (MRO) in Python?	The ordered sequence of classes Python searches when looking up methods and attributes.
 Where can you inspect a class's MRO in Python?	In the class `__mro__` attribute.
-What determines method activation order in cooperative multiple inheritance?	The class MRO plus whether each implementation calls `super()`.
 What is a cooperative method in Python inheritance?	A method that calls `super()` so other implementations in the MRO can participate.
 Why can a noncooperative method break multiple inheritance?	It can stop the call chain early and prevent later classes in the MRO from running.
 What signature requirement helps cooperative multiple inheritance work?	Cooperative methods should have compatible signatures because different classes may be called in different orders.
 Why can changing the order of base classes change behavior in Python multiple inheritance?	The base-class order affects the MRO and therefore which method `super()` reaches next.
-Why can `super()` appear dynamic or surprising in Python?	It follows the MRO of the actual receiver class at runtime, not just the lexical superclass of the current class.
 What is a mixin class in Python?	A class meant to be combined with other base classes to add a focused behavior, not used as the sole concrete base class.
 What is the main purpose of a mixin class?	Code reuse by adding a small, specific behavior to unrelated classes.
 Why should a mixin usually appear before other concrete bases in a Python class definition?	So its methods appear early enough in the MRO to intercept and delegate behavior as intended.
 Why should mixins usually avoid keeping internal instance state?	State makes them harder to combine safely with unrelated classes in multiple inheritance.
 Why is the `Mixin` suffix recommended in Python class names?	It makes the class's intended role explicit to readers and users.
-What is an aggregate class in a multiple-inheritance design?	A class that mostly combines mixins or base classes into a ready-to-use package without much new behavior of its own.
 Why can aggregate classes be useful to library users?	They hide tricky base-class ordering and expose a sensible precomposed class.
 Why should interfaces be explicit with ABCs or protocols in modern Python?	It makes subtype intent clearer than relying on concrete inheritance alone.
 Why is inheritance for code reuse often weaker than composition?	Inheritance tightly couples classes, while composition can reuse behavior with less brittleness.

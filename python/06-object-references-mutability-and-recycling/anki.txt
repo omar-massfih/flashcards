@@ -29,7 +29,6 @@ Why use `if x is None:` for optional parameters (Python)?	Distinguishes “argum
 If a default list is mutated, who observes that mutation later?	Any future call that relies on that default object.
 How do you defensively create your own list from an iterable argument?	`list(iterable)`.
 Why is `list(iterable)` a flexible defensive-copy pattern?	It accepts any iterable and ensures you own a mutable list.
-What does `del name` actually delete (Python)?	The reference/binding, not the underlying object.
 When can an object be garbage-collected (Python, high level)?	When it becomes unreachable (no strong references).
 In CPython, what primary mechanism destroys most objects promptly?	Reference counting (plus a cycle detector for cyclic garbage).
 What problem does cyclic garbage collection address (CPython)?	Unreachable reference cycles that reference counting alone can’t free.

@@ -2,8 +2,6 @@ What uses `obj.__format__(format_spec)` in Python?	F-strings, `format()`, and `s
 How can a class support unpacking like `x, y = obj` (Python)?	By implementing `__iter__` so the object is iterable.
 What is an alternative constructor in Python?	A class-level constructor, often implemented as a `@classmethod`, that builds instances in a different way than `__init__`.
 Why is `@classmethod` useful for alternative constructors (Python)?	It receives the class as the first argument, so it can construct instances of the actual class being called.
-What does `@staticmethod` change about a method call (Python)?	It removes automatic binding; the method receives no special first argument.
-What is the format specification mini-language in Python?	The notation used after `:` in f-strings, `format()`, and `str.format()` to control formatting.
 How can a user-defined class support custom formatting codes in Python?	By implementing `__format__` and interpreting `format_spec` however the class chooses.
 What makes an object hashable in Python?	It has a stable hash value during its lifetime and an equality relation consistent with that hash.
 What is a common pattern for implementing `__hash__` on a value object (Python)?	Hash a tuple of the attributes that define equality, e.g. `hash((self.x, self.y))`.

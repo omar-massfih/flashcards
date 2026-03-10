@@ -8,7 +8,6 @@ Python syntax tip: why can list/dict/tuple literals and comps be multiline witho
 Listcomps vs `map`/`filter`: why often prefer list comprehensions (Python)?	They’re usually more readable and avoid awkward `lambda` usage while doing the same job.
 Do list comprehension loop variables leak in Python 3?	No; comprehension variables have their own local scope (they don’t clobber outer names).
 How do you build a Cartesian product with a list comprehension?	Use multiple `for` clauses, e.g. `[(c, s) for c in colors for s in sizes]`.
-Why use a generator expression instead of a list comprehension to feed another constructor/loop?	It saves memory by producing items one at a time.
 Why are tuples useful as records (Python)?	Field order/length is fixed; unpacking avoids error-prone indexing.
 Why can tuples be smaller/faster than lists (high level)?	Fixed-size allocation and less overhead enable optimizations compared to growable lists.
 Why can a tuple’s value still change even though tuples are “immutable”?	If it contains references to mutable objects, those objects can mutate.

@@ -1,7 +1,6 @@
 Why are dicts so fundamental in Python (implementation)?	Class/instance attributes, module namespaces, and function keyword arguments are represented with dictionaries in memory.
 What data structure underlies Python `dict` (high level)?	A hash table.
 Which built-in types are also based on hash tables (Python)?	`set` and `frozenset` (and `dict` itself).
-What is a dict comprehension (Python)?	An expression that builds a `dict` from an iterable of key/value data (key: value pairs).
 What does `**` do inside a dict literal (Python ≥ 3.5)?	It unpacks another mapping into the new dict (e.g., `{**d1, **d2}`).
 In a dict literal with multiple `**` unpackings, what happens with duplicate keys (Python)?	Later occurrences overwrite earlier ones.
 In `d1 | d2`, which values win if keys overlap (Python)?	The right operand’s values (from `d2`) overwrite.
@@ -26,7 +25,6 @@ What is the `__missing__` method for (Python mappings)?	A hook a `dict` subclass
 Does `k in d` trigger `__missing__` in a `dict` subclass (Python)?	No; membership tests don’t fall back to `__missing__` unless you implement that logic yourself.
 Why must a `__missing__` implementation often special-case string keys (Python example)?	To avoid infinite recursion when `__missing__` retries lookup using a transformed key.
 Why is subclassing `collections.UserDict` often easier than subclassing `dict` (Python)?	UserDict uses composition (`self.data`), avoiding some built-in shortcuts that can make subclassing `dict` tricky.
-What is `types.MappingProxyType` (Python)?	A wrapper that provides a read-only, dynamic proxy view of an underlying mapping.
 Is a `mappingproxy` (from `MappingProxyType`) a snapshot (Python)?	No; it’s dynamic—changes to the original mapping are reflected in the proxy.
 What do `dict.keys()`, `dict.items()`, and `dict.values()` return (Python 3)?	View objects (`dict_keys`, `dict_items`, `dict_values`) that are dynamic projections.
 Which dict views behave like sets (Python)?	`dict_keys` and `dict_items` support set operations like `&`, `|`, `-`, `^`.
@@ -38,7 +36,6 @@ What is `collections.ChainMap` (Python)?	A wrapper that searches multiple mappin
 Where do updates go in a `ChainMap` (Python)?	Assignments/updates affect only the first (leftmost) mapping.
 What does `Counter.update(iterable)` do (Python)?	It adds counts for elements from the iterable (instead of overwriting like `dict.update`).
 Why are set literals like `{1, 2, 3}` preferred over `set([1, 2, 3])` (Python)?	They’re more readable and avoid building an intermediate list (often faster).
-What is a set comprehension (Python)?	An expression that builds a set: `{expr for ...}` (optionally with `if` filters).
 Do set infix operators like `a & b` accept any iterables (Python)?	No; infix operators require sets on both sides (methods like `.intersection(...)` accept iterables).
 How can you remove duplicates while preserving first-seen order (Python ≥ 3.7)?	Use a dict: `list(dict.fromkeys(items))` (dict preserves insertion order).
 Why is set membership testing fast (Python)?	Hash table lookup finds candidates by hash code with few probes on average.

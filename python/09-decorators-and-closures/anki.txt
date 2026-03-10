@@ -5,11 +5,9 @@ What is a registration decorator used for (Python)?	To add functions to a regist
 What is a stacked decorator (Python)?	Multiple decorators applied to one function using multiple `@...` lines.
 Stacked decorators desugaring (Python)?	`@a` then `@b` is `func = a(b(func))`.
 Why do naive decorators often break `__name__` and `__doc__` (Python)?	Because the wrapper replaces the function object, so its metadata becomes the wrapper’s metadata.
-What does `functools.wraps` do (Python)?	Helps write well-behaved decorators by copying metadata (e.g., `__name__`, `__doc__`) from the wrapped function to the wrapper.
 Why should a decorator wrapper accept `*args, **kwargs` (Python)?	To forward any positional/keyword arguments so the decorator works for many signatures.
 Variable scope rule: when is a name local inside a function (Python)?	If it’s a parameter or it’s assigned anywhere in the function body (unless declared `global`/`nonlocal`).
 Why does `print(b); b = 9` raise `UnboundLocalError` (Python)?	Because assignment makes `b` local for the whole function, so `print(b)` reads an uninitialized local.
-What does `nonlocal x` do inside a nested function (Python)?	Makes `x` refer to the nearest enclosing function scope where `x` is defined (reads and assigns that binding).
 In a closure, where are captured bindings stored (Python)?	In the returned function object’s closure cells (`fn.__closure__`), keyed by names in `fn.__code__.co_freevars`.
 Why does rebinding an outer-scope name require `nonlocal` (Python)?	Without `nonlocal`, an assignment makes the name local, so the closure binding won’t be updated.
 Why does `count += 1` inside a nested function create a local `count` without `nonlocal` (Python)?	Augmented assignment on immutables rebinding (`count = count + 1`) counts as assignment, so the compiler treats `count` as local.
@@ -20,9 +18,7 @@ What does `functools.cache` implement (Python)?	Memoization: caching results of 
 `functools.cache`: what’s the key requirement on arguments (Python)?	All arguments must be hashable, because the cache is keyed using a dict.
 What is a risk of using `functools.cache` in long-running processes (Python)?	Unbounded growth: it can consume a lot of memory if there are many distinct argument combinations.
 What does `functools.lru_cache` add compared with `cache` (Python)?	A bounded cache with eviction controlled by `maxsize` (least-recently-used policy).
-What does LRU mean in `lru_cache` (Python)?	Least Recently Used: evict entries that haven’t been accessed recently to make room for new ones.
 `lru_cache`: what does `maxsize` control (Python)?	The maximum number of cached entries (older entries are evicted once full).
-`lru_cache`: what does `typed=True` change (Python)?	Caches results separately for arguments of different types (e.g., treats `1` and `1.0` as distinct keys).
 What does `functools.singledispatch` create (Python)?	A single-dispatch generic function: multiple implementations chosen by the type of the first argument.
 In single dispatch, which argument is used to choose the implementation (Python)?	The first positional argument’s runtime type.
 What does `@singledispatch` decorate (Python)?	The base (fallback) implementation, which typically handles `object` as a catch-all.

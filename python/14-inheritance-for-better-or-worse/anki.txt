@@ -13,18 +13,15 @@ What is multiple inheritance in Python?	The ability of a class to inherit from m
 What problem must a language solve when supporting multiple inheritance?	It must resolve conflicts when several base classes provide attributes or methods with the same name.
 What is the method resolution order (MRO) in Python?	The ordered sequence of classes Python searches when looking up methods and attributes.
 Where can you inspect a class's MRO in Python?	In the class `__mro__` attribute.
-What determines method activation order in cooperative multiple inheritance?	The class MRO plus whether each implementation calls `super()`.
 What is a cooperative method in Python inheritance?	A method that calls `super()` so other implementations in the MRO can participate.
 Why can a noncooperative method break multiple inheritance?	It can stop the call chain early and prevent later classes in the MRO from running.
 What signature requirement helps cooperative multiple inheritance work?	Cooperative methods should have compatible signatures because different classes may be called in different orders.
 Why can changing the order of base classes change behavior in Python multiple inheritance?	The base-class order affects the MRO and therefore which method `super()` reaches next.
-Why can `super()` appear dynamic or surprising in Python?	It follows the MRO of the actual receiver class at runtime, not just the lexical superclass of the current class.
 What is a mixin class in Python?	A class meant to be combined with other base classes to add a focused behavior, not used as the sole concrete base class.
 What is the main purpose of a mixin class?	Code reuse by adding a small, specific behavior to unrelated classes.
 Why should a mixin usually appear before other concrete bases in a Python class definition?	So its methods appear early enough in the MRO to intercept and delegate behavior as intended.
 Why should mixins usually avoid keeping internal instance state?	State makes them harder to combine safely with unrelated classes in multiple inheritance.
 Why is the `Mixin` suffix recommended in Python class names?	It makes the class's intended role explicit to readers and users.
-What is an aggregate class in a multiple-inheritance design?	A class that mostly combines mixins or base classes into a ready-to-use package without much new behavior of its own.
 Why can aggregate classes be useful to library users?	They hide tricky base-class ordering and expose a sensible precomposed class.
 Why should interfaces be explicit with ABCs or protocols in modern Python?	It makes subtype intent clearer than relying on concrete inheritance alone.
 Why is inheritance for code reuse often weaker than composition?	Inheritance tightly couples classes, while composition can reuse behavior with less brittleness.

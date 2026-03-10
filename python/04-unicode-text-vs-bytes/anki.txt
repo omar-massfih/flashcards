@@ -15,7 +15,6 @@ What happens when you create `bytes(...)` from a buffer-like object (Python)?	It
 Which exception do you usually get when encoding `str` → `bytes` fails?	`UnicodeEncodeError`.
 Which exception do you usually get when decoding `bytes` → `str` fails?	`UnicodeDecodeError`.
 Why is `errors='ignore'` usually a bad idea when encoding?	It silently drops unencodable characters (data loss).
-What does `errors='replace'` do in encode/decode (Python)?	Encoding replaces unencodable characters with `?`; decoding replaces invalid byte sequences with `�` (U+FFFD).
 What is “mojibake”?	Garbled text caused by decoding bytes with the wrong encoding.
 Why can decoding with the wrong legacy 8-bit encoding be dangerous?	It can succeed without errors but produce mojibake (silent corruption).
 Can you reliably discover the encoding of arbitrary bytes?	Not in general; you usually must be told (metadata/protocol/file format).
@@ -26,8 +25,6 @@ Why can a file contain more bytes than characters written (UTF-8 example)?	Some 
 What determines the default encoding for `open()` in text mode (high level)?	Locale/user preferences (e.g., `locale.getpreferredencoding()`).
 Why do encoding defaults bite Windows users more often (high level)?	Different defaults may be used for files vs console vs redirected I/O, and many defaults are non-UTF code pages.
 What is a BOM (byte order mark)?	A leading byte sequence that signals endianness/encoding for multibyte encodings (notably UTF-16/UTF-32).
-Why does UTF-16 often start with extra bytes like `b'\\xff\\xfe'`?	That’s a BOM indicating little-endian byte order.
-What is “UTF-8 with BOM” called in Python’s codec registry?	`utf-8-sig`.
 Unicode normalization: why can visually identical strings compare unequal?	They can use different code point sequences (e.g., composed vs combining forms).
 What does `unicodedata.normalize('NFC', s)` do?	Composes characters to a canonical, typically shorter form (good for storage/comparison).
 What does `unicodedata.normalize('NFD', s)` do?	Decomposes characters into base chars + combining marks (useful for stripping marks).

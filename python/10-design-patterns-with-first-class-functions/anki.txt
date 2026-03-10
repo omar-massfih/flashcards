@@ -4,15 +4,11 @@ In function-oriented Strategy, what is the promotion type hint `Callable[[Order]
 In function-oriented Strategy, why is promotion often `Optional[...]`?	Because an order may have no promotion; `None` means “no discount strategy”.
 Why doesn’t method auto-binding apply to a callable stored in an instance attribute (Python)?	Method binding is a descriptor feature of functions defined on the class; a plain callable attribute isn’t automatically bound.
 What’s a subtle maintenance bug in `best_promo` with a manual `promos` list?	You can add a new promotion function but forget to add it to `promos`, so `best_promo` silently ignores it.
-What does `globals()` return (Python)?	A dict representing the current module’s global symbol table.
-In a module, what does `globals()` refer to inside a function defined there (Python)?	The globals of the module where the function is defined (not where it is called from).
 How can you collect promo functions using `globals()` (Strategy pattern)?	Filter `globals().items()` by naming convention (e.g., names ending with `_promo`) and collect the callable values.
 What is a downside of collecting strategies by name convention (e.g., suffix `_promo`)?	It’s implicit and brittle: naming mistakes or unrelated functions can be accidentally included/excluded.
 Why can putting all strategy functions in a separate module help (Strategy pattern)?	It centralizes strategies and enables introspection without relying on naming conventions in unrelated code.
 What does `inspect.getmembers(obj, predicate)` do (Python)?	Returns an object’s attributes as `(name, value)` pairs, optionally filtered by a predicate.
-What does `inspect.isfunction` filter for (Python)?	Values that are user-defined function objects.
 How can you build a `promos` list by introspecting a `promotions` module (Python)?	Use `inspect.getmembers(promotions, inspect.isfunction)` and collect the returned functions.
-What is a risk of blindly collecting all functions from a module as strategies (Python)?	A function with the wrong signature can be included, causing runtime errors when applied as a strategy.
 What is a registration decorator (Python)?	A decorator that records/registers functions (e.g., appends them to a list) as a side effect at import time.
 In decorator-enhanced Strategy, what does `@promotion` do?	It registers the decorated promotion function (adds it to a `promos` list) and returns it unchanged.
 Why does a registration decorator often return the original function (Python)?	So the decorated function’s callable behavior stays the same while still being registered.
@@ -21,10 +17,7 @@ Registration decorator benefit: how can you disable a strategy quickly (Python)?
 Registration decorator benefit: can strategies be registered from other modules (Python)?	Yes; as long as they import and use the `@promotion` decorator, they’ll be registered when that module loads.
 Command pattern: why is Command described as an OO replacement for callbacks (GoF)?	It packages an action as an object so it can be stored, passed around, and invoked later.
 In Python, what’s the simplest replacement for a single-method Command object?	Pass a function (or other callable) instead of a command instance.
-How would an invoker call a function-based command (Python)?	Call it directly: `command()` instead of `command.execute()`.
-What is a MacroCommand (Command pattern idea)?	A command that executes a sequence of commands.
 How can MacroCommand be implemented idiomatically in Python (high level)?	As a callable object (`__call__`) that loops over and calls stored command callables.
-In a callable object, what single-method interface does it implement (Python)?	`__call__` (so calling the instance runs its behavior).
 Why might you still use a class for Command instead of a function (Python)?	To keep state, provide extra methods (e.g., undo), and encapsulate more complex behavior than a single callback.
 What are two alternatives to classes for keeping state across calls (Python)?	A closure (captured free variables) or a callable instance (object with `__call__` + attributes).
 When should you consider a closure for Command-like state (Python)?	When you need small, hidden state tied to a function and a minimal public surface.
