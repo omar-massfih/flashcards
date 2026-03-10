@@ -173,3 +173,37 @@ Why doesn’t concurrency depend on exact clock time?	Because distributed system
 What are sibling values in leaderless replication?	Concurrent versions of the same value that must later be merged.
 Why may applications need to merge sibling values?	Because the database preserves concurrent writes instead of silently discarding them.
 What is a version vector?	A set of per-replica version counters used to track causal relationships between writes across replicas.
+What is partitioning in a distributed database?	Splitting a dataset into smaller subsets so different nodes can store and process different parts of it.
+Why is partitioning used in distributed systems?	To scale storage capacity and query throughput beyond what one machine can handle.
+What is skew in a partitioned database?	An uneven distribution of data or query load across partitions.
+What is a hot spot in a partitioned database?	A partition with disproportionately high load compared with the others.
+Why is random assignment of records to partitions usually a poor approach?	It spreads load but makes reads inefficient because the system may need to query many or all nodes.
+What is key-range partitioning?	Assigning each partition a continuous range of keys.
+Why does key-range partitioning support efficient range queries?	Nearby keys are stored together in sorted order within the same partition or neighboring partitions.
+Why can key-range partitioning create hot spots?	If many writes target nearby keys, they all land in the same partition.
+Why might key-range boundaries be unevenly spaced?	Because the data distribution is uneven, so boundaries must adapt to balance partition sizes.
+What is hash partitioning?	Applying a hash function to a key and assigning partitions by ranges of hash values instead of ranges of keys.
+Why does hash partitioning help distribute load?	A good hash function spreads skewed keys more evenly across partitions.
+Why does hash partitioning make range queries harder?	The hash destroys the natural ordering of keys, so nearby keys are scattered across partitions.
+What is a compound-key compromise used by systems like Cassandra?	Hash one part of the key to choose the partition, but keep later key parts ordered within the partition.
+Why does hashing not eliminate all hot spots?	If many requests target the same key, they still all map to the same partition.
+What is the tradeoff of splitting a hot key into several derived keys?	Writes spread across partitions more evenly, but reads become more expensive because results must be combined.
+What is a document-partitioned secondary index?	A local secondary index stored in the same partition as the document it indexes.
+What is the main write advantage of a document-partitioned secondary index?	Only the partition containing the document needs to be updated on write.
+Why can document-partitioned secondary indexes make reads expensive?	A secondary-index query may require scatter/gather across all partitions.
+What is a term-partitioned secondary index?	A global secondary index partitioned by indexed value rather than by primary-document partition.
+What is the main read advantage of a term-partitioned secondary index?	A query can often be served from one relevant index partition instead of all partitions.
+Why do term-partitioned secondary indexes complicate writes?	One document write may require coordinated updates to multiple index partitions.
+Why are global secondary indexes often updated asynchronously?	Synchronous maintenance would require complex distributed coordination across partitions.
+What is rebalancing in a partitioned database?	Moving data or partition ownership between nodes when cluster membership or load changes.
+Why is `hash(key) mod N` a poor partitioning strategy when nodes are added or removed?	Changing `N` remaps most keys, forcing excessive data movement.
+What is the fixed-number-of-partitions rebalancing strategy?	Create many partitions in advance and move whole partitions between nodes as the cluster changes.
+What is a drawback of using a fixed number of partitions?	You must choose the partition count up front, balancing future growth against partition-management overhead.
+What is dynamic partitioning?	Splitting partitions when they grow too large and merging them when they become too small.
+Why can dynamic partitioning adapt better to changing data volume?	The number of partitions grows or shrinks with the size of the dataset.
+Why can an empty dynamically partitioned database create a bottleneck at first?	It may start with a single partition, so all initial writes go to one node.
+What is pre-splitting?	Creating an initial set of partitions before the data grows large enough to force automatic splits.
+What does partitioning proportional to nodes mean?	Keeping a roughly fixed number of partitions per node so partition sizes stay more stable as nodes are added.
+Why might manual rebalancing be safer than fully automatic rebalancing?	Automatic rebalancing can react badly to transient failures or overload, trigger extra data movement, and cause cascading instability.
+What role can a coordination service like ZooKeeper play in partitioned systems?	It can store the authoritative mapping of partitions to nodes and notify others when assignments change.
+What is the gossip-based approach to partition-routing metadata?	Nodes disseminate cluster-state changes among themselves instead of relying on a separate coordination service.
