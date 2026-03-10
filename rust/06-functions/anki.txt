@@ -1,5 +1,4 @@
 Does Rust care whether a function is defined before or after it’s called?	No; order in the file doesn’t matter as long as the function is in scope for the caller.
-What is the difference between a parameter and an argument?	A parameter is a named variable in the function signature; an argument is the concrete value passed at the call site.
 In Rust function signatures, what must you write for each parameter?	The parameter’s type.
 Why does Rust require parameter types in function signatures?	It helps the compiler produce better errors and reduces the need for type annotations elsewhere.
 What is a statement (Rust, concept)?	An instruction that performs an action and does not return a value.

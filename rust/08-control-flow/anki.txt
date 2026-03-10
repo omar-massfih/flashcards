@@ -17,7 +17,6 @@ If the pattern matches in `let...else`, where do bindings live (Rust)?	In the su
 If the pattern does not match in `let...else`, what must the `else` block do (Rust)?	It must diverge (e.g., `return`, `break`, `continue`, or `panic!`), because execution can’t continue with missing bindings.
 Why does `let...else` “stay on the happy path” (Rust)?	The main logic continues unindented after the binding; non-matching cases exit early in `else`.
 When is `let...else` a good fit versus `if let { ... } else { return ... }` (Rust)?	When you want to bind a value for later code and handle the non-match with an early-exit `else` (clearer control flow).
-What are the three kinds of loops in Rust?	`loop`, `while`, and `for`.
 How can a `loop` produce a value (Rust)?	Use `break <expr>`; the loop expression evaluates to that value.
 Where does the value from `break <expr>` go?	It becomes the value of the entire `loop` expression (often bound with `let result = loop { ... };`).
 In nested loops, which loop do `break` and `continue` affect by default?	The innermost loop at that point.
@@ -30,4 +29,3 @@ Why is iterating with `while` + manual index considered error-prone?	Off-by-one 
 Why can `while` + manual indexing also be slower?	It can require repeated bounds checks / comparisons each iteration.
 Why is `for` preferred when iterating a collection (TRPL’s emphasis)?	Safer, more concise, and often more efficient.
 What advantage does `for` have when the collection length changes?	You don’t need to update an index bound; it iterates the elements directly.
-What standard-library concept is used to run a loop a fixed number of times?	A range (an iterator producing a sequence of numbers).

@@ -16,12 +16,10 @@ What do `overflowing_*` methods return?	The wrapped value and a boolean indicati
 What do `saturating_*` methods do?	Clamp results at the type’s min/max instead of wrapping.
 What floating-point type does Rust default to?	`f64`.
 How do you write a `char` literal vs a string literal (Rust)?	`char` uses single quotes (e.g., `'z'`); strings use double quotes (e.g., "z").
-What does `char` represent in Rust (and size)?	A Unicode scalar value; `char` is 4 bytes.
 What is a tuple (Rust)?	A fixed-length compound type that can hold values of different types.
 How do you destructure a tuple (Rust)?	Use a pattern: `let (x, y, z) = tup;`.
 How do you access tuple elements by index (Rust)?	Use dot-indexing: `tup.0`, `tup.1`, etc.
 What is the unit type/value in Rust?	`()`; an empty value / empty return type.
 What is an array in Rust (core properties)?	A fixed-length collection where every element has the same type.
-What is Rust array type syntax (including repeat init)?	`[T; N]` and repeat init like `[value; N]`.
 Arrays vs vectors: when should you prefer `Vec<T>` over arrays?	When you need a growable/shrinkable collection; if unsure, use a vector.
 What happens on out-of-bounds array indexing in Rust (and why)?	It panics at runtime via bounds checks to prevent invalid memory access (memory safety).

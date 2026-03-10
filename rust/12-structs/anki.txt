@@ -1,4 +1,3 @@
-What is a struct in Rust?	A custom data type that groups related values into named fields.
 Why use a struct instead of a tuple (Rust)?	Fields are named, so meaning doesn’t depend on position and code is clearer/flexible.
 How do you define a struct type in Rust?	With `struct Name { field: Type, ... }`.
 How do you create a struct instance in Rust?	`Name { field1: value1, field2: value2, ... }`.
@@ -11,7 +10,6 @@ When does struct update syntax copy instead of move fields (Rust)?	When the fiel
 What is a tuple struct in Rust?	A struct type with unnamed fields, declared like `struct Name(T1, T2, ...)`.
 Why use a tuple struct (Rust)?	To give a tuple-like value a distinct type name without naming each field.
 How do you destructure a tuple struct (Rust)?	Use the type name in the pattern, e.g. `let Point(x, y, z) = origin;`.
-What is a unit-like struct in Rust?	A struct with no fields, declared like `struct Name;`.
 Why might a struct store `String` instead of `&str` (Rust)?	To own its data so it stays valid as long as the struct value exists.
 What’s required to store references in a struct (Rust)?	Lifetime parameters on the struct and reference fields (e.g., `struct User<'a> { name: &'a str }`).
 Can you move a non-`Copy` field out of `&Struct` (Rust)?	No; you can only borrow fields through a shared reference (moving out would be invalid).

@@ -4,16 +4,13 @@ When do you write a `use ...;` statement?	To bring a module/type/trait into scop
 What is `String` (std) in one phrase?	A growable, UTF-8–encoded owned string.
 What does `&mut T` mean?	A mutable reference to a value of type `T` (allows mutation through the reference).
 Why pass `&mut T` to a function?	So the function can mutate a caller-owned value without taking ownership of it.
-What is `std::io::stdin()` conceptually?	A handle to standard input that you can read user input from.
 What does `read_line(&mut String)` return?	A `Result` indicating success (`Ok(...)`) or failure (`Err(...)`).
-What does `read_line` do to the string buffer?	It appends the input line (including the trailing newline) to the `String`.
 What is `Result<T, E>`?	An enum that represents either success (`Ok(T)`) or failure (`Err(E)`).
 What does the wildcard pattern `_` mean?	Match anything (catch-all), ignoring the matched value.
 What does `parse::<T>()` do?	Attempts to convert a string to type `T`, returning a `Result`.
 Why add a type annotation like `: u32`?	To guide type inference and choose the concrete type you want.
 What is shadowing?	Re-declaring a name to bind it to a new value (possibly a different type) in the same scope.
 Why can’t you compare values of different types directly?	Operations like comparison require compatible types; Rust forces explicit conversions instead of implicit type mixing.
-What is `std::cmp::Ordering` for?	Representing comparison outcomes: `Less`, `Greater`, or `Equal`.
 What does `cmp(&other)` return?	An `Ordering` describing how two values compare.
 Difference between `start..end` and `start..=end`?	`start..end` excludes `end`; `start..=end` includes `end`.
 What is “turbofish” syntax `::<T>` used for?	To specify generic type parameters explicitly, e.g., `parse::<u32>()`.

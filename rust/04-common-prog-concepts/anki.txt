@@ -1,12 +1,9 @@
 When does Rust catch attempts to reassign an immutable binding?	At compile time (a compile-time error).
 Why does Rust default to immutable bindings?	It nudges you toward safer, easier-to-reason-about code and supports safe concurrency.
 What kind of bug can immutability help prevent?	Code that assumes a value won’t change being broken by code that changes it (especially intermittently).
-What does adding `mut` to a binding communicate?	Intent: the value bound to this name is expected to change.
 What must a Rust `const` declaration always include?	A type annotation (e.g., `const X: u32 = ...;`).
 Where can Rust constants be declared?	In any scope, including global scope.
-What can Rust constants be initialized with?	Only constant expressions (values computable at compile time).
 What is the “constant expression” restriction for constants?	A `const` can’t depend on values only known at runtime.
-How long is a Rust constant valid?	For the entire time the program runs, within the scope it’s declared.
 Why replace repeated “magic numbers” with a `const`?	Conveys meaning; one place to update if the value changes.
 What is shadowing in Rust (in one phrase)?	Rebinding the same name with `let`, creating a new binding that hides the previous one.
 Shadowing vs `mut`: what’s the key difference in how the value changes?	Shadowing creates a new binding (requires `let`); `mut` allows reassignment of the same binding.

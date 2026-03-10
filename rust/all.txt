@@ -1,61 +1,42 @@
 What is Cargo in the Rust ecosystem?	The included dependency manager and build tool.
 What does Cargo make easier?	Adding, compiling, and managing dependencies consistently.
 What is rustfmt used for?	Automatic formatting to keep a consistent coding style.
-Name three example domains where Rust is used in production.	Command line tools; web services; embedded devices.
 What is rustup?	A command-line tool for managing Rust versions and associated tools.
-Besides the compiler, what system tool is needed to produce a final executable?	A linker.
-How do you update Rust installed via rustup?	Run `rustup update`.
-What file extension do Rust source files use?	`.rs`
-What is the convention for multi-word Rust filenames?	Use underscores (e.g., `hello_world.rs`).
 What is special about the `main` function in an executable Rust program?	It is the first code that runs.
-What does `println!` do in the Hello World example?	Prints the provided text to the screen/terminal.
 What does the `!` in `println!` indicate?	It’s a macro invocation, not a normal function call.
-How do you compile `main.rs` from the command line?	Run `rustc main.rs`.
-After successful compilation with `rustc`, what do you get to run?	A binary executable.
 Why use Cargo instead of `rustc` directly as projects grow?	To manage options/dependencies and make sharing/building easier.
-How can you check whether Cargo is installed?	Run `cargo --version`.
 What does `cargo new <name>` do?	Creates a new project directory with a starter Rust program and Cargo config.
 What two top-level items does Cargo generate in a new binary project (besides the `src` dir)?	`Cargo.toml` and a `src/` directory (with `main.rs` inside `src/`).
 Where does Cargo expect Rust source files to live?	Inside the `src/` directory.
 What is `Cargo.toml`?	The project’s Cargo configuration file.
-What file format is `Cargo.toml` written in?	TOML.
 How do you build a Cargo project?	Run `cargo build`.
-Where does Cargo store build outputs by default?	In the `target/` directory (debug builds under `target/debug`).
-What does `cargo run` do?	Builds (if needed) and then runs the program.
 What does `cargo check` do?	Checks that code compiles but does not produce an executable.
 Why use `cargo check` during development?	It’s usually faster feedback than a full build.
 What is `Cargo.lock` for?	It records the exact versions of dependencies used in the project.
 How do you build with optimizations for release?	Run `cargo build --release`.
 What’s the trade-off of `cargo build --release`?	Faster runtime, but slower compile times.
-Where do release build outputs go?	Under `target/release`.
 What does `loop { ... }` do?	Creates an infinite loop that runs until you exit it (e.g., with `break`).
 What is the Rust prelude?	A set of standard-library items automatically in scope in every program.
 When do you write a `use ...;` statement?	To bring a module/type/trait into scope when it isn’t already available (e.g., not in the prelude) or to shorten paths.
 What is `String` (std) in one phrase?	A growable, UTF-8–encoded owned string.
 What does `&mut T` mean?	A mutable reference to a value of type `T` (allows mutation through the reference).
 Why pass `&mut T` to a function?	So the function can mutate a caller-owned value without taking ownership of it.
-What is `std::io::stdin()` conceptually?	A handle to standard input that you can read user input from.
 What does `read_line(&mut String)` return?	A `Result` indicating success (`Ok(...)`) or failure (`Err(...)`).
-What does `read_line` do to the string buffer?	It appends the input line (including the trailing newline) to the `String`.
 What is `Result<T, E>`?	An enum that represents either success (`Ok(T)`) or failure (`Err(E)`).
 What does the wildcard pattern `_` mean?	Match anything (catch-all), ignoring the matched value.
 What does `parse::<T>()` do?	Attempts to convert a string to type `T`, returning a `Result`.
 Why add a type annotation like `: u32`?	To guide type inference and choose the concrete type you want.
 What is shadowing?	Re-declaring a name to bind it to a new value (possibly a different type) in the same scope.
 Why can’t you compare values of different types directly?	Operations like comparison require compatible types; Rust forces explicit conversions instead of implicit type mixing.
-What is `std::cmp::Ordering` for?	Representing comparison outcomes: `Less`, `Greater`, or `Equal`.
 What does `cmp(&other)` return?	An `Ordering` describing how two values compare.
 Difference between `start..end` and `start..=end`?	`start..end` excludes `end`; `start..=end` includes `end`.
 What is “turbofish” syntax `::<T>` used for?	To specify generic type parameters explicitly, e.g., `parse::<u32>()`.
 When does Rust catch attempts to reassign an immutable binding?	At compile time (a compile-time error).
 Why does Rust default to immutable bindings?	It nudges you toward safer, easier-to-reason-about code and supports safe concurrency.
 What kind of bug can immutability help prevent?	Code that assumes a value won’t change being broken by code that changes it (especially intermittently).
-What does adding `mut` to a binding communicate?	Intent: the value bound to this name is expected to change.
 What must a Rust `const` declaration always include?	A type annotation (e.g., `const X: u32 = ...;`).
 Where can Rust constants be declared?	In any scope, including global scope.
-What can Rust constants be initialized with?	Only constant expressions (values computable at compile time).
 What is the “constant expression” restriction for constants?	A `const` can’t depend on values only known at runtime.
-How long is a Rust constant valid?	For the entire time the program runs, within the scope it’s declared.
 Why replace repeated “magic numbers” with a `const`?	Conveys meaning; one place to update if the value changes.
 What is shadowing in Rust (in one phrase)?	Rebinding the same name with `let`, creating a new binding that hides the previous one.
 Shadowing vs `mut`: what’s the key difference in how the value changes?	Shadowing creates a new binding (requires `let`); `mut` allows reassignment of the same binding.
@@ -82,17 +63,14 @@ What do `overflowing_*` methods return?	The wrapped value and a boolean indicati
 What do `saturating_*` methods do?	Clamp results at the type’s min/max instead of wrapping.
 What floating-point type does Rust default to?	`f64`.
 How do you write a `char` literal vs a string literal (Rust)?	`char` uses single quotes (e.g., `'z'`); strings use double quotes (e.g., "z").
-What does `char` represent in Rust (and size)?	A Unicode scalar value; `char` is 4 bytes.
 What is a tuple (Rust)?	A fixed-length compound type that can hold values of different types.
 How do you destructure a tuple (Rust)?	Use a pattern: `let (x, y, z) = tup;`.
 How do you access tuple elements by index (Rust)?	Use dot-indexing: `tup.0`, `tup.1`, etc.
 What is the unit type/value in Rust?	`()`; an empty value / empty return type.
 What is an array in Rust (core properties)?	A fixed-length collection where every element has the same type.
-What is Rust array type syntax (including repeat init)?	`[T; N]` and repeat init like `[value; N]`.
 Arrays vs vectors: when should you prefer `Vec<T>` over arrays?	When you need a growable/shrinkable collection; if unsure, use a vector.
 What happens on out-of-bounds array indexing in Rust (and why)?	It panics at runtime via bounds checks to prevent invalid memory access (memory safety).
 Does Rust care whether a function is defined before or after it’s called?	No; order in the file doesn’t matter as long as the function is in scope for the caller.
-What is the difference between a parameter and an argument?	A parameter is a named variable in the function signature; an argument is the concrete value passed at the call site.
 In Rust function signatures, what must you write for each parameter?	The parameter’s type.
 Why does Rust require parameter types in function signatures?	It helps the compiler produce better errors and reduces the need for type annotations elsewhere.
 What is a statement (Rust, concept)?	An instruction that performs an action and does not return a value.
@@ -131,7 +109,6 @@ If the pattern matches in `let...else`, where do bindings live (Rust)?	In the su
 If the pattern does not match in `let...else`, what must the `else` block do (Rust)?	It must diverge (e.g., `return`, `break`, `continue`, or `panic!`), because execution can’t continue with missing bindings.
 Why does `let...else` “stay on the happy path” (Rust)?	The main logic continues unindented after the binding; non-matching cases exit early in `else`.
 When is `let...else` a good fit versus `if let { ... } else { return ... }` (Rust)?	When you want to bind a value for later code and handle the non-match with an early-exit `else` (clearer control flow).
-What are the three kinds of loops in Rust?	`loop`, `while`, and `for`.
 How can a `loop` produce a value (Rust)?	Use `break <expr>`; the loop expression evaluates to that value.
 Where does the value from `break <expr>` go?	It becomes the value of the entire `loop` expression (often bound with `let result = loop { ... };`).
 In nested loops, which loop do `break` and `continue` affect by default?	The innermost loop at that point.
@@ -144,7 +121,6 @@ Why is iterating with `while` + manual index considered error-prone?	Off-by-one 
 Why can `while` + manual indexing also be slower?	It can require repeated bounds checks / comparisons each iteration.
 Why is `for` preferred when iterating a collection (TRPL’s emphasis)?	Safer, more concise, and often more efficient.
 What advantage does `for` have when the collection length changes?	You don’t need to update an index bound; it iterates the elements directly.
-What standard-library concept is used to run a loop a fixed number of times?	A range (an iterator producing a sequence of numbers).
 What is ownership (Rust)?	A set of rules that govern how a Rust program manages memory.
 How does Rust enforce ownership rules?	With compile-time checks; code that violates the rules won’t compile.
 Do ownership checks add runtime overhead (Rust)?	No; the checks happen at compile time.
@@ -201,7 +177,6 @@ Why is `fn f(s: &str)` more flexible than `fn f(s: &String)` (Rust)?	`&str` work
 What is the type of a string literal in Rust (e.g., `"Hello"`)?	`&'static str` (a string slice pointing into the binary).
 Why does Rust reject mutating a `String` while a slice into it is still used?	Borrowing rules: you can’t take a mutable borrow if an immutable borrow is still active and later used.
 What is an array/slice slice type in Rust (general case)?	`&[T]` (e.g., slicing an array gives `&[i32]`).
-What is a struct in Rust?	A custom data type that groups related values into named fields.
 Why use a struct instead of a tuple (Rust)?	Fields are named, so meaning doesn’t depend on position and code is clearer/flexible.
 How do you define a struct type in Rust?	With `struct Name { field: Type, ... }`.
 How do you create a struct instance in Rust?	`Name { field1: value1, field2: value2, ... }`.
@@ -214,7 +189,6 @@ When does struct update syntax copy instead of move fields (Rust)?	When the fiel
 What is a tuple struct in Rust?	A struct type with unnamed fields, declared like `struct Name(T1, T2, ...)`.
 Why use a tuple struct (Rust)?	To give a tuple-like value a distinct type name without naming each field.
 How do you destructure a tuple struct (Rust)?	Use the type name in the pattern, e.g. `let Point(x, y, z) = origin;`.
-What is a unit-like struct in Rust?	A struct with no fields, declared like `struct Name;`.
 Why might a struct store `String` instead of `&str` (Rust)?	To own its data so it stays valid as long as the struct value exists.
 What’s required to store references in a struct (Rust)?	Lifetime parameters on the struct and reference fields (e.g., `struct User<'a> { name: &'a str }`).
 Can you move a non-`Copy` field out of `&Struct` (Rust)?	No; you can only borrow fields through a shared reference (moving out would be invalid).

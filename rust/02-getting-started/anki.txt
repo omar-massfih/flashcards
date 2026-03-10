@@ -1,26 +1,14 @@
 What is rustup?	A command-line tool for managing Rust versions and associated tools.
-Besides the compiler, what system tool is needed to produce a final executable?	A linker.
-How do you update Rust installed via rustup?	Run `rustup update`.
-What file extension do Rust source files use?	`.rs`
-What is the convention for multi-word Rust filenames?	Use underscores (e.g., `hello_world.rs`).
 What is special about the `main` function in an executable Rust program?	It is the first code that runs.
-What does `println!` do in the Hello World example?	Prints the provided text to the screen/terminal.
 What does the `!` in `println!` indicate?	It’s a macro invocation, not a normal function call.
-How do you compile `main.rs` from the command line?	Run `rustc main.rs`.
-After successful compilation with `rustc`, what do you get to run?	A binary executable.
 Why use Cargo instead of `rustc` directly as projects grow?	To manage options/dependencies and make sharing/building easier.
-How can you check whether Cargo is installed?	Run `cargo --version`.
 What does `cargo new <name>` do?	Creates a new project directory with a starter Rust program and Cargo config.
 What two top-level items does Cargo generate in a new binary project (besides the `src` dir)?	`Cargo.toml` and a `src/` directory (with `main.rs` inside `src/`).
 Where does Cargo expect Rust source files to live?	Inside the `src/` directory.
 What is `Cargo.toml`?	The project’s Cargo configuration file.
-What file format is `Cargo.toml` written in?	TOML.
 How do you build a Cargo project?	Run `cargo build`.
-Where does Cargo store build outputs by default?	In the `target/` directory (debug builds under `target/debug`).
-What does `cargo run` do?	Builds (if needed) and then runs the program.
 What does `cargo check` do?	Checks that code compiles but does not produce an executable.
 Why use `cargo check` during development?	It’s usually faster feedback than a full build.
 What is `Cargo.lock` for?	It records the exact versions of dependencies used in the project.
 How do you build with optimizations for release?	Run `cargo build --release`.
 What’s the trade-off of `cargo build --release`?	Faster runtime, but slower compile times.
-Where do release build outputs go?	Under `target/release`.
