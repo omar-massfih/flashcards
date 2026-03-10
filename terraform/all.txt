@@ -280,3 +280,29 @@ What is the difference between an ALB listener and a target group?	A listener ac
 What does an ALB listener rule do in AWS?	It matches incoming requests and decides which target group should receive them.
 Why is `health_check_type = "ELB"` stronger than the default EC2 health check in an Auto Scaling Group?	It lets the ASG replace instances based on load-balancer health checks, not just basic VM reachability.
 Why are production application servers usually placed in private subnets?	Private subnets reduce direct internet exposure, so only selected entry points such as load balancers are public.
+What is Terraform state?	A record of the infrastructure Terraform manages and the mapping from configuration resources to real-world objects.
+Where does Terraform store state by default?	In a local `terraform.tfstate` file in the working directory.
+Why does Terraform need a state file?	It uses state to know which real infrastructure objects correspond to the resources in your configuration.
+Why is the Terraform state file considered a private API?	Its format is for Terraform's internal use and should not be edited or parsed directly by your own code.
+How should you manipulate Terraform state if you must change it?	Use Terraform commands such as `terraform import` or `terraform state` instead of editing the file by hand.
+Why do teams need shared Terraform state storage?	Everyone applying the same configuration must read and update the same state.
+What problem does state locking solve in Terraform?	It prevents concurrent Terraform operations from corrupting or conflicting over shared state.
+Why is state-file isolation important in Terraform?	It limits the blast radius of mistakes so a problem in one environment or component does not affect everything else.
+Why is version control a poor place to store Terraform state?	It is easy to use stale state, it does not provide Terraform locking, and state files may contain plain-text secrets.
+What is a Terraform backend?	The mechanism Terraform uses to load and store state.
+What problems do remote backends solve for Terraform teams?	They reduce manual state-sync errors, provide locking support, and improve protection for sensitive state.
+Why is S3 plus DynamoDB a common Terraform backend pattern on AWS?	S3 provides durable remote state storage, and DynamoDB provides locking.
+What is `prevent_destroy` useful for on Terraform state-storage infrastructure?	It helps prevent accidental deletion of critical resources such as the bucket holding Terraform state.
+Why is versioning useful on a Terraform state bucket?	It keeps older revisions of state so you can inspect or recover previous versions.
+Why is encryption important for Terraform state storage?	State can contain sensitive data, so encryption reduces the risk of exposing secrets.
+What is DynamoDB locking used for in a Terraform S3 backend?	To coordinate exclusive access so only one Terraform operation modifies the state at a time.
+What is the backend bootstrap chicken-and-egg problem in Terraform?	You often need Terraform to create the remote state backend before Terraform can use that backend for its own state.
+What limitation does Terraform place on backend blocks?	Backend configuration cannot use normal variables or references.
+What is partial backend configuration in Terraform?	Leaving some backend settings out of code and supplying them at `terraform init` time with `-backend-config`.
+What are Terraform workspaces?	Named, separate state instances for the same Terraform configuration.
+Why are Terraform workspaces useful?	They let you try isolated copies of the same configuration without changing the base code.
+Why are Terraform workspaces weak for isolating staging from production?	They usually share the same backend and credentials, and the active workspace is easy to overlook.
+What is file-layout isolation in Terraform?	Separating environments and components into different folders and state files.
+Why is file-layout isolation stronger than workspaces for real environments?	It makes environment boundaries explicit and can use separate backends and access controls.
+What is a common tradeoff of file-layout isolation in Terraform?	It improves safety and clarity, but requires running Terraform separately in multiple folders and coordinating dependencies between them.
+What does the `terraform_remote_state` data source do?	It reads outputs from another Terraform state file.
