@@ -1,10 +1,8 @@
-What is the minimal sequence protocol in Python?	Implement `__len__` and `__getitem__`.
 Why can a user-defined class behave like a sequence without inheriting from a sequence base class?	Python relies on protocols: if the required methods are present with the expected behavior, the object can be used as a sequence.
 For a user-defined sequence type, why is composition often preferable to inheritance?	You can store data in an underlying built-in sequence and implement only the protocol methods you need.
 What constructor style is considered best practice for a Python sequence type?	Take a single iterable argument rather than arbitrary positional items.
 Why is `reprlib.repr` useful in a collection type’s `__repr__`?	It produces a safe abbreviated representation for large collections.
 What is a key rule for implementing `__repr__`?	It should never raise an exception; it should always return some useful debugging representation.
-What does duck typing mean in Python?	What matters is whether an object supports the operations you need, not whether it inherits from a particular type.
 Why can implementing only part of a protocol still be acceptable in Python?	If a specific use case needs only a subset of the protocol, supporting just that subset can be enough.
 How does `obj[1:4]` reach a user-defined `__getitem__` method?	Python passes a `slice(1, 4, None)` object to `__getitem__`.
 What attributes does a `slice` object expose?	`start`, `stop`, and `step`.

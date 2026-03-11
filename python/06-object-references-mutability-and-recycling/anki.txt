@@ -37,5 +37,3 @@ What is `__del__` for (Python)?	A finalizer hook when an object is about to be d
 Why is relying on `__del__`/GC timing risky?	Finalization may be delayed or behave differently across implementations/cycles.
 What is a weak reference (Python)?	A reference that doesn’t keep the target alive (doesn’t increase refcount).
 What does `weakref.finalize(obj, callback)` do (Python)?	Registers `callback` to run when `obj` is garbage-collected, without keeping `obj` alive.
-What is interning (Python, high level)?	Reusing identical immutable objects for efficiency.
-Why shouldn’t you rely on interning for program logic?	It’s an implementation detail; use `==` for value comparisons.

@@ -33,4 +33,3 @@ Why are protocols useful for annotating “supports operation X” (Python typin
 What does `Callable[[A, B], R]` mean (Python typing)?	A callable that takes arguments of types `A` and `B` and returns type `R`.
 How do you annotate “any callable signature” (Python typing)?	Use `Callable[..., R]`.
 What is `NoReturn` used for (Python typing)?	Return annotation for functions that never return normally (e.g., always raise or call `sys.exit()`).
-Python 3.8+: how do you declare positional-only parameters?	Use `/` in the signature; parameters before `/` are positional-only.

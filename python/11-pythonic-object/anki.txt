@@ -17,4 +17,3 @@ Why might you add `'__weakref__'` to `__slots__` (Python)?	To allow instances to
 How do class attributes behave when accessed through an instance (Python)?	They act as default attribute values unless the instance has its own attribute of the same name.
 What happens when you assign to an instance attribute that shadows a class attribute (Python)?	The instance gets its own attribute, leaving the class attribute unchanged.
 How can you customize a default class attribute for all instances in Python?	Set it on the class or define a subclass that overrides it.
-Why is `type(self).__name__` useful in `__repr__` (Python)?	It lets inherited `__repr__` methods display the actual subclass name automatically.

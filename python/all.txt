@@ -19,7 +19,6 @@ Why are flat sequences usually more memory-efficient than container sequences?	T
 Give examples of mutable sequences (Python).	`list`; `bytearray`; `array.array`; `collections.deque`.
 Give examples of immutable sequences (Python).	`tuple`; `str`; `bytes`.
 Why can a list comprehension be clearer than a for-loop when building a list?	Its intent is explicit: it always builds a new list (a for-loop can do many tasks).
-Python syntax tip: why can list/dict/tuple literals and comps be multiline without backslashes?	Line breaks are ignored inside `[]`, `{}`, or `()`.
 Listcomps vs `map`/`filter`: why often prefer list comprehensions (Python)?	They’re usually more readable and avoid awkward `lambda` usage while doing the same job.
 Do list comprehension loop variables leak in Python 3?	No; comprehension variables have their own local scope (they don’t clobber outer names).
 How do you build a Cartesian product with a list comprehension?	Use multiple `for` clauses, e.g. `[(c, s) for c in colors for s in sizes]`.
@@ -54,8 +53,6 @@ What happens when you append to a bounded `deque` that is full (Python)?	It disc
 Why are dicts so fundamental in Python (implementation)?	Class/instance attributes, module namespaces, and function keyword arguments are represented with dictionaries in memory.
 What data structure underlies Python `dict` (high level)?	A hash table.
 Which built-in types are also based on hash tables (Python)?	`set` and `frozenset` (and `dict` itself).
-What does `**` do inside a dict literal (Python ≥ 3.5)?	It unpacks another mapping into the new dict (e.g., `{**d1, **d2}`).
-In a dict literal with multiple `**` unpackings, what happens with duplicate keys (Python)?	Later occurrences overwrite earlier ones.
 In `d1 | d2`, which values win if keys overlap (Python)?	The right operand’s values (from `d2`) overwrite.
 Pattern matching: what can mapping patterns match (Python ≥ 3.10)?	Instances of actual or virtual subclasses of `collections.abc.Mapping`.
 Do mapping patterns require an exact match of all keys (Python match/case)?	No; mapping patterns succeed on partial matches (extra keys in the subject are allowed).
@@ -215,8 +212,6 @@ What is `__del__` for (Python)?	A finalizer hook when an object is about to be d
 Why is relying on `__del__`/GC timing risky?	Finalization may be delayed or behave differently across implementations/cycles.
 What is a weak reference (Python)?	A reference that doesn’t keep the target alive (doesn’t increase refcount).
 What does `weakref.finalize(obj, callback)` do (Python)?	Registers `callback` to run when `obj` is garbage-collected, without keeping `obj` alive.
-What is interning (Python, high level)?	Reusing identical immutable objects for efficiency.
-Why shouldn’t you rely on interning for program logic?	It’s an implementation detail; use `==` for value comparisons.
 What does “functions are first-class objects” mean (Python)?	Functions can be created at runtime; assigned; stored; passed as args; returned from functions.
 `sorted(..., key=...)`: what is `key` for (Python)?	A 1-arg function used to compute sort keys for each item.
 What does “functional style” often rely on (Python feature)?	Passing functions around (higher-order functions and callables).
@@ -284,13 +279,11 @@ Why are protocols useful for annotating “supports operation X” (Python typin
 What does `Callable[[A, B], R]` mean (Python typing)?	A callable that takes arguments of types `A` and `B` and returns type `R`.
 How do you annotate “any callable signature” (Python typing)?	Use `Callable[..., R]`.
 What is `NoReturn` used for (Python typing)?	Return annotation for functions that never return normally (e.g., always raise or call `sys.exit()`).
-Python 3.8+: how do you declare positional-only parameters?	Use `/` in the signature; parameters before `/` are positional-only.
 Decorator desugaring: what does `@deco` mean (Python)?	It’s syntax sugar for rebinding: `func = deco(func)` right after `func` is defined.
 Do decorators run at call time or at definition/import time (Python)?	At function definition time; usually during module import (module load), not when the function is later called.
 Import time vs runtime: what’s the difference (Python, decorators context)?	Import time is when module top-level code runs (decorators execute); runtime is when decorated functions are invoked later.
 What is a registration decorator used for (Python)?	To add functions to a registry (e.g., routing tables, plugin hooks) at import time.
 What is a stacked decorator (Python)?	Multiple decorators applied to one function using multiple `@...` lines.
-Stacked decorators desugaring (Python)?	`@a` then `@b` is `func = a(b(func))`.
 Why do naive decorators often break `__name__` and `__doc__` (Python)?	Because the wrapper replaces the function object, so its metadata becomes the wrapper’s metadata.
 Why should a decorator wrapper accept `*args, **kwargs` (Python)?	To forward any positional/keyword arguments so the decorator works for many signatures.
 Variable scope rule: when is a name local inside a function (Python)?	If it’s a parameter or it’s assigned anywhere in the function body (unless declared `global`/`nonlocal`).
@@ -347,8 +340,6 @@ When should you consider a callable instance for Command-like state (Python)?	Wh
 Why prefer a concrete return type for `best_promo` (Python typing)?	It always returns a concrete discount amount (e.g., `Decimal`), which is easier for callers than unions/optionals.
 How do first-class functions reduce boilerplate in Strategy (Python)?	They replace single-method strategy classes/instances with plain functions passed around as values.
 How do first-class functions reduce boilerplate in Command (Python)?	They allow actions to be represented as callbacks (callables) without creating a Command class hierarchy.
-What does it mean that modules are first-class objects (Python)?	Modules are runtime objects whose attributes can be inspected and passed around (enabling module introspection patterns).
-What does it mean that functions are first-class objects (Python, pattern impact)?	You can store, pass, and return functions, enabling patterns like Strategy/Command without extra class scaffolding.
 What uses `obj.__format__(format_spec)` in Python?	F-strings, `format()`, and `str.format()`.
 How can a class support unpacking like `x, y = obj` (Python)?	By implementing `__iter__` so the object is iterable.
 What is an alternative constructor in Python?	A class-level constructor, often implemented as a `@classmethod`, that builds instances in a different way than `__init__`.
@@ -368,14 +359,11 @@ Why might you add `'__weakref__'` to `__slots__` (Python)?	To allow instances to
 How do class attributes behave when accessed through an instance (Python)?	They act as default attribute values unless the instance has its own attribute of the same name.
 What happens when you assign to an instance attribute that shadows a class attribute (Python)?	The instance gets its own attribute, leaving the class attribute unchanged.
 How can you customize a default class attribute for all instances in Python?	Set it on the class or define a subclass that overrides it.
-Why is `type(self).__name__` useful in `__repr__` (Python)?	It lets inherited `__repr__` methods display the actual subclass name automatically.
-What is the minimal sequence protocol in Python?	Implement `__len__` and `__getitem__`.
 Why can a user-defined class behave like a sequence without inheriting from a sequence base class?	Python relies on protocols: if the required methods are present with the expected behavior, the object can be used as a sequence.
 For a user-defined sequence type, why is composition often preferable to inheritance?	You can store data in an underlying built-in sequence and implement only the protocol methods you need.
 What constructor style is considered best practice for a Python sequence type?	Take a single iterable argument rather than arbitrary positional items.
 Why is `reprlib.repr` useful in a collection type’s `__repr__`?	It produces a safe abbreviated representation for large collections.
 What is a key rule for implementing `__repr__`?	It should never raise an exception; it should always return some useful debugging representation.
-What does duck typing mean in Python?	What matters is whether an object supports the operations you need, not whether it inherits from a particular type.
 Why can implementing only part of a protocol still be acceptable in Python?	If a specific use case needs only a subset of the protocol, supporting just that subset can be enough.
 How does `obj[1:4]` reach a user-defined `__getitem__` method?	Python passes a `slice(1, 4, None)` object to `__getitem__`.
 What attributes does a `slice` object expose?	`start`, `stop`, and `step`.
@@ -393,7 +381,6 @@ How can `all(a == b for a, b in zip(self, other))` improve a sequence `__eq__` i
 What is goose typing (Python)?	Runtime type checking against abstract base classes (ABCs) instead of concrete classes.
 What is a static protocol (Python)?	An explicit structural interface defined with a `typing.Protocol` subclass for static type checkers.
 Dynamic protocol vs static protocol: what is one key difference?	A dynamic protocol can still be useful when only partly implemented; a static protocol must provide every required member to satisfy the checker.
-Why can Python iterate over some objects that only implement `__getitem__`?	As a fallback, the interpreter tries successive integer indexes starting at 0 when `__iter__` is missing.
 Why can the `in` operator work on some objects without `__contains__`?	Python can fall back to iteration, and sequence-like objects may be iterated via `__getitem__`.
 What is monkey patching (Python)?	Changing a module, class, or function at runtime to add or alter behavior without editing its original source.
 Why can monkey patching make an object support a protocol at runtime?	Protocols depend on available methods, so adding the needed method can make existing code accept the object.

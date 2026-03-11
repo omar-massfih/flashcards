@@ -1,8 +1,6 @@
 Why are dicts so fundamental in Python (implementation)?	Class/instance attributes, module namespaces, and function keyword arguments are represented with dictionaries in memory.
 What data structure underlies Python `dict` (high level)?	A hash table.
 Which built-in types are also based on hash tables (Python)?	`set` and `frozenset` (and `dict` itself).
-What does `**` do inside a dict literal (Python ≥ 3.5)?	It unpacks another mapping into the new dict (e.g., `{**d1, **d2}`).
-In a dict literal with multiple `**` unpackings, what happens with duplicate keys (Python)?	Later occurrences overwrite earlier ones.
 In `d1 | d2`, which values win if keys overlap (Python)?	The right operand’s values (from `d2`) overwrite.
 Pattern matching: what can mapping patterns match (Python ≥ 3.10)?	Instances of actual or virtual subclasses of `collections.abc.Mapping`.
 Do mapping patterns require an exact match of all keys (Python match/case)?	No; mapping patterns succeed on partial matches (extra keys in the subject are allowed).

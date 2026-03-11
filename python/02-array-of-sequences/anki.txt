@@ -4,7 +4,6 @@ Why are flat sequences usually more memory-efficient than container sequences?	T
 Give examples of mutable sequences (Python).	`list`; `bytearray`; `array.array`; `collections.deque`.
 Give examples of immutable sequences (Python).	`tuple`; `str`; `bytes`.
 Why can a list comprehension be clearer than a for-loop when building a list?	Its intent is explicit: it always builds a new list (a for-loop can do many tasks).
-Python syntax tip: why can list/dict/tuple literals and comps be multiline without backslashes?	Line breaks are ignored inside `[]`, `{}`, or `()`.
 Listcomps vs `map`/`filter`: why often prefer list comprehensions (Python)?	They’re usually more readable and avoid awkward `lambda` usage while doing the same job.
 Do list comprehension loop variables leak in Python 3?	No; comprehension variables have their own local scope (they don’t clobber outer names).
 How do you build a Cartesian product with a list comprehension?	Use multiple `for` clauses, e.g. `[(c, s) for c in colors for s in sizes]`.

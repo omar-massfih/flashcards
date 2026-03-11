@@ -25,5 +25,3 @@ When should you consider a callable instance for Command-like state (Python)?	Wh
 Why prefer a concrete return type for `best_promo` (Python typing)?	It always returns a concrete discount amount (e.g., `Decimal`), which is easier for callers than unions/optionals.
 How do first-class functions reduce boilerplate in Strategy (Python)?	They replace single-method strategy classes/instances with plain functions passed around as values.
 How do first-class functions reduce boilerplate in Command (Python)?	They allow actions to be represented as callbacks (callables) without creating a Command class hierarchy.
-What does it mean that modules are first-class objects (Python)?	Modules are runtime objects whose attributes can be inspected and passed around (enabling module introspection patterns).
-What does it mean that functions are first-class objects (Python, pattern impact)?	You can store, pass, and return functions, enabling patterns like Strategy/Command without extra class scaffolding.

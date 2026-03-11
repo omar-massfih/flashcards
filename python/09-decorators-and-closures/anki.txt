@@ -3,7 +3,6 @@ Do decorators run at call time or at definition/import time (Python)?	At functio
 Import time vs runtime: what’s the difference (Python, decorators context)?	Import time is when module top-level code runs (decorators execute); runtime is when decorated functions are invoked later.
 What is a registration decorator used for (Python)?	To add functions to a registry (e.g., routing tables, plugin hooks) at import time.
 What is a stacked decorator (Python)?	Multiple decorators applied to one function using multiple `@...` lines.
-Stacked decorators desugaring (Python)?	`@a` then `@b` is `func = a(b(func))`.
 Why do naive decorators often break `__name__` and `__doc__` (Python)?	Because the wrapper replaces the function object, so its metadata becomes the wrapper’s metadata.
 Why should a decorator wrapper accept `*args, **kwargs` (Python)?	To forward any positional/keyword arguments so the decorator works for many signatures.
 Variable scope rule: when is a name local inside a function (Python)?	If it’s a parameter or it’s assigned anywhere in the function body (unless declared `global`/`nonlocal`).
