@@ -2,10 +2,4 @@ Why can changing EC2 User Data require instance replacement?	User Data normally 
 What does an Auto Scaling Group do in AWS?	It manages a fleet of EC2 instances by launching, replacing, and resizing them automatically.
 Why is `create_before_destroy` useful with an Auto Scaling Group launch configuration?	It lets Terraform create a replacement launch configuration before deleting the old one, avoiding reference conflicts.
 What is a Terraform data source used for?	To read existing provider data without creating or managing a new resource.
-Why use the `aws_vpc` and `aws_subnets` data sources in AWS examples?	To discover the default VPC and its subnet IDs dynamically instead of hardcoding them.
-Why does `vpc_zone_identifier` improve availability for an Auto Scaling Group?	It spreads instances across multiple subnets, which can map to multiple Availability Zones.
 What is the role of an Application Load Balancer (ALB) in AWS?	To accept incoming HTTP/HTTPS traffic and distribute it across backend targets.
-What is the difference between an ALB listener and a target group?	A listener accepts requests on a port/protocol; a target group defines the backend servers that receive forwarded traffic.
-What does an ALB listener rule do in AWS?	It matches incoming requests and decides which target group should receive them.
-Why is `health_check_type = "ELB"` stronger than the default EC2 health check in an Auto Scaling Group?	It lets the ASG replace instances based on load-balancer health checks, not just basic VM reachability.
-Why are production application servers usually placed in private subnets?	Private subnets reduce direct internet exposure, so only selected entry points such as load balancers are public.

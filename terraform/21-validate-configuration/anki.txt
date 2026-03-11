@@ -4,11 +4,9 @@ What do preconditions validate in Terraform?	Assumptions about resources, data s
 When does Terraform execute preconditions?	After generating a plan but before creating the associated resource, data source, or output.
 What do postconditions validate in Terraform?	Guarantees that resources or data sources must satisfy after Terraform creates or reads them.
 When does Terraform execute postconditions?	After planning and applying changes to a resource, or after reading from a data source.
-What is the main difference between a precondition and a postcondition (Terraform)?	A precondition checks assumptions before the target block runs; a postcondition checks guarantees after it runs.
 What does a `check` block validate in Terraform?	Infrastructure behavior or conditions outside the normal resource lifecycle.
 When does Terraform execute `check` blocks?	At the end of `plan` and `apply` operations.
 What happens when a Terraform `check` assertion fails?	Terraform reports a warning and continues the current operation.
 How do `check` blocks differ from variable validation and pre/postconditions (Terraform)?	Checks do not block operations when they fail.
 What is continuous validation in HCP Terraform?	Regularly re-running checks, preconditions, and postconditions to verify infrastructure over time.
 When does HCP Terraform continuous validation run `check` blocks?	Whenever workspace health assessments run, in addition to normal plan/apply execution.
-What order does Terraform generally use for validation?	Input variable validation first; then preconditions; then postconditions; then checks.

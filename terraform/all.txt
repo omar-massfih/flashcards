@@ -25,16 +25,13 @@ What is a Terraform `resource` block used for?	Declare an infrastructure object 
 Resource block structure (Terraform): what are the two strings after `resource`?	Resource type and resource name (e.g., `resource "TYPE" "NAME"`).
 What is a Terraform resource address (format)?	`<resource_type>.<resource_name>` (e.g., `azurerm_resource_group.rg`).
 What does `terraform init` do?	Initializes the working directory (downloads providers/modules; sets up backend).
-What does `terraform plan` do?	Shows a preview of changes needed to reach the desired state.
 What does `terraform apply` do?	Applies the planned changes to create/update/destroy infrastructure.
 What file does Terraform use to record deployed infrastructure state by default?	`terraform.tfstate`.
 How do you reference another resource’s attribute in Terraform config?	Use `<TYPE>.<NAME>.<ATTRIBUTE>` (e.g., `azurerm_resource_group.rg.name`).
-What does referencing `azurerm_resource_group.rg.name` accomplish in another resource?	Uses the existing resource’s value and creates an implicit dependency between the resources.
 Why does Terraform create a dependency graph?	To ensure resources are created/updated in a valid order based on references.
 What does it mean to “update in-place” (Terraform)?	The resource is modified while keeping the same identity/address; it is not destroyed and recreated.
 In plan output, what does “(known after apply)” mean?	The value is computed by the provider during apply and isn’t known at plan time.
 Why can adding a reference create an implicit dependency without `depends_on`?	Because Terraform can infer ordering from the expression graph (data flow) in configuration.
-How does Terraform show tag additions in a plan?	As an in-place update (`~`) with new keys/values added under `tags`.
 Why does destroy order matter (Terraform)?	Dependent resources must be destroyed before the resources they depend on (e.g., destroy VNet before resource group).
 What is an input variable (Terraform)?	A named value you can set from outside the config (or via defaults) and reference as `var.<name>`.
 Where do you commonly declare input variables (Terraform)?	In `.tf` files such as `variables.tf` using `variable "<name>" { ... }`.
@@ -65,7 +62,6 @@ What is HCP Terraform (high level)?	A hosted Terraform platform for collaboratio
 Why run Terraform in a remote environment (HCP Terraform)?	It provides shared access to state and a stable environment for long-running Terraform operations.
 How do you configure HCP Terraform in Terraform CLI workflow (HCL block)?	Use a `terraform { cloud { organization = "..."; workspaces { name = "..." } } }` block.
 What is an HCP Terraform workspace (conceptually)?	A named context that holds state and run history for a configuration.
-Why should you protect `credentials.tfrc.json`?	It contains an API token; anyone with the file can access HCP Terraform as you.
 What is the default execution mode for HCP Terraform CLI-driven workflow?	Remote execution (Terraform operations run in HCP Terraform).
 What does “local execution” mean with HCP Terraform (CLI-driven)?	Terraform runs locally but stores state remotely in HCP Terraform.
 Where should you set Azure `ARM_...` auth variables when using HCP Terraform?	In the HCP Terraform workspace Variables UI (not only as local shell exports).
@@ -200,14 +196,12 @@ What do preconditions validate in Terraform?	Assumptions about resources, data s
 When does Terraform execute preconditions?	After generating a plan but before creating the associated resource, data source, or output.
 What do postconditions validate in Terraform?	Guarantees that resources or data sources must satisfy after Terraform creates or reads them.
 When does Terraform execute postconditions?	After planning and applying changes to a resource, or after reading from a data source.
-What is the main difference between a precondition and a postcondition (Terraform)?	A precondition checks assumptions before the target block runs; a postcondition checks guarantees after it runs.
 What does a `check` block validate in Terraform?	Infrastructure behavior or conditions outside the normal resource lifecycle.
 When does Terraform execute `check` blocks?	At the end of `plan` and `apply` operations.
 What happens when a Terraform `check` assertion fails?	Terraform reports a warning and continues the current operation.
 How do `check` blocks differ from variable validation and pre/postconditions (Terraform)?	Checks do not block operations when they fail.
 What is continuous validation in HCP Terraform?	Regularly re-running checks, preconditions, and postconditions to verify infrastructure over time.
 When does HCP Terraform continuous validation run `check` blocks?	Whenever workspace health assessments run, in addition to normal plan/apply execution.
-What order does Terraform generally use for validation?	Input variable validation first; then preconditions; then postconditions; then checks.
 What is the purpose of policy enforcement in HCP Terraform?	To validate that Terraform plans comply with security rules and best practices.
 What policy frameworks can HCP Terraform use for custom policies?	Sentinel and OPA.
 When does HCP Terraform evaluate a policy set?	For each run in the selected workspaces.
@@ -237,13 +231,7 @@ Why can changing EC2 User Data require instance replacement?	User Data normally 
 What does an Auto Scaling Group do in AWS?	It manages a fleet of EC2 instances by launching, replacing, and resizing them automatically.
 Why is `create_before_destroy` useful with an Auto Scaling Group launch configuration?	It lets Terraform create a replacement launch configuration before deleting the old one, avoiding reference conflicts.
 What is a Terraform data source used for?	To read existing provider data without creating or managing a new resource.
-Why use the `aws_vpc` and `aws_subnets` data sources in AWS examples?	To discover the default VPC and its subnet IDs dynamically instead of hardcoding them.
-Why does `vpc_zone_identifier` improve availability for an Auto Scaling Group?	It spreads instances across multiple subnets, which can map to multiple Availability Zones.
 What is the role of an Application Load Balancer (ALB) in AWS?	To accept incoming HTTP/HTTPS traffic and distribute it across backend targets.
-What is the difference between an ALB listener and a target group?	A listener accepts requests on a port/protocol; a target group defines the backend servers that receive forwarded traffic.
-What does an ALB listener rule do in AWS?	It matches incoming requests and decides which target group should receive them.
-Why is `health_check_type = "ELB"` stronger than the default EC2 health check in an Auto Scaling Group?	It lets the ASG replace instances based on load-balancer health checks, not just basic VM reachability.
-Why are production application servers usually placed in private subnets?	Private subnets reduce direct internet exposure, so only selected entry points such as load balancers are public.
 Why does Terraform need a state file?	It uses state to know which real infrastructure objects correspond to the resources in your configuration.
 Why is the Terraform state file considered a private API?	Its format is for Terraform's internal use and should not be edited or parsed directly by your own code.
 How should you manipulate Terraform state if you must change it?	Use Terraform commands such as `terraform import` or `terraform state` instead of editing the file by hand.
