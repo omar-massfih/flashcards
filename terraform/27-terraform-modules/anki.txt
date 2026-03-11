@@ -1,0 +1,22 @@
+What is a Terraform module?	Any folder of Terraform configuration files treated as a unit.
+What is the difference between a root module and a reusable module (Terraform)?	A root module is run directly; a reusable module is meant to be called from other modules.
+Why are Terraform modules useful?	They let you reuse infrastructure code across environments instead of copying and pasting it.
+What does a `module "name" { source = ... }` block do (Terraform)?	It instantiates another module from the given source and passes configuration into it.
+When must you rerun `terraform init` for modules?	When you add a module or change its `source`.
+Why should providers usually be configured only in root modules?	Reusable modules should focus on infrastructure logic, while root modules supply environment-specific provider configuration.
+Why do hardcoded resource names make a Terraform module non-reusable?	Using the module more than once can create naming conflicts.
+Why do hardcoded environment-specific values make a Terraform module non-reusable?	They couple the module to one environment’s naming or state layout instead of letting callers supply those differences.
+Why are module inputs the API of a Terraform module?	They are the configurable values callers use to control how the module behaves.
+Why are module inputs useful for environment-specific behavior?	They let the same module vary names, sizes, or other settings across environments without duplicating code.
+What are module locals used for (Terraform)?	To define internal named values for a module without exposing them as configurable inputs.
+Why use locals inside a Terraform module?	They reduce repeated magic values and make the module easier to read and maintain.
+What are module outputs used for (Terraform)?	To return values from a module so callers can use them elsewhere.
+Why are module outputs important for composition (Terraform)?	They let outer configurations connect additional resources to infrastructure created inside the module.
+Why should file access inside a reusable Terraform module usually use `path.module`?	So file paths resolve relative to the module’s own directory instead of the caller’s working directory.
+What module gotcha can happen with inline nested blocks vs separate resources (Terraform)?	Mixing both styles for the same underlying configuration can cause conflicts and overwrites.
+Why should reusable Terraform modules often prefer separate resources over inline nested blocks?	Separate resources are easier for callers to extend or supplement from outside the module.
+Why can exporting a resource ID from a module improve extensibility?	Callers can attach extra environment-specific resources to the module’s infrastructure without modifying the module itself.
+What is the main benefit of versioned Terraform modules?	They let different environments use different tested versions of the same module.
+Why are tags usually better than branch names for Terraform module versions?	Tags point to stable versions, while branches can change between runs.
+What does semantic versioning communicate for a Terraform module?	Whether a release is a breaking change, a backward-compatible feature addition, or a backward-compatible bug fix.
+When should you use local module paths vs versioned remote sources (Terraform)?	Use local paths for fast iteration during module development; use versioned remote sources for shared environments that need reproducible upgrades.
