@@ -4,6 +4,4 @@ Why does Terraform create a dependency graph?	To ensure resources are created/up
 What does it mean to “update in-place” (Terraform)?	The resource is modified while keeping the same identity/address; it is not destroyed and recreated.
 In plan output, what does “(known after apply)” mean?	The value is computed by the provider during apply and isn’t known at plan time.
 Why can adding a reference create an implicit dependency without `depends_on`?	Because Terraform can infer ordering from the expression graph (data flow) in configuration.
-What does the `tags` block do on a Terraform resource (Azure example)?	Assigns metadata key/value tags to the resource.
-In HCL, what is the type/shape of `tags = { ... }`?	A map/object of keys to values (e.g., `Environment = "..."`).
 How does Terraform show tag additions in a plan?	As an in-place update (`~`) with new keys/values added under `tags`.

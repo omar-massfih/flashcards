@@ -1,5 +1,3 @@
-What is Terraform state?	A record of the infrastructure Terraform manages and the mapping from configuration resources to real-world objects.
-Where does Terraform store state by default?	In a local `terraform.tfstate` file in the working directory.
 Why does Terraform need a state file?	It uses state to know which real infrastructure objects correspond to the resources in your configuration.
 Why is the Terraform state file considered a private API?	Its format is for Terraform's internal use and should not be edited or parsed directly by your own code.
 How should you manipulate Terraform state if you must change it?	Use Terraform commands such as `terraform import` or `terraform state` instead of editing the file by hand.
