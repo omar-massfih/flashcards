@@ -1,0 +1,13 @@
+What is the goal of a most general type in type inference?	To assign a type that captures all valid uses without committing to unnecessary specifics.
+What is unification in type inference?	Solving type constraints by finding substitutions that make the type expressions agree.
+What is constraint generation in type inference?	Collecting type-equality requirements from how expressions are composed.
+How does function application constrain types in type inference?	If `f x` is valid, `f` must have a function type whose parameter type matches the type of `x`.
+How does function abstraction constrain types in type inference?	If `x` has type `A` and the body has type `B`, then the abstraction has type `A -> B`.
+Why can type inference lead naturally to polymorphism?	Some inferred type variables may remain unconstrained, producing a general type that can be instantiated in many ways.
+What is a transparent type declaration?	A type alias that gives another name to an existing type without creating a distinct new type.
+What is an opaque type declaration?	A declaration that introduces a genuinely new type distinct from existing ones.
+What is the difference between a type alias and a new type?	A type alias preserves the original type identity; a new type creates a separate type that is not interchangeable by default.
+What is structural type equality?	Two type names are considered equal if the underlying type structures they denote are the same.
+What is name type equality?	Two types are considered equal only if they have the same declared type name.
+Why can transparent type declarations improve documentation without changing behavior?	They communicate domain meaning while remaining interchangeable with the underlying type.
+Why can opaque type declarations improve safety?	They prevent accidentally mixing conceptually different values that happen to share the same representation.
