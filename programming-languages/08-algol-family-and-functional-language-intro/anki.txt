@@ -12,6 +12,5 @@ What is a module system in a programming language?	A mechanism for grouping rela
 Why are modules useful in language design?	They improve structure, reuse, separate compilation, and control over what details are exposed.
 What is information hiding in module design?	Exposing an interface while keeping implementation details inaccessible or changeable behind it.
 Why is garbage collection an important runtime feature?	It automatically reclaims unreachable memory, reducing manual memory-management errors.
-Why are exceptions useful as a control mechanism?	They provide a structured way to propagate failures or unusual conditions without encoding every error path in normal returns.
 What is type inference?	The ability of a language implementation to determine types automatically from program structure.
 Why is type inference valuable in statically typed languages?	It preserves static checking while reducing the amount of explicit type annotation programmers must write.
