@@ -3,9 +3,7 @@ Define scalability (DDIA framing).	Reasonable ways to handle growth in load/data
 Define maintainability (DDIA framing).	Enable teams to work productively over time while maintaining and evolving the system.
 What is a fault vs a failure (DDIA)?	Fault: a component deviates from spec; failure: the system as a whole stops providing required service.
 What is fault tolerance (resilience)?	Mechanisms that prevent certain faults from turning into user-visible failures.
-Why are hardware faults often treated as random/uncorrelated?	One disk/host failing usually doesn’t imply others fail at the same time (weak correlations aside).
 How does redundancy help with hardware faults?	Redundant components can take over while broken parts are replaced, reducing downtime.
-Why do large fleets increase the rate of hardware faults you must handle?	More machines means failures happen more frequently in absolute terms.
 Why do some cloud environments push you toward software fault tolerance?	Instances can become unavailable without warning; designs prioritize elasticity over single-node reliability.
 What operational advantage comes with tolerating machine loss?	Rolling upgrades/patching node-by-node without taking the whole system down.
 What makes systematic software faults especially dangerous?	They are correlated across nodes and can trigger widespread failures.

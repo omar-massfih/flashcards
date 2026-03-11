@@ -3,9 +3,7 @@ Define scalability (DDIA framing).	Reasonable ways to handle growth in load/data
 Define maintainability (DDIA framing).	Enable teams to work productively over time while maintaining and evolving the system.
 What is a fault vs a failure (DDIA)?	Fault: a component deviates from spec; failure: the system as a whole stops providing required service.
 What is fault tolerance (resilience)?	Mechanisms that prevent certain faults from turning into user-visible failures.
-Why are hardware faults often treated as random/uncorrelated?	One disk/host failing usually doesn’t imply others fail at the same time (weak correlations aside).
 How does redundancy help with hardware faults?	Redundant components can take over while broken parts are replaced, reducing downtime.
-Why do large fleets increase the rate of hardware faults you must handle?	More machines means failures happen more frequently in absolute terms.
 Why do some cloud environments push you toward software fault tolerance?	Instances can become unavailable without warning; designs prioritize elasticity over single-node reliability.
 What operational advantage comes with tolerating machine loss?	Rolling upgrades/patching node-by-node without taking the whole system down.
 What makes systematic software faults especially dangerous?	They are correlated across nodes and can trigger widespread failures.
@@ -140,7 +138,6 @@ Why can statement-based replication be unsafe?	Nondeterministic functions, side 
 What is write-ahead log shipping for replication?	Replicating low-level storage-engine log records from leader to followers.
 What is a logical replication log?	A replication log that describes row-level data changes independently of storage-engine internals.
 Why is a logical replication log useful?	It decouples replication from storage internals and is easier for external systems to consume.
-What is trigger-based replication?	Using database triggers and application logic to capture and replicate changes.
 What problem does read-after-write consistency prevent?	A user failing to see their own successful write on a subsequent read.
 What problem do monotonic reads prevent?	A user seeing newer data and then later seeing older data from another replica.
 What problem do consistent prefix reads prevent?	Seeing causally related writes in the wrong order, such as an answer before the question.
@@ -198,7 +195,6 @@ What role can a coordination service like ZooKeeper play in partitioned systems?
 What is the gossip-based approach to partition-routing metadata?	Nodes disseminate cluster-state changes among themselves instead of relying on a separate coordination service.
 Why do transactions simplify application error handling?	They hide partial failure, so the application can usually retry instead of reasoning about half-finished changes.
 What does ACID atomicity guarantee?	If a transaction cannot complete, any writes it made are discarded or undone.
-Why does atomicity make retries safer?	If a transaction aborts, the application can assume it did not partially change the database.
 What does ACID consistency mean?	Application-defined invariants should hold before and after a correct transaction.
 What does ACID isolation aim to guarantee?	Concurrent transactions do not interfere in a way that changes the result from a correct serial execution.
 What does ACID durability mean?	Once a transaction commits successfully, its writes should survive crashes or faults as far as the system can reasonably ensure.

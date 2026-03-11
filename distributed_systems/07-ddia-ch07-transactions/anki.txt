@@ -1,6 +1,5 @@
 Why do transactions simplify application error handling?	They hide partial failure, so the application can usually retry instead of reasoning about half-finished changes.
 What does ACID atomicity guarantee?	If a transaction cannot complete, any writes it made are discarded or undone.
-Why does atomicity make retries safer?	If a transaction aborts, the application can assume it did not partially change the database.
 What does ACID consistency mean?	Application-defined invariants should hold before and after a correct transaction.
 What does ACID isolation aim to guarantee?	Concurrent transactions do not interfere in a way that changes the result from a correct serial execution.
 What does ACID durability mean?	Once a transaction commits successfully, its writes should survive crashes or faults as far as the system can reasonably ensure.

@@ -12,7 +12,6 @@ Why can statement-based replication be unsafe?	Nondeterministic functions, side 
 What is write-ahead log shipping for replication?	Replicating low-level storage-engine log records from leader to followers.
 What is a logical replication log?	A replication log that describes row-level data changes independently of storage-engine internals.
 Why is a logical replication log useful?	It decouples replication from storage internals and is easier for external systems to consume.
-What is trigger-based replication?	Using database triggers and application logic to capture and replicate changes.
 What problem does read-after-write consistency prevent?	A user failing to see their own successful write on a subsequent read.
 What problem do monotonic reads prevent?	A user seeing newer data and then later seeing older data from another replica.
 What problem do consistent prefix reads prevent?	Seeing causally related writes in the wrong order, such as an answer before the question.
