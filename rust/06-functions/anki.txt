@@ -1,4 +1,3 @@
-Does Rust care whether a function is defined before or after it’s called?	No; order in the file doesn’t matter as long as the function is in scope for the caller.
 In Rust function signatures, what must you write for each parameter?	The parameter’s type.
 Why does Rust require parameter types in function signatures?	It helps the compiler produce better errors and reduces the need for type annotations elsewhere.
 What is a statement (Rust, concept)?	An instruction that performs an action and does not return a value.
@@ -13,7 +12,6 @@ In a block, what happens if the last line ends with `;`?	The block’s value bec
 How do you declare a function return type in Rust?	With `-> T` after the parameter list.
 How do Rust functions typically return a value without `return`?	By making the last line of the body a tail expression (no semicolon).
 What common mistake causes a function to return `()` unexpectedly?	Putting a semicolon after the intended return expression (removing the tail expression).
-What does `()` represent as a return value?	The unit value (an “empty” value).
 Why does `x + 1;` often cause a return-type mismatch in Rust functions?	The semicolon makes it a statement, so it yields `()` instead of the numeric value.
 What kind of compiler error often appears when a function’s body yields `()` but the signature says it returns a non-`()` type?	A “mismatched types” error (expected the declared return type, found `()`).
 How can a block expression be used with `let`?	You can bind a block’s value: `let x = { ... tail_expression ... };`.

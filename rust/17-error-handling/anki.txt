@@ -2,7 +2,6 @@ What is `panic!` used for in Rust?	To stop execution when the program reaches an
 What is the difference between unwinding and aborting on panic in Rust?	Unwinding cleans up stack frames as it exits; aborting ends the program immediately without cleanup.
 Why might a Rust project choose `panic = 'abort'`?	To reduce binary size and skip the runtime cost of unwinding.
 Why does out-of-bounds indexing panic in Rust?	Because there is no valid element to return, and continuing would be unsafe.
-Why does Rust panic on out-of-bounds access instead of allowing C-style buffer overreads?	To prevent undefined behavior and security vulnerabilities from reading invalid memory.
 What is a backtrace used for when debugging a Rust panic?	To show the call stack that led to the panic so you can trace the source of the problem.
 How should you read a Rust panic backtrace at a high level?	Start from the top and look for the first frame in code you wrote; that is usually where the bug originates.
 Why is `Result<T, E>` used in Rust?	To represent operations that can succeed with `Ok(T)` or fail with `Err(E)` in a recoverable way.

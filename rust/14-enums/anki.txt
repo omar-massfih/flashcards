@@ -10,7 +10,6 @@ Can you define methods on an enum (Rust)?	Yes; use `impl EnumName { fn ... }`.
 What is `Option<T>` in Rust?	An enum representing an optional value: `Some(T)` or `None`.
 Does Rust have `null`?	No; absence is represented explicitly with `Option<T>`.
 Why is `Option<T>` safer than nulls (Rust)?	`Option<T>` is a distinct type, so the compiler forces you to handle the “no value” case.
-Do you need to `use` `Option`/`Some`/`None` in most Rust code?	No; they’re in the prelude, so they’re usually already in scope.
 What does the `T` in `Option<T>` mean (Rust)?	A generic type parameter: the type inside `Some(T)`.
 Are `Option<i32>` and `Option<char>` the same type (Rust)?	No; substituting a different `T` produces a different concrete type.
 Why does `let x = None;` often need a type annotation (Rust)?	`None` alone doesn’t provide enough information to infer `T`.

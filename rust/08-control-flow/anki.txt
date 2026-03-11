@@ -24,7 +24,6 @@ What is a loop label used for?	Disambiguating which loop `break`/`continue` shou
 What is the syntax shape of a labeled loop?	`'label: loop { ... }` (label starts with a single quote).
 How do you break an outer labeled loop from inside an inner loop?	`break 'label;`.
 Why does `while` reduce nesting versus `loop` + `if` + `break` patterns?	The condition is built into the loop construct, so it’s clearer and less nested.
-What is a common use of `while` shown in TRPL?	Counting down until a condition (e.g., `number != 0`) becomes false.
 Why is iterating with `while` + manual index considered error-prone?	Off-by-one mistakes can cause panics (out-of-bounds) or skipped elements.
 Why can `while` + manual indexing also be slower?	It can require repeated bounds checks / comparisons each iteration.
 Why is `for` preferred when iterating a collection (TRPL’s emphasis)?	Safer, more concise, and often more efficient.

@@ -1,5 +1,4 @@
 What are collections in Rust?	Data structures that can hold multiple values and whose data is typically stored on the heap.
-How do Rust collections differ from arrays and tuples?	Collections can grow or shrink at runtime, while arrays and tuples have a fixed size known at compile time.
 What is `Vec<T>` in Rust?	A growable, heap-allocated collection of values of one type stored next to each other in memory.
 When might `Vec::new()` need a type annotation (Rust)?	When the vector is empty and Rust has not yet seen any elements that reveal the element type.
 What does the `vec!` macro do in Rust?	It creates a vector initialized with the values you provide.

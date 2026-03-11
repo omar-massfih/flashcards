@@ -1,10 +1,5 @@
 What is Cargo in the Rust ecosystem?	The included dependency manager and build tool.
-What does Cargo make easier?	Adding, compiling, and managing dependencies consistently.
-What is rustfmt used for?	Automatic formatting to keep a consistent coding style.
-What is rustup?	A command-line tool for managing Rust versions and associated tools.
-What is special about the `main` function in an executable Rust program?	It is the first code that runs.
 What does the `!` in `println!` indicate?	It’s a macro invocation, not a normal function call.
-Why use Cargo instead of `rustc` directly as projects grow?	To manage options/dependencies and make sharing/building easier.
 What does `cargo new <name>` do?	Creates a new project directory with a starter Rust program and Cargo config.
 What two top-level items does Cargo generate in a new binary project (besides the `src` dir)?	`Cargo.toml` and a `src/` directory (with `main.rs` inside `src/`).
 Where does Cargo expect Rust source files to live?	Inside the `src/` directory.
@@ -70,7 +65,6 @@ What is the unit type/value in Rust?	`()`; an empty value / empty return type.
 What is an array in Rust (core properties)?	A fixed-length collection where every element has the same type.
 Arrays vs vectors: when should you prefer `Vec<T>` over arrays?	When you need a growable/shrinkable collection; if unsure, use a vector.
 What happens on out-of-bounds array indexing in Rust (and why)?	It panics at runtime via bounds checks to prevent invalid memory access (memory safety).
-Does Rust care whether a function is defined before or after it’s called?	No; order in the file doesn’t matter as long as the function is in scope for the caller.
 In Rust function signatures, what must you write for each parameter?	The parameter’s type.
 Why does Rust require parameter types in function signatures?	It helps the compiler produce better errors and reduces the need for type annotations elsewhere.
 What is a statement (Rust, concept)?	An instruction that performs an action and does not return a value.
@@ -85,11 +79,9 @@ In a block, what happens if the last line ends with `;`?	The block’s value bec
 How do you declare a function return type in Rust?	With `-> T` after the parameter list.
 How do Rust functions typically return a value without `return`?	By making the last line of the body a tail expression (no semicolon).
 What common mistake causes a function to return `()` unexpectedly?	Putting a semicolon after the intended return expression (removing the tail expression).
-What does `()` represent as a return value?	The unit value (an “empty” value).
 Why does `x + 1;` often cause a return-type mismatch in Rust functions?	The semicolon makes it a statement, so it yields `()` instead of the numeric value.
 What kind of compiler error often appears when a function’s body yields `()` but the signature says it returns a non-`()` type?	A “mismatched types” error (expected the declared return type, found `()`).
 How can a block expression be used with `let`?	You can bind a block’s value: `let x = { ... tail_expression ... };`.
-Besides `//` comments, what other kind of comment does Rust have?	Documentation comments (covered later in TRPL, e.g., publishing a crate).
 What is an `if` expression used for (Rust)?	Branching: run a block when a condition is true; optionally run an `else` block when false.
 What type must a Rust `if` condition have?	`bool`.
 Does Rust perform truthy/falsy coercions for `if` conditions?	No; conditions must be explicitly boolean.
@@ -116,7 +108,6 @@ What is a loop label used for?	Disambiguating which loop `break`/`continue` shou
 What is the syntax shape of a labeled loop?	`'label: loop { ... }` (label starts with a single quote).
 How do you break an outer labeled loop from inside an inner loop?	`break 'label;`.
 Why does `while` reduce nesting versus `loop` + `if` + `break` patterns?	The condition is built into the loop construct, so it’s clearer and less nested.
-What is a common use of `while` shown in TRPL?	Counting down until a condition (e.g., `number != 0`) becomes false.
 Why is iterating with `while` + manual index considered error-prone?	Off-by-one mistakes can cause panics (out-of-bounds) or skipped elements.
 Why can `while` + manual indexing also be slower?	It can require repeated bounds checks / comparisons each iteration.
 Why is `for` preferred when iterating a collection (TRPL’s emphasis)?	Safer, more concise, and often more efficient.
@@ -224,7 +215,6 @@ Can you define methods on an enum (Rust)?	Yes; use `impl EnumName { fn ... }`.
 What is `Option<T>` in Rust?	An enum representing an optional value: `Some(T)` or `None`.
 Does Rust have `null`?	No; absence is represented explicitly with `Option<T>`.
 Why is `Option<T>` safer than nulls (Rust)?	`Option<T>` is a distinct type, so the compiler forces you to handle the “no value” case.
-Do you need to `use` `Option`/`Some`/`None` in most Rust code?	No; they’re in the prelude, so they’re usually already in scope.
 What does the `T` in `Option<T>` mean (Rust)?	A generic type parameter: the type inside `Some(T)`.
 Are `Option<i32>` and `Option<char>` the same type (Rust)?	No; substituting a different `T` produces a different concrete type.
 Why does `let x = None;` often need a type annotation (Rust)?	`None` alone doesn’t provide enough information to infer `T`.
@@ -279,7 +269,6 @@ After a Rust module has been declared with `mod`, how should other files refer t
 Does moving Rust module code into another file change the module tree or item paths?	No; it only changes where the code is stored, not the module's place in the tree.
 What are the two supported file-path styles for an out-of-line Rust module?	The direct-file style like `src/foo.rs` or `src/foo/bar.rs`, and the older `mod.rs` style like `src/foo/mod.rs` or `src/foo/bar/mod.rs`.
 What are collections in Rust?	Data structures that can hold multiple values and whose data is typically stored on the heap.
-How do Rust collections differ from arrays and tuples?	Collections can grow or shrink at runtime, while arrays and tuples have a fixed size known at compile time.
 What is `Vec<T>` in Rust?	A growable, heap-allocated collection of values of one type stored next to each other in memory.
 When might `Vec::new()` need a type annotation (Rust)?	When the vector is empty and Rust has not yet seen any elements that reveal the element type.
 What does the `vec!` macro do in Rust?	It creates a vector initialized with the values you provide.
@@ -317,7 +306,6 @@ What is `panic!` used for in Rust?	To stop execution when the program reaches an
 What is the difference between unwinding and aborting on panic in Rust?	Unwinding cleans up stack frames as it exits; aborting ends the program immediately without cleanup.
 Why might a Rust project choose `panic = 'abort'`?	To reduce binary size and skip the runtime cost of unwinding.
 Why does out-of-bounds indexing panic in Rust?	Because there is no valid element to return, and continuing would be unsafe.
-Why does Rust panic on out-of-bounds access instead of allowing C-style buffer overreads?	To prevent undefined behavior and security vulnerabilities from reading invalid memory.
 What is a backtrace used for when debugging a Rust panic?	To show the call stack that led to the panic so you can trace the source of the problem.
 How should you read a Rust panic backtrace at a high level?	Start from the top and look for the first frame in code you wrote; that is usually where the bug originates.
 Why is `Result<T, E>` used in Rust?	To represent operations that can succeed with `Ok(T)` or fail with `Err(E)` in a recoverable way.

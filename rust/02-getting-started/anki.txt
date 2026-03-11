@@ -1,7 +1,4 @@
-What is rustup?	A command-line tool for managing Rust versions and associated tools.
-What is special about the `main` function in an executable Rust program?	It is the first code that runs.
 What does the `!` in `println!` indicate?	It’s a macro invocation, not a normal function call.
-Why use Cargo instead of `rustc` directly as projects grow?	To manage options/dependencies and make sharing/building easier.
 What does `cargo new <name>` do?	Creates a new project directory with a starter Rust program and Cargo config.
 What two top-level items does Cargo generate in a new binary project (besides the `src` dir)?	`Cargo.toml` and a `src/` directory (with `main.rs` inside `src/`).
 Where does Cargo expect Rust source files to live?	Inside the `src/` directory.
