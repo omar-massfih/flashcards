@@ -313,3 +313,29 @@ What happens when you insert owned `String` keys or values into a Rust `HashMap`
 What does `entry(key).or_insert(value)` do on a Rust `HashMap`?	It inserts the value only if the key is absent and returns a mutable reference to the entry's value.
 How can `entry(...).or_insert(...)` support updates based on an old value in Rust?	It returns a mutable reference to the stored value, which you can modify in place.
 What is the default hashing tradeoff for Rust's `HashMap`?	It uses SipHash for better resistance to hash-table DoS attacks at some performance cost.
+What is `panic!` used for in Rust?	To stop execution when the program reaches an unrecoverable error.
+What is the difference between unwinding and aborting on panic in Rust?	Unwinding cleans up stack frames as it exits; aborting ends the program immediately without cleanup.
+Why might a Rust project choose `panic = 'abort'`?	To reduce binary size and skip the runtime cost of unwinding.
+Why does out-of-bounds indexing panic in Rust?	Because there is no valid element to return, and continuing would be unsafe.
+Why does Rust panic on out-of-bounds access instead of allowing C-style buffer overreads?	To prevent undefined behavior and security vulnerabilities from reading invalid memory.
+What is a backtrace used for when debugging a Rust panic?	To show the call stack that led to the panic so you can trace the source of the problem.
+How should you read a Rust panic backtrace at a high level?	Start from the top and look for the first frame in code you wrote; that is usually where the bug originates.
+Why is `Result<T, E>` used in Rust?	To represent operations that can succeed with `Ok(T)` or fail with `Err(E)` in a recoverable way.
+Why is matching on `Result` useful in Rust?	It lets you branch explicitly on success versus failure and handle each case differently.
+Why might code inspect `ErrorKind` when handling an I/O error in Rust?	To react differently to specific failure causes, such as creating a file when it is missing.
+What does `unwrap` do on a `Result` in Rust?	It returns the `Ok` value or panics if the result is `Err`.
+Why is `expect` often preferable to `unwrap` in Rust?	It lets you provide context about why failure was considered impossible, making panics easier to debug.
+What does it mean to propagate an error in Rust?	Return the error to the caller instead of handling it in the current function.
+What does the `?` operator do on a `Result` in Rust?	It returns the inner `Ok` value or propagates the `Err` early from the function.
+What extra behavior does `?` have for error types in Rust?	It uses `From` conversion so the error can be transformed into the function's return error type.
+Why can the `?` operator make Rust code more readable?	It removes repetitive match-and-return boilerplate for common propagation patterns.
+What does the `?` operator do on an `Option` in Rust?	It returns the inner `Some` value or returns `None` early from the function.
+Why can’t you freely use `?` in any Rust function?	The function’s return type must be compatible with the residual type that `?` may return early.
+Why can `main` return `Result<(), E>` in Rust?	So it can use `?` and let errors end the program through the standard termination mechanism.
+When is returning `Result` usually the better default than panicking in Rust?	When failure is an expected possibility and the caller may reasonably recover.
+Why are `unwrap` and `expect` often acceptable in examples, prototypes, and tests?	They keep the code concise when robust error handling is not the main point or when failure should fail fast.
+When is `expect` reasonable because the programmer knows more than the compiler?	When logic outside the type system guarantees success in a specific case, such as parsing a hardcoded valid value.
+When is panicking appropriate because of a bad state in Rust?	When an invariant, contract, or assumption has been violated and continuing would be incorrect, unsafe, or meaningless.
+What is a custom validation type in Rust?	A type whose constructor enforces invariants before values of that type can exist.
+Why can a custom validated type reduce repeated runtime checks in Rust?	Functions can rely on the type’s invariant instead of revalidating the raw value everywhere.
+Why should a validation type keep its fields private in Rust?	So callers must construct it through checked APIs that preserve the invariant.
