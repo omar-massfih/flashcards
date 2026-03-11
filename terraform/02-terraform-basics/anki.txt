@@ -1,9 +1,3 @@
 Why add a provider version constraint in `required_providers`?	To avoid unplanned upgrades that may introduce breaking changes.
 What does the Terraform version constraint `required_version` do?	Prevents using Terraform CLI versions that don’t satisfy the constraint.
-What is a Terraform `provider` block used for?	Configure a provider plugin (credentials, features, regions, etc.).
-What is a Terraform `resource` block used for?	Declare an infrastructure object Terraform will manage.
-Resource block structure (Terraform): what are the two strings after `resource`?	Resource type and resource name (e.g., `resource "TYPE" "NAME"`).
-What is a Terraform resource address (format)?	`<resource_type>.<resource_name>` (e.g., `azurerm_resource_group.rg`).
-What does `terraform init` do?	Initializes the working directory (downloads providers/modules; sets up backend).
-What does `terraform apply` do?	Applies the planned changes to create/update/destroy infrastructure.
 What file does Terraform use to record deployed infrastructure state by default?	`terraform.tfstate`.

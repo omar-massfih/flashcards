@@ -1,0 +1,24 @@
+Why is storing secrets in plain text in version control especially dangerous?	It exposes them to everyone and every machine with repo access and makes auditing or revocation very difficult.
+Why should infrastructure secrets and customer secrets usually be managed differently?	They often require different storage and security models, such as reversible encryption for infrastructure secrets versus one-way hashing for customer passwords.
+What is a file-based secret store?	A system that keeps secrets in encrypted files, often checked into version control.
+What is a centralized secret store?	A service that stores encrypted secrets centrally and serves them over a network API, CLI, or UI.
+Why does a file-based secret store create a key-management problem?	The encryption key is itself a secret that must be stored and accessed securely.
+What tools are commonly used to protect encryption keys for encrypted secret files?	A cloud KMS or developers' PGP keys.
+What is a common way for human users to authenticate Terraform providers securely?	Store provider credentials in a personal secrets manager and expose them to Terraform through environment variables.
+Why are environment variables a common way to pass secrets to Terraform providers and resources?	They keep plain-text secrets out of Terraform code and work with many external secret-management approaches.
+What is a key drawback of using environment variables for Terraform secrets?	Secret handling is mostly outside Terraform, which makes practices less standardized and easier to misconfigure.
+What does setting `sensitive = true` on a Terraform variable help with?	It suppresses the value in normal Terraform CLI output, but does not keep it out of state.
+What is one common machine-user approach for Terraform provider authentication in CI systems?	Store machine credentials in the CI platform and expose them as environment variables during the build.
+What is the main drawback of CI systems that rely on stored long-lived provider credentials?	They require manual credential management and often depend on permanent credentials.
+Why are IAM roles preferable to stored access keys for Terraform automation running inside AWS?	They avoid manual credential management and provide temporary credentials automatically.
+How does an EC2 instance make IAM-role credentials available to Terraform?	AWS exposes temporary credentials through the instance metadata service, which Terraform can use automatically.
+What is OIDC used for in Terraform automation?	To let an external CI system authenticate to a cloud provider and assume a role without storing long-lived credentials.
+Why is OIDC attractive for Terraform CI/CD pipelines?	It avoids manually managed permanent secrets by using trusted identity federation and temporary credentials.
+What is the encrypted-files approach for Terraform secrets?	Store ciphertext in version control and decrypt it inside Terraform or adjacent tooling when needed.
+What is an advantage of encrypted secret files in Terraform workflows?	Secrets are versioned alongside the code, reducing environment drift and configuration mismatches.
+What is a drawback of encrypted secret files for Terraform workflows?	Editing, rotating, and testing them is more awkward, and revoking access is hard if an encryption key is compromised.
+What is the secret-store approach for Terraform secrets?	Read secrets from a centralized service such as AWS Secrets Manager or Vault at runtime via data sources or API-backed tooling.
+What is a major advantage of centralized secret stores?	They usually support audit logs, easier rotation, revocation, and more standardized secret-handling practices.
+What is a major drawback of centralized secret stores?	They add external dependencies, cost, and authentication complexity for apps, automation, and tests.
+What important Terraform gotcha applies no matter how you source secrets?	Any secrets passed into resources or data sources can end up in plain text in Terraform state.
+How should Terraform state and plan files be protected if secrets may be present?	Secrets can end up in both state and saved plan files, so store them in encrypted locations and strictly limit access to the backend or storage location.

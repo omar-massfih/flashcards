@@ -1,0 +1,29 @@
+Why can't Terraform testing use localhost?	Terraform usually manages real external infrastructure, so meaningful tests must target a real environment rather than the local machine.
+What is the practical equivalent of localhost for Terraform testing?	An isolated real deployment environment, such as a sandbox cloud account.
+Why is a per-developer isolated sandbox environment ideal for manual Terraform testing?	It lets each developer create and destroy infrastructure freely without conflicting with others or risking shared environments.
+Why should Terraform sandbox environments be cleaned up regularly?	To prevent abandoned resources from increasing cost, clutter, and operational confusion.
+What is a common automated cleanup strategy for Terraform sandbox environments?	Run scheduled cleanup tooling that deletes old or unused resources after a defined age threshold.
+Why can't Terraform modules have pure unit tests?	Their behavior depends heavily on real provider APIs and deployed infrastructure, so fully isolated in-memory tests are usually impractical.
+What is the closest Terraform equivalent to a unit under test?	A single reusable Terraform module.
+Why are Terraform unit tests effectively integration tests with real providers?	They still rely on real cloud APIs and real infrastructure even when they focus on a single module.
+What is Terratest commonly used for in Terraform workflows?	To automate apply, validation, and destroy flows for infrastructure tests in Go.
+Why should a Terraform test usually schedule cleanup before running apply?	So cleanup still happens if later test steps fail.
+Why do infrastructure tests often need retry logic during validation?	Because deployments, health checks, DNS updates, and provider behavior are often asynchronous or temporarily flaky.
+What is dependency injection in Terraform module testing?	Designing modules so external dependencies can be passed in as input variables instead of always being looked up internally.
+Why can optional input variables make Terraform modules easier to test?	They let tests inject mock or test-specific values in place of real external dependencies.
+Why is it useful to isolate external dependencies in a dedicated Terraform file such as `dependencies.tf`?	It makes the module's outside-world assumptions easier to see, reason about, and replace in tests.
+Why must Terraform test resources be namespaced?	To prevent parallel test runs or different users from colliding on global or account-level resource names.
+How can Terraform tests avoid resource-name collisions when run in parallel?	Make names configurable and add a unique random suffix per test run.
+Why can parallel tests against the same Terraform folder conflict even if resource names are unique?	They can overwrite each other's `.terraform` directory, temporary files, or local state during `init` and `apply`.
+How can tests safely run the same Terraform example folder in parallel?	Copy the example to a unique temporary folder for each test run and execute Terraform there.
+What is the purpose of test stages in Terraform integration tests?	To split a long test into named deploy, validate, and teardown phases that can be rerun selectively.
+Why can test stages speed up iterative Terraform development?	They let you skip expensive setup or teardown work while repeatedly reapplying and validating only the part you are changing.
+Why are retries on known Terraform or provider errors useful in infrastructure tests?	They reduce flaky failures from transient network, eventual-consistency, or provider-side issues.
+Why are end-to-end tests that rebuild an entire infrastructure from scratch often impractical?	They are slow, expensive, and increasingly flaky as the number of resources grows.
+What is a more practical end-to-end testing strategy for complex Terraform environments?	Maintain a persistent production-like test environment, apply incremental changes to it, and validate behavior there.
+What is static analysis in Terraform testing, and what can it catch well?	Checking Terraform code without deploying it; it is good at finding syntax problems, type issues, and some policy violations visible directly in the configuration.
+What is a key limitation of static analysis for Terraform?	It cannot prove that deployed infrastructure actually works and is weak at reasoning about dynamic runtime values.
+What is plan testing in Terraform?	Running `terraform plan` and analyzing the planned changes programmatically or through policy checks.
+What does plan testing validate better than pure static analysis?	It can inspect real provider reads and computed change data without actually creating resources.
+What is the test pyramid for infrastructure code?	A strategy that favors many smaller tests, fewer integration tests, and only a small number of high-value end-to-end tests.
+Why are smaller Terraform modules easier to test?	They require less infrastructure to deploy, produce fewer failure modes, and give faster, more focused feedback.

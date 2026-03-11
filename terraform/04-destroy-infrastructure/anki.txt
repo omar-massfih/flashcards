@@ -1,1 +1,0 @@
-Why does destroy order matter (Terraform)?	Dependent resources must be destroyed before the resources they depend on (e.g., destroy VNet before resource group).

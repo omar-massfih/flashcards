@@ -1,16 +1,10 @@
 What is infrastructure as code (IaC)?	Defining, deploying, updating, and destroying infrastructure through code rather than manual steps.
-What is a snowflake server?	A server with a subtly unique configuration caused by manual changes or configuration drift.
-What is configuration drift?	Servers that were meant to match gradually diverge because of repeated in-place changes.
-What is a configuration management tool used for?	Installing and managing software on existing servers.
-What is a server templating tool used for?	Creating reusable machine images that capture a preconfigured server or application environment.
-What is an orchestration tool used for?	Managing deployment, scaling, healing, and networking for running servers or containers.
-What is a provisioning tool used for?	Creating the infrastructure itself, such as servers, databases, load balancers, and networking resources.
-What does immutable infrastructure mean?	You replace servers with newly built images instead of modifying existing servers in place.
+What are snowflake servers and configuration drift?	A snowflake server is one that becomes uniquely configured over time; configuration drift is the gradual divergence of supposedly identical systems caused by repeated in-place or manual changes.
+What are the four main categories of IaC tools, and what does each do?	Configuration management installs/manages software on existing servers; server templating builds reusable machine images; orchestration manages running servers or containers; provisioning creates infrastructure resources such as servers, databases, and networks.
 Mutable vs immutable infrastructure: what is the main tradeoff?	Mutable infrastructure updates servers in place; immutable infrastructure replaces servers with newly built ones.
 Why can immutable infrastructure reduce configuration-drift bugs?	Each deployment starts from a fresh image, so servers don’t accumulate unique change histories.
 Configuration management vs provisioning: what is the key distinction?	Configuration management changes software on existing servers; provisioning creates the infrastructure resources those servers run on.
 Terraform: how does it work at a high level?	It reads configuration files, builds a plan, and translates the desired state into API calls to providers.
-What command shows what Terraform intends to change before applying it?	`terraform plan`
 Why is Terraform considered declarative?	You describe the desired end state, and Terraform figures out how to reach it.
 Procedural vs declarative IaC: what is the main difference?	Procedural code specifies step-by-step actions; declarative code specifies the target end state.
 Why is declarative IaC often easier to reuse and maintain?	The code describes the current desired state directly, instead of encoding a sequence of history-dependent steps.
@@ -20,19 +14,12 @@ Why is Terraform often described as masterless and agentless?	It runs as a clien
 What is one reason Terraform does not provide transparent portability across cloud providers?	Different providers expose different infrastructure primitives and features, so “the same” infrastructure usually cannot be mapped exactly across clouds.
 Why add a provider version constraint in `required_providers`?	To avoid unplanned upgrades that may introduce breaking changes.
 What does the Terraform version constraint `required_version` do?	Prevents using Terraform CLI versions that don’t satisfy the constraint.
-What is a Terraform `provider` block used for?	Configure a provider plugin (credentials, features, regions, etc.).
-What is a Terraform `resource` block used for?	Declare an infrastructure object Terraform will manage.
-Resource block structure (Terraform): what are the two strings after `resource`?	Resource type and resource name (e.g., `resource "TYPE" "NAME"`).
-What is a Terraform resource address (format)?	`<resource_type>.<resource_name>` (e.g., `azurerm_resource_group.rg`).
-What does `terraform init` do?	Initializes the working directory (downloads providers/modules; sets up backend).
-What does `terraform apply` do?	Applies the planned changes to create/update/destroy infrastructure.
 What file does Terraform use to record deployed infrastructure state by default?	`terraform.tfstate`.
 How do you reference another resource’s attribute in Terraform config?	Use `<TYPE>.<NAME>.<ATTRIBUTE>` (e.g., `azurerm_resource_group.rg.name`).
 Why does Terraform create a dependency graph?	To ensure resources are created/updated in a valid order based on references.
 What does it mean to “update in-place” (Terraform)?	The resource is modified while keeping the same identity/address; it is not destroyed and recreated.
 In plan output, what does “(known after apply)” mean?	The value is computed by the provider during apply and isn’t known at plan time.
 Why can adding a reference create an implicit dependency without `depends_on`?	Because Terraform can infer ordering from the expression graph (data flow) in configuration.
-Why does destroy order matter (Terraform)?	Dependent resources must be destroyed before the resources they depend on (e.g., destroy VNet before resource group).
 What is an input variable (Terraform)?	A named value you can set from outside the config (or via defaults) and reference as `var.<name>`.
 Where do you commonly declare input variables (Terraform)?	In `.tf` files such as `variables.tf` using `variable "<name>" { ... }`.
 What does `default = "..."` do in a Terraform variable?	Makes the variable optional by providing a value when no input is given.
@@ -40,12 +27,9 @@ When is a Terraform variable required input?	When it has no `default` and no val
 How do you reference an input variable in Terraform configuration?	Use `var.<variable_name>` (e.g., `var.resource_group_name`).
 How do you override a variable value for a single run (Terraform)?	Pass it on the CLI, e.g. `terraform apply -var "resource_group_name=NewName"`.
 If CLI `-var` values aren’t saved, how do you avoid retyping them?	Use other mechanisms like `.tfvars` files or environment variables.
-What is a `.tfvars` file used for (Terraform)?	To provide variable values from a file so you don’t have to pass them on the CLI each time.
 What environment-variable naming pattern can set Terraform variables?	`TF_VAR_<variable_name>` (e.g., `TF_VAR_resource_group_name`).
-What does “must be replaced” mean in Terraform plan output?	The resource cannot be updated in-place for the change, so Terraform will replace it.
-What does “forces replacement” indicate in plan output?	That changing the attribute requires destroying and recreating the resource.
+What do “must be replaced” and “forces replacement” indicate in Terraform plan output?	The change cannot be applied in place, so Terraform will destroy and recreate the resource instead.
 Why can a dependent resource be replaced when its dependency is replaced?	Because it references attributes that change (e.g., `resource_group_name`), forcing it to be recreated too.
-How does Terraform know which resources depend on others?	It infers dependencies from references like `azurerm_resource_group.rg.name` in other resources.
 How do you tell replacement apart from in-place update in plan symbols?	`~` is update in-place; `-/+` is destroy then create replacement.
 Why should you be cautious about putting secrets in variable defaults?	Defaults can end up in code/version control; prefer secret-safe inputs (env vars/secret managers).
 What’s a typical variable definition “shape” you’ll see in real configs?	`variable "x" { type = string; description = "..."; default = "..." }`.
@@ -72,7 +56,6 @@ Terraform language: what is HCL?	A configuration language Terraform’s native s
 What is a block in Terraform configuration syntax?	A container with a block type, optional labels, and a `{ ... }` body containing arguments and nested blocks.
 What are “block labels” (Terraform/HCL)?	Quoted strings after the block type keyword that identify a particular instance (label count depends on block type).
 For a `resource` block, what are the two labels (high level)?	The resource type (provider-specific) and the resource’s local name (arbitrary within the module).
-What is the purpose of the second label in `resource "TYPE" "NAME" { ... }`?	It uniquely names that instance so you can reference it (e.g., `TYPE.NAME`).
 Terraform resource meta-argument: what does `count` do?	Provisions multiple instances of the same resource from one block.
 Terraform resource meta-argument: what does `for_each` do?	Provisions multiple instances from one block, one per element in a map or set.
 What kinds of values can `for_each` take (Terraform)?	A map or a set of strings.
@@ -86,8 +69,6 @@ Terraform lifecycle: what does `ignore_changes` do?	Tells Terraform to ignore di
 Terraform lifecycle: what does `replace_triggered_by` do?	Forces replacement when the referenced resources/attributes change.
 Terraform lifecycle: what is a `precondition`?	A condition that must be true before creating the resource; otherwise Terraform errors with `error_message`.
 Terraform lifecycle: what is a `postcondition`?	A condition checked after creating the resource; otherwise Terraform errors with `error_message`.
-Terraform language: what is an expression?	Syntax that produces a value in configuration (e.g., literals, references, operators, conditionals, function calls).
-What is a reference expression (Terraform)?	An expression that reads a value exported elsewhere (e.g., `var.<name>` or `<TYPE>.<NAME>.<ATTRIBUTE>`).
 Terraform type: what is `list`/`tuple` (high level)?	An ordered sequence you index with whole numbers starting at 0 (e.g., `["a", 15, true]`).
 Terraform type: what is `set` (high level)?	An unordered collection of unique values (no stable index ordering).
 Terraform type: what is `map`/`object` (high level)?	Values identified by string keys/labels, like `{ name = "Mabel", age = 52 }`.
@@ -101,19 +82,14 @@ Terraform heredoc: what does `<<-` mean (indented heredoc)?	Terraform trims comm
 Terraform tip: should you use heredocs to generate JSON/YAML?	No; prefer `jsonencode(...)` / `yamlencode(...)` to guarantee valid syntax.
 Terraform interpolation: what does `${ ... }` do?	Evaluates the expression, converts the result to a string if needed, and inserts it into the string.
 Terraform directives: what does `%{ ... }` enable?	Conditionals and iteration over collections to build strings.
-Terraform named values: what are the main categories?	Resources; input variables; local values; child module outputs; data sources; filesystem/workspace info; block-local values.
 Terraform resource reference: what does `<TYPE>.<NAME>` refer to?	A managed resource instance (or instances) of the given type and local name.
 If a resource uses neither `count` nor `for_each`, what is the type/shape of `<TYPE>.<NAME>`?	An object representing the resource, with attributes you can access (e.g., `<TYPE>.<NAME>.id`).
 If a resource uses `count`, what is the type/shape of `<TYPE>.<NAME>`?	A list of instance objects.
 If a resource uses `for_each`, what is the type/shape of `<TYPE>.<NAME>`?	A map of instance objects keyed by the `for_each` keys.
-Terraform variables: what does `var.<NAME>` refer to?	The value of the input variable named `<NAME>`.
-Terraform locals: what does `local.<NAME>` refer to?	The value of the local value named `<NAME>`.
-Can locals reference other locals in the same `locals {}` block (Terraform)?	Yes, as long as you don’t create circular dependencies.
 Terraform child module: what does `module.<MODULE_NAME>` represent?	The result of a `module` block (its outputs exposed as a value).
 If a `module` block uses neither `count` nor `for_each`, what is `module.<MODULE_NAME>`?	An object with one attribute per child-module output (access via `module.<MODULE_NAME>.<OUTPUT_NAME>`).
 If a `module` block uses `for_each`, what is `module.<MODULE_NAME>`?	A map of objects keyed by the `for_each` keys, each object holding the module outputs.
 If a `module` block uses `count`, what is `module.<MODULE_NAME>`?	A list of objects, one per module instance, each object holding the module outputs.
-Terraform data sources: what does `data.<DATA_TYPE>.<NAME>` represent?	An object (or instances) for a data resource of that type and name.
 Terraform paths: what is `path.module`?	The filesystem path of the module where the expression appears.
 Terraform paths: what is `path.root`?	The filesystem path of the root module of the configuration.
 Terraform paths: what is `path.cwd`?	The original working directory where Terraform was run (before any `-chdir`).
@@ -228,24 +204,18 @@ What is the recommended module-version practice for third-party Terraform module
 How should reusable Terraform modules constrain Terraform core and provider versions?	Constrain only the minimum allowed versions, such as `>= 0.12.0`.
 How should root Terraform modules usually constrain provider versions?	Use `~>` to set both lower and upper bounds for each provider they depend on.
 Why can changing EC2 User Data require instance replacement?	User Data normally runs only on first boot, so an existing instance may need to be replaced to rerun it.
-What does an Auto Scaling Group do in AWS?	It manages a fleet of EC2 instances by launching, replacing, and resizing them automatically.
 Why is `create_before_destroy` useful with an Auto Scaling Group launch configuration?	It lets Terraform create a replacement launch configuration before deleting the old one, avoiding reference conflicts.
-What is a Terraform data source used for?	To read existing provider data without creating or managing a new resource.
-What is the role of an Application Load Balancer (ALB) in AWS?	To accept incoming HTTP/HTTPS traffic and distribute it across backend targets.
-Why does Terraform need a state file?	It uses state to know which real infrastructure objects correspond to the resources in your configuration.
 Why is the Terraform state file considered a private API?	Its format is for Terraform's internal use and should not be edited or parsed directly by your own code.
 How should you manipulate Terraform state if you must change it?	Use Terraform commands such as `terraform import` or `terraform state` instead of editing the file by hand.
 Why do teams need shared Terraform state storage?	Everyone applying the same configuration must read and update the same state.
 What problem does state locking solve in Terraform?	It prevents concurrent Terraform operations from corrupting or conflicting over shared state.
 Why is state-file isolation important in Terraform?	It limits the blast radius of mistakes so a problem in one environment or component does not affect everything else.
 Why is version control a poor place to store Terraform state?	It is easy to use stale state, it does not provide Terraform locking, and state files may contain plain-text secrets.
-What is a Terraform backend?	The mechanism Terraform uses to load and store state.
 What problems do remote backends solve for Terraform teams?	They reduce manual state-sync errors, provide locking support, and improve protection for sensitive state.
 Why is S3 plus DynamoDB a common Terraform backend pattern on AWS?	S3 provides durable remote state storage, and DynamoDB provides locking.
 What is `prevent_destroy` useful for on Terraform state-storage infrastructure?	It helps prevent accidental deletion of critical resources such as the bucket holding Terraform state.
 Why is versioning useful on a Terraform state bucket?	It keeps older revisions of state so you can inspect or recover previous versions.
 Why is encryption important for Terraform state storage?	State can contain sensitive data, so encryption reduces the risk of exposing secrets.
-What is DynamoDB locking used for in a Terraform S3 backend?	To coordinate exclusive access so only one Terraform operation modifies the state at a time.
 What is the backend bootstrap chicken-and-egg problem in Terraform?	You often need Terraform to create the remote state backend before Terraform can use that backend for its own state.
 What limitation does Terraform place on backend blocks?	Backend configuration cannot use normal variables or references.
 What is partial backend configuration in Terraform?	Leaving some backend settings out of code and supplying them at `terraform init` time with `-backend-config`.
@@ -258,8 +228,143 @@ What is a common tradeoff of file-layout isolation in Terraform?	It improves saf
 What does the `terraform_remote_state` data source do?	It reads outputs from another Terraform state file.
 Why do hardcoded resource names make a Terraform module non-reusable?	Using the module more than once can create naming conflicts.
 Why do hardcoded environment-specific values make a Terraform module non-reusable?	They couple the module to one environment’s naming or state layout instead of letting callers supply those differences.
-Why can exporting a resource ID from a module improve extensibility?	Callers can attach extra environment-specific resources to the module’s infrastructure without modifying the module itself.
 What is the main benefit of versioned Terraform modules?	They let different environments use different tested versions of the same module.
 Why are tags usually better than branch names for Terraform module versions?	Tags point to stable versions, while branches can change between runs.
 What does semantic versioning communicate for a Terraform module?	Whether a release is a breaking change, a backward-compatible feature addition, or a backward-compatible bug fix.
 When should you use local module paths vs versioned remote sources (Terraform)?	Use local paths for fast iteration during module development; use versioned remote sources for shared environments that need reproducible upgrades.
+Why is `count` considered Terraform's simplest and most limited looping construct?	It can only create a fixed number of whole resource or module instances and identifies them by numeric index.
+What is the main identity problem with `count` on a list-backed set of resources?	Removing an item from the middle shifts later indexes, so Terraform may replace or rename the wrong resources.
+Why is `for_each` usually safer than `count` for multiple similar Terraform resources?	It keys instances by stable map/set keys instead of fragile numeric positions.
+When using `for_each` on a resource, why is `toset(...)` often needed?	Resource-level `for_each` accepts maps or sets, so a list often needs conversion first.
+What is one key advantage of `for_each` over `count` for inline blocks?	`for_each` can be used inside `dynamic` blocks to generate nested blocks, while `count` cannot.
+What is the purpose of a `dynamic` block in Terraform?	To generate repeated nested blocks inside a resource, data source, provider, or provisioner from collection data.
+What is `default_tags` in the AWS provider used for?	To apply a baseline set of tags automatically to most AWS resources managed through that provider configuration.
+What is a for string directive in Terraform?	A `%{ for ... } ... %{ endfor }` construct that repeats text generation inside a string or heredoc.
+What does an if string directive do in Terraform?	It conditionally renders part of a string using `%{ if ... }`, optionally with `%{ else }`.
+What problem do strip markers `~` solve in Terraform string directives?	They remove surrounding whitespace that would otherwise be preserved in heredocs and rendered strings.
+How can `count` be used to model a simple conditional resource in Terraform?	Set `count` to `1` when the condition is true and `0` when it is false.
+Why can `for_each` plus a filtered for-expression be useful for conditionals?	You can create zero or more instances by transforming and filtering a collection before iterating over it.
+Why can `one(concat(a[*].x, b[*].x))` be safer than repeating an if/else condition in Terraform outputs?	It derives the surviving value from whichever conditional resource exists instead of duplicating branching logic in another place.
+Why is zero-downtime deployment with `create_before_destroy` and ASGs considered a workaround?	It can work, but it stitches together lifecycle tricks and health-check settings instead of using a deployment feature designed for rolling replacement.
+Why can tying an Auto Scaling Group name to a launch configuration name force replacement?	Changing the launch configuration changes the ASG name, and a changed name can require Terraform to replace the ASG.
+Why can `create_before_destroy` interact poorly with auto scaling policies on an ASG?	The replacement group can come up at its configured minimum size instead of preserving the currently scaled-out capacity.
+Why is `instance_refresh` usually preferable to ASG replacement tricks for rolling deployment on AWS?	It is a first-class AWS mechanism for gradually replacing instances behind an ASG with built-in rollout behavior.
+Why can a valid-looking `terraform plan` still fail during `apply`?	Terraform plans from its state, so it may not know about conflicting real-world resources that were created outside Terraform.
+What is the key lesson once Terraform manages part of your infrastructure?	Avoid manual out-of-band changes so the code and state remain an accurate model of reality.
+What does `terraform import` do?	It associates an existing real infrastructure object with a resource address in Terraform state.
+Why can refactoring Terraform be risky even when behavior seems unchanged?	Renaming resource addresses, module addresses, or identity-driving arguments can make Terraform think old resources were deleted and new ones added.
+What does `terraform state mv` do?	It moves state from one resource address to another so Terraform preserves identity across a refactor.
+What does a `moved` block do in Terraform?	It declares an old-to-new address mapping so Terraform can update state automatically during planning and apply.
+Why do immutable resource arguments make Terraform refactors or updates more dangerous?	Changing an immutable argument forces replacement, which can cause downtime or data loss if not planned carefully.
+Why is storing secrets in plain text in version control especially dangerous?	It exposes them to everyone and every machine with repo access and makes auditing or revocation very difficult.
+Why should infrastructure secrets and customer secrets usually be managed differently?	They often require different storage and security models, such as reversible encryption for infrastructure secrets versus one-way hashing for customer passwords.
+What is a file-based secret store?	A system that keeps secrets in encrypted files, often checked into version control.
+What is a centralized secret store?	A service that stores encrypted secrets centrally and serves them over a network API, CLI, or UI.
+Why does a file-based secret store create a key-management problem?	The encryption key is itself a secret that must be stored and accessed securely.
+What tools are commonly used to protect encryption keys for encrypted secret files?	A cloud KMS or developers' PGP keys.
+What is a common way for human users to authenticate Terraform providers securely?	Store provider credentials in a personal secrets manager and expose them to Terraform through environment variables.
+Why are environment variables a common way to pass secrets to Terraform providers and resources?	They keep plain-text secrets out of Terraform code and work with many external secret-management approaches.
+What is a key drawback of using environment variables for Terraform secrets?	Secret handling is mostly outside Terraform, which makes practices less standardized and easier to misconfigure.
+What does setting `sensitive = true` on a Terraform variable help with?	It suppresses the value in normal Terraform CLI output, but does not keep it out of state.
+What is one common machine-user approach for Terraform provider authentication in CI systems?	Store machine credentials in the CI platform and expose them as environment variables during the build.
+What is the main drawback of CI systems that rely on stored long-lived provider credentials?	They require manual credential management and often depend on permanent credentials.
+Why are IAM roles preferable to stored access keys for Terraform automation running inside AWS?	They avoid manual credential management and provide temporary credentials automatically.
+How does an EC2 instance make IAM-role credentials available to Terraform?	AWS exposes temporary credentials through the instance metadata service, which Terraform can use automatically.
+What is OIDC used for in Terraform automation?	To let an external CI system authenticate to a cloud provider and assume a role without storing long-lived credentials.
+Why is OIDC attractive for Terraform CI/CD pipelines?	It avoids manually managed permanent secrets by using trusted identity federation and temporary credentials.
+What is the encrypted-files approach for Terraform secrets?	Store ciphertext in version control and decrypt it inside Terraform or adjacent tooling when needed.
+What is an advantage of encrypted secret files in Terraform workflows?	Secrets are versioned alongside the code, reducing environment drift and configuration mismatches.
+What is a drawback of encrypted secret files for Terraform workflows?	Editing, rotating, and testing them is more awkward, and revoking access is hard if an encryption key is compromised.
+What is the secret-store approach for Terraform secrets?	Read secrets from a centralized service such as AWS Secrets Manager or Vault at runtime via data sources or API-backed tooling.
+What is a major advantage of centralized secret stores?	They usually support audit logs, easier rotation, revocation, and more standardized secret-handling practices.
+What is a major drawback of centralized secret stores?	They add external dependencies, cost, and authentication complexity for apps, automation, and tests.
+What important Terraform gotcha applies no matter how you source secrets?	Any secrets passed into resources or data sources can end up in plain text in Terraform state.
+How should Terraform state and plan files be protected if secrets may be present?	Secrets can end up in both state and saved plan files, so store them in encrypted locations and strictly limit access to the backend or storage location.
+Why do infrastructure projects often take much longer than expected?	They combine immature tooling, frequent yak shaving, and a long checklist of real production requirements.
+What is accidental complexity in infrastructure work?	Complexity caused by particular tools, processes, or incidental implementation choices rather than the core problem itself.
+What is essential complexity in infrastructure work?	Complexity that comes from the real production requirements of the system itself and cannot be avoided by better tooling alone.
+What is yak shaving in DevOps work?	Having to complete many unexpected prerequisite tasks before you can finish the task you originally meant to do.
+Why are large Terraform modules considered harmful?	They are slower, riskier, harder to secure, harder to understand, harder to review, and harder to test.
+What is the recommended size principle for Terraform modules?	Prefer small modules that each do one thing well.
+Why can a single huge Terraform module be insecure?	Changing anything may require broad access to everything it manages, violating least privilege.
+Why are small Terraform modules easier to review safely?	The plan output and code changes stay small enough that humans can realistically read and reason about them.
+What makes Terraform modules composable?	Passing data in through input variables, returning useful output values, and combining simple modules into higher-level modules.
+Why is writing example usage first a good Terraform module design practice?	It helps define a cleaner API and user experience before implementation details dominate the design.
+What is the purpose of an `examples/` folder for Terraform modules?	To provide executable examples that serve as documentation, manual test harnesses, and the basis for automated tests.
+What is the purpose of a `test/` folder in a Terraform modules repo?	To hold automated tests that exercise the module examples and verify expected behavior.
+Why are validation, precondition, and postcondition checks useful in production-grade modules?	They let the module fail earlier and more clearly when assumptions or guarantees are violated.
+When should you use input variable validation in Terraform modules?	For basic input sanitization that can be checked directly from one variable's value.
+When should you use preconditions in Terraform modules?	To check assumptions before apply when the condition depends on more than a single variable or on dynamic data.
+When should you use postconditions in Terraform modules?	To enforce guarantees about the deployed result after Terraform has created or read the resource.
+What Terraform dependencies should typically be version-pinned, and why?	Terraform core, providers, and reusable modules should be version-pinned to make deployments predictable and repeatable and avoid accidental upgrades.
+Why might teams pin Terraform core to an exact minor or patch version too?	To roll out upgrades intentionally and keep developer workstations and CI on the same behavior.
+What problem does `tfenv` solve in Terraform workflows?	It makes it easier to install and switch between multiple Terraform CLI versions.
+What does a `.terraform-version` file do with `tfenv`?	It tells `tfenv` which Terraform version to use automatically in that folder tree.
+What is the purpose of `.terraform.lock.hcl`?	It records exact provider versions and checksums so future `terraform init` runs use the same trusted provider builds.
+Why should `.terraform.lock.hcl` be checked into version control?	It makes provider selection repeatable across machines and helps detect tampered provider binaries.
+How do you intentionally upgrade locked Terraform providers?	Update the version constraint and run `terraform init -upgrade`.
+What is one benefit of versioning Terraform modules with Git tags and semantic versioning?	You can promote known-good module versions across environments and roll back if needed.
+Why can registry-style module sources be clearer than raw Git URLs?	They separate the module source address from the version number and make version selection easier to read.
+What is a Terraform provisioner used for?	To execute scripts or copy files during resource creation or destruction.
+Why are provisioners often considered an escape hatch in Terraform?	They break out of Terraform's normal declarative model and can make code less portable and more brittle.
+What is the difference between `local-exec` and `remote-exec` provisioners?	`local-exec` runs on the Terraform client machine, while `remote-exec` runs on the target resource after connecting to it.
+Why is User Data often preferable to `remote-exec` on EC2?	It is easier to use with ASGs, safer than opening SSH, and leaves clearer debugging artifacts on the instance.
+What is a `null_resource` used for in Terraform?	To participate in Terraform lifecycle logic and run provisioners without managing a real infrastructure object.
+What does the `triggers` argument on a `null_resource` do?	It forces the resource to be replaced when the trigger values change, which can re-run attached provisioners.
+What is the `external` data source used for in Terraform?	To call an external program that exchanges JSON with Terraform so Terraform can read data it cannot fetch natively.
+Why should Terraform escape hatches such as provisioners and `external` be used conservatively?	They increase brittleness, reduce portability, and make the configuration harder to reason about declaratively.
+Why can't Terraform testing use localhost?	Terraform usually manages real external infrastructure, so meaningful tests must target a real environment rather than the local machine.
+What is the practical equivalent of localhost for Terraform testing?	An isolated real deployment environment, such as a sandbox cloud account.
+Why is a per-developer isolated sandbox environment ideal for manual Terraform testing?	It lets each developer create and destroy infrastructure freely without conflicting with others or risking shared environments.
+Why should Terraform sandbox environments be cleaned up regularly?	To prevent abandoned resources from increasing cost, clutter, and operational confusion.
+What is a common automated cleanup strategy for Terraform sandbox environments?	Run scheduled cleanup tooling that deletes old or unused resources after a defined age threshold.
+Why can't Terraform modules have pure unit tests?	Their behavior depends heavily on real provider APIs and deployed infrastructure, so fully isolated in-memory tests are usually impractical.
+What is the closest Terraform equivalent to a unit under test?	A single reusable Terraform module.
+Why are Terraform unit tests effectively integration tests with real providers?	They still rely on real cloud APIs and real infrastructure even when they focus on a single module.
+What is Terratest commonly used for in Terraform workflows?	To automate apply, validation, and destroy flows for infrastructure tests in Go.
+Why should a Terraform test usually schedule cleanup before running apply?	So cleanup still happens if later test steps fail.
+Why do infrastructure tests often need retry logic during validation?	Because deployments, health checks, DNS updates, and provider behavior are often asynchronous or temporarily flaky.
+What is dependency injection in Terraform module testing?	Designing modules so external dependencies can be passed in as input variables instead of always being looked up internally.
+Why can optional input variables make Terraform modules easier to test?	They let tests inject mock or test-specific values in place of real external dependencies.
+Why is it useful to isolate external dependencies in a dedicated Terraform file such as `dependencies.tf`?	It makes the module's outside-world assumptions easier to see, reason about, and replace in tests.
+Why must Terraform test resources be namespaced?	To prevent parallel test runs or different users from colliding on global or account-level resource names.
+How can Terraform tests avoid resource-name collisions when run in parallel?	Make names configurable and add a unique random suffix per test run.
+Why can parallel tests against the same Terraform folder conflict even if resource names are unique?	They can overwrite each other's `.terraform` directory, temporary files, or local state during `init` and `apply`.
+How can tests safely run the same Terraform example folder in parallel?	Copy the example to a unique temporary folder for each test run and execute Terraform there.
+What is the purpose of test stages in Terraform integration tests?	To split a long test into named deploy, validate, and teardown phases that can be rerun selectively.
+Why can test stages speed up iterative Terraform development?	They let you skip expensive setup or teardown work while repeatedly reapplying and validating only the part you are changing.
+Why are retries on known Terraform or provider errors useful in infrastructure tests?	They reduce flaky failures from transient network, eventual-consistency, or provider-side issues.
+Why are end-to-end tests that rebuild an entire infrastructure from scratch often impractical?	They are slow, expensive, and increasingly flaky as the number of resources grows.
+What is a more practical end-to-end testing strategy for complex Terraform environments?	Maintain a persistent production-like test environment, apply incremental changes to it, and validate behavior there.
+What is static analysis in Terraform testing, and what can it catch well?	Checking Terraform code without deploying it; it is good at finding syntax problems, type issues, and some policy violations visible directly in the configuration.
+What is a key limitation of static analysis for Terraform?	It cannot prove that deployed infrastructure actually works and is weak at reasoning about dynamic runtime values.
+What is plan testing in Terraform?	Running `terraform plan` and analyzing the planned changes programmatically or through policy checks.
+What does plan testing validate better than pure static analysis?	It can inspect real provider reads and computed change data without actually creating resources.
+What is the test pyramid for infrastructure code?	A strategy that favors many smaller tests, fewer integration tests, and only a small number of high-value end-to-end tests.
+Why are smaller Terraform modules easier to test?	They require less infrastructure to deploy, produce fewer failure modes, and give faster, more focused feedback.
+Why is adopting Terraform on a team more than just introducing a new tool?	It also changes team skills, habits, workflows, and deployment processes.
+Why can adopting infrastructure as code have a high opportunity cost?	Time spent learning and migrating to IaC is time not spent on other urgent projects.
+Why is incremental adoption of Terraform usually safer than a big-bang migration?	Small steps reduce risk and let each step deliver value even if the larger migration stalls.
+What is false incrementalism in a migration project?	Breaking work into steps that still provide no real value until the very last step is complete.
+What makes a good incremental Terraform adoption strategy?	Solve one small, concrete problem at a time so each step is independently worthwhile.
+Why must teams be given time to learn Terraform for adoption to succeed?	Otherwise they will fall back to manual changes during pressure and the Terraform code will drift from reality.
+What usually happens if only one person on a team understands the Terraform code?	Others will keep making manual changes, and the Terraform code will quickly become stale and untrusted.
+What is the purpose of having separate live and modules repositories for Terraform?	One repo defines reusable versioned modules, while the other defines what is actually deployed in each environment.
+Why can a dedicated infrastructure team create leverage with a Terraform modules repo?	They can build reusable, production-grade modules that other teams consume instead of rebuilding infrastructure from scratch.
+What is the Golden Rule of Terraform?	The main branch of the live repository should be a 1:1 representation of what is actually deployed in production.
+Why do Terraform workspaces make the 1:1 live-repo rule weaker for real environments?	Multiple deployed environments can share one code copy, so browsing the repo no longer shows exactly what exists.
+Why should shared Terraform environments be deployed from a single branch?	Deploying the same environment from multiple branches can cause one branch's plan to silently undo valid changes already applied from another branch.
+Why is `terraform apply` from a developer workstation usually the wrong production workflow for teams?	It is less consistent, harder to secure, and easier to misuse than a CI-driven deployment flow.
+Why is reviewing the Terraform plan output valuable in team workflows?	It often reveals unintended deletes, replacements, or reversions before they affect real infrastructure.
+Why should Terraform deployments run from a CI server?	It forces full automation, uses a consistent environment, and gives tighter control over deployment permissions.
+Why is giving a CI server broad permanent admin credentials especially risky for Terraform?	Terraform may need arbitrary infrastructure permissions, so a compromised CI server could become a full-account compromise.
+What is a safer permission pattern for team Terraform deployments?	Use temporary credentials and isolate admin privileges behind a separate locked-down worker that only exposes a narrow deployment API.
+Why should Terraform changes be promoted across environments as versioned artifacts?	It lets teams test the exact same version in pre-prod before production and roll back more predictably.
+What extra step is commonly worth adding to Terraform promotion flows compared with app deployment flows?	A human approval step that reviews the plan output before apply.
+Why should Terraform changes always be tested in pre-production before production?	Terraform usually does not roll back infrastructure changes automatically when something goes wrong.
+What are two common Terraform deployment failure cases teams should be prepared to handle?	Transient errors that need retries and failed state writes that leave behind `errored.tfstate`.
+What is `errored.tfstate` used for after a failed Terraform apply?	It contains state Terraform could not upload, so you can later recover by pushing it to the backend.
+When is `terraform force-unlock` appropriate?	Only when you are sure a state lock was left behind accidentally and no real operation is still using it.
+What problem does Terragrunt help solve in a Terraform live repository?	It reduces repeated boilerplate for provider, backend, module source, and environment-specific input configuration.
+How does Terragrunt typically keep backend configuration DRY across many live modules?	By defining shared remote-state settings in parent `terragrunt.hcl` files and inheriting them in child modules.
+What does a Terragrunt `dependency` block provide?	A way to read outputs from another Terragrunt-managed module and pass them as inputs without hardcoding remote-state details in the module itself.

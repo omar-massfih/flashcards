@@ -5,12 +5,9 @@ When is a Terraform variable required input?	When it has no `default` and no val
 How do you reference an input variable in Terraform configuration?	Use `var.<variable_name>` (e.g., `var.resource_group_name`).
 How do you override a variable value for a single run (Terraform)?	Pass it on the CLI, e.g. `terraform apply -var "resource_group_name=NewName"`.
 If CLI `-var` values aren’t saved, how do you avoid retyping them?	Use other mechanisms like `.tfvars` files or environment variables.
-What is a `.tfvars` file used for (Terraform)?	To provide variable values from a file so you don’t have to pass them on the CLI each time.
 What environment-variable naming pattern can set Terraform variables?	`TF_VAR_<variable_name>` (e.g., `TF_VAR_resource_group_name`).
-What does “must be replaced” mean in Terraform plan output?	The resource cannot be updated in-place for the change, so Terraform will replace it.
-What does “forces replacement” indicate in plan output?	That changing the attribute requires destroying and recreating the resource.
+What do “must be replaced” and “forces replacement” indicate in Terraform plan output?	The change cannot be applied in place, so Terraform will destroy and recreate the resource instead.
 Why can a dependent resource be replaced when its dependency is replaced?	Because it references attributes that change (e.g., `resource_group_name`), forcing it to be recreated too.
-How does Terraform know which resources depend on others?	It infers dependencies from references like `azurerm_resource_group.rg.name` in other resources.
 How do you tell replacement apart from in-place update in plan symbols?	`~` is update in-place; `-/+` is destroy then create replacement.
 Why should you be cautious about putting secrets in variable defaults?	Defaults can end up in code/version control; prefer secret-safe inputs (env vars/secret managers).
 What’s a typical variable definition “shape” you’ll see in real configs?	`variable "x" { type = string; description = "..."; default = "..." }`.

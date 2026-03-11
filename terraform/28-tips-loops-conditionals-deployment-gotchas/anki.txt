@@ -1,0 +1,24 @@
+Why is `count` considered Terraform's simplest and most limited looping construct?	It can only create a fixed number of whole resource or module instances and identifies them by numeric index.
+What is the main identity problem with `count` on a list-backed set of resources?	Removing an item from the middle shifts later indexes, so Terraform may replace or rename the wrong resources.
+Why is `for_each` usually safer than `count` for multiple similar Terraform resources?	It keys instances by stable map/set keys instead of fragile numeric positions.
+When using `for_each` on a resource, why is `toset(...)` often needed?	Resource-level `for_each` accepts maps or sets, so a list often needs conversion first.
+What is one key advantage of `for_each` over `count` for inline blocks?	`for_each` can be used inside `dynamic` blocks to generate nested blocks, while `count` cannot.
+What is the purpose of a `dynamic` block in Terraform?	To generate repeated nested blocks inside a resource, data source, provider, or provisioner from collection data.
+What is `default_tags` in the AWS provider used for?	To apply a baseline set of tags automatically to most AWS resources managed through that provider configuration.
+What is a for string directive in Terraform?	A `%{ for ... } ... %{ endfor }` construct that repeats text generation inside a string or heredoc.
+What does an if string directive do in Terraform?	It conditionally renders part of a string using `%{ if ... }`, optionally with `%{ else }`.
+What problem do strip markers `~` solve in Terraform string directives?	They remove surrounding whitespace that would otherwise be preserved in heredocs and rendered strings.
+How can `count` be used to model a simple conditional resource in Terraform?	Set `count` to `1` when the condition is true and `0` when it is false.
+Why can `for_each` plus a filtered for-expression be useful for conditionals?	You can create zero or more instances by transforming and filtering a collection before iterating over it.
+Why can `one(concat(a[*].x, b[*].x))` be safer than repeating an if/else condition in Terraform outputs?	It derives the surviving value from whichever conditional resource exists instead of duplicating branching logic in another place.
+Why is zero-downtime deployment with `create_before_destroy` and ASGs considered a workaround?	It can work, but it stitches together lifecycle tricks and health-check settings instead of using a deployment feature designed for rolling replacement.
+Why can tying an Auto Scaling Group name to a launch configuration name force replacement?	Changing the launch configuration changes the ASG name, and a changed name can require Terraform to replace the ASG.
+Why can `create_before_destroy` interact poorly with auto scaling policies on an ASG?	The replacement group can come up at its configured minimum size instead of preserving the currently scaled-out capacity.
+Why is `instance_refresh` usually preferable to ASG replacement tricks for rolling deployment on AWS?	It is a first-class AWS mechanism for gradually replacing instances behind an ASG with built-in rollout behavior.
+Why can a valid-looking `terraform plan` still fail during `apply`?	Terraform plans from its state, so it may not know about conflicting real-world resources that were created outside Terraform.
+What is the key lesson once Terraform manages part of your infrastructure?	Avoid manual out-of-band changes so the code and state remain an accurate model of reality.
+What does `terraform import` do?	It associates an existing real infrastructure object with a resource address in Terraform state.
+Why can refactoring Terraform be risky even when behavior seems unchanged?	Renaming resource addresses, module addresses, or identity-driving arguments can make Terraform think old resources were deleted and new ones added.
+What does `terraform state mv` do?	It moves state from one resource address to another so Terraform preserves identity across a refactor.
+What does a `moved` block do in Terraform?	It declares an old-to-new address mapping so Terraform can update state automatically during planning and apply.
+Why do immutable resource arguments make Terraform refactors or updates more dangerous?	Changing an immutable argument forces replacement, which can cause downtime or data loss if not planned carefully.

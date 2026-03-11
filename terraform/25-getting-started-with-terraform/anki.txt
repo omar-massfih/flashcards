@@ -1,5 +1,2 @@
 Why can changing EC2 User Data require instance replacement?	User Data normally runs only on first boot, so an existing instance may need to be replaced to rerun it.
-What does an Auto Scaling Group do in AWS?	It manages a fleet of EC2 instances by launching, replacing, and resizing them automatically.
 Why is `create_before_destroy` useful with an Auto Scaling Group launch configuration?	It lets Terraform create a replacement launch configuration before deleting the old one, avoiding reference conflicts.
-What is a Terraform data source used for?	To read existing provider data without creating or managing a new resource.
-What is the role of an Application Load Balancer (ALB) in AWS?	To accept incoming HTTP/HTTPS traffic and distribute it across backend targets.

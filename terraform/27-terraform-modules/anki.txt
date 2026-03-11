@@ -1,6 +1,5 @@
 Why do hardcoded resource names make a Terraform module non-reusable?	Using the module more than once can create naming conflicts.
 Why do hardcoded environment-specific values make a Terraform module non-reusable?	They couple the module to one environment’s naming or state layout instead of letting callers supply those differences.
-Why can exporting a resource ID from a module improve extensibility?	Callers can attach extra environment-specific resources to the module’s infrastructure without modifying the module itself.
 What is the main benefit of versioned Terraform modules?	They let different environments use different tested versions of the same module.
 Why are tags usually better than branch names for Terraform module versions?	Tags point to stable versions, while branches can change between runs.
 What does semantic versioning communicate for a Terraform module?	Whether a release is a breaking change, a backward-compatible feature addition, or a backward-compatible bug fix.
