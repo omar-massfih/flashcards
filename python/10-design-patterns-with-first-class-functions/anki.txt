@@ -1,9 +1,6 @@
 Classic Strategy in Python: why use an ABC + `@abstractmethod`?	To make the pattern explicit and enforce that concrete strategies implement the required method.
 Function-oriented Strategy: when can you replace strategy classes with functions (Python)?	When each strategy has no internal state and effectively implements a single method (one algorithm).
-In function-oriented Strategy, what is the promotion type hint `Callable[[Order], Decimal]` saying?	The promotion is a callable that takes an `Order` and returns a `Decimal` discount.
-In function-oriented Strategy, why is promotion often `Optional[...]`?	Because an order may have no promotion; `None` means “no discount strategy”.
 Why doesn’t method auto-binding apply to a callable stored in an instance attribute (Python)?	Method binding is a descriptor feature of functions defined on the class; a plain callable attribute isn’t automatically bound.
-What’s a subtle maintenance bug in `best_promo` with a manual `promos` list?	You can add a new promotion function but forget to add it to `promos`, so `best_promo` silently ignores it.
 How can you collect promo functions using `globals()` (Strategy pattern)?	Filter `globals().items()` by naming convention (e.g., names ending with `_promo`) and collect the callable values.
 What is a downside of collecting strategies by name convention (e.g., suffix `_promo`)?	It’s implicit and brittle: naming mistakes or unrelated functions can be accidentally included/excluded.
 Why can putting all strategy functions in a separate module help (Strategy pattern)?	It centralizes strategies and enables introspection without relying on naming conventions in unrelated code.

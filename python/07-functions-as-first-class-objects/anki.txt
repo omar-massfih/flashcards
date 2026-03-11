@@ -1,8 +1,6 @@
 What does “functions are first-class objects” mean (Python)?	Functions can be created at runtime; assigned; stored; passed as args; returned from functions.
 `sorted(..., key=...)`: what is `key` for (Python)?	A 1-arg function used to compute sort keys for each item.
-What does “functional style” often rely on (Python feature)?	Passing functions around (higher-order functions and callables).
-Modern Python: what often replaces `map` for building lists?	List comprehensions (or generator expressions for lazy pipelines).
-Modern Python: what often replaces `filter` for selecting items?	A comprehension with an `if` clause (listcomp/genexp).
+Modern Python: what often replaces `map` and `filter` in simple pipelines?	Comprehensions; use a list comprehension or generator expression, often with an `if` clause.
 What is the most common “reduce-like” task, and its preferred built-in (Python)?	Summation; use `sum(...)`.
 What restriction applies to the body of a `lambda` (Python)?	It must be a single expression (no statements like `while`, `try`, `=` assignment).
 Why is `lambda` usually best kept small in Python?	Nontrivial lambdas get hard to read; prefer a named `def`.

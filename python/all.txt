@@ -175,7 +175,6 @@ What do class patterns in `match`/`case` match (Python)?	Instances by type and o
 What enables positional class patterns for a class (Python)?	`__match_args__` listing attribute names in positional-match order.
 Python variables: are they “boxes” or “labels”?	Labels (names bound to objects), not boxes that contain copies.
 If b = a and a refers to a mutable object, what happens to b when you mutate through a?	b reflects the same change because both names reference the same object.
-Why can `y = Gizmo() * 10` create an instance but still not bind `y`?	The RHS creates the object, then an error occurs before binding; `y` is never created.
 Why is `is` typically faster than `==` (Python)?	`is` can’t be overloaded; it’s essentially an identity comparison.
 When is `is` the right tool in Python code?	Comparing to singletons like `None` or a sentinel object.
 Idiom: how do you test for `None` in Python?	`x is None` (and `x is not None`).
@@ -201,9 +200,7 @@ Where are positional default parameter values stored (Python)?	On the function o
 Why are mutable default arguments dangerous (Python)?	Mutations persist and affect future calls that use the default.
 Safe pattern for optional mutable parameters (Python)?	Default to `None`, then create a new list/dict inside the function.
 Why use `if x is None:` for optional parameters (Python)?	Distinguishes “argument omitted” from an empty container provided by the caller.
-If a default list is mutated, who observes that mutation later?	Any future call that relies on that default object.
 How do you defensively create your own list from an iterable argument?	`list(iterable)`.
-Why is `list(iterable)` a flexible defensive-copy pattern?	It accepts any iterable and ensures you own a mutable list.
 When can an object be garbage-collected (Python, high level)?	When it becomes unreachable (no strong references).
 In CPython, what primary mechanism destroys most objects promptly?	Reference counting (plus a cycle detector for cyclic garbage).
 What problem does cyclic garbage collection address (CPython)?	Unreachable reference cycles that reference counting alone can’t free.
@@ -214,9 +211,7 @@ What is a weak reference (Python)?	A reference that doesn’t keep the target al
 What does `weakref.finalize(obj, callback)` do (Python)?	Registers `callback` to run when `obj` is garbage-collected, without keeping `obj` alive.
 What does “functions are first-class objects” mean (Python)?	Functions can be created at runtime; assigned; stored; passed as args; returned from functions.
 `sorted(..., key=...)`: what is `key` for (Python)?	A 1-arg function used to compute sort keys for each item.
-What does “functional style” often rely on (Python feature)?	Passing functions around (higher-order functions and callables).
-Modern Python: what often replaces `map` for building lists?	List comprehensions (or generator expressions for lazy pipelines).
-Modern Python: what often replaces `filter` for selecting items?	A comprehension with an `if` clause (listcomp/genexp).
+Modern Python: what often replaces `map` and `filter` in simple pipelines?	Comprehensions; use a list comprehension or generator expression, often with an `if` clause.
 What is the most common “reduce-like” task, and its preferred built-in (Python)?	Summation; use `sum(...)`.
 What restriction applies to the body of a `lambda` (Python)?	It must be a single expression (no statements like `while`, `try`, `=` assignment).
 Why is `lambda` usually best kept small in Python?	Nontrivial lambdas get hard to read; prefer a named `def`.
@@ -315,10 +310,7 @@ How can a decorator factory enable toggling behavior like registration (Python)?
 Class-based decorator factory: what makes an instance act as a decorator (Python)?	Implementing `__call__(self, func)` so the instance can be used as the decorator.
 Classic Strategy in Python: why use an ABC + `@abstractmethod`?	To make the pattern explicit and enforce that concrete strategies implement the required method.
 Function-oriented Strategy: when can you replace strategy classes with functions (Python)?	When each strategy has no internal state and effectively implements a single method (one algorithm).
-In function-oriented Strategy, what is the promotion type hint `Callable[[Order], Decimal]` saying?	The promotion is a callable that takes an `Order` and returns a `Decimal` discount.
-In function-oriented Strategy, why is promotion often `Optional[...]`?	Because an order may have no promotion; `None` means “no discount strategy”.
 Why doesn’t method auto-binding apply to a callable stored in an instance attribute (Python)?	Method binding is a descriptor feature of functions defined on the class; a plain callable attribute isn’t automatically bound.
-What’s a subtle maintenance bug in `best_promo` with a manual `promos` list?	You can add a new promotion function but forget to add it to `promos`, so `best_promo` silently ignores it.
 How can you collect promo functions using `globals()` (Strategy pattern)?	Filter `globals().items()` by naming convention (e.g., names ending with `_promo`) and collect the callable values.
 What is a downside of collecting strategies by name convention (e.g., suffix `_promo`)?	It’s implicit and brittle: naming mistakes or unrelated functions can be accidentally included/excluded.
 Why can putting all strategy functions in a separate module help (Strategy pattern)?	It centralizes strategies and enables introspection without relying on naming conventions in unrelated code.

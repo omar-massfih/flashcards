@@ -1,6 +1,5 @@
 Python variables: are they “boxes” or “labels”?	Labels (names bound to objects), not boxes that contain copies.
 If b = a and a refers to a mutable object, what happens to b when you mutate through a?	b reflects the same change because both names reference the same object.
-Why can `y = Gizmo() * 10` create an instance but still not bind `y`?	The RHS creates the object, then an error occurs before binding; `y` is never created.
 Why is `is` typically faster than `==` (Python)?	`is` can’t be overloaded; it’s essentially an identity comparison.
 When is `is` the right tool in Python code?	Comparing to singletons like `None` or a sentinel object.
 Idiom: how do you test for `None` in Python?	`x is None` (and `x is not None`).
@@ -26,9 +25,7 @@ Where are positional default parameter values stored (Python)?	On the function o
 Why are mutable default arguments dangerous (Python)?	Mutations persist and affect future calls that use the default.
 Safe pattern for optional mutable parameters (Python)?	Default to `None`, then create a new list/dict inside the function.
 Why use `if x is None:` for optional parameters (Python)?	Distinguishes “argument omitted” from an empty container provided by the caller.
-If a default list is mutated, who observes that mutation later?	Any future call that relies on that default object.
 How do you defensively create your own list from an iterable argument?	`list(iterable)`.
-Why is `list(iterable)` a flexible defensive-copy pattern?	It accepts any iterable and ensures you own a mutable list.
 When can an object be garbage-collected (Python, high level)?	When it becomes unreachable (no strong references).
 In CPython, what primary mechanism destroys most objects promptly?	Reference counting (plus a cycle detector for cyclic garbage).
 What problem does cyclic garbage collection address (CPython)?	Unreachable reference cycles that reference counting alone can’t free.
