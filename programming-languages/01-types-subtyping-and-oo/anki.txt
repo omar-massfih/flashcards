@@ -25,4 +25,3 @@ What variance on overridden method return types is type-safe?	Covariant return t
 What variance on overridden method parameter types is type-safe?	Contravariant parameter types.
 Why do many mainstream OO languages use stricter rules than full variance in method overriding?	Stricter rules are simpler to specify/check and avoid confusing edge cases even when some variance would be type-safe.
 Why can covariant parameter types be unsafe in method overriding?	They can break substitutability by rejecting arguments that were valid for the supertype method.
-Why can contravariant parameter types be safe in method overriding?	The overriding method accepts at least the inputs the original method accepted, preserving substitutability.

@@ -25,7 +25,6 @@ What variance on overridden method return types is type-safe?	Covariant return t
 What variance on overridden method parameter types is type-safe?	Contravariant parameter types.
 Why do many mainstream OO languages use stricter rules than full variance in method overriding?	Stricter rules are simpler to specify/check and avoid confusing edge cases even when some variance would be type-safe.
 Why can covariant parameter types be unsafe in method overriding?	They can break substitutability by rejecting arguments that were valid for the supertype method.
-Why can contravariant parameter types be safe in method overriding?	The overriding method accepts at least the inputs the original method accepted, preserving substitutability.
 What is scope (Programming languages)?	The region of program text where a declaration is visible.
 What is lifetime (Programming languages)?	The period of execution during which storage for a value or variable location is allocated.
 Why is lifetime not the same as scope?	A variable’s storage can remain allocated during execution even when some parts of its scope are temporarily hidden.
@@ -65,10 +64,7 @@ Why is returning a nested function harder than passing one as an argument?	The r
 When must an activation record outlive the function call that created it?	When a returned closure still needs variables stored in that activation record.
 Why are closure environments often stored on the heap?	Because stack allocation alone cannot support environments that must survive after a function returns.
 How can a returned closure provide private state?	It captures local variables that remain accessible only through that returned function.
-What data is usually stored with each object?	The object's instance-specific state, such as its field values.
-What runtime data is usually shared rather than stored separately in every object?	Common class-level functionality such as method tables, templates, or static members.
 What is the runtime difference between a method call and a plain nested function call in JavaScript?	A method call binds `this` to the receiver object, while a plain function call does not preserve that object binding.
-What does `let` change about scope in JavaScript?	It introduces block-scoped bindings instead of function-scoped `var` bindings.
 Why is block scope often preferable to function scope?	It limits a binding's visibility to the block where it is needed and avoids accidental reuse across a whole function.
 What does static typing mean?	Types are checked on program syntax before execution, rejecting programs that do not type-check.
 What does dynamic typing mean?	Types are checked at run time as values are used during execution.
@@ -124,15 +120,11 @@ Why was BNF important in programming-language design?	It provided a systematic w
 Why were recursive functions and stack allocation an important milestone in language design?	They made nested and recursive procedure calls practical by giving each call its own activation state.
 What is pass-by-name?	A parameter-passing method where the argument behaves like re-evaluated substituted code rather than a single precomputed value.
 Why can pass-by-name interact badly with side effects?	Re-evaluating the argument can make mutations and aliasing produce surprising behavior.
-What is pass-by-reference?	A parameter-passing method where the callee can operate on the caller's underlying variable or storage location.
-Why can pass-by-reference be useful?	It avoids copying large values and lets a procedure update caller-visible state directly.
 Why is weak type checking a language-design tradeoff?	It can increase flexibility and low-level control, but it also makes type errors and unsafe operations easier to write.
 What is a module system in a programming language?	A mechanism for grouping related declarations and organizing them behind named interfaces and implementations.
 Why are modules useful in language design?	They improve structure, reuse, separate compilation, and control over what details are exposed.
 What is information hiding in module design?	Exposing an interface while keeping implementation details inaccessible or changeable behind it.
-What is a higher-order function?	A function that takes functions as arguments, returns functions, or both.
 Why is garbage collection an important runtime feature?	It automatically reclaims unreachable memory, reducing manual memory-management errors.
-What is an abstract data type (ADT) in programming languages?	A type defined by its operations and interface rather than by exposing its concrete representation.
 Why are exceptions useful as a control mechanism?	They provide a structured way to propagate failures or unusual conditions without encoding every error path in normal returns.
 What is type inference?	The ability of a language implementation to determine types automatically from program structure.
 Why is type inference valuable in statically typed languages?	It preserves static checking while reducing the amount of explicit type annotation programmers must write.

@@ -7,15 +7,11 @@ Why was BNF important in programming-language design?	It provided a systematic w
 Why were recursive functions and stack allocation an important milestone in language design?	They made nested and recursive procedure calls practical by giving each call its own activation state.
 What is pass-by-name?	A parameter-passing method where the argument behaves like re-evaluated substituted code rather than a single precomputed value.
 Why can pass-by-name interact badly with side effects?	Re-evaluating the argument can make mutations and aliasing produce surprising behavior.
-What is pass-by-reference?	A parameter-passing method where the callee can operate on the caller's underlying variable or storage location.
-Why can pass-by-reference be useful?	It avoids copying large values and lets a procedure update caller-visible state directly.
 Why is weak type checking a language-design tradeoff?	It can increase flexibility and low-level control, but it also makes type errors and unsafe operations easier to write.
 What is a module system in a programming language?	A mechanism for grouping related declarations and organizing them behind named interfaces and implementations.
 Why are modules useful in language design?	They improve structure, reuse, separate compilation, and control over what details are exposed.
 What is information hiding in module design?	Exposing an interface while keeping implementation details inaccessible or changeable behind it.
-What is a higher-order function?	A function that takes functions as arguments, returns functions, or both.
 Why is garbage collection an important runtime feature?	It automatically reclaims unreachable memory, reducing manual memory-management errors.
-What is an abstract data type (ADT) in programming languages?	A type defined by its operations and interface rather than by exposing its concrete representation.
 Why are exceptions useful as a control mechanism?	They provide a structured way to propagate failures or unusual conditions without encoding every error path in normal returns.
 What is type inference?	The ability of a language implementation to determine types automatically from program structure.
 Why is type inference valuable in statically typed languages?	It preserves static checking while reducing the amount of explicit type annotation programmers must write.
