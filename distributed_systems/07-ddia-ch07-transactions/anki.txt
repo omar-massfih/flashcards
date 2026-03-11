@@ -1,0 +1,33 @@
+Why do transactions simplify application error handling?	They hide partial failure, so the application can usually retry instead of reasoning about half-finished changes.
+What does ACID atomicity guarantee?	If a transaction cannot complete, any writes it made are discarded or undone.
+Why does atomicity make retries safer?	If a transaction aborts, the application can assume it did not partially change the database.
+What does ACID consistency mean?	Application-defined invariants should hold before and after a correct transaction.
+What does ACID isolation aim to guarantee?	Concurrent transactions do not interfere in a way that changes the result from a correct serial execution.
+What does ACID durability mean?	Once a transaction commits successfully, its writes should survive crashes or faults as far as the system can reasonably ensure.
+Why are multi-object transactions useful?	They keep related writes to multiple rows, documents, or indexes in sync as one unit.
+Why can denormalized data increase the need for multi-object transactions?	The same logical fact may be stored in several places and must be updated together to avoid inconsistency.
+Why are retries not always safe or sufficient after a transaction abort?	Retries can duplicate work, worsen overload, repeat external side effects, or be pointless after permanent errors.
+What does read committed guarantee about reads?	A transaction only sees committed data, preventing dirty reads.
+What does read committed guarantee about writes?	It prevents dirty writes, so one transaction does not overwrite another transaction's uncommitted data.
+What is read skew (nonrepeatable read)?	A transaction sees different committed values for related data at different times instead of one consistent snapshot.
+What problem does snapshot isolation solve?	It lets a transaction read from a consistent point-in-time snapshot and avoids read skew.
+Why is snapshot isolation useful for backups and analytic queries?	Long-running reads can see a coherent database state even while writes continue.
+What is MVCC in databases?	Multi-version concurrency control keeps multiple versions of data so readers can use a consistent snapshot while writers proceed.
+Why is the term `repeatable read` confusing in databases?	Different databases use the name for different guarantees, so it does not reliably mean one specific behavior.
+What is a lost update?	Concurrent read-modify-write cycles overwrite one another so one transaction's change disappears.
+What is the main idea of an atomic write operation?	Perform the update inside the database as one concurrency-safe step instead of a separate read-modify-write cycle in application code.
+How can explicit locking prevent lost updates?	It forces conflicting read-modify-write cycles to run sequentially.
+What is the idea behind automatic lost-update detection?	The database aborts a transaction if its write would clobber another concurrent transaction's change.
+What is compare-and-set used for in concurrency control?	To update a value only if it has not changed since it was last read.
+Why can compare-and-set still be unsafe in some databases?	If the condition is checked against a stale snapshot, it can miss a concurrent write.
+What is write skew?	Concurrent transactions read overlapping state and write different rows, together violating a shared invariant.
+Why does snapshot isolation not prevent write skew?	Each transaction can commit based on a snapshot whose premise became outdated before commit.
+What is a phantom in transaction isolation?	A write changes the set of rows that would match another transaction's query.
+Why can weak isolation levels still be dangerous?	They prevent some anomalies but still allow subtle race conditions such as lost updates, write skew, or phantoms.
+What does serializable isolation guarantee?	The result is the same as if transactions had run one at a time in some serial order.
+What is actual serial execution in transaction processing?	Executing transactions literally one after another, which avoids concurrency-control conflicts but limits throughput unless data is partitioned.
+What is two-phase locking (2PL)?	A serializability technique that uses shared and exclusive locks held until the transaction ends.
+What is the main downside of two-phase locking?	Blocking and deadlocks can significantly hurt latency and throughput under contention.
+What is serializable snapshot isolation (SSI)?	An optimistic serializability technique that starts from snapshot isolation and aborts transactions with dangerous serialization conflicts.
+What is the main advantage of SSI over two-phase locking?	Readers and writers usually do not block each other, so latency is often more predictable.
+What is materializing conflicts in transaction isolation?	Introducing concrete lockable records so a phantom-style conflict becomes an explicit lock conflict.
