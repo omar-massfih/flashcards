@@ -1,0 +1,26 @@
+What problem do overloaded signatures solve (Python typing)?	They let a type checker model different valid call shapes precisely, especially when the return type depends on the arguments.
+How are overloaded signatures written in a regular Python module?	Write one or more `@overload` stubs before the real implementation, then provide one actual function body.
+How does a type checker choose among overloaded signatures (Python typing)?	It tries to match the call against the overloads in order and uses the first matching signature.
+Why can flexible Pythonic APIs need many overloads (Python typing)?	Because one function may accept several argument patterns whose parameter and return types relate differently.
+What is `TypedDict` used for (Python typing)?	To describe a `dict` used as a record with a fixed set of string keys and specific value types per key.
+What does `TypedDict` provide to a type checker?	Field-specific key and value types for dict-like records, so invalid keys or value types can be flagged statically.
+What runtime effect does `TypedDict` have?	Essentially none; it exists for static type checking, and its constructor produces a plain `dict`.
+What kinds of mistakes can a type checker catch with `TypedDict`?	Wrong value types, invalid keys, and illegal deletion or assignment patterns for declared keys.
+Why is `TypedDict` not a replacement for JSON validation?	Static typing cannot verify the runtime shape of dynamic data like `json.loads(...)`; only runtime validation can do that.
+What does `typing.cast` do for the type checker?	It tells the checker to treat a value as a specified type even when inference cannot prove that type.
+When is `cast` a reasonable tool (Python typing)?	When the checker lacks information or external type hints are wrong, but the programmer has stronger knowledge about the value.
+Why is frequent use of `cast` a code smell?	It can hide real typing problems, poor APIs, or low-quality stubs instead of fixing the underlying issue.
+Where does Python store annotations at runtime?	In `__annotations__` mappings on functions, classes, and modules.
+Why is reading raw `__annotations__` directly fragile?	Runtime annotations may contain strings, unresolved forward references, or behavior that changes across Python versions.
+What runtime problem do forward references create for annotations?	A type may need to be named before the class object exists, so runtime inspection may see a string instead of the real type.
+What does `from __future__ import annotations` do?	It postpones annotation evaluation and stores annotations as strings instead of evaluating them at definition time.
+What should you prefer over reading raw `__annotations__` directly?	`inspect.get_annotations(...)` or `typing.get_type_hints(...)`.
+Why wrap `get_type_hints` or `get_annotations` in your own helper?	It localizes future compatibility changes so the rest of the codebase does not depend directly on unstable annotation-inspection details.
+What is a generic type (Python typing)?	A type declared with one or more type variables, such as a class parameterized by element type.
+What is a parameterized type (Python typing)?	A generic type supplied with actual type arguments, such as `LottoBlower[int]`.
+When can a type parameter be covariant?	When it describes values that come out of the object, but are not later accepted back in.
+When can a type parameter be contravariant?	When it describes values that go into the object, but are not produced back out.
+When must a type parameter be invariant?	When the same parameter is used for both values accepted by the object and values returned from it.
+Why can immutable containers often be covariant?	Because they only produce values, so accepting a subtype container is type-safe.
+Why are mutable containers usually invariant?	Because they both consume and produce values, so covariance or contravariance would allow unsafe writes or reads.
+When can a generic static protocol be covariant?	When its type parameter appears only in output positions, such as the return type of a protocol method.
