@@ -8,5 +8,4 @@ Why is returning a nested function harder than passing one as an argument?	The r
 When must an activation record outlive the function call that created it?	When a returned closure still needs variables stored in that activation record.
 Why are closure environments often stored on the heap?	Because stack allocation alone cannot support environments that must survive after a function returns.
 How can a returned closure provide private state?	It captures local variables that remain accessible only through that returned function.
-What is the runtime difference between a method call and a plain nested function call in JavaScript?	A method call binds `this` to the receiver object, while a plain function call does not preserve that object binding.
 Why is block scope often preferable to function scope?	It limits a binding's visibility to the block where it is needed and avoids accidental reuse across a whole function.
