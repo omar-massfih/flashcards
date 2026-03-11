@@ -1,0 +1,15 @@
+What is inter-process communication (IPC)?	Mechanisms that let processes exchange data or coordinate across address spaces and protection domains.
+What is message passing in IPC?	Communication where one process sends a message and another process receives it instead of sharing memory directly.
+What is direct communication in IPC?	Sender and receiver explicitly name each other when sending and receiving messages.
+What is indirect communication in IPC?	Processes communicate through a shared mailbox or queue instead of naming each other directly.
+What is a mailbox in IPC?	A shared message queue that stores messages for processes to send to and receive from indirectly.
+Why can mailboxes support many-to-many communication?	Multiple senders and receivers can all use the same shared queue.
+What extra feature can message-queue mailboxes provide that ordinary pipes do not?	Message types, so receivers can distinguish among different kinds of messages.
+What is a pipe in UNIX IPC?	A kernel-managed unidirectional byte stream with one end for reading and one end for writing.
+What is the main data-model difference between a pipe and a mailbox?	A pipe is an untyped byte stream, while a mailbox stores discrete messages that may also have types.
+What is shared memory in IPC?	A mechanism where multiple processes map the same physical memory region into their virtual address spaces.
+Why is shared memory usually fast for IPC?	Processes exchange data by reading and writing the same memory directly instead of copying messages through the kernel for each transfer.
+Why does shared memory need an external synchronization mechanism?	Multiple processes may read and write the same bytes concurrently, so synchronization is needed to avoid races and inconsistent data.
+What are signals in operating systems?	Software-generated interrupts sent to a process to notify it of events or request a control action.
+What are the three main ways a process can handle a signal?	Use the default action, ignore/block it when allowed, or catch it with a signal handler.
+What is the main limitation of signals as an IPC mechanism?	They are mainly notifications/control events and carry very little data compared with pipes, queues, or shared memory.

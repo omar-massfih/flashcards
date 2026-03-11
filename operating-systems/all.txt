@@ -132,3 +132,35 @@ What is extent-based allocation?	Representing a file as runs of consecutive bloc
 Why can extent-based allocation improve performance?	It reduces metadata and lookups while improving locality for large sequential reads.
 What is RAID?	A family of disk organizations that trade off performance, capacity, and fault tolerance across multiple disks.
 Why do SSDs change storage-system assumptions?	They greatly reduce seek and rotational costs, changing the relative importance of scheduling and locality decisions.
+What is inter-process communication (IPC)?	Mechanisms that let processes exchange data or coordinate across address spaces and protection domains.
+What is message passing in IPC?	Communication where one process sends a message and another process receives it instead of sharing memory directly.
+What is direct communication in IPC?	Sender and receiver explicitly name each other when sending and receiving messages.
+What is indirect communication in IPC?	Processes communicate through a shared mailbox or queue instead of naming each other directly.
+Why does direct communication require explicit buffering strategy?	A receiver may get messages from many senders, or a sender may target many receivers, so the system must decide where queued messages wait.
+What is a mailbox in IPC?	A shared message queue that stores messages for processes to send to and receive from indirectly.
+Why can mailboxes support many-to-many communication?	Multiple senders and receivers can all use the same shared queue.
+What extra feature can message-queue mailboxes provide that ordinary pipes do not?	Message types, so receivers can distinguish among different kinds of messages.
+What does `msgget(...)` do in System V IPC?	It creates or accesses a message queue and returns its identifier.
+What does `msgsnd(...)` do in System V IPC?	It places a message onto a message queue.
+What does `msgrcv(...)` do in System V IPC?	It receives a message from a message queue, optionally filtering by message type.
+What does `msgctl(...)` do in System V IPC?	It inspects or controls a message queue, such as reading status or changing/removing it.
+What is a pipe in UNIX IPC?	A kernel-managed unidirectional byte stream with one end for reading and one end for writing.
+What does `pipe(fd)` create?	Two file descriptors: one read end and one write end.
+How are pipes commonly used with process creation?	A process creates a pipe, forks, and then parent and child close opposite ends so one writes and the other reads.
+Why do processes usually close one end of a pipe after `fork()`?	To enforce one-way communication and avoid keeping unused pipe ends open.
+What is the main data-model difference between a pipe and a mailbox?	A pipe is an untyped byte stream, while a mailbox stores discrete messages that may also have types.
+What is a practical communication-limit difference between pipes and mailboxes?	Pipes are mainly used as one sender/one receiver streams, while mailboxes naturally support many senders and receivers.
+What is shared memory in IPC?	A mechanism where multiple processes map the same physical memory region into their virtual address spaces.
+Why is shared memory usually fast for IPC?	Processes exchange data by reading and writing the same memory directly instead of copying messages through the kernel for each transfer.
+What does `shmget(...)` do in System V shared memory?	It creates or accesses a shared memory segment and returns its identifier.
+What does `shmat(...)` do in System V shared memory?	It attaches a shared memory segment to a process's address space.
+What does `shmdt(...)` do in System V shared memory?	It detaches a shared memory segment from a process's address space.
+What does `shmctl(...)` do in System V shared memory?	It controls or inspects a shared memory segment.
+Why does shared memory need an external synchronization mechanism?	Multiple processes may read and write the same bytes concurrently, so synchronization is needed to avoid races and inconsistent data.
+What are signals in operating systems?	Software-generated interrupts sent to a process to notify it of events or request a control action.
+What kinds of events can generate signals?	Hardware conditions, software conditions, I/O notifications, process-control events, and resource-related events.
+What does `kill(pid, signal)` do for IPC/signaling?	It sends a specified signal to another process.
+What are the three main ways a process can handle a signal?	Use the default action, ignore/block it when allowed, or catch it with a signal handler.
+What is a signal handler?	A function the process registers to run when a specific signal is delivered.
+Which two signals are noted as not blockable/ignorable in this lecture?	`SIGKILL` and `SIGSTOP`.
+What is the main limitation of signals as an IPC mechanism?	They are mainly notifications/control events and carry very little data compared with pipes, queues, or shared memory.
