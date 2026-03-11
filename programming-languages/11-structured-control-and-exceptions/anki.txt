@@ -1,0 +1,16 @@
+What is structured programming?	Organizing control flow with standard block constructs such as conditionals and loops instead of arbitrary jumps.
+Why is jumping into the middle of a block or function problematic?	There may be no clear setup for local variables, parameters, or activation-record state at the jump target.
+What is a structured exit?	A control transfer that leaves a computation in a controlled way rather than jumping into an arbitrary program location.
+What are exceptions used for in sequential languages?	To abort part of a computation and transfer control to a handler for unusual or exceptional conditions.
+How do exceptions differ from ordinary structured constructs like `if` or `while`?	They perform nonlocal control transfer to a handler rather than continuing within the local syntactic structure.
+What two core language mechanisms does an exception system need?	A way to raise an exception and a way to establish a handler.
+How is an exception handler usually selected?	Control transfers to the most recently established matching handler on the run-time stack.
+Why are exception handlers often said to be dynamically scoped?	The active handler is chosen from the dynamic call chain at run time, not from lexical nesting alone.
+Why can dynamic scoping make sense for exception handlers even in mostly statically scoped languages?	The caller or surrounding computation often knows how to recover from an error better than the callee does.
+How can pattern matching help in exception handling?	It allows different handlers to respond differently based on which exception was raised and any attached data.
+Why can exceptions also be used for efficiency rather than just errors?	They provide an early exit from deeply nested computation once a decisive condition is found.
+Why can exception mechanisms have performance costs?	Tracking handler state and, in some implementations, building stack-trace information can be expensive.
+Why can `raise` be given an arbitrary result type in statically typed exception systems?	Because it does not return normally, it can type-check in many expression contexts as if it had any result type.
+What typing requirement applies to an exception handler expression?	The normal result of the handler must have the same type as the protected expression it replaces.
+What resource-management problem can exceptions create?	Resources allocated between the handler and the raise point may be skipped over and not cleaned up automatically.
+What is the role of a `finally`-style construct in exception handling?	It guarantees cleanup code runs whether the protected computation succeeds or raises an exception.
