@@ -1,0 +1,15 @@
+What is logic programming (Programming languages)?	A programming paradigm where computation is expressed through logical relations and solved by deduction/search.
+What does "computation as deduction" mean in logic programming?	Executing a program is treated as proving that a query follows from the program's clauses.
+What does "Program = Logic + Control" mean in declarative programming?	The programmer describes the logical relationships, while the language implementation handles the search/control strategy.
+What is the difference between a declarative and a procedural reading of a logic program?	The declarative reading says what relation is true; the procedural reading says how the system will try to satisfy a query.
+When does unification fail?	When term structure is incompatible, such as different functor names or different arity.
+Why is unification central to logic programming?	It is the mechanism used to match queries with facts and rules and to produce variable bindings.
+What is the closed-world assumption in logic programming?	A query is treated as false if it cannot be proven from the facts and rules in the current database.
+Why are relations more general than functions in logic programming?	A relation can be used in multiple directions, not only from fixed inputs to one output.
+Why are logic programs often described as executable specifications?	The same clauses both specify a relation and can be executed to answer queries about it.
+What is backtracking in logic programming?	The search process of returning to an earlier choice point to try another alternative when the current path fails or after one solution is found.
+Why can one logic-program query produce multiple answers?	Different substitutions may satisfy the same relation, and backtracking can enumerate them.
+Why is placing the recursive subgoal late in a logic-programming rule often important?	It reduces the risk of infinite search before simpler constraining goals have had a chance to bind variables.
+What is the list head-tail view in logic programming?	A nonempty list is treated as a head element plus a tail list.
+Why are anonymous variables useful in logic programming?	They indicate that a position matters for matching but the bound value itself is intentionally ignored.
+What is the difference between using a logic program for testing and for computing?	A fixed query can test whether a relation holds, while queries with variables can ask the program to compute satisfying bindings.
