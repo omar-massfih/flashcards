@@ -2,7 +2,10 @@
 
 Anki **Basic** flashcards while learning Terraform and Infrastructure as Code (IaC).
 
-Source: https://developer.hashicorp.com/terraform/tutorials
+## Sources
+- https://developer.hashicorp.com/terraform/tutorials
+- Terraform: Up & Running
+- Additional chapter-style Terraform material summarized into later decks
 
 ## Structure
 - Numbered subfolders contain `anki.txt` decks (tab-delimited, Basic notes).
