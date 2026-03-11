@@ -1,6 +1,10 @@
 What is infrastructure as code (IaC)?	Defining, deploying, updating, and destroying infrastructure through code rather than manual steps.
 What are snowflake servers and configuration drift?	A snowflake server is one that becomes uniquely configured over time; configuration drift is the gradual divergence of supposedly identical systems caused by repeated in-place or manual changes.
-What are the four main categories of IaC tools, and what does each do?	Configuration management installs/manages software on existing servers; server templating builds reusable machine images; orchestration manages running servers or containers; provisioning creates infrastructure resources such as servers, databases, and networks.
+What are the four main categories of IaC tools?	Configuration management; server templating; orchestration; provisioning.
+What does configuration management do (IaC)?	It installs and manages software on existing servers.
+What does server templating do (IaC)?	It builds reusable machine images.
+What does orchestration do (IaC)?	It manages running servers or containers.
+What does provisioning do (IaC)?	It creates infrastructure resources such as servers, databases, and networks.
 Mutable vs immutable infrastructure: what is the main tradeoff?	Mutable infrastructure is usually simpler and cheaper to update in place; immutable infrastructure is usually more predictable and less prone to configuration drift because changes happen by replacement.
 Configuration management vs provisioning: what is the key distinction?	Configuration management changes software on existing servers; provisioning creates the infrastructure resources those servers run on.
 Terraform: how does it work at a high level?	It reads configuration files, builds a plan, and translates the desired state into API calls to providers.
