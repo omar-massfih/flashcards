@@ -1,0 +1,16 @@
+What does monomorphic mean in a type system?	Each relevant expression, variable, or function has only one type.
+What does polymorphic mean in a type system?	A value or definition can be used at more than one type.
+What are the three classic forms of polymorphism?	Parametric polymorphism; ad hoc polymorphism (overloading); subtype polymorphism.
+What is ad hoc polymorphism?	Using the same operation name for different implementations chosen by type.
+What is subtype polymorphism?	Allowing a value of a subtype to be used wherever a supertype is expected.
+What is the key difference between parametric polymorphism and overloading?	Parametric polymorphism uses one uniform algorithm for many types; overloading uses different algorithms for different types.
+What is the difference between explicit and implicit parametric polymorphism?	Explicit parametric polymorphism exposes type parameters in the program text; implicit parametric polymorphism relies on type inference to infer and instantiate them.
+What is a type scheme?	A type expression with type variables that stands for many concrete type instances.
+What is an equality type?	A type for which the language defines an equality test.
+Why is equality on functions generally not computable?	Two functions are equal only if they produce the same result for every possible input, which is not decidable in general.
+What is Leibniz-style equality, and why is it hard to use directly in programming languages?	Two expressions are equal if no operation can distinguish them; this is hard to use directly because that condition is undecidable in general.
+What is the relationship between a type error and type safety?	A type error is using a value in a way that violates its type meaning; type safety means well-typed programs cannot produce such violations during execution.
+What is the main difference between compile-time and run-time type checking?	Compile-time checking rejects bad programs before execution; run-time checking detects type misuse while the program runs.
+What is a sound type checker?	A type checker that never accepts a program with a real type error.
+What is a conservative type checker?	A type checker that may reject some programs that would actually run without type errors.
+How can type inference help reveal bugs?	If the inferred type is more general or different than expected, it can expose a mistaken definition or a missing use of data.
