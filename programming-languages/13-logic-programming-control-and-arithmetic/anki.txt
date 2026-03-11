@@ -1,0 +1,9 @@
+Why does arithmetic weaken pure declarativeness in logic programming?	Arithmetic is treated operationally rather than as a fully relational part of the logic, so the same clause no longer has a clean symmetric declarative reading.
+Why are arithmetic operations in logic programming often described as functional rather than relational?	They are usually evaluated in a fixed direction, so they behave more like computing a result than solving a general relation in all directions.
+Why do arithmetic comparisons in logic programming often require ground expressions?	The system must know the numeric values before it can compare them, so uninstantiated variables usually cause an error.
+What is negation as failure in logic programming?	A goal succeeds when the system fails to prove the negated subgoal.
+When does negation as failure best match ordinary logical negation?	When the negated query is ground and terminates.
+Why is negation as failure problematic on non-ground goals?	Failure to prove a goal with variables does not mean the relation is false for all bindings, so the result can be operationally misleading.
+What is tabling in logic programming?	Storing and reusing intermediate query results instead of re-deriving them repeatedly.
+Why can tabling help recursive logic programs terminate more reliably?	It avoids repeating the same subgoals indefinitely and can break some infinite search patterns.
+Why is I/O awkward in a backtracking language?	Side effects such as printing are not undone by backtracking, so operational behavior can disagree with the logical reading.
