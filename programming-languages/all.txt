@@ -64,7 +64,6 @@ Why is returning a nested function harder than passing one as an argument?	The r
 When must an activation record outlive the function call that created it?	When a returned closure still needs variables stored in that activation record.
 Why are closure environments often stored on the heap?	Because stack allocation alone cannot support environments that must survive after a function returns.
 How can a returned closure provide private state?	It captures local variables that remain accessible only through that returned function.
-What is the runtime difference between a method call and a plain nested function call in JavaScript?	A method call binds `this` to the receiver object, while a plain function call does not preserve that object binding.
 Why is block scope often preferable to function scope?	It limits a binding's visibility to the block where it is needed and avoids accidental reuse across a whole function.
 What does static typing mean?	Types are checked on program syntax before execution, rejecting programs that do not type-check.
 What does dynamic typing mean?	Types are checked at run time as values are used during execution.
@@ -125,6 +124,74 @@ What is a module system in a programming language?	A mechanism for grouping rela
 Why are modules useful in language design?	They improve structure, reuse, separate compilation, and control over what details are exposed.
 What is information hiding in module design?	Exposing an interface while keeping implementation details inaccessible or changeable behind it.
 Why is garbage collection an important runtime feature?	It automatically reclaims unreachable memory, reducing manual memory-management errors.
-Why are exceptions useful as a control mechanism?	They provide a structured way to propagate failures or unusual conditions without encoding every error path in normal returns.
 What is type inference?	The ability of a language implementation to determine types automatically from program structure.
 Why is type inference valuable in statically typed languages?	It preserves static checking while reducing the amount of explicit type annotation programmers must write.
+What does monomorphic mean in a type system?	Each relevant expression, variable, or function has only one type.
+What does polymorphic mean in a type system?	A value or definition can be used at more than one type.
+What are the three classic forms of polymorphism?	Parametric polymorphism; ad hoc polymorphism (overloading); subtype polymorphism.
+What is ad hoc polymorphism?	Using the same operation name for different implementations chosen by type.
+What is subtype polymorphism?	Allowing a value of a subtype to be used wherever a supertype is expected.
+What is the key difference between parametric polymorphism and overloading?	Parametric polymorphism uses one uniform algorithm for many types; overloading uses different algorithms for different types.
+What is the difference between explicit and implicit parametric polymorphism?	Explicit parametric polymorphism exposes type parameters in the program text; implicit parametric polymorphism relies on type inference to infer and instantiate them.
+What is a type scheme?	A type expression with type variables that stands for many concrete type instances.
+What is an equality type?	A type for which the language defines an equality test.
+Why is equality on functions generally not computable?	Two functions are equal only if they produce the same result for every possible input, which is not decidable in general.
+What is Leibniz-style equality, and why is it hard to use directly in programming languages?	Two expressions are equal if no operation can distinguish them; this is hard to use directly because that condition is undecidable in general.
+What is the relationship between a type error and type safety?	A type error is using a value in a way that violates its type meaning; type safety means well-typed programs cannot produce such violations during execution.
+What is the main difference between compile-time and run-time type checking?	Compile-time checking rejects bad programs before execution; run-time checking detects type misuse while the program runs.
+What is a sound type checker?	A type checker that never accepts a program with a real type error.
+What is a conservative type checker?	A type checker that may reject some programs that would actually run without type errors.
+How can type inference help reveal bugs?	If the inferred type is more general or different than expected, it can expose a mistaken definition or a missing use of data.
+What is the goal of a most general type in type inference?	To assign a type that captures all valid uses without committing to unnecessary specifics.
+What is unification in type inference?	Solving type constraints by finding substitutions that make the type expressions agree.
+What is constraint generation in type inference?	Collecting type-equality requirements from how expressions are composed.
+How does function application constrain types in type inference?	If `f x` is valid, `f` must have a function type whose parameter type matches the type of `x`.
+How does function abstraction constrain types in type inference?	If `x` has type `A` and the body has type `B`, then the abstraction has type `A -> B`.
+Why can type inference lead naturally to polymorphism?	Some inferred type variables may remain unconstrained, producing a general type that can be instantiated in many ways.
+What is a transparent type declaration?	A type alias that gives another name to an existing type without creating a distinct new type.
+What is an opaque type declaration?	A declaration that introduces a genuinely new type distinct from existing ones.
+What is the difference between a type alias and a new type?	A type alias preserves the original type identity; a new type creates a separate type that is not interchangeable by default.
+What is structural type equality?	Two type names are considered equal if the underlying type structures they denote are the same.
+What is name type equality?	Two types are considered equal only if they have the same declared type name.
+Why can transparent type declarations improve documentation without changing behavior?	They communicate domain meaning while remaining interchangeable with the underlying type.
+Why can opaque type declarations improve safety?	They prevent accidentally mixing conceptually different values that happen to share the same representation.
+What is structured programming?	Organizing control flow with standard block constructs such as conditionals and loops instead of arbitrary jumps.
+Why is jumping into the middle of a block or function problematic?	There may be no clear setup for local variables, parameters, or activation-record state at the jump target.
+What is a structured exit?	A control transfer that leaves a computation in a controlled way rather than jumping into an arbitrary program location.
+What are exceptions used for in sequential languages?	To abort part of a computation and transfer control to a handler for unusual or exceptional conditions.
+How do exceptions differ from ordinary structured constructs like `if` or `while`?	They perform nonlocal control transfer to a handler rather than continuing within the local syntactic structure.
+What two core language mechanisms does an exception system need?	A way to raise an exception and a way to establish a handler.
+How is an exception handler usually selected?	Control transfers to the most recently established matching handler on the run-time stack.
+Why are exception handlers often said to be dynamically scoped?	The active handler is chosen from the dynamic call chain at run time, not from lexical nesting alone.
+Why can dynamic scoping make sense for exception handlers even in mostly statically scoped languages?	The caller or surrounding computation often knows how to recover from an error better than the callee does.
+How can pattern matching help in exception handling?	It allows different handlers to respond differently based on which exception was raised and any attached data.
+Why can exceptions also be used for efficiency rather than just errors?	They provide an early exit from deeply nested computation once a decisive condition is found.
+Why can exception mechanisms have performance costs?	Tracking handler state and, in some implementations, building stack-trace information can be expensive.
+Why can `raise` be given an arbitrary result type in statically typed exception systems?	Because it does not return normally, it can type-check in many expression contexts as if it had any result type.
+What typing requirement applies to an exception handler expression?	The normal result of the handler must have the same type as the protected expression it replaces.
+What resource-management problem can exceptions create?	Resources allocated between the handler and the raise point may be skipped over and not cleaned up automatically.
+What is the role of a `finally`-style construct in exception handling?	It guarantees cleanup code runs whether the protected computation succeeds or raises an exception.
+What is logic programming (Programming languages)?	A programming paradigm where computation is expressed through logical relations and solved by deduction/search.
+What does "computation as deduction" mean in logic programming?	Executing a program is treated as proving that a query follows from the program's clauses.
+What does "Program = Logic + Control" mean in declarative programming?	The programmer describes the logical relationships, while the language implementation handles the search/control strategy.
+What is the difference between a declarative and a procedural reading of a logic program?	The declarative reading says what relation is true; the procedural reading says how the system will try to satisfy a query.
+When does unification fail?	When term structure is incompatible, such as different functor names or different arity.
+Why is unification central to logic programming?	It is the mechanism used to match queries with facts and rules and to produce variable bindings.
+What is the closed-world assumption in logic programming?	A query is treated as false if it cannot be proven from the facts and rules in the current database.
+Why are relations more general than functions in logic programming?	A relation can be used in multiple directions, not only from fixed inputs to one output.
+Why are logic programs often described as executable specifications?	The same clauses both specify a relation and can be executed to answer queries about it.
+What is backtracking in logic programming?	The search process of returning to an earlier choice point to try another alternative when the current path fails or after one solution is found.
+Why can one logic-program query produce multiple answers?	Different substitutions may satisfy the same relation, and backtracking can enumerate them.
+Why is placing the recursive subgoal late in a logic-programming rule often important?	It reduces the risk of infinite search before simpler constraining goals have had a chance to bind variables.
+What is the list head-tail view in logic programming?	A nonempty list is treated as a head element plus a tail list.
+Why are anonymous variables useful in logic programming?	They indicate that a position matters for matching but the bound value itself is intentionally ignored.
+What is the difference between using a logic program for testing and for computing?	A fixed query can test whether a relation holds, while queries with variables can ask the program to compute satisfying bindings.
+Why does arithmetic weaken pure declarativeness in logic programming?	Arithmetic is treated operationally rather than as a fully relational part of the logic, so the same clause no longer has a clean symmetric declarative reading.
+Why are arithmetic operations in logic programming often described as functional rather than relational?	They are usually evaluated in a fixed direction, so they behave more like computing a result than solving a general relation in all directions.
+Why do arithmetic comparisons in logic programming often require ground expressions?	The system must know the numeric values before it can compare them, so uninstantiated variables usually cause an error.
+What is negation as failure in logic programming?	A goal succeeds when the system fails to prove the negated subgoal.
+When does negation as failure best match ordinary logical negation?	When the negated query is ground and terminates.
+Why is negation as failure problematic on non-ground goals?	Failure to prove a goal with variables does not mean the relation is false for all bindings, so the result can be operationally misleading.
+What is tabling in logic programming?	Storing and reusing intermediate query results instead of re-deriving them repeatedly.
+Why can tabling help recursive logic programs terminate more reliably?	It avoids repeating the same subgoals indefinitely and can break some infinite search patterns.
+Why is I/O awkward in a backtracking language?	Side effects such as printing are not undone by backtracking, so operational behavior can disagree with the logical reading.
