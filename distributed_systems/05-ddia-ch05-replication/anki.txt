@@ -1,5 +1,4 @@
 What is replication in distributed systems?	Keeping copies of the same data on multiple network-connected machines.
-Why replicate data across multiple machines?	To reduce latency, improve availability, and increase read throughput.
 What is leader-based replication?	A replication model where one leader accepts writes and followers copy changes from it.
 What is the main tradeoff between synchronous and asynchronous replication?	Synchronous replication improves durability but can block writes; asynchronous replication improves availability but can lose unreplicated writes on leader failure.
 What is semi-synchronous replication?	A setup where at least one follower is replicated synchronously while others are asynchronous.

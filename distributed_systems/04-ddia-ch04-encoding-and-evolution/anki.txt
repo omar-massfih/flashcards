@@ -29,7 +29,6 @@ Why are network requests fundamentally less predictable than local function call
 Why can retrying an RPC be dangerous?	The original request may already have been processed, so retries can perform the action multiple times unless it is idempotent.
 Why is REST often easier to experiment with and debug than custom RPC?	It works with standard tools such as browsers and `curl` and has a broad ecosystem of HTTP infrastructure.
 Why do public or cross-organizational service APIs often need long-term compatibility?	The service owner cannot force all clients to upgrade at the same time.
-What is a message broker?	An intermediary that temporarily stores messages and delivers them from producers to consumers.
 What are advantages of a message broker over direct RPC?	It can buffer overload, retry delivery, decouple sender from recipient, and support one-to-many delivery.
 What is the key communication difference between message passing and RPC?	Message passing is usually asynchronous and one-way, while RPC typically expects an immediate reply.
 What is the actor model?	A concurrency model where independent actors hold local state and communicate by asynchronous messages.

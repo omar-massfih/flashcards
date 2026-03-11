@@ -1,4 +1,3 @@
-Why are there many different database systems?	Different applications have different requirements and access patterns; tradeoffs differ.
 Define reliability (DDIA framing).	Continuing to work correctly (correct function at required performance) even when things go wrong.
 Define scalability (DDIA framing).	Reasonable ways to handle growth in load/data/complexity; add resources while keeping performance acceptable.
 Define maintainability (DDIA framing).	Enable teams to work productively over time while maintaining and evolving the system.
@@ -123,13 +122,11 @@ Why are network requests fundamentally less predictable than local function call
 Why can retrying an RPC be dangerous?	The original request may already have been processed, so retries can perform the action multiple times unless it is idempotent.
 Why is REST often easier to experiment with and debug than custom RPC?	It works with standard tools such as browsers and `curl` and has a broad ecosystem of HTTP infrastructure.
 Why do public or cross-organizational service APIs often need long-term compatibility?	The service owner cannot force all clients to upgrade at the same time.
-What is a message broker?	An intermediary that temporarily stores messages and delivers them from producers to consumers.
 What are advantages of a message broker over direct RPC?	It can buffer overload, retry delivery, decouple sender from recipient, and support one-to-many delivery.
 What is the key communication difference between message passing and RPC?	Message passing is usually asynchronous and one-way, while RPC typically expects an immediate reply.
 What is the actor model?	A concurrency model where independent actors hold local state and communicate by asynchronous messages.
 Why does location transparency fit the actor model better than classic RPC?	Actor systems already assume asynchronous message passing and possible message loss, so local and remote communication are less mismatched.
 What is replication in distributed systems?	Keeping copies of the same data on multiple network-connected machines.
-Why replicate data across multiple machines?	To reduce latency, improve availability, and increase read throughput.
 What is leader-based replication?	A replication model where one leader accepts writes and followers copy changes from it.
 What is the main tradeoff between synchronous and asynchronous replication?	Synchronous replication improves durability but can block writes; asynchronous replication improves availability but can lose unreplicated writes on leader failure.
 What is semi-synchronous replication?	A setup where at least one follower is replicated synchronously while others are asynchronous.
@@ -167,8 +164,6 @@ Why doesn’t concurrency depend on exact clock time?	Because distributed system
 What are sibling values in leaderless replication?	Concurrent versions of the same value that must later be merged.
 Why may applications need to merge sibling values?	Because the database preserves concurrent writes instead of silently discarding them.
 What is a version vector?	A set of per-replica version counters used to track causal relationships between writes across replicas.
-What is partitioning in a distributed database?	Splitting a dataset into smaller subsets so different nodes can store and process different parts of it.
-Why is partitioning used in distributed systems?	To scale storage capacity and query throughput beyond what one machine can handle.
 What is skew in a partitioned database?	An uneven distribution of data or query load across partitions.
 What is a hot spot in a partitioned database?	A partition with disproportionately high load compared with the others.
 Why is random assignment of records to partitions usually a poor approach?	It spreads load but makes reads inefficient because the system may need to query many or all nodes.

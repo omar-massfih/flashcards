@@ -1,4 +1,3 @@
-Why are there many different database systems?	Different applications have different requirements and access patterns; tradeoffs differ.
 Define reliability (DDIA framing).	Continuing to work correctly (correct function at required performance) even when things go wrong.
 Define scalability (DDIA framing).	Reasonable ways to handle growth in load/data/complexity; add resources while keeping performance acceptable.
 Define maintainability (DDIA framing).	Enable teams to work productively over time while maintaining and evolving the system.

@@ -1,5 +1,3 @@
-What is partitioning in a distributed database?	Splitting a dataset into smaller subsets so different nodes can store and process different parts of it.
-Why is partitioning used in distributed systems?	To scale storage capacity and query throughput beyond what one machine can handle.
 What is skew in a partitioned database?	An uneven distribution of data or query load across partitions.
 What is a hot spot in a partitioned database?	A partition with disproportionately high load compared with the others.
 Why is random assignment of records to partitions usually a poor approach?	It spreads load but makes reads inefficient because the system may need to query many or all nodes.
