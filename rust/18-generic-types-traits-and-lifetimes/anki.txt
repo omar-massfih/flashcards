@@ -1,0 +1,32 @@
+Why are generics useful in Rust?	They let one definition work across multiple concrete types, reducing duplication without giving up compile-time checking.
+What does a generic function signature like `fn f<T>(x: T) -> T` mean?	The same function body can be compiled for different concrete types substituted for `T`.
+Why does comparing values of a generic type with `>` require a trait bound in Rust?	Because not every type supports ordering, so the type must implement `PartialOrd`.
+What does a trait bound do on a generic type in Rust?	It restricts the generic type to only those types that implement the required behavior.
+What does `struct Point<T> { x: T, y: T }` imply about `x` and `y`?	They must have the same concrete type for a given `Point<T>` instance.
+Why would a Rust struct use multiple generic parameters like `Point<T, U>`?	To allow different fields to use different concrete types.
+Why can methods be implemented on `impl<T> Point<T>` in Rust?	Because the methods are intended to work for every concrete `Point<T>` regardless of what `T` is.
+Why would Rust use `impl Point<f32>` instead of `impl<T> Point<T>`?	To define methods that only make sense for one specific concrete type.
+Can a Rust method introduce its own generic parameters separate from the struct's generics?	Yes; method-level generics can be declared after the method name and are independent of the type's own generic parameters.
+What is monomorphization in Rust?	The compile-time process of generating concrete versions of generic code for each used concrete type.
+Do Rust generics add runtime dispatch overhead by default?	No; monomorphization produces type-specific code at compile time, so generic code runs like handwritten concrete code.
+What does a trait define in Rust?	A shared set of method signatures that describe behavior types can implement.
+How is a trait implemented for a type in Rust?	With `impl TraitName for Type { ... }`, providing the required method bodies.
+What does the orphan rule prevent in Rust?	Implementing an external trait for an external type when neither is local to your crate.
+Why does Rust's orphan rule matter?	It prevents conflicting trait implementations across crates and preserves coherence.
+What is a default trait implementation in Rust?	A method body provided in the trait definition that implementors may inherit or override.
+Can a default trait method call another trait method in Rust?	Yes; a default method can build behavior from another required or default trait method.
+What does `&impl Summary` mean in a Rust function parameter?	The parameter can be any type that implements the `Summary` trait.
+What is the difference between `fn f(a: &impl Trait, b: &impl Trait)` and `fn f<T: Trait>(a: &T, b: &T)`?	The first allows different concrete types for `a` and `b`; the second requires the same concrete type for both.
+What does `T: Summary + Display` mean in Rust?	The generic type `T` must implement both `Summary` and `Display`.
+Why use a `where` clause for trait bounds in Rust?	To move complex bounds out of the parameter list and make the signature easier to read.
+What does `-> impl Summary` mean in a Rust return type?	The function returns some single concrete type that implements `Summary` without naming that type in the signature.
+What is a key limitation of `impl Trait` in return position in Rust?	All return paths must resolve to the same concrete type.
+What is a blanket implementation in Rust?	An implementation of a trait for every type that satisfies some trait bound.
+What is a lifetime in Rust?	The span of code for which a reference is valid.
+What is the main purpose of lifetimes in Rust?	To prevent dangling references by ensuring borrowed data outlives the references to it.
+What does `fn longest<'a>(x: &'a str, y: &'a str) -> &'a str` mean in Rust?	The returned reference must be valid for the lifetime shared by both input references, effectively the shorter overlapping lifetime.
+When returning a reference from a Rust function, what must its lifetime be tied to?	One of the input references, unless ownership of a new value is returned instead.
+Why can't a Rust function return a reference to a local variable it created?	The local value is dropped when the function ends, so the returned reference would dangle.
+When does a Rust struct need a lifetime parameter?	When it stores references in its fields.
+What are Rust's three lifetime elision rules for functions and methods?	Each input reference gets its own lifetime; if there is exactly one input lifetime, it is assigned to all output references; if a method has `&self` or `&mut self`, that lifetime is assigned to output references.
+What does the `'static` lifetime mean in Rust?	The reference can remain valid for the entire duration of the program.
