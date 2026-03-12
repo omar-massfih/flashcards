@@ -1,0 +1,34 @@
+What is a partial failure in a distributed system?	A failure in which some parts of the system are broken or unreachable while other parts continue to work.
+Why are partial failures harder to handle than total failures?	They are nondeterministic and ambiguous: some operations may succeed, fail, or appear to hang without clearly revealing what happened.
+Why can a distributed system not simply treat every fault as a full-system crash?	Internet services usually need to stay available while individual nodes or links fail, are repaired, or are upgraded.
+What does it mean to build a reliable system from unreliable components?	Use higher-level mechanisms such as redundancy, retransmission, and coordination so the overall system tolerates faults in its parts.
+Why is a missing network response ambiguous in an asynchronous network?	Because the request may have been lost, delayed, processed slowly, or processed successfully while the response was lost or delayed.
+Why is choosing a timeout difficult in an asynchronous network?	Because delays are unbounded in principle, so a short timeout risks false suspicions while a long timeout delays failure detection.
+How can premature timeouts make an overloaded distributed system worse?	They can trigger failover or load shifting onto other nodes, increasing load and causing cascading failure.
+What is the main source of network-delay variability in packet networks?	Queueing due to contention for links, CPUs, buffers, or other shared resources.
+Why can queueing delays become especially bad near maximum capacity?	Because small bursts can build long queues quickly when the system has little spare capacity to drain them.
+What tradeoff does UDP make relative to TCP?	It reduces delay variability by avoiding retransmission and flow control, but it gives up reliable delivery and ordered byte streams.
+What is the difference between a circuit-switched network and a packet-switched network?	Circuit switching reserves fixed bandwidth ahead of time; packet switching shares bandwidth dynamically among packets.
+What tradeoff does packet switching make relative to circuit switching?	It improves utilization and flexibility for bursty traffic, but it allows queueing and unbounded delays.
+What is a time-of-day clock?	A clock that reports the current date and wall-clock time according to a calendar.
+What is a monotonic clock?	A clock that only moves forward and is used to measure elapsed time or durations.
+Why is a time-of-day clock unsafe for measuring elapsed time?	Because it can jump forward or backward due to synchronization adjustments and other anomalies.
+Why can't monotonic clock values be compared across different machines?	Because their absolute values are arbitrary and have meaning only on the local machine.
+What limits the accuracy of clock synchronization in distributed systems?	Quartz drift, NTP error, network delay variability, virtualization effects, and misconfiguration.
+Why can synchronized time-of-day clocks break event ordering?	Because clock skew can make a later event appear to have an earlier timestamp than an earlier event.
+Why is last-write-wins dangerous when clocks are skewed?	A write with an incorrect later timestamp can overwrite causally newer data and silently lose updates.
+What is a logical clock used for in a distributed system?	To capture relative ordering of events without relying on physical wall-clock time.
+What is a clock confidence interval?	A range within which the true current time is believed to lie; it matters because fine timestamp precision is meaningless if the uncertainty is much larger.
+Why can a process pause be dangerous when leadership or leases depend on time?	A paused process may resume believing its lease is still valid even though other nodes have already replaced it.
+Name common causes of long process pauses in distributed systems.	Garbage collection, VM suspension or migration, scheduler delays, slow disk or network I/O, paging, and process-stop signals.
+Why can a node wrongly believe it still holds a lease after a pause?	Because it did not observe the passage of real time while paused, but the rest of the system continued and may have let the lease expire.
+Why can't a node fully trust its own view of whether it is alive or leader?	Because network faults and pauses can isolate it from the rest of the system, which may already have declared it dead and chosen someone else.
+Why do many distributed algorithms rely on quorums?	Because agreement by a majority reduces dependence on any one node's possibly stale or incorrect local view.
+What is a fencing token?	A monotonically increasing value attached to a lease or lock grant so stale holders can be detected and rejected.
+Why must a protected resource check fencing tokens itself?	Because a stale client may still believe it is authorized, so the resource must reject requests with older tokens.
+What is a Byzantine fault?	A fault in which a node may behave arbitrarily, including sending contradictory, corrupted, or malicious messages.
+When are Byzantine-fault-tolerant protocols typically necessary?	When components cannot be trusted to behave honestly, such as in adversarial or corruption-prone environments.
+What are the three timing-assumption system models in distributed systems?	Synchronous: bounded network delay, process pauses, and clock error; partially synchronous: usually bounded but occasionally violated; asynchronous: no timing assumptions at all.
+What is the difference between crash-stop and crash-recovery fault models?	Crash-stop assumes a failed node never returns; crash-recovery assumes a node may crash and later restart with stable storage preserved.
+What is a safety property in a distributed algorithm?	A property that says nothing bad ever happens; once violated, the violation has already occurred and cannot be undone.
+What is a liveness property in a distributed algorithm?	A property that says something good eventually happens, possibly after waiting or recovery.
