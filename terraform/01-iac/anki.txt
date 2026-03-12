@@ -6,7 +6,6 @@ What does server templating do (IaC)?	It builds reusable machine images.
 What does orchestration do (IaC)?	It manages running servers or containers.
 What does provisioning do (IaC)?	It creates infrastructure resources such as servers, databases, and networks.
 Mutable vs immutable infrastructure: what is the main tradeoff?	Mutable infrastructure is usually simpler and cheaper to update in place; immutable infrastructure is usually more predictable and less prone to configuration drift because changes happen by replacement.
-Configuration management vs provisioning: what is the key distinction?	Configuration management changes software on existing servers; provisioning creates the infrastructure resources those servers run on.
 Terraform: how does it work at a high level?	It reads configuration files, builds a plan, and translates the desired state into API calls to providers.
 Why is Terraform considered declarative?	You describe the desired end state, and Terraform figures out how to reach it.
 Procedural vs declarative IaC: what is the main difference?	Procedural code specifies step-by-step actions; declarative code specifies the target end state.
