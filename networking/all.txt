@@ -1,0 +1,28 @@
+What is an end system (networking)?	A device at the edge of a network that sends or receives data, such as a computer, phone, printer, or sensor.
+What is an intermediate system (networking)?	A device inside the network that forwards or relays traffic, such as a router, switch, or modem.
+What is a gateway in networking?	An intermediate system that translates, filters, or connects between different networks or protocols.
+What is a network topology?	The arrangement of nodes and links in a network.
+What is a point-to-point channel (networking)?	A communication link where data is sent between exactly two endpoints.
+What is a broadcasting channel (networking)?	A shared communication medium where one transmission can potentially be heard by many nodes.
+Why can broadcasting channels suffer collisions?	If two nodes send at the same time, their signals can interfere and ruin both messages, so shared-media networks need coordination and error detection.
+Why are layered network architectures used?	To manage complexity by splitting communication tasks into layers with clearer responsibilities.
+What is encapsulation in networking?	The process where each layer wraps higher-layer data with its own control information before sending it downward.
+What does the physical layer provide?	A bit stream between adjacent systems, including the mechanics of encoding and decoding bits.
+What does the data link layer provide?	A frame stream between adjacent systems, including framing, medium access, and link-level error handling.
+What is framing in the data link layer?	Grouping a bit stream into frames with boundaries and control information such as checksums.
+What address is commonly used at the data link layer?	A MAC address.
+What does the network layer provide?	Packet transport between end systems, including addressing and routing.
+What is routing?	Choosing a path through the network from a source node to a destination node.
+What are common responsibilities of the network layer?	Addressing, routing, choosing paths, handling congestion, and multiplexing transport-layer packets.
+What does the transport layer provide?	End-to-end communication between processes.
+What does the transport layer address that the network layer does not?	Processes on end systems, not just the end systems themselves.
+What transport-layer service choices can vary between protocols?	Connection setup, ordering, error correction, and flow control.
+What is end-to-end flow control?	Adjusting sending speed so a sender does not overwhelm a receiver.
+What does the session layer handle?	Structured dialogue over time, such as session management, synchronization, checkpointing, and token management.
+What does the presentation layer handle?	Data representation and semantics, such as encoding, serialization, compression, and encryption.
+Name the 7 OSI layers from top to bottom.	Application; Presentation; Session; Transport; Network; Data link; Physical.
+How does the TCP/IP model differ from the OSI model?	It merges application, presentation, and session into one application layer, and merges data link and physical into a network interface layer.
+Why are the upper layers less clearly separated in TCP/IP?	Session and presentation functions are mostly treated as application support rather than distinct Internet-wide layers.
+Why can the boundary between transport and network be blurry in TCP/IP?	Some mechanisms, such as congestion signaling, involve both layers.
+What is the Internet hourglass model?	A protocol-stack structure with many applications above and many link technologies below, connected through a narrow common Internet layer.
+Why is IP considered the waist of the Internet hourglass?	Because many different applications and network technologies interoperate through the common IP layer.
