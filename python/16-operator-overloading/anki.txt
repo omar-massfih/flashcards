@@ -1,0 +1,25 @@
+Why can operator overloading be valuable in Python?	It can make APIs and domain-specific expressions more readable by letting user-defined types use familiar operators.
+What restrictions does Python place on operator overloading?	You can only overload existing operators, you cannot change built-in types' operator meanings, and some operators such as `is`, `and`, `or`, and `not` cannot be overloaded.
+What is the general rule for unary and infix operator methods in Python?	They should return a new result object and not mutate their operands.
+What should an infix operator special method return if it cannot handle the operand type?	`NotImplemented`.
+Why should an operator special method return `NotImplemented` instead of raising `TypeError` when it cannot handle an operand?	It lets Python try the reversed operator method on the other operand before failing.
+What is the difference between `NotImplemented` and `NotImplementedError` in Python?	`NotImplemented` is a return value used in operator dispatch; `NotImplementedError` is an exception often raised by unimplemented methods.
+When evaluating `a + b`, what does Python try first?	It calls `a.__add__(b)`.
+When does Python try the reversed operator method such as `__radd__`?	When the forward method is missing or returns `NotImplemented`.
+When is a reverse operator method like `__radd__` often simple to implement?	For a commutative operation, it can often delegate to the forward implementation.
+Why is duck typing often useful in operator overloading?	It allows compatible non-matching types to interoperate as long as they support the needed operations.
+Why can explicit `isinstance` checks still be useful in operator overloading?	They can make behavior and error handling more predictable than unconstrained duck typing.
+Why should `__add__` not mutate its operands?	Users expect `+` to produce a result value, not to change either input object.
+What does the `@` operator represent in Python?	Matrix multiplication or another matmul-like product defined by `__matmul__`.
+When is it reasonable for `@` on two vector-like operands to raise `ValueError`?	When the operands are otherwise compatible but have incompatible dimensions, such as different lengths for a dot product.
+How are rich comparison operators different from arithmetic operators in Python dispatch?	They use paired forward/reverse comparison methods and have special fallback behavior for `==` and `!=`.
+What fallback does Python use if `==` cannot be handled by either operand?	It compares object identities.
+What fallback does Python use if `!=` cannot be handled by either operand?	It negates the result of `==`.
+Why is returning `NotImplemented` from `__eq__` often better than trying to compare every iterable?	It lets the other operand participate in dispatch and avoids surprising cross-type equality rules.
+Why can overly permissive equality on unrelated types be a problem?	It can create surprising results and ambiguous semantics, making code harder to reason about.
+How does augmented assignment work if a Python class does not implement `__iadd__`?	Python falls back to `a = a + b`, which usually creates a new object.
+When should a mutable Python type implement `__iadd__`?	When `+=` should update the object in place instead of creating a new one.
+What must an in-place operator method like `__iadd__` return?	`self`.
+Should immutable Python types implement in-place operator methods such as `__iadd__`?	No; in-place mutation is contrary to immutability.
+Why can `+=` reasonably be more permissive than `+` for mutable sequence-like types?	`+=` keeps the left-hand object's type and updates it in place, while `+` creates a new result and therefore often needs stricter operand-type rules.
+When is implementing a reverse infix method like `__radd__` unnecessary?	When the forward method is intentionally defined to work only with operands of the same type, so a reversed call could never add new valid cases.
