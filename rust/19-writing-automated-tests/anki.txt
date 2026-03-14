@@ -1,0 +1,30 @@
+What does `cargo test` do in Rust?	It builds the project in test mode and runs the resulting test binaries.
+When is `assert_eq!` preferable to `assert!` in Rust?	When you want to check equality and see both compared values if the assertion fails.
+When is `assert_ne!` useful in Rust tests?	When you only need to assert that two values are different.
+What traits must values implement to work with `assert_eq!` or `assert_ne!` in Rust?	`PartialEq` for comparison and `Debug` so failed assertions can print the values.
+Why add a custom message to `assert!`, `assert_eq!`, or `assert_ne!` in Rust tests?	To make failures easier to diagnose by explaining what the assertion was supposed to guarantee.
+What does `#[should_panic]` mean on a Rust test?	The test passes only if the code in the test panics.
+Why can `#[should_panic]` be too imprecise in Rust tests?	It accepts any panic, even if the panic happened for the wrong reason.
+What does `#[should_panic(expected = \"...\")]` add to a Rust test?	It requires the panic message to contain a specific substring, making the test more precise.
+Why might a Rust test return `Result<(), E>` instead of using only assertion macros?	It lets the test use `?` and fail by returning `Err` instead of panicking directly.
+Why can't a Rust test use both `#[should_panic]` and a `Result` return type?	`#[should_panic]` expects the test to panic, while a `Result`-based test signals failure by returning `Err`.
+How do Rust tests run by default when there are multiple tests?	They run in parallel on multiple threads.
+Why must Rust tests avoid shared mutable external state by default?	Parallel test execution can make tests interfere with each other and produce nondeterministic failures.
+How can you force Rust tests to run one at a time?	Run `cargo test -- --test-threads=1`.
+What output does Rust capture by default for passing tests?	Standard output is captured and hidden for tests that pass.
+How can you show `println!` output from passing Rust tests?	Run `cargo test -- --show-output`.
+How can you run a single Rust test by name?	Pass the test function name to `cargo test`.
+How can you run multiple Rust tests that share part of a name?	Pass a substring to `cargo test`, which runs tests whose names match it.
+What does `#[ignore]` do on a Rust test?	It marks the test so it is skipped during a normal `cargo test` run.
+What is the difference between `cargo test -- --ignored` and `cargo test -- --include-ignored` in Rust?	`--ignored` runs only ignored tests; `--include-ignored` runs both ignored and non-ignored tests.
+What is the difference between unit tests and integration tests in Rust?	Unit tests exercise code in isolation and may test private details; integration tests use only the public API from outside the crate.
+Why is `#[cfg(test)]` used on a Rust unit-test module?	So the test code is compiled only when running tests, not during a normal build.
+Can Rust unit tests call private functions from the same source file?	Yes; the test module is a child module and can access items from its parent module.
+Where do Rust integration tests live?	In top-level files under the `tests/` directory.
+Why must a Rust integration test import the library crate explicitly with `use`?	Each file in `tests/` is compiled as a separate crate.
+Why don't integration-test files in Rust need `#[cfg(test)]`?	Cargo compiles files in `tests/` only when running tests.
+How can you run only one Rust integration test file?	Run `cargo test --test <file_stem>`.
+Why is `tests/common.rs` a poor place for shared Rust integration-test helpers?	Cargo treats it as its own integration test crate and it shows up as a separate test target.
+How should shared helper code be organized for Rust integration tests?	Put it in a submodule such as `tests/common/mod.rs` and import it with `mod common;`.
+Why can't a pure binary Rust crate be integration-tested through the `tests/` directory?	Other crates cannot `use` items from `src/main.rs`; only library crates expose reusable public APIs.
+Why do Rust projects often keep logic in `src/lib.rs` even when they provide a binary?	It makes the core functionality available for integration testing and leaves `src/main.rs` as a thin entry point.
