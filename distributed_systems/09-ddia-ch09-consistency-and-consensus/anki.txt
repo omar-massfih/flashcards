@@ -1,0 +1,40 @@
+What does eventual consistency guarantee in a replicated system?	If writes stop and faults are repaired, replicas eventually converge so reads return the same value.
+Why is eventual consistency hard for application developers?	Because it behaves unlike ordinary variables: a recent write may not be visible yet, and edge-case anomalies often appear only under faults or high concurrency.
+What is linearizability in a distributed system?	A guarantee that the system behaves as if there were only one copy of the data and each operation took effect atomically at a single point in time.
+What recency guarantee does linearizability provide?	Once a write completes successfully, all later reads must return that up-to-date value.
+What is the difference between linearizability and serializability?	Linearizability is a recency guarantee for single-object operations; serializability is an isolation guarantee for transactions over potentially many objects.
+Why is linearizability useful for leader election and distributed locks?	Because all nodes must agree on the current leader or lock holder, avoiding split brain and conflicting ownership.
+Why do hard uniqueness constraints require linearizability?	Because the system must present one agreed current value when deciding whether a name, seat, or key is already taken.
+Why can linearizability matter when components communicate through multiple channels?	It prevents cross-channel race conditions where one component observes an effect before another component can observe the state that caused it.
+Which replication approaches can generally provide linearizable behavior?	Single-leader systems with up-to-date reads and consensus-based systems can; multi-leader systems generally cannot, and leaderless systems usually do not.
+Why are quorum reads and writes alone not enough to guarantee linearizability in leaderless replication?	Because concurrent reads and writes can still observe old and new values in an order that violates recency.
+What tradeoff does linearizability impose during a network interruption?	A replica that cannot reach the current authority may have to stop serving linearizable operations rather than risk returning stale or conflicting results.
+Why is the usual “pick two of three” summary of CAP misleading?	Because partitions are faults rather than optional features, and the theorem's practical scope is much narrower than the slogan suggests.
+Why do many systems give up linearizability?	To improve latency, throughput, and availability under network delay, not just for theoretical partition tolerance.
+What does causality mean in a distributed system?	If one operation could have influenced another, the cause must be observed before the effect.
+What does causal consistency guarantee?	If you observe an effect, you must also be able to observe the operations that causally preceded it.
+What is the difference between the ordering implied by linearizability and the ordering implied by causality?	Linearizability imposes a total order on operations; causality imposes only a partial order, leaving concurrent operations incomparable.
+Is linearizability stronger or weaker than causal consistency?	Stronger; any linearizable system preserves causality, but a causally consistent system need not be linearizable.
+Why don't naive per-node sequence numbers or physical timestamps preserve causality across nodes?	Because independently generated numbers or skewed clocks can order events inconsistently with what actually happened before what.
+What is a Lamport timestamp?	A logical timestamp, typically `(counter, node_id)`, that advances using the maximum value seen so far to produce a total order consistent with causality.
+What is a key limitation of Lamport timestamps?	They impose a total order but cannot tell whether two operations were actually concurrent.
+What is total order broadcast?	A protocol that delivers the same messages to all nodes in the same order, without losing them.
+Why is total order broadcast useful for replication?	Applying the same writes in the same order keeps replicas consistent with each other.
+Why is total order broadcast stronger than plain timestamp ordering?	Because once an order is delivered it is finalized; later information cannot be inserted retroactively ahead of already delivered messages.
+What is atomic commit in a distributed transaction?	The requirement that all participants either commit or abort together.
+Why can't a distributed transaction simply ask every participant to commit independently?	Because some participants could commit while others abort, violating atomicity.
+What is the purpose of the prepare phase in two-phase commit?	To force each participant to durably promise that it can commit later if the coordinator tells it to.
+When does the coordinator in two-phase commit reach the commit point?	When it durably records the final commit or abort decision in its log.
+Why is two-phase commit a blocking protocol?	A participant that voted yes cannot unilaterally decide afterward, so it may have to wait for a failed coordinator to recover.
+Why are in-doubt two-phase-commit transactions dangerous?	They can keep locks open and block other transactions until the final outcome is resolved.
+Why is three-phase commit not a practical general solution to blocking atomic commit?	Because it assumes bounded network delay and response times, which real distributed systems usually cannot guarantee.
+What is the difference between database-internal and heterogeneous distributed transactions?	Database-internal transactions span nodes of one database system; heterogeneous transactions span different technologies such as multiple databases or message brokers.
+Why are heterogeneous distributed transactions operationally difficult?	They rely on a coordinator and lowest-common-denominator protocol support, amplify failures, and can leave hard-to-recover in-doubt work.
+What properties define consensus in distributed systems?	Uniform agreement, integrity, validity, and termination.
+Why isn't choosing one fixed “dictator” node enough to solve fault-tolerant consensus?	If that node fails, the system can no longer make progress, violating termination.
+What is an epoch, term, or ballot number in a consensus algorithm?	A monotonically increasing generation number used to distinguish old leadership from newer leadership.
+Why must the quorums for leader election and proposal voting overlap in a consensus algorithm?	So any successful proposal intersects with the latest leadership knowledge, preventing conflicting decisions from stale leaders.
+What is the relationship between total order broadcast and consensus?	Total order broadcast can be viewed as repeated rounds of consensus, and the problems are reducible to each other.
+What kinds of problems are reducible to consensus?	Leader election, atomic commit, total order broadcast, linearizable compare-and-set, distributed locks and leases, membership, and hard uniqueness constraints.
+Why are consensus systems expensive?	They require coordination with quorums, need a majority of nodes to be available, and are sensitive to network delay and false failure suspicions.
+What are systems like ZooKeeper and etcd mainly used for?	Storing small amounts of replicated coordination state with linearizable atomic operations, membership tracking, leader election, and change notifications.
