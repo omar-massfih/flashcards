@@ -1,0 +1,23 @@
+What is an N-entity in layered networking?	An active component within layer N that implements the layer's behavior, such as a process or intelligent I/O module.
+What is an N-service access point (SAP) in layered networking?	A named interface where layer N provides service to layer N+1.
+What is the relationship between peer entities in networking?	They are corresponding entities in the same layer on different systems that communicate using that layer's protocol.
+What does a communication protocol define (networking)?	The format and ordering of messages between entities, and the actions taken on transmission, reception, or other events.
+What is a protocol data unit (PDU)?	A unit of data exchanged by peer entities in a protocol; depending on context it may be called a frame, packet, datagram, or message.
+What happens to user data as it moves down a protocol stack?	Each layer adds its own control information for its peer before passing the result downward.
+Why does a receiving layer remove its own header before passing data upward?	Because that header is only meant for the peer entity at the same layer, not for higher layers.
+What does a transport-layer port identify?	A process or application endpoint on an end system.
+Why is a port called a transport-layer address?	Because it names the destination process within the host, which is the transport layer's addressing job.
+What does a network-layer address identify?	The remote end system that packets should be delivered to across the network.
+What does a link-layer MAC address identify?	The next-hop interface on the local link, not the final remote host across the whole path.
+Why can the link-layer destination address change at each hop?	Because each hop sends the frame to a different next-hop interface while forwarding the same network-layer packet onward.
+Why are MAC addresses unnecessary on a true point-to-point link?	Because there is only one possible peer on the link, so the lower layer already knows which interface should receive the frame.
+Why are MAC addresses important on broadcast links?	Because multiple nodes share the medium, so frames need local link-layer addresses to identify the intended receiver.
+What is address resolution in networking?	The process of mapping a network-layer address to the correct link-layer address for the next hop.
+Why is address resolution needed in packet forwarding?	A node may know the destination IP address but still need the correct local MAC address before it can send a frame on the link.
+Why is address resolution a per-link problem?	Different links may use different layer-2 protocols and address formats, so each hop needs its own local mapping.
+Why can't a node on one side of a router use a host's MAC address from another link directly?	MAC addresses only have local link meaning and are not used end-to-end across routers.
+What is network byte order?	The standard byte order used for multi-byte protocol fields on the network: big-endian.
+What is the difference between big-endian and little-endian?	Big-endian stores the most significant byte first; little-endian stores the least significant byte first.
+Why is a standard network byte order necessary?	So machines with different internal byte orders interpret transmitted multi-byte values consistently.
+Why can raw memory views of integers be dangerous in networking code?	The byte order in memory depends on the host architecture, so blindly reinterpreting bytes can reverse protocol field values.
+Why is big-endian convenient for protocol headers and addresses?	The most significant bytes come first on the wire, which matches prefix-style interpretation and lets receivers start processing from the leading bytes immediately.
