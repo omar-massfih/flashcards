@@ -471,3 +471,39 @@ What must an in-place operator method like `__iadd__` return?	`self`.
 Should immutable Python types implement in-place operator methods such as `__iadd__`?	No; in-place mutation is contrary to immutability.
 Why can `+=` reasonably be more permissive than `+` for mutable sequence-like types?	`+=` keeps the left-hand object's type and updates it in place, while `+` creates a new result and therefore often needs stricter operand-type rules.
 When is implementing a reverse infix method like `__radd__` unnecessary?	When the forward method is intentionally defined to work only with operands of the same type, so a reversed call could never add new valid cases.
+What does `iter(x)` try first in Python?	It first looks for `x.__iter__()` and uses that to obtain an iterator.
+How can an object still be iterable in Python even if it does not define `__iter__`?	If it implements `__getitem__` with 0-based indexes, `iter()` can build an iterator from that legacy sequence protocol.
+What is the most accurate way to check whether an object is iterable in Python?	Call `iter(x)` and handle `TypeError` if it fails.
+What is an iterator in Python?	An object with `__next__` that yields items one by one and raises `StopIteration` when exhausted.
+Why must a Python iterator also implement `__iter__` returning `self`?	So it can be used anywhere an iterable is expected, such as in a `for` loop.
+What is the difference between an iterable and an iterator in Python?	An iterable can produce new iterators; an iterator is the stateful object currently yielding items.
+Why should an iterable usually not be its own iterator?	Because each traversal should get an independent iterator state, allowing multiple or repeated passes over the same data.
+What is a generator function in Python?	A function containing `yield` that returns a generator object when called.
+How does `next(g)` interact with a generator object?	It resumes execution until the next `yield`, returns the yielded value, and suspends the generator again.
+What happens when a generator function runs to completion?	The generator object raises `StopIteration`.
+What is the difference between a list comprehension and a generator expression?	A list comprehension eagerly builds a list; a generator expression produces values lazily on demand.
+Why can a lazy iterator or generator save resources?	It produces items only when needed, which can reduce memory use and avoid unnecessary work.
+Why can `re.finditer` be preferable to `re.findall` for large inputs?	`finditer` yields matches lazily instead of building a full list of all matches up front.
+What determines whether to use a generator expression or a generator function in Python?	Use a generator expression for short simple logic; use a generator function when the logic is complex enough that a named function is clearer.
+What is the purpose of the two-argument form `iter(callable, sentinel)`?	It repeatedly calls a zero-argument callable and stops iteration when the callable returns the sentinel value.
+What does `itertools.count` generate?	An arithmetic progression that continues indefinitely unless externally limited.
+Why is `itertools.takewhile` useful with an infinite generator?	It stops the output as soon as the predicate becomes false, making an otherwise unbounded source finite.
+What does `itertools.accumulate` do?	It yields running accumulated results, such as partial sums, minima, maxima, or products.
+What does `zip` do with multiple iterables in Python?	It consumes them in parallel and stops when the shortest iterable is exhausted.
+What does `itertools.zip_longest` do differently from `zip`?	It continues until the longest iterable is exhausted, filling missing positions with a default value.
+What does `itertools.chain` do?	It yields all items from several iterables one after another as one continuous stream.
+What does `itertools.product` compute?	The Cartesian product of the input iterables.
+What does `itertools.groupby` assume about its input?	Items that belong in the same group should already be adjacent, often because the input was sorted by the grouping key.
+What does `itertools.tee` do?	It creates multiple independent iterators that each yield the items of one input iterable.
+Why can `all()` and `any()` be more efficient than a generic reduce?	They short-circuit and stop as soon as the final truth value is determined.
+What does `yield from subgen()` do in a generator?	It delegates iteration to the subgenerator, passing its yielded values directly to the caller until the subgenerator finishes.
+Why can `yield from` simplify recursive or nested generator code?	It replaces explicit loops that forward values from another generator.
+What value can `yield from` capture from a subgenerator?	The value returned by the subgenerator when it finishes.
+What is the difference between a generator used as an iterator and a classic coroutine?	A generator used as an iterator produces data for the caller, while a classic coroutine is mainly designed to receive data via `send`.
+What does it mean to prime a classic coroutine in Python?	Advance it to its first `yield`, usually with `next(coro)` or `coro.send(None)`, so it is ready to receive sent values.
+What happens if you call `send(x)` on a classic coroutine before priming it?	It fails, because the coroutine is not yet suspended at a `yield` where it can receive a value.
+What does `.close()` do to a generator or classic coroutine?	It raises `GeneratorExit` inside it, causing it to terminate unless explicitly handled.
+How can a classic coroutine return a final value in Python?	By using `return value`, which is delivered to the caller as the `value` attribute of the resulting `StopIteration`.
+Why is `Iterator[T]` often enough as a type hint for a generator used only for iteration?	Because it conveys the yielded item type without the extra send/return details of the fuller `Generator` type.
+What do the three type parameters in `Generator[YieldType, SendType, ReturnType]` represent?	The type yielded out, the type accepted by `send`, and the final return type.
+Why is the `SendType` of `Generator[YieldType, SendType, ReturnType]` contravariant?	Because it describes values that go into the coroutine, so a coroutine that accepts a broader input type can stand in for one that accepts a narrower type.
