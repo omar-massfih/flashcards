@@ -507,3 +507,28 @@ How can a classic coroutine return a final value in Python?	By using `return val
 Why is `Iterator[T]` often enough as a type hint for a generator used only for iteration?	Because it conveys the yielded item type without the extra send/return details of the fuller `Generator` type.
 What do the three type parameters in `Generator[YieldType, SendType, ReturnType]` represent?	The type yielded out, the type accepted by `send`, and the final return type.
 Why is the `SendType` of `Generator[YieldType, SendType, ReturnType]` contravariant?	Because it describes values that go into the coroutine, so a coroutine that accepts a broader input type can stand in for one that accepts a narrower type.
+What problem does the `with` statement solve (Python)?	It packages temporary setup and reliable teardown so cleanup happens even if the block exits via `return` or an exception.
+What protocol makes an object usable in a `with` statement (Python)?	The context manager protocol: `__enter__` and `__exit__`.
+In `with expr as target:`, what value is bound to `target` (Python)?	Whatever `expr.__enter__()` returns, which may be different from the context manager object itself.
+When is `__exit__` called for a context manager (Python)?	Whenever control leaves the `with` block, whether by normal completion, `return`, or exception.
+What does `__exit__` receive when a `with` block raises an exception (Python)?	The exception type, the exception instance, and the traceback object.
+What does a truthy return value from `__exit__` mean (Python)?	It tells the interpreter the exception was handled and should be suppressed.
+Why are context managers useful beyond automatic file closing (Python)?	They factor reusable setup/teardown or temporary state changes into a safer abstraction.
+What does `contextlib.closing` provide (Python)?	A context manager wrapper for objects that have `close()` but do not implement `__enter__` and `__exit__`.
+What does `contextlib.suppress` do (Python)?	It temporarily ignores specified exception types within a `with` block.
+What does `contextlib.nullcontext` do (Python)?	It provides a no-op context manager, useful when code conditionally needs a real context manager or none at all.
+When is `contextlib.ExitStack` especially useful (Python)?	When the number of context managers to enter is dynamic or not known in advance.
+What does the `@contextmanager` decorator let you implement (Python)?	A context manager as a generator with one `yield`, instead of writing a class with `__enter__` and `__exit__`.
+In a generator-based context manager, what does the code before `yield` represent (Python)?	The setup phase that runs like `__enter__`.
+In a generator-based context manager, what does the code after `yield` represent (Python)?	The teardown phase that runs like `__exit__`.
+Why should a `@contextmanager` generator usually put `yield` inside `try/finally` (Python)?	To guarantee teardown runs even if code inside the `with` block raises an exception.
+How are exceptions from a `with` block delivered into a `@contextmanager` generator (Python)?	They are raised back into the generator at the `yield` point.
+What does `|` mean inside a `match` pattern (Python)?	It forms an OR-pattern: the case matches if any alternative pattern matches.
+What restriction applies to variable binding in an OR-pattern (Python)?	All alternatives must bind the same set of variables.
+What is a guard in a `case` clause (Python)?	An `if` condition checked after the pattern matches to decide whether that case should run.
+Why is `match/case` a good fit for interpreters or DSLs (Python)?	The patterns can mirror the grammar or tree structure of the language, making dispatch clearer and easier to extend.
+When does the `else` clause of a loop run (Python `for`/`while`)?	Only if the loop completes normally without `break`; for `while`, that means the condition became false.
+When does the `else` clause of a `try` statement run (Python)?	Only if the `try` block completes without raising an exception.
+Why can `try/except/else` be clearer than putting follow-up code inside `try` (Python)?	It keeps only the operation expected to fail inside `try` and makes the success-only path explicit.
+What does EAFP mean in Python?	"Easier to ask forgiveness than permission": do the operation and handle exceptions if needed.
+Why can EAFP be safer than LBYL in concurrent code (Python)?	State can change between a precheck and the action, but exception handling checks at the actual point of use.
