@@ -1,0 +1,24 @@
+What does CIDR allow in IP addressing?	Variable-length network prefixes, so networks can choose how many bits belong to the network part versus the host part.
+What does a netmask indicate in IP addressing?	Which bits belong to the network prefix and which belong to the host portion of the address.
+How is a CIDR network commonly written?	As a network address followed by a prefix length, such as `/22` or `/48`.
+How can a host or router tell whether a destination is on a local subnet?	By checking whether `destination_address & netmask` equals the local subnet address.
+What is the longest-prefix-match rule in IP routing?	If multiple routing entries match a destination, use the one with the longest matching prefix.
+Why is longest-prefix match needed in routing?	So more specific routes override broader aggregate routes when both match the same destination.
+Why was IPv6 introduced?	To address IPv4 limitations, especially address exhaustion, and to improve areas such as routing scalability, mobility, and QoS support.
+How does the IPv6 header differ from the IPv4 header?	It is larger but simpler, with a fixed basic format and less per-hop processing.
+Why is the IPv6 header considered simpler than the IPv4 header?	It removes the header checksum, moves options into extension headers, and eliminates router-side fragmentation.
+Who handles fragmentation in IPv6?	End systems handle it; routers do not fragment packets in transit.
+What is the purpose of IPv6 extension headers?	To move optional features out of the main header so normal forwarding stays simpler.
+What IPv6 fields help support differentiated handling of traffic?	The traffic class and flow label fields.
+How are IPv6 addresses written?	As eight groups of hexadecimal 16-bit values separated by colons.
+How can an IPv6 address be compressed in text form?	By omitting leading zeros in a group and replacing one contiguous run of all-zero groups with `::`.
+What does an IPv6 prefix like `/48` mean?	The first 48 bits are the network prefix, and the remaining bits identify subnets and interfaces.
+What is a link-local IPv6 address?	A non-routable address on the local link, typically in `fe80::/10`, used for local communication and bootstrapping.
+Why is a link-local IPv6 address useful even before a host gets a routable address?	It lets the host communicate on the local link first, which helps with setup steps such as duplicate-address detection and later address acquisition.
+What message is used in IPv6 duplicate-address detection?	A Neighbor Solicitation ICMP message.
+What does the transport layer address in the TCP/IP model?	Process or application endpoints, not just hosts.
+What identifies a transport-layer service endpoint in TCP/IP?	A port number together with the host's IP address and transport protocol.
+What uniquely identifies a TCP connection?	The 5-tuple of source IP, source port, destination IP, destination port, and protocol.
+Why can multiple TCP connections reuse the same local port?	Because the full 5-tuple is different when the remote endpoint differs.
+Why are well-known server ports useful?	They give clients a predictable port number for reaching a standard service.
+What is transport-layer multiplexing and demultiplexing?	Using ports and protocol identifiers so many application flows can share one host and IP stack while incoming data is delivered to the correct process.
