@@ -389,3 +389,23 @@ Why is `tests/common.rs` a poor place for shared Rust integration-test helpers?	
 How should shared helper code be organized for Rust integration tests?	Put it in a submodule such as `tests/common/mod.rs` and import it with `mod common;`.
 Why can't a pure binary Rust crate be integration-tested through the `tests/` directory?	Other crates cannot `use` items from `src/main.rs`; only library crates expose reusable public APIs.
 Why do Rust projects often keep logic in `src/lib.rs` even when they provide a binary?	It makes the core functionality available for integration testing and leaves `src/main.rs` as a thin entry point.
+What does `std::env::args()` provide in Rust?	An iterator over the command-line arguments passed to the program.
+Why does `collect()` often need a type annotation when collecting command-line arguments in Rust?	Because Rust must know which collection type to build, such as `Vec<String>`.
+When should Rust code use `std::env::args_os()` instead of `std::env::args()`?	When the program must accept command-line arguments that may contain invalid Unicode.
+Why is it useful to group command-line settings into a `Config` struct in Rust?	It makes the program's configuration explicit and keeps related values together.
+Why is cloning argument strings into a `Config` struct often acceptable in a small Rust CLI?	It simplifies ownership and lifetime management for small values where the extra copy cost is negligible.
+When should a Rust binary split code between `main.rs` and `lib.rs`?	When the program logic starts growing, so `main` can stay focused on setup while reusable logic moves into the library.
+What responsibilities should usually remain in `main` for a Rust CLI?	Parse arguments, set up configuration, call the main `run` logic, and report any top-level errors.
+Why is returning `Result` from `Config::build` better than panicking on missing CLI arguments?	It lets the program produce a user-facing usage error instead of an internal panic-style failure.
+What does `unwrap_or_else` enable on a `Result` in Rust CLI setup code?	Custom handling of the error case while still extracting the success value when present.
+Why is `process::exit(1)` used in a Rust CLI after a top-level error?	To terminate the program with a nonzero exit status that signals failure to the calling process.
+Why is it useful for a Rust CLI's `run` function to return `Result<(), Box<dyn Error>>`?	It lets `run` propagate different error types with `?` while signaling that success has no meaningful return value.
+What does `Box<dyn Error>` mean in a Rust function return type?	The function may return any heap-allocated error type that implements the `Error` trait.
+Why is the `?` operator useful in a Rust CLI `run` function?	It propagates errors concisely instead of requiring explicit `match` handling at each step.
+Why does a search function like `fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str>` tie the output lifetime to `contents`?	Because the returned string slices must point into the searched text, not into the query string.
+Why is test-driven development helpful when implementing a function like `search`?	It forces the intended behavior to be specified first and lets the implementation grow just enough to satisfy the tests.
+How can a Rust program implement case-insensitive search simply?	Lowercase the query and each candidate line before checking whether the line contains the query.
+What is the tradeoff of using `to_lowercase()` for case-insensitive search in Rust?	It is simple and practical, but not a fully general Unicode-aware case-folding solution.
+How can a Rust CLI enable optional behavior through an environment variable?	Read it with `env::var` and treat its presence or value as configuration.
+Why should error messages in a CLI be written to `stderr` instead of `stdout`?	So users can redirect normal output to a file without losing visibility into errors.
+What is the difference between `println!` and `eprintln!` in Rust?	`println!` writes to standard output, while `eprintln!` writes to standard error.
