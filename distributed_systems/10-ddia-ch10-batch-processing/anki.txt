@@ -1,0 +1,39 @@
+What is a system of record?	The authoritative source of truth where new facts are first written and represented canonically.
+What is a derived data system?	A system whose data is computed from another source and can be rebuilt from that source if lost.
+Why is derived data useful even though it is redundant?	It enables faster reads and alternative views such as caches, indexes, materialized views, and recommendation data.
+What are the three broad kinds of data systems contrasted in DDIA chapter 10?	Services (online systems), batch processing systems, and stream processing systems.
+What is the main performance focus of a batch processing system?	Throughput over a large bounded input dataset.
+What distinguishes stream processing from batch processing?	Stream processing works on events shortly after they happen rather than on a fixed bounded dataset.
+Why are Unix tools an important model for batch processing?	They show how simple composable programs over immutable inputs can form powerful data-processing pipelines.
+Why is a uniform interface important in Unix-style data processing?	It lets independently written tools compose cleanly because one program's output can become another's input.
+What is the key uniform interface in Unix-style data processing?	An ordered byte stream exposed as files, stdin, stdout, or pipes.
+Why is separating logic from wiring useful in data processing systems?	It lets the program focus on transformation logic while the environment decides where input comes from and where output goes.
+Why does immutability of batch-job inputs make experimentation safer?	You can rerun, debug, and tweak processing without damaging the original data.
+What are the two user-defined phases in a basic MapReduce job?	The mapper phase and the reducer phase.
+Why is sorting central to MapReduce?	It brings records with the same key together so reducers can process related data in one place.
+What is the shuffle in MapReduce?	The partitioning, copying, and sorting of mapper output so each reducer receives the records for its key range.
+Why does MapReduce “move computation to the data”?	It tries to run map tasks on machines that already store the relevant input blocks, reducing network transfer.
+Why are chained MapReduce jobs more like temporary files than Unix pipes?	Each stage fully materializes its output before the next job starts.
+What is a reduce-side sort-merge join?	A join that maps both inputs by join key, shuffles and sorts them, and performs the join in the reducer.
+Why is a reduce-side join attractive despite the shuffle cost?	It works without assuming special layout properties of the input datasets.
+What is the main idea of “bringing related data to the same place” in MapReduce?	Partition and sort by key so all records needed for one join or grouping arrive in one reducer call.
+How does MapReduce implement `GROUP BY`-style processing?	Mappers emit the grouping key, and the framework brings all records with that key to the same reducer for aggregation.
+What is a hot key in distributed batch processing?	A disproportionately frequent key that creates skew by overloading one reducer or partition.
+What is a broadcast hash join?	A map-side join where the small input is loaded into memory on every mapper that scans the large input.
+When is a partitioned hash join possible?	When both join inputs are partitioned compatibly by the same key and partitioning scheme.
+When is a map-side merge join possible?	When both join inputs are partitioned and sorted in the same way, so a mapper can merge them directly.
+Why can map-side joins be faster than reduce-side joins?	They avoid the expensive shuffle-and-sort stage, but require stronger assumptions about input layout.
+What kinds of outputs commonly come from batch workflows?	Search indexes, machine-learning models, recommendation data, reports, and read-optimized key-value datasets.
+Why is it often better for a batch job to build new output files than to write directly into an external database?	It preserves all-or-nothing batch semantics, avoids overwhelming the database, and makes rollback and reruns much easier.
+What does it mean to materialize intermediate state in a batch workflow?	Write the output of one stage to durable files before the next stage begins.
+What is a major downside of materializing every intermediate stage, as in classic MapReduce?	It adds latency and I/O because later stages must wait and reread fully written intermediate data.
+What is a dataflow engine in distributed batch processing?	A system that executes an entire workflow as one job with operators connected by explicit data dependencies.
+Why can dataflow engines outperform classic MapReduce?	They avoid unnecessary materialization, unnecessary sorting, and redundant mapper stages, and can pipeline operators.
+How do Spark and Flink recover from failures without fully materializing every intermediate result?	They recompute lost state from prior data and tracked lineage or checkpoints.
+Why is deterministic operator behavior important for fault recovery in dataflow systems?	Because recomputation must produce the same results, or downstream state becomes inconsistent.
+What is the main difference between Hadoop-style batch systems and traditional MPP databases?	Hadoop-style systems prioritize storage and processing flexibility over tightly integrated optimized SQL execution.
+Why did Hadoop-style systems encourage “schema-on-read”?	They allowed raw data to be collected first and interpreted later for different purposes instead of forcing one schema up front.
+What is a key advantage of higher-level declarative APIs over hand-written MapReduce code?	They let the framework choose efficient join strategies and execution plans automatically.
+What is the Pregel model for graph processing?	An iterative bulk-synchronous model in which each vertex processes incoming messages and sends messages to other vertices for the next round.
+Why can distributed graph processing be communication-heavy?	Because related vertices are often spread across machines, so many edge traversals require cross-machine messaging.
+Why can a single-machine graph algorithm outperform a distributed one for medium-sized graphs?	Because it avoids the high network and coordination overhead of distributed graph processing.
