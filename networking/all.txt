@@ -73,3 +73,39 @@ What uniquely identifies a TCP connection?	The 5-tuple of source IP, source port
 Why can multiple TCP connections reuse the same local port?	Because the full 5-tuple is different when the remote endpoint differs.
 Why are well-known server ports useful?	They give clients a predictable port number for reaching a standard service.
 What is transport-layer multiplexing and demultiplexing?	Using ports and protocol identifiers so many application flows can share one host and IP stack while incoming data is delivered to the correct process.
+What information identifies the forwarding target in a connectionless network-layer packet?	The destination end-system address.
+What information can identify the forwarding target in a connection-oriented network layer?	A route label or virtual-circuit identifier carried in the packet.
+What knowledge does an intermediate system need for layer-3 forwarding?	Subnetwork topology, end-system location/addressing, communication requirements such as QoS, and current network status.
+What is the difference between routing and switching in packet networks?	Routing computes the next hop from a destination address; switching forwards using a prefilled mapping from a short identifier to the next hop.
+What is circuit switching?	Communication over a dedicated physical connection that exists for the duration of the conversation.
+Why can circuit switching waste resources?	Capacity stays reserved even when the traffic is bursty or temporarily idle.
+What is packet switching?	Sending limited-size packets independently through the network without a dedicated end-to-end path.
+Why can packet switching achieve high resource utilization?	Links are shared statistically instead of being rigidly reserved for one conversation.
+What are key drawbacks of packet switching?	Congestion can occur, delay can vary, and packets from one flow may take different paths.
+What is virtual-circuit switching?	Connection-oriented packet switching in which a path is set up in advance and switches keep per-connection state.
+How does virtual-circuit switching differ from circuit switching?	It still sends packets and keeps logical state, but it does not require a dedicated physical circuit for the whole path.
+What happens during the setup phase of a virtual circuit?	A path is selected, virtual-circuit identifiers are assigned, forwarding state is stored in switches, and resources may be reserved.
+How are packets forwarded during a virtual circuit's data-transfer phase?	All packets follow the established path using the stored forwarding state and the virtual-circuit identifier in each packet.
+What happens during the disconnect phase of a virtual circuit?	The switches release reserved resources and delete the connection state.
+Why can virtual-circuit packets have lower header overhead than pure packet-switched packets?	They can carry a short virtual-circuit identifier instead of a full destination address.
+What benefits can virtual circuits provide over pure packet switching?	They can help preserve packet order and make QoS guarantees more feasible.
+Why are virtual-circuit identifiers often local to each link segment instead of global?	The same numeric identifier can be reused on different links, and each switch maps incoming identifiers to outgoing ones.
+Why is virtual-circuit switching more sensitive to node or link failures than packet switching?	Its fixed path and stored per-connection state depend on the specific switches and links chosen during setup.
+What are the core responsibilities of the transport layer in TCP/IP?	Addressing processes, managing end-to-end connections, transferring data transparently between processes, and offering QoS-related features such as reliability and flow/congestion control.
+What is a connection-oriented transport service?	A transport service with separate setup, data-transfer, and disconnect phases.
+What is a connectionless transport service?	A transport service that sends independent messages without first establishing a connection.
+What is the difference between flow control and congestion control?	Flow control protects the receiver from being overwhelmed; congestion control protects the network from overload.
+Why can flow control and congestion control be hard to distinguish in practice?	Both can appear as packet loss or reduced throughput, even though one is caused by receiver limits and the other by network limits.
+What is a transport service access point at the transport layer in TCP/IP?	A port together with the host's IP address.
+What is a transport protocol data unit (TPDU)?	The unit of data exchanged by transport-layer peers; in TCP/IP it is commonly called a segment or datagram depending on the protocol.
+Why is TCP described as a byte-stream service rather than a packet service?	It presents applications with an ordered stream of bytes instead of preserving application message boundaries.
+Why does TCP usually split data into segments that fit into layer-3 packets?	To avoid relying on IP fragmentation, which is inefficient and can make the loss of one IP fragment destroy the whole larger unit of data.
+What kind of transport protocol is UDP?	A simple, unreliable, connectionless, message-oriented transport protocol.
+What is the purpose of the UDP source port?	It identifies the sender's transport endpoint so a reply can be directed back there.
+What is the purpose of the UDP destination port?	It identifies the receiving service or process for demultiplexing at the destination host.
+What does the UDP checksum protect?	The UDP header and data, with help from a pseudoheader derived from IP-layer information.
+What is included in the UDP pseudoheader for checksum calculation?	The source IP address, destination IP address, protocol number, and UDP length.
+Why does UDP include IP-layer information in its checksum pseudoheader?	So the receiver can detect some cases of misdelivery to the wrong IP endpoint or wrong protocol context.
+When is the UDP checksum considered unused in IPv4?	When the checksum field is all zeros.
+Why is a computed UDP checksum of zero transmitted as `0xFFFF`?	Because an all-zero checksum field is reserved to mean that no checksum is being used.
+Why is UDP often a good fit for simple request/response or real-time applications?	It avoids connection setup and retransmission delays, which is useful when timeliness matters more than occasional loss or duplication.

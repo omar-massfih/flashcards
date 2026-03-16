@@ -1,0 +1,18 @@
+What information identifies the forwarding target in a connectionless network-layer packet?	The destination end-system address.
+What information can identify the forwarding target in a connection-oriented network layer?	A route label or virtual-circuit identifier carried in the packet.
+What knowledge does an intermediate system need for layer-3 forwarding?	Subnetwork topology, end-system location/addressing, communication requirements such as QoS, and current network status.
+What is the difference between routing and switching in packet networks?	Routing computes the next hop from a destination address; switching forwards using a prefilled mapping from a short identifier to the next hop.
+What is circuit switching?	Communication over a dedicated physical connection that exists for the duration of the conversation.
+Why can circuit switching waste resources?	Capacity stays reserved even when the traffic is bursty or temporarily idle.
+What is packet switching?	Sending limited-size packets independently through the network without a dedicated end-to-end path.
+Why can packet switching achieve high resource utilization?	Links are shared statistically instead of being rigidly reserved for one conversation.
+What are key drawbacks of packet switching?	Congestion can occur, delay can vary, and packets from one flow may take different paths.
+What is virtual-circuit switching?	Connection-oriented packet switching in which a path is set up in advance and switches keep per-connection state.
+How does virtual-circuit switching differ from circuit switching?	It still sends packets and keeps logical state, but it does not require a dedicated physical circuit for the whole path.
+What happens during the setup phase of a virtual circuit?	A path is selected, virtual-circuit identifiers are assigned, forwarding state is stored in switches, and resources may be reserved.
+How are packets forwarded during a virtual circuit's data-transfer phase?	All packets follow the established path using the stored forwarding state and the virtual-circuit identifier in each packet.
+What happens during the disconnect phase of a virtual circuit?	The switches release reserved resources and delete the connection state.
+Why can virtual-circuit packets have lower header overhead than pure packet-switched packets?	They can carry a short virtual-circuit identifier instead of a full destination address.
+What benefits can virtual circuits provide over pure packet switching?	They can help preserve packet order and make QoS guarantees more feasible.
+Why are virtual-circuit identifiers often local to each link segment instead of global?	The same numeric identifier can be reused on different links, and each switch maps incoming identifiers to outgoing ones.
+Why is virtual-circuit switching more sensitive to node or link failures than packet switching?	Its fixed path and stored per-connection state depend on the specific switches and links chosen during setup.

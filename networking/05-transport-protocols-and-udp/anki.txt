@@ -1,0 +1,18 @@
+What are the core responsibilities of the transport layer in TCP/IP?	Addressing processes, managing end-to-end connections, transferring data transparently between processes, and offering QoS-related features such as reliability and flow/congestion control.
+What is a connection-oriented transport service?	A transport service with separate setup, data-transfer, and disconnect phases.
+What is a connectionless transport service?	A transport service that sends independent messages without first establishing a connection.
+What is the difference between flow control and congestion control?	Flow control protects the receiver from being overwhelmed; congestion control protects the network from overload.
+Why can flow control and congestion control be hard to distinguish in practice?	Both can appear as packet loss or reduced throughput, even though one is caused by receiver limits and the other by network limits.
+What is a transport service access point at the transport layer in TCP/IP?	A port together with the host's IP address.
+What is a transport protocol data unit (TPDU)?	The unit of data exchanged by transport-layer peers; in TCP/IP it is commonly called a segment or datagram depending on the protocol.
+Why is TCP described as a byte-stream service rather than a packet service?	It presents applications with an ordered stream of bytes instead of preserving application message boundaries.
+Why does TCP usually split data into segments that fit into layer-3 packets?	To avoid relying on IP fragmentation, which is inefficient and can make the loss of one IP fragment destroy the whole larger unit of data.
+What kind of transport protocol is UDP?	A simple, unreliable, connectionless, message-oriented transport protocol.
+What is the purpose of the UDP source port?	It identifies the sender's transport endpoint so a reply can be directed back there.
+What is the purpose of the UDP destination port?	It identifies the receiving service or process for demultiplexing at the destination host.
+What does the UDP checksum protect?	The UDP header and data, with help from a pseudoheader derived from IP-layer information.
+What is included in the UDP pseudoheader for checksum calculation?	The source IP address, destination IP address, protocol number, and UDP length.
+Why does UDP include IP-layer information in its checksum pseudoheader?	So the receiver can detect some cases of misdelivery to the wrong IP endpoint or wrong protocol context.
+When is the UDP checksum considered unused in IPv4?	When the checksum field is all zeros.
+Why is a computed UDP checksum of zero transmitted as `0xFFFF`?	Because an all-zero checksum field is reserved to mean that no checksum is being used.
+Why is UDP often a good fit for simple request/response or real-time applications?	It avoids connection setup and retransmission delays, which is useful when timeliness matters more than occasional loss or duplication.
