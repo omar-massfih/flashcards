@@ -1,0 +1,39 @@
+Why do complex applications usually need several specialized data tools instead of one general system?	Because the same data is used under different access patterns and tradeoffs, and no single tool is ideal for all of them.
+What is the main data-integration challenge in a multi-system architecture?	Keeping multiple representations of the same data consistent across different storage and processing systems.
+Why is it helpful to funnel writes through one system of record before deriving other views?	It gives one place that determines write order, making downstream derived systems easier to keep consistent.
+Why are log-based derived data systems often preferable to distributed transactions for integration?	They trade synchronous coordination for ordered asynchronous propagation, which is usually more robust and practical across heterogeneous tools.
+What is the key weakness of asynchronous derived data compared with distributed transactions?	Derived views may lag behind the source of truth, so they do not automatically provide strong timing guarantees like read-your-own-writes.
+Why does total ordering become difficult in large distributed systems?	Scaling, partitioning, geographic distribution, microservices, and offline clients all create situations with no single global leader or agreed order.
+Why can ordering events by object or partition still be sufficient in many cases?	Conflicts usually matter only among events that touch the same key or logically related data.
+What problem arises when causally related events are processed without preserving their dependency order?	Derived systems may observe and act on an order that contradicts user intent, producing inconsistent or incorrect outcomes.
+Why is reprocessing historical data valuable for application evolution?	It lets you rebuild new derived views, indexes, or schemas from existing input without mutating the original source.
+What is the core idea of the lambda architecture?	Keep immutable event data, use a stream layer for low-latency approximate updates, and a batch layer for later recomputation of corrected views.
+What is a major downside of the lambda architecture?	It duplicates logic and operational complexity by requiring both batch and stream implementations of the same computation.
+What is the main idea behind unifying batch and stream processing?	Use one system that can both replay historical events and process live streams with the same programming model.
+What capabilities make unified batch-and-stream processing practical?	Replayable event logs, exactly-once stream semantics, and event-time windowing.
+What does “unbundling a database” mean?	Separating database-like functions such as indexing, view maintenance, and replication into composable external systems linked by logs and streams.
+What are unbundled databases mainly trying to unify?	Writes and state propagation across multiple specialized systems using logs and asynchronous derivation.
+Why is asynchronous log-based integration considered more loosely coupled than distributed transactions?	It contains faults locally and lets components evolve and run independently instead of requiring synchronous cross-system coordination.
+What is the write path in a dataflow architecture?	The eager processing that turns incoming data into derived state before any user asks for it.
+What is the read path in a dataflow architecture?	The on-demand work done when a user or service queries already derived state.
+Why can a full-text index be viewed as a write/read path tradeoff?	Writes do extra work to update the index so reads can avoid scanning all documents later.
+Why are stateful offline-capable clients natural in a dataflow view of applications?	The device can hold a local replica or cache of state and subscribe to changes instead of depending on synchronous round-trips for every interaction.
+What is the advantage of pushing state changes to clients rather than making clients poll?	It reduces staleness and allows more responsive interfaces that stay closer to current server state.
+What does it mean to treat reads as events too?	Read requests can be logged and processed through the same dataflow machinery as writes, rather than existing only as transient queries.
+Why can logging read events be useful?	It helps reconstruct what a user saw, improving provenance tracking, causal analysis, and auditability.
+What is the end-to-end argument in system design?	A correctness property often cannot be fully guaranteed by low-level components alone and must be enforced with help from the application endpoints.
+Why are database transactions alone not enough for end-to-end duplicate suppression?	Duplicate requests can be retried across clients, services, and connections, so the application must carry an operation identity across the whole path.
+What is the purpose of an end-to-end operation identifier?	To let every stage detect retries of the same logical request and suppress duplicates.
+Why can dataflow systems preserve integrity without requiring synchronous coordination everywhere?	They can use durable logs, deterministic derivations, idempotent processing, and asynchronous validation to keep state correct.
+What is the difference between timeliness and integrity in data systems?	Timeliness is whether users see up-to-date state quickly; integrity is whether the data is correct and uncorrupted.
+What is the difference between an eventual-consistency problem and an integrity problem?	Eventual consistency is temporary staleness that may resolve with time; integrity failure is lasting corruption that requires repair.
+Why is integrity often more important than timeliness?	Stale data may be annoying, but corrupted or contradictory data can cause lasting harm and expensive recovery.
+What is a coordination-avoiding data system?	A system that preserves integrity for many operations without requiring synchronous cross-node coordination on every write.
+Why can many business constraints be enforced after the fact instead of before the write?	The system can compensate later with apologies, refunds, or other business processes if occasional violations are acceptable.
+Why is auditing important even when underlying systems claim strong guarantees?	Hardware faults, software bugs, and misuse can still corrupt data, so correctness should be verified rather than blindly assumed.
+Why do immutable event logs improve auditability?	They preserve the full history and make derived state reproducible by rerunning deterministic transformations.
+What does “trust, but verify” mean for data systems?	Use reliability mechanisms, but also continuously check and validate that data and replicas are still correct.
+Why can “data-driven” decisions still be discriminatory?	If the training data reflects historical bias or correlated proxies for protected traits, the model can learn and reinforce that bias.
+What does privacy mean in an ethical data-systems context?	The ability of a person to decide what information about them is revealed, to whom, and for what purpose.
+Why is large-scale behavioral tracking often better described as surveillance than mere data collection?	The data is extracted asymmetrically and used to observe, profile, and influence people, often serving organizational interests more than the user's.
+Why is collected personal data described as a toxic or hazardous asset?	It creates value for organizations but also creates risk of abuse, breaches, coercive access, and future misuse.

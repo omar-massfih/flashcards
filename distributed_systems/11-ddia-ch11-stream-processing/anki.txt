@@ -1,0 +1,51 @@
+What is a stream in data systems?	Data that is incrementally made available over time rather than as one bounded complete dataset.
+Why must batch systems artificially divide unbounded data into chunks?	Because a batch job needs a bounded input so it can know when it has finished.
+What is an event in stream processing?	A small, self-contained, immutable record of something that happened at some point in time, usually with a timestamp.
+What are producers and consumers in a streaming system?	Producers generate events once, and consumers subscribe to process those events.
+Why does frequent polling become inefficient for low-latency stream processing?	Most polls return no new data, so overhead rises as you poll more often.
+What are the three main ways a messaging system can react to slow consumers?	Drop messages, buffer them in a queue, or apply backpressure to slow producers.
+What is the main limitation of direct producer-to-consumer messaging systems?	They usually tolerate fewer faults and often assume both producers and consumers stay continuously online.
+What is a message broker?	A server that receives messages from producers, buffers them, and delivers them to consumers.
+How do message brokers help compared with direct messaging?	They decouple clients in time, so producers and consumers can connect, disconnect, or crash independently.
+What is the difference between load balancing and fan-out in messaging?	Load balancing delivers each message to one consumer in a group; fan-out delivers each message to all subscribed consumers.
+Why do message brokers use acknowledgments?	So a message is only considered done and removed after a consumer confirms successful processing.
+Why can load balancing plus redelivery reorder messages?	A message that was assigned to one consumer may be retried on another later, after newer messages were already processed.
+What is a log-based message broker?	A broker that stores messages in an append-only log and lets consumers read that log sequentially.
+What is a partition in a log-based message broker?	An independently readable and writable append-only log that holds one slice of a topic.
+What is an offset in a log-based message broker?	A monotonically increasing sequence number that identifies a message's position within a partition.
+What ordering guarantee does a partitioned log provide?	Messages are totally ordered within one partition, but not across different partitions.
+Why is fan-out easy in a log-based broker?	Several consumers can read the same log independently because reading does not delete messages.
+How does load balancing usually work in a log-based broker?	By assigning whole partitions, not individual messages, to consumers in a consumer group.
+What is a consumer offset?	The position of the last processed message in a partition, which lets a consumer resume later.
+Why do consumer offsets reduce bookkeeping overhead in log-based systems?	The broker tracks progress by position in the log instead of requiring an acknowledgment for every single message.
+What happens if a consumer falls behind further than the broker's retention window?	It misses old messages because the broker eventually deletes or archives old log segments.
+What is the main benefit of replaying old messages in a log-based broker?	You can rerun consumers, rebuild derived state, recover from bugs, or experiment without changing the input log.
+What is the core problem with dual writes to multiple systems?	Concurrent writes or partial failures can leave the systems permanently inconsistent with each other.
+What is change data capture (CDC)?	Observing all writes made to a database and turning them into a stream of change events for other systems to consume.
+Why is CDC useful for derived data systems?	It lets caches, indexes, warehouses, and similar systems follow one source-of-truth database in write order.
+Why is an initial snapshot often needed in CDC?	Because a changelog of only recent updates is not enough to build a full copy of current database state from scratch.
+What does log compaction do in a log-based system?	It keeps only the latest value for each key, discarding superseded older records.
+Why is log compaction useful for rebuilding derived state?	A new consumer can replay the compacted log from offset 0 and reconstruct the latest database contents.
+What is event sourcing?	Modeling application state as a durable log of immutable application-level events rather than as in-place updates to mutable records.
+How does event sourcing differ from change data capture?	Event sourcing makes events the application's primary write model, while CDC extracts change events from an underlying mutable database.
+What is the difference between a command and an event in event sourcing?	A command is a request that may fail validation; an event is an accepted fact that has become durable and immutable.
+Why are immutable events useful for debugging and recovery?	They preserve the full history of what happened, making it easier to diagnose bugs and rebuild state correctly.
+What does CQRS mean in systems built around logs and views?	Write-optimized command handling is separated from read-optimized derived views.
+What is the difference between event time and processing time?	Event time is when the event actually happened; processing time is when the stream processor handles it.
+Why can processing-time windows produce misleading results?	Delays, restarts, or backlog reprocessing can shift events into artificial spikes or dips unrelated to when they actually occurred.
+What is a straggler event in stream processing?	An event that arrives after the system thought the relevant time window was already complete.
+What are the two broad ways to deal with straggler events?	Ignore them once a window closes, or emit a corrected result after late events arrive.
+What is a tumbling window?	A fixed-size, non-overlapping time window in which each event belongs to exactly one window.
+What is a hopping window?	A fixed-size window that advances by a smaller hop interval, so windows overlap.
+What is a sliding window?	A window defined by events occurring within some time interval of each other rather than by fixed boundaries.
+What is a session window?	A variable-length window that groups nearby events for one entity until a period of inactivity ends the session.
+What is a stream-stream join?	A join that correlates events from two streams, often within a time window.
+What is a stream-table join?	A join that enriches stream events using the latest state of a table or table changelog.
+What is a table-table join in stream processing?	Joining two changelog streams so each change updates a materialized view of the join.
+Why can joins on changing streams be nondeterministic?	If related events from different streams arrive in different interleavings, the join may use different versions of state at different times.
+What is microbatching in stream processing?	Breaking a stream into very small batches and processing each batch like a miniature batch job.
+What is checkpointing in stream processing?	Periodically saving operator state so processing can restart from a recent consistent point after a failure.
+Why are microbatching or checkpointing alone not enough for exactly-once processing with external side effects?	A failed task may already have written to an external system, and restarting it can repeat that effect.
+What does exactly-once processing really require in a stream processor?	State updates, outputs, side effects, and input acknowledgments must take effect together or not at all.
+What is an idempotent operation?	An operation that can be repeated without changing the final result beyond the first successful application.
+Why is idempotence useful in stream processing fault tolerance?	It allows safe retries after failures without making the visible effect happen twice.

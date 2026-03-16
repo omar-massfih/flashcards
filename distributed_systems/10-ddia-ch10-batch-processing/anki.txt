@@ -1,8 +1,7 @@
 What is a system of record?	The authoritative source of truth where new facts are first written and represented canonically.
 What is a derived data system?	A system whose data is computed from another source and can be rebuilt from that source if lost.
 Why is derived data useful even though it is redundant?	It enables faster reads and alternative views such as caches, indexes, materialized views, and recommendation data.
-What are the three broad kinds of data systems contrasted in DDIA chapter 10?	Services (online systems), batch processing systems, and stream processing systems.
-What is the main performance focus of a batch processing system?	Throughput over a large bounded input dataset.
+What are the three broad kinds of data systems often contrasted in distributed systems?	Services (online systems), batch processing systems, and stream processing systems.
 What distinguishes stream processing from batch processing?	Stream processing works on events shortly after they happen rather than on a fixed bounded dataset.
 Why are Unix tools an important model for batch processing?	They show how simple composable programs over immutable inputs can form powerful data-processing pipelines.
 Why is a uniform interface important in Unix-style data processing?	It lets independently written tools compose cleanly because one program's output can become another's input.
