@@ -1,0 +1,45 @@
+What is concurrency in Python systems?	The ability to handle multiple pending tasks so each eventually makes progress, even if only one runs at a time.
+What is parallelism in Python systems?	The ability to execute multiple computations at the same time, typically using multiple CPU cores or machines.
+What is an execution unit in Python concurrency?	A process, thread, or coroutine: something that can execute code independently.
+What is a process in Python concurrency?	A separate running program with its own memory space and interpreter state.
+Why is communication between Python processes relatively costly?	Objects must be serialized to bytes to cross process boundaries.
+What is a thread in Python concurrency?	An execution unit inside one process that shares the process memory space with other threads.
+What is the main advantage of Python threads over processes?	Threads are lighter weight and can share live objects directly.
+What is the main risk of shared-memory threads in Python?	Concurrent mutation of the same objects can corrupt data unless access is synchronized.
+What is a coroutine in Python concurrency?	A function that can suspend itself and resume later, usually under control of an event loop.
+What kind of multitasking do Python coroutines use?	Cooperative multitasking: a coroutine must explicitly yield control with `await` or `yield`.
+What kind of multitasking do Python threads and processes use?	Preemptive multitasking under the operating system scheduler.
+What is a queue in concurrent Python programs?	A structure for exchanging data and control messages between execution units, often in FIFO order.
+What is a lock or mutex in Python concurrency?	A synchronization object used to prevent multiple execution units from updating shared state at the same time.
+What is contention in concurrent systems?	Competition among execution units for limited resources such as CPU time, locks, or I/O.
+Why are threads or processes harder to manage than ordinary function calls?	Completion, results, errors, and shutdown usually require explicit coordination instead of direct return values and exceptions.
+Why are long-lived worker threads or processes common in concurrent programs?	They amortize startup cost by processing many jobs instead of doing one task and exiting.
+What is the Global Interpreter Lock (GIL) in CPython?	A lock protecting interpreter state so only one thread executes Python bytecode at a time.
+Why can Python threads still work well for I/O-bound tasks despite the GIL?	Blocking I/O operations release the GIL, and I/O latency dominates execution time anyway.
+Why are Python threads a poor fit for CPU-bound work?	Threads contend for the GIL and add context-switching overhead instead of running Python code in parallel.
+How do you use multiple CPU cores for CPU-bound Python code?	Run the work in multiple processes, such as with `multiprocessing` or a process pool.
+When does CPython automatically release the GIL?	During many blocking system calls such as disk I/O, network I/O, and `time.sleep()`.
+Why doesn’t the GIL usually matter for coroutines by default?	Coroutines normally share one thread and one event loop, so they are not competing for parallel execution of Python bytecode.
+What is `threading.Event` used for in Python?	Simple signalling between threads, such as telling a worker thread to stop.
+What does `Event.wait(timeout)` do in Python threading?	It blocks until the event is set or until the timeout expires.
+How does the `multiprocessing` API relate to `threading`?	It intentionally mirrors much of the threading API, but runs work in separate processes.
+Why can `multiprocessing` bypass the GIL?	Each child process has its own Python interpreter and its own GIL.
+What does `asyncio.run(coro())` do?	It starts an event loop, runs the coroutine to completion, and returns its result.
+What does `asyncio.create_task(coro())` do?	It schedules a coroutine to run soon and returns a `Task` that manages it.
+What does `await some_coro()` do in Python?	It suspends the current coroutine until the awaited operation completes, yielding control to the event loop.
+Why should `asyncio` code use `await asyncio.sleep(...)` instead of `time.sleep(...)`?	`asyncio.sleep` yields control without blocking the event loop, while `time.sleep` blocks the whole thread.
+What happens if a CPU-bound function runs directly inside a coroutine?	It blocks the event loop, preventing other coroutines from making progress.
+What does `await asyncio.sleep(0)` do?	It yields control to the event loop immediately so other pending coroutines can run.
+Why is `await asyncio.sleep(0)` only a stopgap for CPU-bound async code?	The CPU-heavy work still runs in the event-loop thread between yields, slowing the whole program.
+What is the rough asyncio equivalent of a `threading.Thread`?	An `asyncio.Task`, which drives a coroutine.
+How is coroutine cancellation delivered in `asyncio`?	By raising `CancelledError` at an await point inside the coroutine.
+Why are queues central to process-based worker pools in Python?	They let the parent submit jobs and collect results without shared mutable state.
+What is a poison pill or sentinel in a worker queue?	A special value placed in the queue to tell a worker to stop processing and exit.
+Why is `object()` a poor sentinel for inter-process queues in Python?	After serialization and deserialization, object identity is not preserved.
+Why can results from multiple worker processes arrive out of submission order?	Different jobs finish at different times when workers run in parallel.
+Why can many CPU-bound Python threads be slower than one sequential thread?	GIL contention and context-switch overhead can outweigh any benefit.
+What problem do WSGI application servers solve for Python web apps?	They distribute requests across multiple Python worker processes so sequential app code can use multicore machines.
+What is the difference between WSGI and ASGI?	WSGI is a synchronous server interface; ASGI is designed to support asynchronous applications and coroutines.
+What is a distributed task queue in Python web architecture?	A system that sends background jobs to separate worker processes or machines via a message queue.
+Why are distributed task queues useful in web applications?	They offload slow work such as email, PDF generation, retries, and scheduled jobs from request-handling processes.
+Why does a producer-consumer task-queue design improve scalability?	Producers and workers are decoupled, so you can add more workers without changing the producers.

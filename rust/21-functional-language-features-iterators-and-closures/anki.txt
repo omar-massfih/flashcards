@@ -1,0 +1,28 @@
+What is a closure in Rust?	An anonymous function-like value that can be stored, passed around, and called later.
+How do closures differ from regular functions in Rust?	Closures can capture values from the environment where they are defined; regular functions cannot.
+What does `Option::unwrap_or_else` do in Rust?	It returns the `Some` value if present; otherwise it calls a fallback closure and returns that result.
+Why can Rust usually infer closure parameter and return types?	Closures are usually used in a narrow local context, so the compiler can infer their types from usage.
+What important limitation applies after Rust infers a closure's parameter type?	The closure becomes tied to one concrete parameter and return type for that use.
+How can a Rust closure capture values from its environment?	By immutable borrow, mutable borrow, or taking ownership.
+What determines whether a Rust closure borrows or takes ownership of a captured value?	How the closure body uses that value.
+What does `move` before a closure do in Rust?	It forces the closure to take ownership of the values it captures.
+When is `move` especially useful for a Rust closure?	When transferring captured data to another thread or other context that may outlive the current scope.
+What does the `FnOnce` trait mean for a Rust closure?	The closure can be called at least once and may consume captured values, so it might only be callable one time.
+What does the `FnMut` trait mean for a Rust closure?	The closure may mutate captured values but does not move them out, so it can be called more than once.
+What does the `Fn` trait mean for a Rust closure?	The closure neither mutates nor moves out captured values, so it can be called repeatedly without changing its environment.
+Why can `Option::unwrap_or_else` accept any kind of Rust closure?	It only needs a closure that can be called once, and every closure implements `FnOnce`.
+Why does `sort_by_key` require an `FnMut` closure in Rust?	Because it may call the key-extracting closure multiple times while sorting.
+Why can't a closure that moves a captured value out of its body satisfy an `FnMut` bound?	After the first call, the moved value is no longer available for later calls.
+When can a Rust function name be used where a closure is expected?	When no environment capture is needed and the function's signature matches the required `Fn` trait bound.
+Why are Rust iterators described as lazy?	They do no work until a consuming operation actually uses their items.
+What does the `Iterator` trait's `next` method return?	`Option<Self::Item>`, yielding `Some(item)` until the iterator is exhausted and then `None`.
+What kind of items does `iter()` produce in Rust?	Immutable references to the collection's items.
+What kind of items does `iter_mut()` produce in Rust?	Mutable references to the collection's items.
+What kind of items does `into_iter()` produce in Rust?	Owned items, consuming the original collection.
+What is a consuming adapter in Rust's iterator API?	A method that repeatedly calls `next`, uses up the iterator, and produces a final result.
+What is an iterator adapter in Rust?	A method that transforms an iterator into another iterator without consuming it immediately.
+Why does calling `map()` alone usually have no visible effect in Rust?	`map()` returns a lazy iterator, so nothing happens until the result is consumed.
+What does `collect()` do in Rust iterator code?	It consumes an iterator and gathers the produced items into a collection.
+Why are iterator chains often preferred over manual loops in Rust?	They express the transformation more directly and often avoid extra mutable state.
+What does it mean that Rust iterators are a zero-cost abstraction?	They usually compile to code with little or no runtime overhead compared with equivalent hand-written loops.
+Why can returning an iterator instead of a `Vec` improve responsiveness in Rust?	The caller can process items lazily as they are produced instead of waiting for all results to be collected first.
