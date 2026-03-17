@@ -1,0 +1,81 @@
+What is the main focus of Chapter 20?	The concurrent.futures.Executor classes and how they simplify concurrent work with threads and processes.
+Why was the chapter renamed to "Concurrent Executors"?	Because executors are the main high-level feature, while futures are mostly low-level and often hidden.
+What pattern do concurrent executors encapsulate?	Spawning independent workers and collecting results.
+What is a future in Python concurrency?	An object representing the asynchronous execution of an operation.
+Which two standard library Future classes exist since Python 3.4?	concurrent.futures.Future and asyncio.Future.
+What is futures in Python similar to in JavaScript?	Promises.
+What is the main benefit of concurrency for network I/O?	The program can do other work while waiting for remote responses.
+How many flags do the example scripts download?	20 country flags.
+What were the average download times in the chapter for the three flag scripts?	flags.py: 7.18s, flags_threadpool.py: 1.40s, flags_asyncio.py: 1.35s.
+What key output difference appears in concurrent flag downloads versus sequential downloads?	The country codes appear in a different order each run.
+Why are threads and coroutines both much faster than sequential code for HTTP downloads?	Because they overlap waiting time from network I/O.
+For controllable HTTP clients, what performance difference does the chapter report between threads and coroutines?	No significant difference.
+What library is used for HTTP client examples in this chapter?	HTTPX.
+Why is HTTPX useful in these chapters?	It provides both synchronous and asynchronous APIs.
+What does save_flag do in flags.py?	It writes downloaded image bytes to a file in DEST_DIR.
+What does get_flag return?	The binary content of the downloaded flag image.
+Why is setting a timeout on network operations good practice?	It avoids blocking for a long time for no good reason.
+What does httpx.raise_for_status() do?	It raises an exception for HTTP responses outside the 2XX range.
+Why is flush=True used in print calls in the download scripts?	To force progress output to appear immediately.
+How is main designed in flags.py?	It accepts a downloader function so different download_many implementations can be plugged in.
+What refactoring is common when converting sequential code to concurrent code?	Turning the body of a for loop into a function to run concurrently.
+What executor class is used for threaded downloads?	ThreadPoolExecutor.
+What executor class is used for process-based parallelism?	ProcessPoolExecutor.
+What does Executor.map do?	It runs the same callable over an iterable of arguments concurrently and returns an iterator of results.
+How does executor.map differ from built-in map?	It schedules calls concurrently in worker threads or processes.
+When is an exception from executor.map surfaced to the caller?	When iterating over its returned results.
+What is the default max_workers formula for ThreadPoolExecutor since Python 3.8?	min(32, os.cpu_count() + 4)
+Why does ThreadPoolExecutor default to more workers than CPU count?	To preserve extra workers for I/O-bound tasks.
+What does ThreadPoolExecutor do with idle threads?	It reuses idle worker threads before starting more.
+Where do futures appear in the simple ThreadPoolExecutor.map example?	They are used internally and hidden from user code.
+Who should create Future objects?	The concurrency framework, not application code.
+Why should application code not instantiate Future directly?	Because futures must be scheduled and state-managed by the framework.
+What does Future.done() return?	A nonblocking Boolean showing whether the computation has finished.
+What does Future.add_done_callback() do?	It registers a callable to run when the future completes.
+In which thread or process does a future callback run according to the chapter?	In the same worker thread or process that ran the wrapped function.
+What does concurrent.futures.Future.result() do if the work is complete?	It returns the result or re-raises the exception from the callable.
+What does concurrent.futures.Future.result() do if the work is not complete?	It blocks until the result is ready, unless a timeout expires.
+What happens if a timeout expires in concurrent.futures.Future.result()?	It raises TimeoutError.
+How is asyncio.Future.result() commonly accessed instead?	With await, not by blocking with result().
+Why does await not work with concurrent.futures.Future?	Because it is not an asyncio future.
+What does concurrent.futures.as_completed return?	An iterator yielding futures as they finish.
+Why does future.result() not block when used inside a loop over as_completed?	Because as_completed yields only completed futures.
+Why is executor.submit + as_completed more flexible than executor.map?	It supports different callables and arguments and returns results as they finish.
+What extra structure is commonly built when using as_completed?	A dict mapping each future to related metadata.
+Why map futures to metadata like country codes?	So you can recover context when results arrive out of order.
+In the five-download futures demo, why were some futures shown as pending?	Because max_workers was smaller than the number of submitted tasks.
+What happens if ThreadPoolExecutor max_workers is set to 1 in the demo?	The script behaves sequentially.
+What is ProcessPoolExecutor mainly useful for?	CPU-bound work.
+Why is ProcessPoolExecutor not helpful for flag downloads?	Because flag downloads are I/O-bound, not CPU-bound.
+What default worker count does ProcessPoolExecutor use when max_workers is None?	os.cpu_count()
+Why are processes heavier than threads?	They use more memory and take longer to start.
+What kind of problems are ideal for ProcessPoolExecutor?	Embarrassingly parallel CPU-intensive tasks.
+What advantage did proc_pool.py have over the earlier multiprocessing prime checker?	It was shorter and simpler because the executor handled worker management and result collection.
+Why did proc_pool.py display prime-check results in descending order?	Because executor.map preserves input order.
+Why did proc_pool.py seem stuck after the first quick result?	Because the second submitted number took the longest, and map waits for results in input order.
+What does Executor.map preserve that as_completed does not?	Submission order of results.
+What does the loiter demo show about Executor.map?	Tasks start concurrently, but consuming results can still block in input order.
+What does executor.map return in the loiter demo?	A generator of results.
+Why can iterating over results from executor.map block?	Because each next() waits for the next submitted future's result.
+What package provides the text progress bar in the flags2 examples?	tqdm.
+What does tqdm conceptually do?	It wraps an iterable and shows progress while the iterable is consumed.
+Why must total=len(cc_list) be passed to tqdm around as_completed?	Because the as_completed iterator has no len.
+What are the three statuses tallied in the flags2 examples?	OK, NOT_FOUND, and ERROR.
+How are 404 errors handled in flags2?	download_one catches them and returns DownloadStatus.NOT_FOUND.
+How are non-404 HTTP errors handled in flags2?	They are re-raised and handled by download_many.
+How are network request errors handled in flags2 download_many?	They are caught as httpx.RequestError and counted as ERROR.
+What does verbose mode do in the flags2 scripts?	It prints per-country status and error messages instead of showing a progress bar.
+Why is MAX_CONCUR_REQ defined in flags2_threadpool.py?	To prevent creating too many threads and using too much memory.
+How is concur_req chosen in flags2_threadpool.py?	As the smallest of MAX_CONCUR_REQ, len(cc_list), and the requested max.
+What is the default concurrent request count in flags2_threadpool.py?	30.
+What is the max concurrent request cap in flags2_threadpool.py?	1000.
+Why should you be careful testing concurrent HTTP clients against public servers?	Too many requests can resemble or cause a denial-of-service attack.
+What local server labels are supported by the flags2 scripts?	LOCAL, REMOTE, DELAY, and ERROR.
+What does the DELAY test server do?	Adds a random delay before each response.
+What does the ERROR test server do?	Adds random delay and sometimes returns HTTP errors.
+What HTTP error code is used by the ERROR test server example?	418 I'm a teapot.
+What happened in the chapter's larger flags2 benchmark?	The concurrent versions finished in seconds, while the sequential run would have taken over 5 minutes.
+What chapter-wide lesson does the flag download example demonstrate?	Concurrent I/O can deliver major throughput gains with simple high-level code.
+What is a key advantage of concurrent.futures over manual thread management?	It hides low-level details like worker pools, queues, and synchronization.
+What chapter message is given about threads and locks for complex concurrency?	They are often not the best answer, and higher-level abstractions are preferred.
+What is the overall value of concurrent.futures for application programmers?	It makes common concurrency problems simple without exposing low-level thread or process management.
