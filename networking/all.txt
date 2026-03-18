@@ -1,9 +1,6 @@
 What is an end system (networking)?	A device at the edge of a network that sends or receives data, such as a computer, phone, printer, or sensor.
 What is an intermediate system (networking)?	A device inside the network that forwards or relays traffic, such as a router, switch, or modem.
 What is a gateway in networking?	An intermediate system that translates, filters, or connects between different networks or protocols.
-What is a network topology?	The arrangement of nodes and links in a network.
-What is a point-to-point channel (networking)?	A communication link where data is sent between exactly two endpoints.
-What is a broadcasting channel (networking)?	A shared communication medium where one transmission can potentially be heard by many nodes.
 Why can broadcasting channels suffer collisions?	If two nodes send at the same time, their signals can interfere and ruin both messages, so shared-media networks need coordination and error detection.
 Why are layered network architectures used?	To manage complexity by splitting communication tasks into layers with clearer responsibilities.
 What is encapsulation in networking?	The process where each layer wraps higher-layer data with its own control information before sending it downward.
@@ -12,10 +9,7 @@ What does the data link layer provide?	A frame stream between adjacent systems, 
 What is framing in the data link layer?	Grouping a bit stream into frames with boundaries and control information such as checksums.
 What address is commonly used at the data link layer?	A MAC address.
 What does the network layer provide?	Packet transport between end systems, including addressing and routing.
-What is routing?	Choosing a path through the network from a source node to a destination node.
 What are common responsibilities of the network layer?	Addressing, routing, choosing paths, handling congestion, and multiplexing transport-layer packets.
-What does the transport layer provide?	End-to-end communication between processes.
-What does the transport layer address that the network layer does not?	Processes on end systems, not just the end systems themselves.
 What transport-layer service choices can vary between protocols?	Connection setup, ordering, error correction, and flow control.
 What is end-to-end flow control?	Adjusting sending speed so a sender does not overwhelm a receiver.
 What does the session layer handle?	Structured dialogue over time, such as session management, synchronization, checkpointing, and token management.
@@ -93,10 +87,8 @@ Why are virtual-circuit identifiers often local to each link segment instead of 
 Why is virtual-circuit switching more sensitive to node or link failures than packet switching?	Its fixed path and stored per-connection state depend on the specific switches and links chosen during setup.
 What are the core responsibilities of the transport layer in TCP/IP?	Addressing processes, managing end-to-end connections, transferring data transparently between processes, and offering QoS-related features such as reliability and flow/congestion control.
 What is a connection-oriented transport service?	A transport service with separate setup, data-transfer, and disconnect phases.
-What is a connectionless transport service?	A transport service that sends independent messages without first establishing a connection.
 What is the difference between flow control and congestion control?	Flow control protects the receiver from being overwhelmed; congestion control protects the network from overload.
 Why can flow control and congestion control be hard to distinguish in practice?	Both can appear as packet loss or reduced throughput, even though one is caused by receiver limits and the other by network limits.
-What is a transport service access point at the transport layer in TCP/IP?	A port together with the host's IP address.
 What is a transport protocol data unit (TPDU)?	The unit of data exchanged by transport-layer peers; in TCP/IP it is commonly called a segment or datagram depending on the protocol.
 Why is TCP described as a byte-stream service rather than a packet service?	It presents applications with an ordered stream of bytes instead of preserving application message boundaries.
 Why does TCP usually split data into segments that fit into layer-3 packets?	To avoid relying on IP fragmentation, which is inefficient and can make the loss of one IP fragment destroy the whole larger unit of data.
@@ -181,8 +173,6 @@ In a connection-oriented network layer, when is routing usually performed?	Durin
 What are desirable properties of a routing algorithm?	Correctness, simplicity, robustness, stability, fairness, and good overall efficiency.
 Why can fairness and optimization conflict in routing?	Maximizing total throughput or minimizing total cost can leave some flows with much worse service than others.
 What simple optimization criterion is often used in routing?	Minimizing path cost, often approximated by hop count or another additive metric.
-What is a non-adaptive routing algorithm?	One that does not react to the current network state during operation and uses precomputed or fixed routes.
-What is an adaptive routing algorithm?	One that changes routing decisions based on current or recent network conditions such as topology or load.
 What is the optimality principle in routing?	If router J lies on the optimal path from I to K, then the path from J to K along that route is itself optimal.
 What is a sink tree in routing?	The collection of optimal paths from every source toward one specific destination, forming a loop-free tree rooted at that destination.
 What kinds of metrics can define shortest path in routing?	Hop count, geographic distance, delay, bandwidth-related cost, communication cost, or combinations of such metrics.

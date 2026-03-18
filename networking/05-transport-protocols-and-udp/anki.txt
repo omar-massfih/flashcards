@@ -1,9 +1,7 @@
 What are the core responsibilities of the transport layer in TCP/IP?	Addressing processes, managing end-to-end connections, transferring data transparently between processes, and offering QoS-related features such as reliability and flow/congestion control.
 What is a connection-oriented transport service?	A transport service with separate setup, data-transfer, and disconnect phases.
-What is a connectionless transport service?	A transport service that sends independent messages without first establishing a connection.
 What is the difference between flow control and congestion control?	Flow control protects the receiver from being overwhelmed; congestion control protects the network from overload.
 Why can flow control and congestion control be hard to distinguish in practice?	Both can appear as packet loss or reduced throughput, even though one is caused by receiver limits and the other by network limits.
-What is a transport service access point at the transport layer in TCP/IP?	A port together with the host's IP address.
 What is a transport protocol data unit (TPDU)?	The unit of data exchanged by transport-layer peers; in TCP/IP it is commonly called a segment or datagram depending on the protocol.
 Why is TCP described as a byte-stream service rather than a packet service?	It presents applications with an ordered stream of bytes instead of preserving application message boundaries.
 Why does TCP usually split data into segments that fit into layer-3 packets?	To avoid relying on IP fragmentation, which is inefficient and can make the loss of one IP fragment destroy the whole larger unit of data.

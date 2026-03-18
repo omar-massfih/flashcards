@@ -6,8 +6,6 @@ In a connection-oriented network layer, when is routing usually performed?	Durin
 What are desirable properties of a routing algorithm?	Correctness, simplicity, robustness, stability, fairness, and good overall efficiency.
 Why can fairness and optimization conflict in routing?	Maximizing total throughput or minimizing total cost can leave some flows with much worse service than others.
 What simple optimization criterion is often used in routing?	Minimizing path cost, often approximated by hop count or another additive metric.
-What is a non-adaptive routing algorithm?	One that does not react to the current network state during operation and uses precomputed or fixed routes.
-What is an adaptive routing algorithm?	One that changes routing decisions based on current or recent network conditions such as topology or load.
 What is the optimality principle in routing?	If router J lies on the optimal path from I to K, then the path from J to K along that route is itself optimal.
 What is a sink tree in routing?	The collection of optimal paths from every source toward one specific destination, forming a loop-free tree rooted at that destination.
 What kinds of metrics can define shortest path in routing?	Hop count, geographic distance, delay, bandwidth-related cost, communication cost, or combinations of such metrics.
