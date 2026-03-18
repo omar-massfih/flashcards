@@ -1,0 +1,30 @@
+What is a descriptor in Python?	An object whose class implements part of the descriptor protocol, such as `__get__`, `__set__`, or `__delete__`, to control attribute access.
+What is a managed class in descriptor terminology?	The class that defines descriptor instances as its class attributes.
+What is a managed instance in descriptor terminology?	An instance of the managed class whose attribute access is controlled by descriptors.
+Why are descriptors useful in Python?	They let the same attribute-access logic be reused across many managed attributes and classes.
+Why are descriptors a natural fit for ORMs and validation frameworks?	They centralize conversion, validation, and storage behavior behind ordinary attribute syntax.
+Why should a validation descriptor usually store values in the managed instance, not in the descriptor itself?	The descriptor instance is shared by all managed instances, so storing data on it would mix values across objects.
+What does a descriptor's `__set__(self, instance, value)` receive?	The descriptor instance, the managed instance, and the value being assigned.
+What does a descriptor's `__get__(self, instance, owner)` receive?	The descriptor instance, the managed instance or `None`, and the managed class.
+What does `instance is None` mean inside a descriptor `__get__`?	The attribute was accessed through the class rather than through an instance.
+Why is it good practice for `__get__` to return `self` when `instance is None`?	It supports class-level introspection and metaprogramming on the descriptor itself.
+What problem does `__set_name__` solve for descriptors?	It tells each descriptor instance the attribute name it was assigned to in the managed class.
+When is `__set_name__` called in Python?	During class creation, once the descriptor has been bound to a class attribute in the managed class.
+Why can `__set_name__` simplify descriptor implementations?	It removes the need to repeat or manually pass the managed attribute name when declaring descriptor instances.
+What is an overriding descriptor in Python?	A descriptor that implements `__set__`, so assignment to the managed attribute is intercepted instead of creating a normal instance attribute.
+What is a nonoverriding descriptor in Python?	A descriptor that does not implement `__set__`, so an instance attribute of the same name can shadow it.
+Why is a property an overriding descriptor?	Because it provides `__get__` and a `__set__` behavior, even if the setter just raises for read-only access.
+What is the practical effect of an overriding descriptor on instance reads?	It continues to control access even if a same-named value exists in the instance `__dict__`.
+What is the practical effect of a nonoverriding descriptor on instance assignment?	Assigning a same-named instance attribute shadows the descriptor for later reads on that instance.
+Why can a descriptor without `__get__` still be overriding?	If it defines `__set__`, it still intercepts assignment even though reads may fall back differently.
+Why can't a descriptor attached to a class control assignment to that same class attribute?	Because class-level rebinding replaces the descriptor object in the class namespace instead of routing through the descriptor protocol there.
+Why are methods in Python descriptors?	Functions defined on a class implement `__get__`, which turns them into bound methods when accessed through instances.
+What is a bound method in Python?	A callable produced when a function is accessed through an instance, with that instance bound as the first argument.
+How does reading a function through a class differ from reading it through an instance?	Through the class you get the original function; through the instance you get a bound method.
+Why can a validation descriptor often omit `__get__`?	If it stores validated values directly under the managed name in the instance, normal instance lookup can read them efficiently.
+Why must a read-only descriptor class still implement `__set__`?	Otherwise it becomes nonoverriding and a same-named instance attribute can shadow it.
+Why are `property` and descriptors usually safer than hand-written `__getattribute__` and `__setattr__`?	They target specific attributes instead of intercepting almost every attribute access in the object.
+What design pattern appears when an abstract descriptor delegates validation to a subclass hook such as `validate`?	The template method pattern: shared setting logic calls subclass-specific validation logic.
+Why can descriptor subclasses such as `Quantity` and `NonBlank` be cleaner than repeating many validating properties?	They share the common access logic once and vary only the validation behavior.
+Why can `cached_property` be described as a nonoverriding descriptor?	After the first computation it stores a same-named instance attribute, which then shadows the descriptor on later reads.
+Why are special methods less vulnerable to instance shadowing than normal methods?	Python looks up special methods on the class, not by ordinary instance attribute lookup.

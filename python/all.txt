@@ -608,3 +608,140 @@ How are exceptions surfaced when using `Executor.map`?	They are re-raised when y
 Why can concurrent web download clients be much faster than sequential ones?	They overlap waiting time for many network responses instead of idling on one request at a time.
 Why should a concurrent HTTP client limit its concurrency?	To avoid overwhelming the server or accidentally behaving like a denial-of-service attack.
 Why does `as_completed` integrate well with progress bars?	Each completed future can immediately advance progress, regardless of submission order.
+What does `async def` define in Python?	A native coroutine function; calling it produces a coroutine object.
+What is a classic coroutine in Python?	A generator-based coroutine driven by `.send(...)` and `yield`, not by `await`.
+What is an asynchronous generator in Python?	A function defined with `async def` that uses `yield`, producing an asynchronous iterator.
+What makes an `async def` function an asynchronous generator instead of a native coroutine?	It contains `yield` in its body.
+What can `await` be applied to in Python?	Awaitable objects, such as native coroutine objects, `Task` objects, and other objects implementing the await protocol.
+What is the practical difference between `await coro()` and `asyncio.create_task(coro())`?	`await` runs the coroutine and waits for its result now; `create_task` schedules it to run concurrently and returns a `Task`.
+What does `asyncio.gather(*aws)` do?	It waits for all given awaitables to finish and returns their results in submission order.
+How does `asyncio.gather` order its results?	It returns results in the same order the awaitables were passed in, not completion order.
+When is `asyncio.as_completed` preferable to `asyncio.gather`?	When you want to handle results as each awaitable finishes instead of waiting for all of them together.
+What does `asyncio.as_completed` yield?	Awaitables that produce results in completion order.
+Why does async code often read like sequential code despite running concurrently?	Because `await` lets a coroutine suspend at explicit points while preserving local control flow and state.
+Why can't you directly reuse blocking I/O functions in high-performance asyncio code?	Because blocking functions stall the event loop instead of yielding control while they wait.
+What is the all-or-nothing problem in asynchronous programming?	To get the full benefit, every I/O-heavy layer must avoid blocking; one blocking layer can undermine the whole async design.
+What is an asynchronous context manager in Python?	An object used with `async with` that defines asynchronous `__aenter__` and `__aexit__` methods.
+When should `async with` be used instead of `with`?	When entering or exiting the context requires awaitable setup or cleanup.
+What is an asynchronous iterable in Python?	An object usable with `async for` because it provides `__aiter__`.
+What is an asynchronous iterator in Python?	An asynchronous iterable that provides `__anext__`, returning an awaitable for the next item.
+Why are asynchronous iterators useful for large or slow data sources?	They can yield control between items instead of blocking while waiting for more data.
+What is an asynchronous generator expression in Python?	A generator expression using `async for`, producing an asynchronous generator object.
+What does `asyncio.to_thread(fn, *args, **kwargs)` do?	It runs a blocking callable in a worker thread and returns an awaitable for its result.
+Why is `asyncio.to_thread` useful in async programs?	It lets you offload blocking operations such as file I/O without freezing the event loop.
+What does `loop.run_in_executor(executor, fn, *args)` do?	It submits a blocking callable to an executor and lets async code await its completion.
+When might `run_in_executor` use a `ProcessPoolExecutor` instead of the default thread pool?	When the delegated work is CPU-bound and you want to avoid blocking on the GIL.
+Why can cancellation be tricky with `run_in_executor`?	Cancelling the awaiting coroutine does not necessarily stop the underlying thread or process job.
+What is an `asyncio.Semaphore` used for?	Limiting how many coroutines may enter a protected section concurrently.
+Why are semaphores useful in async network clients?	They throttle concurrency so the client does not overwhelm a server or local resources.
+What does `async with semaphore:` do in asyncio?	It acquires the semaphore asynchronously on entry and releases it automatically on exit.
+Why is `async with semaphore:` safer than manual `acquire()` and `release()` calls?	It guarantees release even if an exception occurs.
+Why should blocking file I/O inside an async program often be delegated to a thread?	Because file operations can block the event loop just like network calls.
+What is structured concurrency in async programming?	A style where spawned concurrent tasks are scoped to a block or task group with a clear lifetime and cleanup point.
+Why is a so-called I/O-bound async system still vulnerable to CPU-bound slowdowns?	Because any CPU-heavy code running in the event-loop thread can still block all other async tasks.
+What are common ways to handle CPU-bound work in an async Python system?	Use a process pool, an external task queue, or compiled/native code instead of running it in the event-loop thread.
+What is a dynamic attribute in Python?	An attribute accessed with normal dot notation whose value is computed or retrieved on demand instead of being stored plainly in the instance.
+What is the Uniform Access Principle in object design?	Clients should use the same notation whether a value is implemented by stored data or by computation.
+Why can dynamic attributes make JSON-like data easier to explore in Python?	They allow dot notation such as `obj.attr` instead of repeated nested subscription syntax like `obj['attr']`.
+What role does `__getattr__` play in JSON façade classes such as `FrozenJSON`?	It translates missing attribute access into lookup or construction from the underlying mapping.
+Why is `__getattr__` a good fit for read-only façade objects over mappings?	It only runs for names not already handled normally, so existing methods can still be delegated cleanly.
+Why might a dynamic JSON façade delegate unknown names to the underlying dict first?	So methods like `keys()` or `items()` still work on the façade.
+Why is implementing `__dir__` useful on a dynamic-attribute façade?	It improves interactive discovery and tab completion by listing the dynamic attribute names.
+Why should a `__getattr__` implementation normally raise `AttributeError` for missing names?	Because attribute access machinery and tools such as `hasattr` expect missing attributes to fail with `AttributeError`, not some unrelated exception.
+What problem arises if source data uses a Python keyword as a would-be attribute name?	Dot access becomes invalid syntax, so the name must be transformed or accessed indirectly.
+How can a dynamic attribute wrapper safely expose keys that are Python keywords?	Rename them, for example by appending `_`, so they become valid attribute names.
+Why is `__init__` not the true constructor in Python?	The instance already exists when `__init__` runs; it only initializes the object.
+What is `__new__` responsible for in Python object creation?	Creating or otherwise providing the object that will later be initialized.
+Why can overriding `__new__` be useful in dynamic object wrappers?	It can return different kinds of objects depending on the input, such as a wrapper for mappings, a list for sequences, or a plain value for scalars.
+When will Python skip calling `__init__` after `__new__`?	When `__new__` returns an object that is not an instance of the class being constructed.
+Why can `self.__dict__.update(kwargs)` be a concise record-building idiom in Python?	It creates instance attributes directly from keyword arguments or mapping data.
+What risk comes with creating instance attributes directly from external data keys?	Data can shadow methods or other class attributes, causing subtle bugs or overwritten behavior.
+Why can `self.__class__.fetch(...)` be safer than `self.fetch(...)` in data-driven classes?	An instance attribute named `fetch` could shadow the inherited method, but `self.__class__.fetch` refers to the class method directly.
+Why are properties useful for linked-record access in data wrappers?	They can transparently dereference stored IDs or serial numbers into richer related objects.
+What common expectation makes caching computed properties desirable?	Attribute reads are expected to be cheap, so expensive computation or lookup should often be done only once.
+What is a simple manual pattern for caching a computed property?	Compute the value once, store it on the instance, and return the cached value on later reads.
+Why can hand-rolled property caches be unsafe in multithreaded code?	Two threads may race while populating the cache and observe incomplete or duplicated work.
+What does `functools.cached_property` do in Python?	It computes a value on first access and stores the result on the instance under the same attribute name.
+Why is `cached_property` not a drop-in replacement for every `property`?	It relies on storing an instance attribute of the same name, which conflicts with designs that already need that name for underlying instance data.
+Why can't `cached_property` be used in classes without an instance `__dict__`?	It caches by writing to the instance, which requires normal instance dictionary storage.
+How can `@property` stacked over `@cache` help cache a computed attribute?	The cached function memoizes results by arguments, and the outer property exposes that cached computation as attribute access.
+Why does stacking `@property` over `@cache` work for a read-only computed attribute?	The property calls a zero-argument-on-the-outside method whose result is memoized, without needing to create a same-named instance attribute.
+What is a validating property in Python?	A property whose setter enforces business rules before accepting a new value.
+Why are properties a Pythonic way to add validation to an existing public attribute?	They preserve the `obj.attr` syntax while inserting getter/setter logic behind it.
+Why can the classic `property(...)` form sometimes be preferable to decorators?	It is easier to generate properties programmatically, such as in a property factory.
+What does it mean that a property is a class attribute?	The property object lives on the class and controls access to that attribute name on instances.
+Why does a property override an instance attribute of the same name while the property exists?	Attribute lookup checks the class first for overriding descriptors such as properties before using the instance dictionary value directly.
+What happens if you assign directly into an instance `__dict__` for a name managed by a property?	The stored value exists in the instance dictionary, but reads may still go through the property while the property remains defined on the class.
+How can removing a property from the class change later attribute access?	Once the class no longer has the property, normal instance attributes of that name become visible again.
+Where does a property's documentation come from in Python?	Usually from the getter method's docstring, or from the `doc` argument to `property(...)`.
+What is a property factory in Python?	A function that builds and returns customized property objects programmatically.
+Why does a property factory often use closures?	The generated getter and setter need to remember which storage attribute they are managing.
+Why might a property factory require repeating the managed attribute name in the class body?	The property object is created before it is bound to the class attribute name, so it cannot automatically know that name at creation time.
+Why are `__getattribute__` and `__setattr__` harder to use safely than `__getattr__`?	They intercept nearly every attribute access or assignment, so mistakes can easily cause recursion or broadly affect object behavior.
+What built-in function exposes an object's writable attribute mapping when it has one?	`vars(obj)`, which usually returns the object's `__dict__`.
+What is a descriptor in Python?	An object whose class implements part of the descriptor protocol, such as `__get__`, `__set__`, or `__delete__`, to control attribute access.
+What is a managed class in descriptor terminology?	The class that defines descriptor instances as its class attributes.
+What is a managed instance in descriptor terminology?	An instance of the managed class whose attribute access is controlled by descriptors.
+Why are descriptors useful in Python?	They let the same attribute-access logic be reused across many managed attributes and classes.
+Why are descriptors a natural fit for ORMs and validation frameworks?	They centralize conversion, validation, and storage behavior behind ordinary attribute syntax.
+Why should a validation descriptor usually store values in the managed instance, not in the descriptor itself?	The descriptor instance is shared by all managed instances, so storing data on it would mix values across objects.
+What does a descriptor's `__set__(self, instance, value)` receive?	The descriptor instance, the managed instance, and the value being assigned.
+What does a descriptor's `__get__(self, instance, owner)` receive?	The descriptor instance, the managed instance or `None`, and the managed class.
+What does `instance is None` mean inside a descriptor `__get__`?	The attribute was accessed through the class rather than through an instance.
+Why is it good practice for `__get__` to return `self` when `instance is None`?	It supports class-level introspection and metaprogramming on the descriptor itself.
+What problem does `__set_name__` solve for descriptors?	It tells each descriptor instance the attribute name it was assigned to in the managed class.
+When is `__set_name__` called in Python?	During class creation, once the descriptor has been bound to a class attribute in the managed class.
+Why can `__set_name__` simplify descriptor implementations?	It removes the need to repeat or manually pass the managed attribute name when declaring descriptor instances.
+What is an overriding descriptor in Python?	A descriptor that implements `__set__`, so assignment to the managed attribute is intercepted instead of creating a normal instance attribute.
+What is a nonoverriding descriptor in Python?	A descriptor that does not implement `__set__`, so an instance attribute of the same name can shadow it.
+Why is a property an overriding descriptor?	Because it provides `__get__` and a `__set__` behavior, even if the setter just raises for read-only access.
+What is the practical effect of an overriding descriptor on instance reads?	It continues to control access even if a same-named value exists in the instance `__dict__`.
+What is the practical effect of a nonoverriding descriptor on instance assignment?	Assigning a same-named instance attribute shadows the descriptor for later reads on that instance.
+Why can a descriptor without `__get__` still be overriding?	If it defines `__set__`, it still intercepts assignment even though reads may fall back differently.
+Why can't a descriptor attached to a class control assignment to that same class attribute?	Because class-level rebinding replaces the descriptor object in the class namespace instead of routing through the descriptor protocol there.
+Why are methods in Python descriptors?	Functions defined on a class implement `__get__`, which turns them into bound methods when accessed through instances.
+What is a bound method in Python?	A callable produced when a function is accessed through an instance, with that instance bound as the first argument.
+How does reading a function through a class differ from reading it through an instance?	Through the class you get the original function; through the instance you get a bound method.
+Why can a validation descriptor often omit `__get__`?	If it stores validated values directly under the managed name in the instance, normal instance lookup can read them efficiently.
+Why must a read-only descriptor class still implement `__set__`?	Otherwise it becomes nonoverriding and a same-named instance attribute can shadow it.
+Why are `property` and descriptors usually safer than hand-written `__getattribute__` and `__setattr__`?	They target specific attributes instead of intercepting almost every attribute access in the object.
+What design pattern appears when an abstract descriptor delegates validation to a subclass hook such as `validate`?	The template method pattern: shared setting logic calls subclass-specific validation logic.
+Why can descriptor subclasses such as `Quantity` and `NonBlank` be cleaner than repeating many validating properties?	They share the common access logic once and vary only the validation behavior.
+Why can `cached_property` be described as a nonoverriding descriptor?	After the first computation it stores a same-named instance attribute, which then shadows the descriptor on later reads.
+Why are special methods less vulnerable to instance shadowing than normal methods?	Python looks up special methods on the class, not by ordinary instance attribute lookup.
+Why are classes suitable targets for metaprogramming in Python?	Because classes are first-class objects that can be created, inspected, modified, and returned like other values.
+What built-in class normally constructs user-defined classes in Python?	`type`.
+How can `type` act as a class factory?	Called with three arguments, it builds a class from a name, a tuple of base classes, and a namespace dict.
+What are the three main arguments to the class-building form of `type(...)`?	The class name, the base-class tuple, and the class namespace mapping.
+Why can a function-based class factory be useful in Python?	It can generate simple classes dynamically without requiring users to write repetitive boilerplate.
+What is a class decorator in Python?	A callable that receives a class object, may modify or replace it, and returns the class to be used.
+What is a common reason to prefer a class decorator over a metaclass?	It can enhance a class after creation with less complexity and fewer inheritance/metaclass conflicts.
+What does `__init_subclass__` do in Python?	It lets a base class customize or validate each new subclass when that subclass is created.
+When is `__init_subclass__` called in Python class creation?	After the subclass object has been created, during class definition time.
+Why can `__init_subclass__` be simpler than a metaclass for many class-customization tasks?	It lets a normal base class react to subclass creation without defining a separate metaclass.
+Why can't `__init_subclass__` configure `__slots__` for a new subclass?	Because it runs only after the class has already been built, and `__slots__` must be present during class construction.
+Why can't a class decorator configure `__slots__` for the class it decorates?	Because the decorator runs after the class object has already been created.
+What does `typing.get_type_hints(cls)` enable in class builders?	It lets the builder inspect declared attribute annotations and generate behavior from them.
+Why might a class builder replace annotated attributes with descriptors?	To turn type or field declarations into runtime-managed validated attributes.
+Why might a class builder also inject methods such as `__init__` and `__repr__`?	To give user-defined record-like classes convenient behavior automatically.
+What is import time in Python?	The phase when a module is parsed, compiled if needed, and its top-level code is executed during import.
+Why is the boundary between import time and runtime fuzzy in Python?	Because importing a module executes real code that can perform ordinary runtime effects.
+Why do class decorators and `__init_subclass__` often feel like import-time machinery?	They run while class statements are being executed, usually during module import.
+What is a metaclass in Python?	A class whose instances are themselves classes.
+What makes a class a metaclass in Python?	It subclasses `type`, so it can participate in building classes.
+Why can a metaclass customize class creation more deeply than a class decorator or `__init_subclass__`?	It can inspect and alter the class namespace and construction arguments before the class object is created.
+What does a metaclass `__new__` typically receive?	The metaclass, the new class name, the base classes, and the namespace mapping for the class under construction.
+What kind of customization is commonly done in a metaclass `__new__`?	Editing the class namespace before delegating to `type.__new__`, such as injecting descriptors, methods, or `__slots__`.
+What does `__prepare__` do in a metaclass?	It provides the mapping object used as the class namespace while the class body is executed.
+When is `__prepare__` called relative to the class body?	Before the class body runs, so it can control how names are recorded during class definition.
+How can `__prepare__` enable unusual metaprogramming tricks?	By returning a custom mapping whose lookup or assignment behavior affects how the class body is interpreted.
+Why can a custom mapping returned by `__prepare__` observe class definition line by line?	Because Python writes class-body names into that mapping as the class body executes.
+What is a practical use of a metaclass-generated `__slots__`?	Restricting instances to declared attributes while reducing memory use and blocking arbitrary new attributes.
+Why can a metaclass be necessary when a class builder wants both validated descriptors and automatically generated `__slots__`?	Because both the descriptors and `__slots__` must be installed before the class is created.
+What kind of conflict can arise with metaclasses in multiple inheritance?	A class can have only one effective metaclass, so incompatible base metaclasses can produce a metaclass conflict error.
+Why should metaclasses usually remain implementation details of a library?	They are powerful but hard to reason about, so users are better served by a simple base class or decorator API.
+What is one benefit of providing a regular base class that uses a metaclass internally?	Users can access the behavior by subclassing normally without needing to interact with the metaclass directly.
+What general sequencing occurs during class creation with a metaclass, descriptors, `__init_subclass__`, and decorators?	The metaclass prepares and builds the class first, then descriptor `__set_name__` runs, then `__init_subclass__`, then class decorators are applied.
+Why does understanding class-creation order matter in metaprogramming?	Different hooks can only influence certain stages, so using the wrong hook can make a customization impossible or too late.
+What does `cls.__subclasses__()` return in Python?	The immediate subclasses of the class that are currently in memory.
+What is the practical difference between `cls.__mro__` and `cls.mro()`?	`__mro__` is the stored resolution-order tuple; `mro()` is the method used to compute that order and can be customized by a metaclass.

@@ -1,0 +1,36 @@
+Why are classes suitable targets for metaprogramming in Python?	Because classes are first-class objects that can be created, inspected, modified, and returned like other values.
+What built-in class normally constructs user-defined classes in Python?	`type`.
+How can `type` act as a class factory?	Called with three arguments, it builds a class from a name, a tuple of base classes, and a namespace dict.
+What are the three main arguments to the class-building form of `type(...)`?	The class name, the base-class tuple, and the class namespace mapping.
+Why can a function-based class factory be useful in Python?	It can generate simple classes dynamically without requiring users to write repetitive boilerplate.
+What is a class decorator in Python?	A callable that receives a class object, may modify or replace it, and returns the class to be used.
+What is a common reason to prefer a class decorator over a metaclass?	It can enhance a class after creation with less complexity and fewer inheritance/metaclass conflicts.
+What does `__init_subclass__` do in Python?	It lets a base class customize or validate each new subclass when that subclass is created.
+When is `__init_subclass__` called in Python class creation?	After the subclass object has been created, during class definition time.
+Why can `__init_subclass__` be simpler than a metaclass for many class-customization tasks?	It lets a normal base class react to subclass creation without defining a separate metaclass.
+Why can't `__init_subclass__` configure `__slots__` for a new subclass?	Because it runs only after the class has already been built, and `__slots__` must be present during class construction.
+Why can't a class decorator configure `__slots__` for the class it decorates?	Because the decorator runs after the class object has already been created.
+What does `typing.get_type_hints(cls)` enable in class builders?	It lets the builder inspect declared attribute annotations and generate behavior from them.
+Why might a class builder replace annotated attributes with descriptors?	To turn type or field declarations into runtime-managed validated attributes.
+Why might a class builder also inject methods such as `__init__` and `__repr__`?	To give user-defined record-like classes convenient behavior automatically.
+What is import time in Python?	The phase when a module is parsed, compiled if needed, and its top-level code is executed during import.
+Why is the boundary between import time and runtime fuzzy in Python?	Because importing a module executes real code that can perform ordinary runtime effects.
+Why do class decorators and `__init_subclass__` often feel like import-time machinery?	They run while class statements are being executed, usually during module import.
+What is a metaclass in Python?	A class whose instances are themselves classes.
+What makes a class a metaclass in Python?	It subclasses `type`, so it can participate in building classes.
+Why can a metaclass customize class creation more deeply than a class decorator or `__init_subclass__`?	It can inspect and alter the class namespace and construction arguments before the class object is created.
+What does a metaclass `__new__` typically receive?	The metaclass, the new class name, the base classes, and the namespace mapping for the class under construction.
+What kind of customization is commonly done in a metaclass `__new__`?	Editing the class namespace before delegating to `type.__new__`, such as injecting descriptors, methods, or `__slots__`.
+What does `__prepare__` do in a metaclass?	It provides the mapping object used as the class namespace while the class body is executed.
+When is `__prepare__` called relative to the class body?	Before the class body runs, so it can control how names are recorded during class definition.
+How can `__prepare__` enable unusual metaprogramming tricks?	By returning a custom mapping whose lookup or assignment behavior affects how the class body is interpreted.
+Why can a custom mapping returned by `__prepare__` observe class definition line by line?	Because Python writes class-body names into that mapping as the class body executes.
+What is a practical use of a metaclass-generated `__slots__`?	Restricting instances to declared attributes while reducing memory use and blocking arbitrary new attributes.
+Why can a metaclass be necessary when a class builder wants both validated descriptors and automatically generated `__slots__`?	Because both the descriptors and `__slots__` must be installed before the class is created.
+What kind of conflict can arise with metaclasses in multiple inheritance?	A class can have only one effective metaclass, so incompatible base metaclasses can produce a metaclass conflict error.
+Why should metaclasses usually remain implementation details of a library?	They are powerful but hard to reason about, so users are better served by a simple base class or decorator API.
+What is one benefit of providing a regular base class that uses a metaclass internally?	Users can access the behavior by subclassing normally without needing to interact with the metaclass directly.
+What general sequencing occurs during class creation with a metaclass, descriptors, `__init_subclass__`, and decorators?	The metaclass prepares and builds the class first, then descriptor `__set_name__` runs, then `__init_subclass__`, then class decorators are applied.
+Why does understanding class-creation order matter in metaprogramming?	Different hooks can only influence certain stages, so using the wrong hook can make a customization impossible or too late.
+What does `cls.__subclasses__()` return in Python?	The immediate subclasses of the class that are currently in memory.
+What is the practical difference between `cls.__mro__` and `cls.mro()`?	`__mro__` is the stored resolution-order tuple; `mro()` is the method used to compute that order and can be customized by a metaclass.

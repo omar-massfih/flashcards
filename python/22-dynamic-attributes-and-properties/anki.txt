@@ -1,0 +1,39 @@
+What is a dynamic attribute in Python?	An attribute accessed with normal dot notation whose value is computed or retrieved on demand instead of being stored plainly in the instance.
+What is the Uniform Access Principle in object design?	Clients should use the same notation whether a value is implemented by stored data or by computation.
+Why can dynamic attributes make JSON-like data easier to explore in Python?	They allow dot notation such as `obj.attr` instead of repeated nested subscription syntax like `obj['attr']`.
+What role does `__getattr__` play in JSON façade classes such as `FrozenJSON`?	It translates missing attribute access into lookup or construction from the underlying mapping.
+Why is `__getattr__` a good fit for read-only façade objects over mappings?	It only runs for names not already handled normally, so existing methods can still be delegated cleanly.
+Why might a dynamic JSON façade delegate unknown names to the underlying dict first?	So methods like `keys()` or `items()` still work on the façade.
+Why is implementing `__dir__` useful on a dynamic-attribute façade?	It improves interactive discovery and tab completion by listing the dynamic attribute names.
+Why should a `__getattr__` implementation normally raise `AttributeError` for missing names?	Because attribute access machinery and tools such as `hasattr` expect missing attributes to fail with `AttributeError`, not some unrelated exception.
+What problem arises if source data uses a Python keyword as a would-be attribute name?	Dot access becomes invalid syntax, so the name must be transformed or accessed indirectly.
+How can a dynamic attribute wrapper safely expose keys that are Python keywords?	Rename them, for example by appending `_`, so they become valid attribute names.
+Why is `__init__` not the true constructor in Python?	The instance already exists when `__init__` runs; it only initializes the object.
+What is `__new__` responsible for in Python object creation?	Creating or otherwise providing the object that will later be initialized.
+Why can overriding `__new__` be useful in dynamic object wrappers?	It can return different kinds of objects depending on the input, such as a wrapper for mappings, a list for sequences, or a plain value for scalars.
+When will Python skip calling `__init__` after `__new__`?	When `__new__` returns an object that is not an instance of the class being constructed.
+Why can `self.__dict__.update(kwargs)` be a concise record-building idiom in Python?	It creates instance attributes directly from keyword arguments or mapping data.
+What risk comes with creating instance attributes directly from external data keys?	Data can shadow methods or other class attributes, causing subtle bugs or overwritten behavior.
+Why can `self.__class__.fetch(...)` be safer than `self.fetch(...)` in data-driven classes?	An instance attribute named `fetch` could shadow the inherited method, but `self.__class__.fetch` refers to the class method directly.
+Why are properties useful for linked-record access in data wrappers?	They can transparently dereference stored IDs or serial numbers into richer related objects.
+What common expectation makes caching computed properties desirable?	Attribute reads are expected to be cheap, so expensive computation or lookup should often be done only once.
+What is a simple manual pattern for caching a computed property?	Compute the value once, store it on the instance, and return the cached value on later reads.
+Why can hand-rolled property caches be unsafe in multithreaded code?	Two threads may race while populating the cache and observe incomplete or duplicated work.
+What does `functools.cached_property` do in Python?	It computes a value on first access and stores the result on the instance under the same attribute name.
+Why is `cached_property` not a drop-in replacement for every `property`?	It relies on storing an instance attribute of the same name, which conflicts with designs that already need that name for underlying instance data.
+Why can't `cached_property` be used in classes without an instance `__dict__`?	It caches by writing to the instance, which requires normal instance dictionary storage.
+How can `@property` stacked over `@cache` help cache a computed attribute?	The cached function memoizes results by arguments, and the outer property exposes that cached computation as attribute access.
+Why does stacking `@property` over `@cache` work for a read-only computed attribute?	The property calls a zero-argument-on-the-outside method whose result is memoized, without needing to create a same-named instance attribute.
+What is a validating property in Python?	A property whose setter enforces business rules before accepting a new value.
+Why are properties a Pythonic way to add validation to an existing public attribute?	They preserve the `obj.attr` syntax while inserting getter/setter logic behind it.
+Why can the classic `property(...)` form sometimes be preferable to decorators?	It is easier to generate properties programmatically, such as in a property factory.
+What does it mean that a property is a class attribute?	The property object lives on the class and controls access to that attribute name on instances.
+Why does a property override an instance attribute of the same name while the property exists?	Attribute lookup checks the class first for overriding descriptors such as properties before using the instance dictionary value directly.
+What happens if you assign directly into an instance `__dict__` for a name managed by a property?	The stored value exists in the instance dictionary, but reads may still go through the property while the property remains defined on the class.
+How can removing a property from the class change later attribute access?	Once the class no longer has the property, normal instance attributes of that name become visible again.
+Where does a property's documentation come from in Python?	Usually from the getter method's docstring, or from the `doc` argument to `property(...)`.
+What is a property factory in Python?	A function that builds and returns customized property objects programmatically.
+Why does a property factory often use closures?	The generated getter and setter need to remember which storage attribute they are managing.
+Why might a property factory require repeating the managed attribute name in the class body?	The property object is created before it is bound to the class attribute name, so it cannot automatically know that name at creation time.
+Why are `__getattribute__` and `__setattr__` harder to use safely than `__getattr__`?	They intercept nearly every attribute access or assignment, so mistakes can easily cause recursion or broadly affect object behavior.
+What built-in function exposes an object's writable attribute mapping when it has one?	`vars(obj)`, which usually returns the object's `__dict__`.
