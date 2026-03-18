@@ -437,3 +437,27 @@ What does `collect()` do in Rust iterator code?	It consumes an iterator and gath
 Why are iterator chains often preferred over manual loops in Rust?	They express the transformation more directly and often avoid extra mutable state.
 What does it mean that Rust iterators are a zero-cost abstraction?	They usually compile to code with little or no runtime overhead compared with equivalent hand-written loops.
 Why can returning an iterator instead of a `Vec` improve responsiveness in Rust?	The caller can process items lazily as they are produced instead of waiting for all results to be collected first.
+What is a release profile in Cargo?	A predefined, customizable set of compiler settings for a particular build mode.
+What does `opt-level` control in a Cargo profile?	How aggressively Rust optimizes the compiled code, from `0` to `3`.
+Why is a low optimization level a good default for the `dev` profile?	It reduces compile time during frequent rebuilds, even if the code runs slower.
+Why is a high optimization level a good default for the `release` profile?	It spends more time compiling so the resulting program runs faster.
+How do you customize a Cargo profile?	Add a `[profile.<name>]` section in `Cargo.toml` and override specific settings.
+What kind of Rust comment generates HTML API documentation?	A documentation comment starting with `///`.
+What does `cargo doc --open` do?	It builds the docs and opens them in a web browser.
+What advantage do example code blocks in Rust doc comments provide beyond explanation?	`cargo test` runs them as documentation tests, helping keep examples in sync with the code.
+What does a doc comment starting with `//!` document in Rust?	The enclosing item, such as the whole crate or a module.
+Why might a crate author re-export items with `pub use` at the top level?	To present a simpler, easier-to-discover public API without changing the internal module layout.
+What does `cargo login` do for crates.io publishing?	It stores your crates.io API token locally so Cargo can authenticate publish operations.
+Why must a crate name on crates.io be unique?	Crate names are allocated on a first-come, first-served basis.
+What metadata is required in `Cargo.toml` before publishing a crate to crates.io?	At minimum, a nonempty `description` and `license`.
+What license format does Cargo expect in the `license` field?	An SPDX license identifier expression, such as `MIT` or `MIT OR Apache-2.0`.
+Why should you be careful before running `cargo publish`?	Published crate versions are permanent and cannot be overwritten.
+What does `cargo yank --vers <version>` do?	It prevents new projects from selecting that published version while leaving existing lockfiles working.
+What is a Cargo workspace?	A set of related packages that share one `Cargo.lock` file and one output directory.
+Why do workspace members share a top-level `target` directory?	So crates can reuse build artifacts and avoid unnecessary recompilation.
+Do crates in the same Cargo workspace automatically depend on each other?	No; dependency relationships must still be declared explicitly, such as with path dependencies.
+Why does a Cargo workspace use a single `Cargo.lock` file?	So all workspace crates resolve compatible dependency versions from one lockfile.
+How do you run or test one specific package from a workspace root?	Use the `-p` flag with the package name, such as `cargo test -p add_one`.
+What does `cargo install` do?	It installs a binary crate locally so you can run its executable from the command line.
+Where does `cargo install` place binaries by default when using rustup defaults?	In `$HOME/.cargo/bin`.
+How can a program become a custom Cargo subcommand?	Name the executable `cargo-<name>` and put it on your `PATH`.
