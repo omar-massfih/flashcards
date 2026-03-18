@@ -1,0 +1,21 @@
+What is software architecture in this book's framing?	The combination of a system's structure, architecture characteristics, logical components, architecture style, and architecture decisions.
+What are architecture characteristics in software architecture?	The system capabilities and quality attributes, often expressed as the required "-ilities" and success criteria.
+What do logical components define in software architecture?	The application's behavior, such as its domains, entities, and workflows.
+What is an architecture style in software architecture?	A named structural starting point used to implement a system once its requirements and behavior are understood.
+What are architecture decisions in software architecture?	Rules and constraints that guide how the system may be constructed.
+Why are architecture decisions important?	They constrain implementation choices so teams build the system in ways that preserve its intended characteristics.
+What is the First Law of Software Architecture?	Everything in software architecture is a trade-off.
+What is the Second Law of Software Architecture?	Why is more important than how.
+Why is "why" more important than "how" in software architecture?	Understanding the reasons and trade-offs behind a decision is more valuable than merely knowing the resulting structure.
+What is the Third Law of Software Architecture?	Most architecture decisions are not binary but exist on a spectrum between extremes.
+Why does software architecture have to be understood in context?	Architectural choices depend on the realities of the environment, including costs, constraints, and engineering practices of the time.
+What is the difference between an architecture decision and a technical decision?	An architecture decision sets guiding constraints for teams, while a technical decision chooses a specific tool or implementation within those constraints.
+When might a software architect need to make a specific technology choice instead of only setting guidance?	When preserving a critical architecture characteristic such as scalability, performance, or availability requires it.
+Why must architects continually analyze an existing architecture?	Because changes in business needs and technology can cause structural decay and make a once-sound architecture less effective over time.
+Why is keeping current with technology and industry trends important for software architects?	Architectural decisions are long-lived, so architects need awareness of trends that may affect their relevance and future fitness.
+Why must architects ensure compliance with architecture decisions?	Because if teams ignore those decisions, the system can drift and fail to deliver the required characteristics.
+Why should a software architect understand diverse technologies even without being an expert in all of them?	Architects need broad technical awareness to choose and integrate appropriate options in heterogeneous environments.
+Why is technical breadth especially valuable for software architects?	It helps them compare options, understand trade-offs, and guide teams without being limited to one familiar tool.
+Why must a software architect understand the business domain?	Because effective architecture depends on understanding the business problems, goals, and requirements the system must support.
+Why are interpersonal skills essential for software architects?	Architects must lead, mentor, facilitate, and communicate decisions effectively across teams and stakeholders.
+Why do software architects need negotiation and political awareness?	Architectural decisions often affect many stakeholders and are frequently challenged, so architects must justify and win support for them.
