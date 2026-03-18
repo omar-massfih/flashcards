@@ -1,0 +1,33 @@
+What is congestion in a packet network?	A situation where offered traffic exceeds what some part of the network can handle efficiently.
+Why can a router with infinite buffers still be problematic under congestion?	It can avoid drops but let queues grow without bound, causing extremely large delays.
+What happens when a router with finite buffers is overloaded?	The queue fills up and packets are dropped.
+What is the cost of congestion when retransmissions occur?	More packets are sent for the same useful throughput, including wasteful duplicate transmissions.
+Why can retransmitting delayed-but-not-lost packets worsen congestion?	It increases load without increasing useful delivered throughput.
+What is the goal of congestion control?	To adapt the offered load to the capacity at the bottleneck so the network stays stable and useful.
+What is the core idea of Jacobson's congestion-control approach for TCP?	Reduce sending when loss occurs and increase sending otherwise to approach stability.
+What does the conservation-of-packets principle mean in TCP congestion control?	In equilibrium, a new packet should enter the network only when an old packet leaves.
+What is the congestion window (`cwnd`) in TCP?	The maximum amount of unacknowledged data a sender allows in the network for one connection.
+How does TCP's congestion window limit sending rate?	Approximate sending rate is `cwnd / RTT`.
+What is the maximum segment size (MSS) in TCP?	The largest amount of TCP payload sent in one segment.
+What is slow start in TCP congestion control?	A phase where `cwnd` grows rapidly from a small value, roughly doubling each RTT until loss or a threshold is reached.
+Why is TCP slow start called "slow" even though growth is exponential?	Because it starts conservatively from a very small congestion window.
+What is `ssthresh` in TCP congestion control?	A threshold separating slow start from congestion avoidance behavior.
+What happens to `ssthresh` after TCP detects congestion?	It is typically reduced to about half of the current congestion window.
+What is additive increase in TCP congestion avoidance?	Increasing the congestion window gradually, roughly by one MSS per RTT without loss.
+What is multiplicative decrease in TCP congestion control?	Cutting the congestion window substantially, typically by about half, when congestion is detected.
+How does TCP Tahoe react to a detected packet loss?	It halves `ssthresh` and resets `cwnd` back to one MSS, returning to slow start.
+How does TCP Reno react differently from Tahoe after a single packet loss?	It halves `ssthresh` but reduces `cwnd` only to that new threshold instead of all the way back to one MSS.
+When does TCP return to slow start even in Reno-style behavior?	When loss is detected by timeout rather than by duplicate ACKs.
+What fairness goal is commonly stated for TCP congestion control?	Flows sharing a bottleneck should receive roughly equal shares of the bottleneck bandwidth under similar conditions.
+How does AIMD tend to promote fairness between TCP flows?	A flow using too much bandwidth is forced to back off on loss, while flows below their share can keep increasing.
+What is the key idea of TCP CUBIC?	Use a cubic function of time since the last congestion event to control `cwnd` growth.
+Why is TCP CUBIC less dependent on ACK pacing than Reno-style TCP?	It grows the congestion window mainly as a function of elapsed time since the last reduction.
+Why is TCP CUBIC often better on long-distance high-bandwidth paths?	Its window growth is designed to scale better when large bandwidth-delay products are available.
+What tradeoff does TCP CUBIC make compared with New Reno?	It scales well and is stable at high rates, but can converge more slowly when competing flows change.
+Why was QUIC introduced?	To replace HTTP over TCP with a lower-latency transport that also integrates security and modern congestion control.
+What transport protocol does QUIC run over?	UDP.
+What major functions does QUIC move above UDP?	Session setup, reliability, flow control, congestion control, and integrated security.
+What is one important benefit of QUIC running in user space?	It is easier to evolve and experiment with than kernel-implemented TCP.
+What is head-of-line blocking, in the context motivating QUIC?	A delay where later data is held up because an earlier missing piece must be recovered first.
+What is the basic idea of BBR congestion control?	Estimate the bottleneck bandwidth and round-trip behavior, then send near that rate instead of treating loss as the main signal.
+Why does BBR periodically reduce sending rate after probing higher bandwidth?	To drain any excess queue built during probing and check the path again.

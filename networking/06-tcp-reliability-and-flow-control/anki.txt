@@ -1,0 +1,31 @@
+What kind of service does TCP provide over IP?	A reliable, ordered, end-to-end byte stream over an unreliable connectionless network.
+What does it mean that TCP is a byte-stream protocol?	It preserves byte order but not application message boundaries.
+What does it mean that TCP is full duplex?	Both endpoints can transmit data simultaneously in both directions over one connection.
+Why does TCP need sequence numbers?	To detect loss, duplicates, and reordering and to place bytes in the correct order.
+What does the TCP acknowledgment number indicate?	The next byte the receiver expects to receive.
+Why are TCP acknowledgments cumulative?	An ACK confirms receipt of all bytes up to, but not including, the next expected byte.
+How does TCP fundamentally achieve reliability?	By detecting missing or duplicate byte ranges and retransmitting unacknowledged data.
+What is a spurious retransmission in TCP?	A retransmission triggered even though the original data was already delivered, typically because the timeout was too short.
+Why is choosing the TCP retransmission timeout difficult?	Too short causes unnecessary retransmissions; too long delays recovery from actual loss.
+What is SampleRTT in TCP timeout estimation?	A measured round-trip time for a transmitted segment and its acknowledgment.
+Why does TCP smooth RTT measurements instead of using only the latest sample?	To estimate a stable retransmission timeout despite short-term variation.
+What problem does transport-layer flow control solve?	It prevents a fast sender from overwhelming a slow receiver.
+Why does stop-and-wait need a retransmission timer?	To recover when either a data packet or its ACK is lost.
+Why does stop-and-wait need sequence numbers?	To distinguish a retransmitted old packet from the next new packet after ACK loss.
+Why is stop-and-wait inefficient on high-bandwidth, high-delay links?	The sender sits idle for most of the round-trip time instead of keeping the link busy.
+What is pipelining in transport-layer flow control?	Allowing multiple unacknowledged packets to be in flight at the same time.
+What is a sliding window in transport protocols?	A flow-control mechanism that allows several sequence-numbered packets or bytes to be sent before ACKs arrive.
+What does the sender window represent in a sliding-window protocol?	The range of sequence numbers that may be sent but are not yet cumulatively acknowledged.
+What does the receiver window represent in a sliding-window protocol?	The range of sequence numbers the receiver is currently willing to accept.
+Why must a sliding-window sender buffer unacknowledged packets?	So it can retransmit them if loss is detected.
+How does Go-Back-N handle an out-of-order packet at the receiver?	The receiver discards it and keeps acknowledging only the last in-order data.
+What is the main disadvantage of Go-Back-N?	A single loss can force retransmission of many packets that actually arrived correctly.
+How does Selective Repeat handle out-of-order packets?	The receiver keeps correctly received in-window packets and waits only for the missing ones to be retransmitted.
+What is the main disadvantage of Selective Repeat?	It requires more receiver buffering and more complex bookkeeping.
+Why must the sequence-number space be larger than the sender window in Go-Back-N?	Otherwise a retransmitted old packet can be mistaken for a new packet after sequence numbers wrap around.
+Why must the Selective Repeat window size be at most half the sequence-number space?	To avoid ambiguity between old retransmissions and new packets after wraparound.
+What is a credit-based flow-control mechanism?	A flow-control scheme in which the receiver explicitly grants how much additional data the sender may transmit based on available buffer space.
+How does TCP implement flow control in practice?	With a variable-size advertised receive window carried in ACKs.
+What does the TCP window field advertise?	How much receiver buffer space is currently available for incoming data.
+Why can the TCP advertised window change over time?	Because the receiver's available buffer space changes as the application reads data and new data arrives.
+What does a TCP window of zero mean?	The receiver currently cannot accept more data, so the sender must stop sending new data.

@@ -1,0 +1,31 @@
+What is the core task of routing at the network layer?	Choosing which outgoing link or next hop should be used to move packets toward their destination.
+How does routing differ from forwarding inside a router?	Routing computes or updates paths; forwarding applies the current table to each arriving packet.
+What information does the routing process typically produce for forwarding?	A routing table that maps destinations to outgoing links or next hops.
+In a connectionless network layer, what field is typically used for routing each packet?	The destination end-system address.
+In a connection-oriented network layer, when is routing usually performed?	During connection setup, after which packets follow the established route label or virtual-circuit identifier.
+What are desirable properties of a routing algorithm?	Correctness, simplicity, robustness, stability, fairness, and good overall efficiency.
+Why can fairness and optimization conflict in routing?	Maximizing total throughput or minimizing total cost can leave some flows with much worse service than others.
+What simple optimization criterion is often used in routing?	Minimizing path cost, often approximated by hop count or another additive metric.
+What is a non-adaptive routing algorithm?	One that does not react to the current network state during operation and uses precomputed or fixed routes.
+What is an adaptive routing algorithm?	One that changes routing decisions based on current or recent network conditions such as topology or load.
+What is the optimality principle in routing?	If router J lies on the optimal path from I to K, then the path from J to K along that route is itself optimal.
+What is a sink tree in routing?	The collection of optimal paths from every source toward one specific destination, forming a loop-free tree rooted at that destination.
+What kinds of metrics can define shortest path in routing?	Hop count, geographic distance, delay, bandwidth-related cost, communication cost, or combinations of such metrics.
+What problem does Dijkstra's algorithm solve in networking?	Finding shortest paths from one source node to all other nodes in a graph with nonnegative link costs.
+What is the basic idea of Dijkstra's algorithm?	Repeatedly make the closest tentative node permanent, then relax paths through it to improve neighboring distances.
+How can routing tables be derived from a shortest-path tree?	For each destination, choose the first outgoing step on the tree path from the router to that destination.
+What is link-state routing?	A distributed routing approach where each router learns the full topology and link costs, then computes shortest paths locally.
+Why does link-state routing measure the cost to neighboring routers?	So each router can advertise local link metrics for path computation.
+What information is typically included in a link-state advertisement?	The router's identity, its neighbors, link costs, sequence information, and an age or lifetime.
+Why do link-state advertisements use sequence numbers and age fields?	To distinguish newer information from stale or duplicated information.
+How is link-state information commonly distributed through the network?	By flooding it so all routers receive the same topology information.
+What is the main scalability drawback of flooding in link-state routing?	It is robust but expensive in large networks because every router must receive and process many updates.
+What is distance-vector routing?	A distributed routing approach where each router advertises its current distance estimates to neighbors.
+What information does a router maintain in distance-vector routing?	For each destination, the best known distance and the preferred outgoing next hop.
+How does a router update a route in distance-vector routing?	It combines a neighbor's advertised distance to a destination with its own cost to that neighbor and picks the best total.
+What is the main strength of distance-vector routing when a shorter path appears?	Good news about a better route can spread quickly hop by hop.
+What is the count-to-infinity problem in distance-vector routing?	After a failure, routers can feed each other incorrect increasing distance estimates for a long time before converging.
+Why does count-to-infinity happen in distance-vector routing?	Routers may believe a neighbor still has a path that actually depended on themselves or another failed route.
+What is split horizon in distance-vector routing?	A rule that a router should not advertise a route back to the neighbor from which that route was learned.
+How does split horizon help distance-vector routing?	It reduces some routing loops and can mitigate count-to-infinity in simple topologies.
+Why does split horizon not completely solve count-to-infinity?	Incorrect information can still circulate in larger or more complex topologies.
