@@ -1,0 +1,31 @@
+What problem do executors solve in Python concurrency?	They hide the mechanics of worker pools and job queues so you can submit callables and collect results at a higher level.
+What are the two main executor classes in `concurrent.futures`?	`ThreadPoolExecutor` and `ProcessPoolExecutor`.
+When is `ThreadPoolExecutor` usually a good fit in Python?	For many independent I/O-bound tasks, such as network requests.
+When is `ProcessPoolExecutor` usually a good fit in Python?	For CPU-bound tasks that can run independently on multiple cores.
+Why is `ProcessPoolExecutor` usually not helpful for I/O-bound HTTP downloads?	Process startup and inter-process communication add overhead without solving an I/O bottleneck.
+What does `Executor.submit(fn, *args, **kwargs)` do in Python?	It schedules one callable for execution and returns a `Future` representing that work.
+What does `Executor.map(fn, iterable)` do in Python?	It schedules the same callable over multiple inputs and returns an iterator of results.
+How does `Executor.map` order its results in Python?	It yields results in the same order as the input iterable, not in completion order.
+Why can `Executor.map` make progress appear stalled?	A slow early task delays delivery of later results, even if those later tasks already finished.
+What does `concurrent.futures.as_completed` return?	An iterator that yields futures as each one completes.
+When is `submit` plus `as_completed` better than `map` in Python?	When you want results as soon as they finish, need per-task error handling, or need to attach metadata to each task.
+What is a `Future` in `concurrent.futures`?	An object representing an asynchronous computation that may still be running or may already be finished.
+Should application code usually instantiate `Future` directly?	No; futures are normally created by the executor or concurrency framework.
+What does `future.done()` tell you in Python?	Whether the asynchronous computation has finished.
+What does `future.result()` do in `concurrent.futures`?	It returns the callable's result, or re-raises the exception from that callable.
+What happens if you call `future.result()` before the future is done?	The calling thread blocks until the result is ready, unless a timeout is used.
+What can `future.result(timeout=...)` raise in Python?	`TimeoutError` if the result is not ready before the timeout expires.
+What does `Future.add_done_callback` do in Python?	It registers a callable to be invoked when the future is finished.
+What common pattern helps associate extra context with futures?	Store each future in a dict keyed to metadata such as the original input or identifier.
+How can executors simplify legacy sequential code?	You can often extract the body of a sequential loop into a worker function and submit that function concurrently.
+What happens when you use an executor as a context manager in Python?	It shuts down the pool on exit and waits for submitted work to finish.
+What does `max_workers` control in an executor?	The maximum number of worker threads or processes in the pool.
+Why does `ThreadPoolExecutor` default to more workers than CPU cores?	Because it is mainly intended for I/O-bound tasks, where workers spend much of their time waiting.
+Why does `ProcessPoolExecutor` default to about one worker per CPU core?	Because it is intended for CPU-bound work, where more processes than cores usually just add contention.
+Why can `ProcessPoolExecutor` use multiple CPU cores despite the GIL?	Each worker process has its own interpreter and its own GIL.
+What kind of tasks are often called embarrassingly parallel?	Independent tasks that need little or no coordination with one another.
+Why is `ProcessPoolExecutor` a good match for embarrassingly parallel tasks?	Independent tasks can be distributed across processes with minimal coordination overhead.
+How are exceptions surfaced when using `Executor.map`?	They are re-raised when you consume the corresponding result from the iterator returned by `map`.
+Why can concurrent web download clients be much faster than sequential ones?	They overlap waiting time for many network responses instead of idling on one request at a time.
+Why should a concurrent HTTP client limit its concurrency?	To avoid overwhelming the server or accidentally behaving like a denial-of-service attack.
+Why does `as_completed` integrate well with progress bars?	Each completed future can immediately advance progress, regardless of submission order.
