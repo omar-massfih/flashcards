@@ -16,7 +16,6 @@ Why should a `@contextmanager` generator usually put `yield` inside `try/finally
 How are exceptions from a `with` block delivered into a `@contextmanager` generator (Python)?	They are raised back into the generator at the `yield` point.
 What does `|` mean inside a `match` pattern (Python)?	It forms an OR-pattern: the case matches if any alternative pattern matches.
 What restriction applies to variable binding in an OR-pattern (Python)?	All alternatives must bind the same set of variables.
-What is a guard in a `case` clause (Python)?	An `if` condition checked after the pattern matches to decide whether that case should run.
 Why is `match/case` a good fit for interpreters or DSLs (Python)?	The patterns can mirror the grammar or tree structure of the language, making dispatch clearer and easier to extend.
 When does the `else` clause of a loop run (Python `for`/`while`)?	Only if the loop completes normally without `break`; for `while`, that means the condition became false.
 When does the `else` clause of a `try` statement run (Python)?	Only if the `try` block completes without raising an exception.

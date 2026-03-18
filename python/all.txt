@@ -372,7 +372,6 @@ Why should an equality check using `zip` usually compare lengths first?	Because 
 How can `all(a == b for a, b in zip(self, other))` improve a sequence `__eq__` implementation?	It compares items lazily and stops at the first mismatch.
 What is goose typing (Python)?	Runtime type checking against abstract base classes (ABCs) instead of concrete classes.
 What is a static protocol (Python)?	An explicit structural interface defined with a `typing.Protocol` subclass for static type checkers.
-Dynamic protocol vs static protocol: what is one key difference?	A dynamic protocol can still be useful when only partly implemented; a static protocol must provide every required member to satisfy the checker.
 Why can the `in` operator work on some objects without `__contains__`?	Python can fall back to iteration, and sequence-like objects may be iterated via `__getitem__`.
 What is monkey patching (Python)?	Changing a module, class, or function at runtime to add or alter behavior without editing its original source.
 Why can monkey patching make an object support a protocol at runtime?	Protocols depend on available methods, so adding the needed method can make existing code accept the object.
@@ -525,7 +524,6 @@ Why should a `@contextmanager` generator usually put `yield` inside `try/finally
 How are exceptions from a `with` block delivered into a `@contextmanager` generator (Python)?	They are raised back into the generator at the `yield` point.
 What does `|` mean inside a `match` pattern (Python)?	It forms an OR-pattern: the case matches if any alternative pattern matches.
 What restriction applies to variable binding in an OR-pattern (Python)?	All alternatives must bind the same set of variables.
-What is a guard in a `case` clause (Python)?	An `if` condition checked after the pattern matches to decide whether that case should run.
 Why is `match/case` a good fit for interpreters or DSLs (Python)?	The patterns can mirror the grammar or tree structure of the language, making dispatch clearer and easier to extend.
 When does the `else` clause of a loop run (Python `for`/`while`)?	Only if the loop completes normally without `break`; for `while`, that means the condition became false.
 When does the `else` clause of a `try` statement run (Python)?	Only if the `try` block completes without raising an exception.
@@ -607,9 +605,7 @@ Why is `ProcessPoolExecutor` a good match for embarrassingly parallel tasks?	Ind
 How are exceptions surfaced when using `Executor.map`?	They are re-raised when you consume the corresponding result from the iterator returned by `map`.
 Why can concurrent web download clients be much faster than sequential ones?	They overlap waiting time for many network responses instead of idling on one request at a time.
 Why should a concurrent HTTP client limit its concurrency?	To avoid overwhelming the server or accidentally behaving like a denial-of-service attack.
-Why does `as_completed` integrate well with progress bars?	Each completed future can immediately advance progress, regardless of submission order.
 What does `async def` define in Python?	A native coroutine function; calling it produces a coroutine object.
-What is a classic coroutine in Python?	A generator-based coroutine driven by `.send(...)` and `yield`, not by `await`.
 What is an asynchronous generator in Python?	A function defined with `async def` that uses `yield`, producing an asynchronous iterator.
 What makes an `async def` function an asynchronous generator instead of a native coroutine?	It contains `yield` in its body.
 What can `await` be applied to in Python?	Awaitable objects, such as native coroutine objects, `Task` objects, and other objects implementing the await protocol.
@@ -618,7 +614,6 @@ What does `asyncio.gather(*aws)` do?	It waits for all given awaitables to finish
 How does `asyncio.gather` order its results?	It returns results in the same order the awaitables were passed in, not completion order.
 When is `asyncio.as_completed` preferable to `asyncio.gather`?	When you want to handle results as each awaitable finishes instead of waiting for all of them together.
 What does `asyncio.as_completed` yield?	Awaitables that produce results in completion order.
-Why does async code often read like sequential code despite running concurrently?	Because `await` lets a coroutine suspend at explicit points while preserving local control flow and state.
 Why can't you directly reuse blocking I/O functions in high-performance asyncio code?	Because blocking functions stall the event loop instead of yielding control while they wait.
 What is the all-or-nothing problem in asynchronous programming?	To get the full benefit, every I/O-heavy layer must avoid blocking; one blocking layer can undermine the whole async design.
 What is an asynchronous context manager in Python?	An object used with `async with` that defines asynchronous `__aenter__` and `__aexit__` methods.

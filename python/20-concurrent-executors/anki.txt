@@ -28,4 +28,3 @@ Why is `ProcessPoolExecutor` a good match for embarrassingly parallel tasks?	Ind
 How are exceptions surfaced when using `Executor.map`?	They are re-raised when you consume the corresponding result from the iterator returned by `map`.
 Why can concurrent web download clients be much faster than sequential ones?	They overlap waiting time for many network responses instead of idling on one request at a time.
 Why should a concurrent HTTP client limit its concurrency?	To avoid overwhelming the server or accidentally behaving like a denial-of-service attack.
-Why does `as_completed` integrate well with progress bars?	Each completed future can immediately advance progress, regardless of submission order.

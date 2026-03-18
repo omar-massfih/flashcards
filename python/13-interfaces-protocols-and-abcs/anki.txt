@@ -1,6 +1,5 @@
 What is goose typing (Python)?	Runtime type checking against abstract base classes (ABCs) instead of concrete classes.
 What is a static protocol (Python)?	An explicit structural interface defined with a `typing.Protocol` subclass for static type checkers.
-Dynamic protocol vs static protocol: what is one key difference?	A dynamic protocol can still be useful when only partly implemented; a static protocol must provide every required member to satisfy the checker.
 Why can the `in` operator work on some objects without `__contains__`?	Python can fall back to iteration, and sequence-like objects may be iterated via `__getitem__`.
 What is monkey patching (Python)?	Changing a module, class, or function at runtime to add or alter behavior without editing its original source.
 Why can monkey patching make an object support a protocol at runtime?	Protocols depend on available methods, so adding the needed method can make existing code accept the object.
