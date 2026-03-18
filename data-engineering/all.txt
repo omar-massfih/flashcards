@@ -1,0 +1,32 @@
+What is data engineering?	The development, implementation, and maintenance of systems and processes that turn raw data into high-quality, consistent information for downstream use.
+What is a data engineer?	A practitioner who manages the data engineering lifecycle from source-system data through serving data for uses such as analysis or machine learning.
+What are the main stages of the data engineering lifecycle?	Generation, storage, ingestion, transformation, and serving.
+Why is the data engineering lifecycle a useful framing?	It shifts attention away from individual tools and toward how data moves from source to business value.
+What are the key undercurrents of the data engineering lifecycle?	Security, data management, DataOps, data architecture, orchestration, and software engineering.
+Why is data engineering described as upstream of data science?	Data engineers provide the reliable inputs and systems that data scientists use downstream.
+Why do data scientists often struggle without strong data engineering support?	They end up spending excessive time gathering, cleaning, and preparing data instead of focusing on analysis and modeling.
+What broad shift defines modern data engineering compared with the big-data era?	The role has moved away from low-level cluster maintenance toward managing the broader data lifecycle with more abstracted tools.
+What is data maturity in an organization?	The degree to which a company effectively uses, integrates, and operationalizes data across the business.
+What are the three simplified stages of data maturity in an organization?	Starting with data, scaling with data, and leading with data.
+What typically characterizes the "starting with data" stage of maturity?	Goals are still forming, architecture is immature, the team is small, and the data engineer is usually a generalist seeking quick wins.
+What should a data engineer prioritize in an organization that is just starting with data?	Get stakeholder buy-in, define a practical architecture, identify useful data, and build a solid data foundation.
+What typically characterizes the "scaling with data" stage of maturity?	The company has formal data practices and now needs scalable architecture, stronger operations, and systems that support machine learning.
+What should a data engineer prioritize in an organization that is scaling with data?	Establish robust practices, build scalable architectures, adopt DevOps and DataOps habits, and keep solutions simple to operate.
+What typically characterizes the "leading with data" stage of maturity?	Data is deeply embedded in the business, self-service is possible, and engineering focuses on automation, governance, and competitive advantage.
+What is a major risk for organizations that already lead with data?	Complacency, which can cause the organization to lose discipline and slip backward in data maturity.
+What is a type A data engineer?	A data engineer focused on abstraction who prefers off-the-shelf products, managed services, and minimal undifferentiated heavy lifting.
+What is a type B data engineer?	A data engineer who builds custom data tools and systems when they are required for scale or competitive advantage.
+What is the main business responsibility of a data engineer beyond technical implementation?	Connecting technical work to business value through communication, prioritization, cost control, and continuous learning.
+Why is communication a core skill for data engineers?	Because success depends on understanding stakeholders, gathering requirements, and aligning technical work with organizational needs.
+Why is cost awareness important in data engineering?	A good solution must deliver value while balancing time to value, total cost of ownership, and operational overhead.
+Why should data engineers avoid undifferentiated heavy lifting?	Because unnecessary complexity slows delivery and wastes effort that could be spent on work that creates real competitive advantage.
+Why should a data engineer have production-grade software engineering skills?	Data engineering systems need reliable, maintainable code even when many underlying services are managed or abstracted.
+Why is SQL a core language for data engineers?	It remains the most common interface for databases, warehouses, lakes, and many large-scale transformation systems.
+Why is Python important in data engineering?	It is widely used as a glue language across orchestration, data processing, data science, and tool APIs.
+Why can JVM languages such as Java or Scala still matter in data engineering?	They are common in major open source data frameworks and may expose lower-level capabilities than higher-level APIs.
+Why is shell proficiency useful for data engineers?	Command-line tools and scripting remain essential for automation, system operations, and lightweight data-processing tasks.
+What is the difference between internal-facing and external-facing data engineering?	Internal-facing data engineering serves business users and internal analytics, while external-facing data engineering supports customer-facing applications and products.
+Why is external-facing data engineering often harder to secure than internal-facing data engineering?	It must handle outside users, higher concurrency, and often multitenant data access.
+How do data engineers typically interact with software engineers?	They collaborate to understand source systems, data generation patterns, and application changes that affect the data lifecycle.
+How do data engineers typically interact with data analysts?	They build and improve the pipelines, datasets, and quality controls that analysts rely on for reporting and business insight.
+How do data engineers typically interact with machine learning engineers?	They provide reliable data foundations and often coordinate on the infrastructure and workflows needed for production ML.
