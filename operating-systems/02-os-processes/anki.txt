@@ -29,7 +29,6 @@ Why is Round Robin good for interactive workloads?	It gives each task frequent C
 What is the main time-slice tradeoff in Round Robin?	Short slices improve responsiveness and help I/O-bound tasks, but increase context-switch overhead.
 Why do CPU-bound tasks often prefer longer time slices?	Longer slices reduce switching overhead and let them do more useful work per run.
 Why do I/O-bound tasks often benefit from shorter time slices?	They tend to need short bursts of CPU and benefit from quicker rescheduling.
-Static vs dynamic scheduling: what is the difference?	Static scheduling is decided ahead of run time; dynamic scheduling makes decisions during execution.
 Preemptive vs non-preemptive scheduling: what is the difference?	Preemptive scheduling can interrupt a running task; non-preemptive scheduling lets it keep running until it blocks, yields, or finishes its slot.
 Why is preemptive scheduling useful?	It lets urgent or time-sensitive tasks run quickly instead of waiting for the current task to finish voluntarily.
 What is priority scheduling?	A policy that runs the highest-priority ready task first.

@@ -1,8 +1,6 @@
 What is inter-process communication (IPC)?	Mechanisms that let processes exchange data or coordinate across address spaces and protection domains.
 What is message passing in IPC?	Communication where one process sends a message and another process receives it instead of sharing memory directly.
-What is direct communication in IPC?	Sender and receiver explicitly name each other when sending and receiving messages.
 What is indirect communication in IPC?	Processes communicate through a shared mailbox or queue instead of naming each other directly.
-What is a mailbox in IPC?	A shared message queue that stores messages for processes to send to and receive from indirectly.
 Why can mailboxes support many-to-many communication?	Multiple senders and receivers can all use the same shared queue.
 What extra feature can message-queue mailboxes provide that ordinary pipes do not?	Message types, so receivers can distinguish among different kinds of messages.
 What is a pipe in UNIX IPC?	A kernel-managed unidirectional byte stream with one end for reading and one end for writing.

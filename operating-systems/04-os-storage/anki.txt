@@ -11,11 +11,8 @@ What does SSTF disk scheduling do?	It serves the pending request closest to the 
 What is the main drawback of SSTF?	Far-away requests can starve if nearer requests keep arriving.
 What does SCAN disk scheduling do?	It moves the head across the disk in one direction, serving requests on the way, then reverses.
 Why is SCAN often a good compromise?	It improves seek efficiency while avoiding some of SSTF's starvation problems.
-Why do modern disks reduce how much control the OS has over scheduling?	The device firmware often hides physical layout and does its own internal scheduling and remapping.
 What is buffer caching?	Keeping disk blocks in memory so repeated accesses can avoid physical disk I/O.
 What is read-ahead or prefetching?	Fetching likely-needed future blocks before the process explicitly requests them.
-What is file management in a file system?	Mechanisms for naming, sharing, protecting, and accessing files and directories.
-What is storage management in a file system?	Allocating and locating file data on persistent storage.
 What is chaining in the media for file allocation?	Each file block points to the next block on disk.
 What is the main drawback of chaining in the media?	Random access is expensive because blocks must be followed one by one.
 What is a FAT-style allocation map?	A table that stores the next-block links for files outside the file data itself.
@@ -23,5 +20,4 @@ What is an inode-style table of pointers?	Metadata stores direct and indirect po
 What is an advantage of inode-style block pointers?	They support efficient random and sequential access while keeping the main metadata structure small.
 What is extent-based allocation?	Representing a file as runs of consecutive blocks instead of many separate block pointers.
 Why can extent-based allocation improve performance?	It reduces metadata and lookups while improving locality for large sequential reads.
-What is RAID?	A family of disk organizations that trade off performance, capacity, and fault tolerance across multiple disks.
 Why do SSDs change storage-system assumptions?	They greatly reduce seek and rotational costs, changing the relative importance of scheduling and locality decisions.

@@ -1,6 +1,4 @@
-What is memory management concerned with (Operating systems)?	Managing memory resources: allocation, protection, virtual memory, and hierarchy control.
 Why do computer systems use a memory hierarchy?	Because smaller and faster memory is more expensive per byte, so systems trade speed, capacity, and cost across levels.
-What is absolute addressing?	Addressing memory by fixed physical byte locations.
 What is relative addressing?	Addressing memory relative to a base location instead of an absolute physical address.
 Why is relative addressing more convenient for processes?	It lets code work independently of where the process is physically loaded in memory.
 What is dynamic address translation?	Converting a relative or virtual address into an absolute physical address at run time.
@@ -11,7 +9,6 @@ What is the heap in a process memory layout?	The region used for dynamic memory 
 What is the stack in a process memory layout?	The region used for function call state, local variables, and return information, typically growing toward lower addresses.
 Why is multiprogramming a memory-management challenge?	Many processes compete for memory at once, and each process’s memory needs can change over time.
 What is swapping?	Moving an entire process and its state out of main memory to secondary storage and later bringing it back.
-What are overlays in memory management?	A manual technique where programmers replace parts of code or data in memory as needed.
 What is fixed partitioning?	Dividing memory into partitions of predetermined size before programs are loaded.
 What is internal fragmentation?	Wasted space inside an allocated memory region because the region is larger than the process needs.
 What is dynamic partitioning?	Creating and removing memory partitions at run time based on process needs.

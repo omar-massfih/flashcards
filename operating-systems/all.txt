@@ -4,7 +4,6 @@ Why is device management hard for an OS?	Devices differ widely in speed, access 
 What is a device driver?	Device-specific software that talks to a device controller and translates OS requests into device-specific commands.
 Why are device drivers important to OS design?	They isolate device-specific control logic from the rest of the operating system.
 What is a system call?	A controlled entry from user-space code into the kernel to request an OS service.
-What is the system call interface?	The set of system calls through which programs access OS services.
 Why do OSes distinguish user mode and kernel mode?	For protection and security: applications should not directly control hardware or unrestricted memory.
 What restrictions typically apply in user mode?	No direct hardware/device-driver access; limited instructions; access only to assigned memory via the OS interface.
 What capabilities does kernel mode provide?	Access to all memory, privileged instructions, and direct hardware control.
@@ -57,7 +56,6 @@ Why is Round Robin good for interactive workloads?	It gives each task frequent C
 What is the main time-slice tradeoff in Round Robin?	Short slices improve responsiveness and help I/O-bound tasks, but increase context-switch overhead.
 Why do CPU-bound tasks often prefer longer time slices?	Longer slices reduce switching overhead and let them do more useful work per run.
 Why do I/O-bound tasks often benefit from shorter time slices?	They tend to need short bursts of CPU and benefit from quicker rescheduling.
-Static vs dynamic scheduling: what is the difference?	Static scheduling is decided ahead of run time; dynamic scheduling makes decisions during execution.
 Preemptive vs non-preemptive scheduling: what is the difference?	Preemptive scheduling can interrupt a running task; non-preemptive scheduling lets it keep running until it blocks, yields, or finishes its slot.
 Why is preemptive scheduling useful?	It lets urgent or time-sensitive tasks run quickly instead of waiting for the current task to finish voluntarily.
 What is priority scheduling?	A policy that runs the highest-priority ready task first.
@@ -67,9 +65,7 @@ Why is RM considered a static-priority algorithm?	Task priorities are derived fr
 What is Earliest Deadline First (EDF) scheduling?	A dynamic-priority real-time algorithm that runs the task with the nearest deadline first.
 Why is EDF considered a dynamic-priority algorithm?	Task priorities change over time as deadlines approach.
 Why can EDF schedule some task sets better than fixed-priority schemes?	Because it always prioritizes the most urgent deadline instead of obeying a fixed priority order.
-What is memory management concerned with (Operating systems)?	Managing memory resources: allocation, protection, virtual memory, and hierarchy control.
 Why do computer systems use a memory hierarchy?	Because smaller and faster memory is more expensive per byte, so systems trade speed, capacity, and cost across levels.
-What is absolute addressing?	Addressing memory by fixed physical byte locations.
 What is relative addressing?	Addressing memory relative to a base location instead of an absolute physical address.
 Why is relative addressing more convenient for processes?	It lets code work independently of where the process is physically loaded in memory.
 What is dynamic address translation?	Converting a relative or virtual address into an absolute physical address at run time.
@@ -80,7 +76,6 @@ What is the heap in a process memory layout?	The region used for dynamic memory 
 What is the stack in a process memory layout?	The region used for function call state, local variables, and return information, typically growing toward lower addresses.
 Why is multiprogramming a memory-management challenge?	Many processes compete for memory at once, and each process’s memory needs can change over time.
 What is swapping?	Moving an entire process and its state out of main memory to secondary storage and later bringing it back.
-What are overlays in memory management?	A manual technique where programmers replace parts of code or data in memory as needed.
 What is fixed partitioning?	Dividing memory into partitions of predetermined size before programs are loaded.
 What is internal fragmentation?	Wasted space inside an allocated memory region because the region is larger than the process needs.
 What is dynamic partitioning?	Creating and removing memory partitions at run time based on process needs.
@@ -118,11 +113,8 @@ What does SSTF disk scheduling do?	It serves the pending request closest to the 
 What is the main drawback of SSTF?	Far-away requests can starve if nearer requests keep arriving.
 What does SCAN disk scheduling do?	It moves the head across the disk in one direction, serving requests on the way, then reverses.
 Why is SCAN often a good compromise?	It improves seek efficiency while avoiding some of SSTF's starvation problems.
-Why do modern disks reduce how much control the OS has over scheduling?	The device firmware often hides physical layout and does its own internal scheduling and remapping.
 What is buffer caching?	Keeping disk blocks in memory so repeated accesses can avoid physical disk I/O.
 What is read-ahead or prefetching?	Fetching likely-needed future blocks before the process explicitly requests them.
-What is file management in a file system?	Mechanisms for naming, sharing, protecting, and accessing files and directories.
-What is storage management in a file system?	Allocating and locating file data on persistent storage.
 What is chaining in the media for file allocation?	Each file block points to the next block on disk.
 What is the main drawback of chaining in the media?	Random access is expensive because blocks must be followed one by one.
 What is a FAT-style allocation map?	A table that stores the next-block links for files outside the file data itself.
@@ -130,13 +122,10 @@ What is an inode-style table of pointers?	Metadata stores direct and indirect po
 What is an advantage of inode-style block pointers?	They support efficient random and sequential access while keeping the main metadata structure small.
 What is extent-based allocation?	Representing a file as runs of consecutive blocks instead of many separate block pointers.
 Why can extent-based allocation improve performance?	It reduces metadata and lookups while improving locality for large sequential reads.
-What is RAID?	A family of disk organizations that trade off performance, capacity, and fault tolerance across multiple disks.
 Why do SSDs change storage-system assumptions?	They greatly reduce seek and rotational costs, changing the relative importance of scheduling and locality decisions.
 What is inter-process communication (IPC)?	Mechanisms that let processes exchange data or coordinate across address spaces and protection domains.
 What is message passing in IPC?	Communication where one process sends a message and another process receives it instead of sharing memory directly.
-What is direct communication in IPC?	Sender and receiver explicitly name each other when sending and receiving messages.
 What is indirect communication in IPC?	Processes communicate through a shared mailbox or queue instead of naming each other directly.
-What is a mailbox in IPC?	A shared message queue that stores messages for processes to send to and receive from indirectly.
 Why can mailboxes support many-to-many communication?	Multiple senders and receivers can all use the same shared queue.
 What extra feature can message-queue mailboxes provide that ordinary pipes do not?	Message types, so receivers can distinguish among different kinds of messages.
 What is a pipe in UNIX IPC?	A kernel-managed unidirectional byte stream with one end for reading and one end for writing.
