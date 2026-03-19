@@ -1,0 +1,3 @@
+Why is using a mutable class variable for per-instance state a common bug in Python?	Because the same mutable object is then shared by all instances.
+Can a function defined outside a class become an instance method in Python?	Yes; if it is assigned as a function attribute on the class, instances bind it as a method.
+What is the global scope used by a Python method?	The module where the method's function was defined, not the class body.
