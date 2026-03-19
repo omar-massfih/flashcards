@@ -1,0 +1,6 @@
+Why is modifying a collection while iterating over that same collection risky in Python?	It can make the iteration logic hard to reason about and lead to skipped, duplicated, or otherwise incorrect processing.
+In Python pattern matching, how are bare names interpreted?	As capture variables, not as named constants.
+How can you force a named constant to be treated as a constant pattern instead of a capture in Python `match`?	Use a dotted name such as `Color.RED`.
+Do sequence patterns in Python `match` statements match iterators or strings?	No; they match arbitrary sequences except iterators and strings.
+When is a guard in a Python `match` statement evaluated relative to value capture?	After the pattern has matched and any capture variables have been bound.
+Why are positional-only parameters useful in a public Python API?	They let the implementation change parameter names later without breaking callers that pass arguments positionally.
