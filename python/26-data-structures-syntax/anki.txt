@@ -1,0 +1,7 @@
+What is a common design principle of mutating list methods in Python?	Methods that mutate a list in place usually return `None` rather than the list itself.
+Why must a tuple expression be parenthesized inside a Python list comprehension?	Otherwise the syntax is ambiguous and invalid.
+What is required to create a one-item tuple in Python syntax?	A trailing comma, as in `item,`.
+How do you create an empty set in Python?	With `set()`, because `{}` creates an empty dictionary.
+What do `and` and `or` return in Python when used as value operators?	The last evaluated operand, not necessarily a Boolean.
+What does the walrus operator `:=` do in Python?	It assigns a value within an expression.
+How are two sequences ordered in Python if one is an initial prefix of the other?	The shorter sequence is considered smaller.
