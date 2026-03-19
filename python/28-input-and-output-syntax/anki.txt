@@ -1,0 +1,6 @@
+What does the `=` specifier do in a Python f-string expression?	It expands to the expression text, `=`, and the expression's `repr()` value.
+Why can using text mode corrupt binary data in Python?	Text mode may translate line endings, which changes the raw bytes.
+What can happen if you write to a file in Python without closing it or using `with`?	Buffered data may not be fully written to disk.
+What is the key difference between `f.readline()` returning `''` and returning `'\n'` in Python?	`''` means end-of-file, while `'\n'` means a blank line.
+What seek operations are safely supported for text files in Python?	Seeks relative to the beginning, plus `seek(0, 2)` for the end; arbitrary text-mode offsets are not supported reliably.
+Why is unpickling untrusted data dangerous in Python?	A malicious pickle payload can execute arbitrary code during deserialization.
