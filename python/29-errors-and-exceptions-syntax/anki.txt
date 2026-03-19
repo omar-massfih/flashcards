@@ -1,0 +1,8 @@
+Why is `Exception` usually a better catch-all than `BaseException` in Python?	Because `Exception` catches ordinary non-fatal errors, while `BaseException` also includes termination-oriented exceptions like `KeyboardInterrupt` and `SystemExit`.
+What is exception chaining in Python?	Attaching one exception to another so the later exception records the earlier one as context or cause.
+What does `raise SomeError from None` do in Python?	It suppresses automatic exception chaining from the currently handled exception.
+Why are `return`, `break`, or `continue` inside `finally` discouraged in Python?	They can suppress or override exceptions and make control flow misleading.
+If both `try` and `finally` return a value in Python, which return value wins?	The one from `finally`.
+What is an `ExceptionGroup` in Python?	An exception object that wraps multiple exception instances so they can be raised together.
+What does `except* SomeError` do in Python?	It handles only the matching exceptions within an `ExceptionGroup`, letting the rest continue propagating.
+What does `add_note(text)` do on a Python exception?	It appends an explanatory note that will be shown in the rendered traceback.
