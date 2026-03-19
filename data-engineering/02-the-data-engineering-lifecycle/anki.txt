@@ -1,0 +1,58 @@
+What is the data engineering lifecycle?	The subset of the full data lifecycle that covers the stages a data engineer directly manages, from source data through serving useful outputs.
+How does the full data lifecycle differ from the data engineering lifecycle?	The full lifecycle covers data across its entire lifespan, while the data engineering lifecycle focuses only on the stages under a data engineer's control.
+Why is storage shown as a foundation rather than a simple one-time stage in the data engineering lifecycle?	Because data is stored throughout the lifecycle as it moves between ingestion, transformation, and serving systems.
+Why can the stages of the data engineering lifecycle appear out of order or overlap in practice?	Because real systems often repeat, intertwine, or combine lifecycle steps instead of following a perfectly linear flow.
+What is a source system in data engineering?	The system that originally generates the data consumed downstream, such as an application database, message queue, or IoT device.
+Why must data engineers understand source systems even if they do not own them?	Because source-system behavior, schema changes, and performance limits can directly affect pipelines and downstream data quality.
+What is a fixed-schema source system?	A source system whose writes must conform to a predefined schema, such as a relational database.
+What is a schemaless source system?	A system where the application effectively defines the schema at write time rather than relying on a rigid, centrally enforced schema.
+Why is schema evolution a recurring challenge for data engineers?	Because source schemas change over time, making downstream ingestion, transformation, and serving logic harder to keep correct.
+What does it mean to evaluate a source system's consistency in data engineering?	Assessing how reliably the source emits well-formed, expected data and how often inconsistencies or quality issues occur.
+Why should a data engineer care whether querying a source system affects its performance?	Because analytical access patterns can create contention and degrade the operational system that produces the data.
+What is hot data?	Data that is accessed very frequently and therefore should be stored for fast retrieval.
+What is cold data?	Data that is rarely accessed and is suitable for low-cost archival storage.
+Why does data temperature matter when choosing storage?	Because access frequency affects the right trade-off between retrieval speed and storage cost.
+Why is there no universal best storage solution in data engineering?	Storage choices depend on workload patterns, latency needs, data scale, schema flexibility, and downstream use cases.
+What is batch ingestion?	Collecting and processing data in chunks based on time intervals or size thresholds instead of continuously record by record.
+What is streaming ingestion?	Continuously delivering data to downstream systems shortly after it is produced.
+Why is batch processing described as a specialized way of handling a stream?	Because most source data is produced continuously, and batching is just one way of grouping that ongoing flow for processing.
+Why is streaming-first not automatically the best ingestion strategy?	It introduces extra complexity and cost, so it is justified only when the business truly needs lower latency.
+What is the push model of data ingestion?	A model in which the source system writes or emits data toward a downstream target or buffer.
+What is the pull model of data ingestion?	A model in which the ingestion system retrieves data from the source system.
+Why can push versus pull be blurry in real data pipelines?	Because data is often pushed in one part of the pipeline and pulled in another as it moves across systems.
+What is transformation in the data engineering lifecycle?	Changing raw ingested data into forms that are useful for downstream analysis, reporting, or machine learning.
+Why is transformation where data often begins creating value?	Because raw data usually becomes practically usable only after it is cleaned, typed, structured, aggregated, or otherwise reshaped.
+What is data featurization in machine learning pipelines?	The transformation of raw data into features useful for training or scoring ML models.
+Why should business logic be implemented consistently across transformations?	Inconsistent logic creates conflicting metrics and definitions, making data less trustworthy and less reusable.
+What does serving data mean in the data engineering lifecycle?	Making prepared data available for practical downstream use such as analytics, dashboards, machine learning, or operational systems.
+Why is unused data often described as inert?	Because data creates value only when it is actually consumed for a real business purpose.
+What is business intelligence in data serving?	Using processed data to describe the past or current state of the business through reports, dashboards, and analysis.
+What is operational analytics?	Analytics focused on present conditions and immediate action, such as live inventory or real-time system health views.
+What is embedded analytics?	Customer-facing analytics exposed within a product or platform rather than used only internally.
+Why is embedded analytics harder to secure than internal BI?	It must safely serve many external users, often with multitenant data isolation requirements and much higher request volume.
+What is reverse ETL?	Sending transformed or enriched data from downstream analytical systems back into operational systems or SaaS platforms.
+Why can reverse ETL be useful?	It allows insights, scores, and curated metrics produced downstream to drive actions in production systems.
+What does the principle of least privilege mean in data engineering security?	Give users and systems only the minimum access required to perform their intended tasks.
+Why is least privilege important in data engineering?	It reduces the blast radius of mistakes or breaches and encourages a security-first mindset.
+What is data management in the context of data engineering?	The set of plans, practices, and controls used to deliver, protect, govern, and enhance data throughout its lifecycle.
+What are the three core categories of data governance emphasized in this chapter?	Discoverability, security, and accountability.
+What is metadata?	Data about data that makes datasets and data processes easier to discover, understand, and govern.
+What is business metadata?	Metadata describing business definitions, rules, owners, and the meaning and use of data.
+What is technical metadata?	Metadata describing schemas, lineage, pipeline structure, field mappings, and other system-level details.
+What is operational metadata?	Metadata about the runtime behavior of systems and processes, such as job status, logs, errors, and execution details.
+What is reference metadata?	Metadata describing standard lookup values used to classify or interpret other data, such as codes or units.
+What is data lineage?	The record of how data moves, changes, and depends on upstream systems throughout its lifecycle.
+Why is data lineage valuable?	It supports debugging, auditing, compliance, accountability, and understanding how data evolved.
+What is data accountability?	Clearly assigning responsibility for governing a dataset or data domain to a specific person.
+What are the three main dimensions of data quality emphasized in this chapter?	Accuracy, completeness, and timeliness.
+What is master data management (MDM)?	The practice of creating and maintaining consistent definitions of core business entities across systems.
+What is a golden record in master data management?	A harmonized, authoritative representation of an entity such as a customer, product, or location.
+What is orchestration in data engineering?	Coordinating many dependent jobs so they run in the right order, on the right cadence, and with proper monitoring.
+How is an orchestration engine different from a simple scheduler?	A scheduler mainly knows time, while an orchestration engine also understands dependencies, state, and workflow structure.
+Why is orchestration especially important in batch data systems?	Because batch workflows often involve many dependent steps that must be coordinated, monitored, and rerun reliably.
+What are the three core technical pillars of DataOps emphasized in this chapter?	Automation, monitoring and observability, and incident response.
+What is DataOps?	Applying DevOps, Agile, and process-control ideas to data work in order to improve delivery speed, quality, and reliability of data products.
+Why is observability critical in data engineering?	Because bad data and broken pipelines can silently cause harm unless teams can detect problems before stakeholders do.
+What is incident response in data engineering?	The process of identifying, diagnosing, communicating, and resolving failures in data systems as quickly and reliably as possible.
+What is infrastructure as code (IaC) in data engineering?	Managing infrastructure and cloud resources through version-controlled code rather than manual setup.
+What does pipelines as code mean?	Defining pipeline tasks and dependencies in code so orchestration systems can execute them repeatably.
