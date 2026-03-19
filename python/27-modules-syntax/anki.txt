@@ -1,0 +1,7 @@
+Why are changes to a Python module not picked up by a plain second `import` in the same session?	Because Python imports each module only once per interpreter session and then reuses the cached module object.
+What search-path precedence can accidentally shadow a standard-library module in Python?	The script's directory is searched before the standard-library directories.
+Do `.pyc` files make Python code run faster after it is loaded?	No; they mainly speed up module loading, not execution speed.
+What do `-O` and `-OO` change when creating compiled Python files?	`-O` removes `assert` statements; `-OO` removes both `assert` statements and docstrings.
+What happens if a package does not define `__all__` and you run `from package import *`?	Python imports the names currently defined by the package, not every submodule on disk.
+How can a name in `__init__.py` shadow a submodule during `from package import *`?	A local definition with the same name takes precedence over the submodule name.
+Why must a Python module intended to run as the main program use absolute imports instead of relative imports?	Because the main module has no package context for resolving relative imports.
