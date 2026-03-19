@@ -1,0 +1,4 @@
+What does `/` return in Python arithmetic?	A floating-point result, even when dividing two integers.
+Does automatic adjacent string-literal concatenation work with variables or expressions in Python?	No; it works only for literals.
+How are out-of-range indexes handled differently from out-of-range slices in Python?	An out-of-range index raises `IndexError`, but an out-of-range slice is clipped gracefully.
+In Python multiple assignment, when are the right-hand-side expressions evaluated?	All right-hand-side expressions are evaluated first, before any target is assigned.
