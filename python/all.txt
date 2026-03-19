@@ -1,3 +1,7 @@
+What does `/` return in Python arithmetic?	A floating-point result, even when dividing two integers.
+Does automatic adjacent string-literal concatenation work with variables or expressions in Python?	No; it works only for literals.
+How are out-of-range indexes handled differently from out-of-range slices in Python?	An out-of-range index raises `IndexError`, but an out-of-range slice is clipped gracefully.
+In Python multiple assignment, when are the right-hand-side expressions evaluated?	All right-hand-side expressions are evaluated first, before any target is assigned.
 What is the Python Data Model?	The set of protocols (special methods) that let objects support core language features and idiomatic syntax.
 What are “special methods” in Python?	Methods with `__double_underscores__` that the interpreter calls to implement language features.
 Why prefer built-ins over calling special methods directly?	Built-ins can add behavior and may be faster (especially for built-in types).
@@ -740,3 +744,40 @@ What general sequencing occurs during class creation with a metaclass, descripto
 Why does understanding class-creation order matter in metaprogramming?	Different hooks can only influence certain stages, so using the wrong hook can make a customization impossible or too late.
 What does `cls.__subclasses__()` return in Python?	The immediate subclasses of the class that are currently in memory.
 What is the practical difference between `cls.__mro__` and `cls.mro()`?	`__mro__` is the stored resolution-order tuple; `mro()` is the method used to compute that order and can be customized by a metaclass.
+Why is modifying a collection while iterating over that same collection risky in Python?	It can make the iteration logic hard to reason about and lead to skipped, duplicated, or otherwise incorrect processing.
+In Python pattern matching, how are bare names interpreted?	As capture variables, not as named constants.
+How can you force a named constant to be treated as a constant pattern instead of a capture in Python `match`?	Use a dotted name such as `Color.RED`.
+Do sequence patterns in Python `match` statements match iterators or strings?	No; they match arbitrary sequences except iterators and strings.
+When is a guard in a Python `match` statement evaluated relative to value capture?	After the pattern has matched and any capture variables have been bound.
+Why are positional-only parameters useful in a public Python API?	They let the implementation change parameter names later without breaking callers that pass arguments positionally.
+What is a common design principle of mutating list methods in Python?	Methods that mutate a list in place usually return `None` rather than the list itself.
+Why must a tuple expression be parenthesized inside a Python list comprehension?	Otherwise the syntax is ambiguous and invalid.
+What is required to create a one-item tuple in Python syntax?	A trailing comma, as in `item,`.
+How do you create an empty set in Python?	With `set()`, because `{}` creates an empty dictionary.
+What do `and` and `or` return in Python when used as value operators?	The last evaluated operand, not necessarily a Boolean.
+What does the walrus operator `:=` do in Python?	It assigns a value within an expression.
+How are two sequences ordered in Python if one is an initial prefix of the other?	The shorter sequence is considered smaller.
+Why are changes to a Python module not picked up by a plain second `import` in the same session?	Because Python imports each module only once per interpreter session and then reuses the cached module object.
+What search-path precedence can accidentally shadow a standard-library module in Python?	The script's directory is searched before the standard-library directories.
+Do `.pyc` files make Python code run faster after it is loaded?	No; they mainly speed up module loading, not execution speed.
+What do `-O` and `-OO` change when creating compiled Python files?	`-O` removes `assert` statements; `-OO` removes both `assert` statements and docstrings.
+What happens if a package does not define `__all__` and you run `from package import *`?	Python imports the names currently defined by the package, not every submodule on disk.
+How can a name in `__init__.py` shadow a submodule during `from package import *`?	A local definition with the same name takes precedence over the submodule name.
+Why must a Python module intended to run as the main program use absolute imports instead of relative imports?	Because the main module has no package context for resolving relative imports.
+What does the `=` specifier do in a Python f-string expression?	It expands to the expression text, `=`, and the expression's `repr()` value.
+Why can using text mode corrupt binary data in Python?	Text mode may translate line endings, which changes the raw bytes.
+What can happen if you write to a file in Python without closing it or using `with`?	Buffered data may not be fully written to disk.
+What is the key difference between `f.readline()` returning `''` and returning `'\n'` in Python?	`''` means end-of-file, while `'\n'` means a blank line.
+What seek operations are safely supported for text files in Python?	Seeks relative to the beginning, plus `seek(0, 2)` for the end; arbitrary text-mode offsets are not supported reliably.
+Why is unpickling untrusted data dangerous in Python?	A malicious pickle payload can execute arbitrary code during deserialization.
+Why is `Exception` usually a better catch-all than `BaseException` in Python?	Because `Exception` catches ordinary non-fatal errors, while `BaseException` also includes termination-oriented exceptions like `KeyboardInterrupt` and `SystemExit`.
+What is exception chaining in Python?	Attaching one exception to another so the later exception records the earlier one as context or cause.
+What does `raise SomeError from None` do in Python?	It suppresses automatic exception chaining from the currently handled exception.
+Why are `return`, `break`, or `continue` inside `finally` discouraged in Python?	They can suppress or override exceptions and make control flow misleading.
+If both `try` and `finally` return a value in Python, which return value wins?	The one from `finally`.
+What is an `ExceptionGroup` in Python?	An exception object that wraps multiple exception instances so they can be raised together.
+What does `except* SomeError` do in Python?	It handles only the matching exceptions within an `ExceptionGroup`, letting the rest continue propagating.
+What does `add_note(text)` do on a Python exception?	It appends an explanatory note that will be shown in the rendered traceback.
+Why is using a mutable class variable for per-instance state a common bug in Python?	Because the same mutable object is then shared by all instances.
+Can a function defined outside a class become an instance method in Python?	Yes; if it is assigned as a function attribute on the class, instances bind it as a method.
+What is the global scope used by a Python method?	The module where the method's function was defined, not the class body.

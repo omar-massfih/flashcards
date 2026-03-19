@@ -461,3 +461,42 @@ How do you run or test one specific package from a workspace root?	Use the `-p` 
 What does `cargo install` do?	It installs a binary crate locally so you can run its executable from the command line.
 Where does `cargo install` place binaries by default when using rustup defaults?	In `$HOME/.cargo/bin`.
 How can a program become a custom Cargo subcommand?	Name the executable `cargo-<name>` and put it on your `PATH`.
+What is a smart pointer in Rust?	A type that behaves like a pointer but also carries ownership semantics, metadata, or extra capabilities beyond a plain reference.
+How do references and smart pointers differ in Rust ownership terms?	References only borrow data, while many smart pointers own the data they point to.
+Which two traits are especially important to Rust smart pointers?	`Deref`, for reference-like behavior, and `Drop`, for custom cleanup when a value goes out of scope.
+What is `Box<T>` used for in Rust?	To store a value on the heap while keeping a fixed-size pointer on the stack.
+When is `Box<T>` especially useful in Rust?	For recursive types, large values you want to move without copying the underlying data, and trait objects.
+Why can `Box<T>` make a recursive type compile in Rust?	Because `Box<T>` has a known size, so it breaks the infinite-size recursion in the type definition.
+What does `Box::new(x)` do in Rust?	Allocates `x` on the heap and returns a `Box<T>` owning it.
+Why can `*y` work for both `&T` and `Box<T>` in Rust?	Because `Box<T>` implements `Deref`, so dereferencing it can yield a reference to the inner value.
+What does implementing `Deref` let a custom smart pointer do in Rust?	Customize `*` so the type can behave like a reference to its target.
+What must the `deref` method return in Rust?	A reference to the inner target value, not the target value by move.
+Why shouldn't `deref` return the inner value by value in Rust?	That would move the value out of `self` during dereferencing, which is usually not desired.
+What is deref coercion in Rust?	Automatic conversion from a reference to a type implementing `Deref` into a reference to that type's target.
+Why is deref coercion useful in Rust?	It lets functions accept references like `&str` while callers can pass smart pointers or other reference-like types such as `&String`.
+When does Rust perform deref coercion?	When function or method argument types do not match directly but repeated `Deref` calls can produce the required reference type.
+What are the three deref coercion cases Rust supports?	`&T` to `&U` with `Deref`; `&mut T` to `&mut U` with `DerefMut`; and `&mut T` to `&U` with `Deref`.
+Why does Rust allow `&mut T` to coerce to `&U` but not `&T` to `&mut U`?	A mutable reference can be treated immutably without breaking aliasing rules, but an immutable reference cannot safely become mutable.
+What does the `Drop` trait do in Rust?	Allows a type to run custom cleanup code automatically when a value goes out of scope.
+How do you explicitly clean up a value early in Rust?	Call `std::mem::drop(value)`.
+In what order are local variables dropped in Rust?	In reverse order of creation.
+What problem does `Rc<T>` solve in Rust?	It enables multiple ownership of the same heap-allocated value in single-threaded code.
+What does `Rc::clone(&x)` do in Rust?	It creates another owner of the same allocation by incrementing the reference count, not by deep-copying the underlying data.
+Why is `Rc::clone` preferred stylistically over `x.clone()` for `Rc<T>`?	It signals that only the reference count is being incremented, not that the inner data is being deeply cloned.
+When is an `Rc<T>` value dropped in Rust?	When its strong reference count reaches zero.
+What problem does `RefCell<T>` solve in Rust?	It allows interior mutability by enforcing the borrowing rules at runtime instead of compile time.
+What is interior mutability in Rust?	A pattern where an outwardly immutable value allows mutation of data stored inside it.
+How do `Box<T>`, `Rc<T>`, and `RefCell<T>` differ in ownership and borrow checking?	`Box<T>` has one owner with compile-time borrow checks; `Rc<T>` has multiple owners with only immutable compile-time borrows; `RefCell<T>` has one owner with borrow rules checked at runtime.
+What do `RefCell::borrow()` and `RefCell::borrow_mut()` return in Rust?	`Ref<T>` and `RefMut<T>` smart pointers, which behave like references via `Deref`.
+What happens if you violate the borrow rules of `RefCell<T>` in Rust?	The program panics at runtime.
+Why might `RefCell<T>` accept code the compiler rejects with normal references?	Because runtime checking can allow memory-safe patterns that conservative compile-time analysis cannot prove valid.
+Why is `Rc<RefCell<T>>` a common combination in Rust?	It allows shared ownership via `Rc<T>` together with mutation via `RefCell<T>`.
+Why can `Rc<T>` plus `RefCell<T>` create memory leaks in Rust?	Because reference cycles can keep strong counts above zero forever.
+What is a reference cycle in Rust?	A cycle of owning references where values keep each other alive indefinitely.
+Why are memory leaks from reference cycles still memory safe in Rust?	They waste memory but do not create dangling pointers or undefined behavior.
+What is `Weak<T>` used for with `Rc<T>` in Rust?	To hold a non-owning reference that does not contribute to the strong count.
+How do you create a `Weak<T>` from an `Rc<T>` in Rust?	Call `Rc::downgrade(&rc)`.
+Why does `Weak<T>` help prevent reference cycles in Rust?	Because weak references do not keep the allocation alive once all strong owners are gone.
+How do you access the value behind a `Weak<T>` in Rust?	Call `upgrade()`, which returns `Option<Rc<T>>`.
+Why does `Weak::upgrade()` return `Option<Rc<T>>` in Rust?	Because the value may already have been dropped if no strong references remain.
+What do `Rc::strong_count` and `Rc::weak_count` report in Rust?	The number of strong owning references and weak non-owning references to the allocation.

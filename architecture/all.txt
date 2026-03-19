@@ -19,3 +19,39 @@ Why is technical breadth especially valuable for software architects?	It helps t
 Why must a software architect understand the business domain?	Because effective architecture depends on understanding the business problems, goals, and requirements the system must support.
 Why are interpersonal skills essential for software architects?	Architects must lead, mentor, facilitate, and communicate decisions effectively across teams and stakeholders.
 Why do software architects need negotiation and political awareness?	Architectural decisions often affect many stakeholders and are frequently challenged, so architects must justify and win support for them.
+What is architectural thinking?	Viewing systems from an architectural point of view by considering structure, interactions, trade-offs, and long-term consequences.
+What is the difference between software architecture and software design?	Architecture is primarily about system structure, while design is primarily about the appearance and localized implementation details within that structure.
+What three criteria help place a decision on the spectrum between architecture and design?	Whether it is strategic or tactical, how much effort it takes to change, and how significant the trade-offs are.
+Why are strategic decisions usually more architectural than tactical decisions?	Because they are longer-term, involve more planning and stakeholders, and shape the system more broadly.
+Why does high change effort usually indicate an architectural decision?	Because architecture is generally the part of the system that is hardest to change.
+Why do significant trade-offs usually indicate an architectural decision?	Because architectural choices affect important qualities and constraints across the system rather than only local implementation details.
+What is technical depth?	Deep expertise in a particular language, framework, platform, or tool.
+What is technical breadth?	Awareness of many different technologies, tools, and approaches, even without deep expertise in all of them.
+Why is technical breadth more important than technical depth for an architect?	Architects need to compare many possible solutions and choose among them, not just optimize within one familiar technology.
+What are the three levels in the knowledge pyramid for technologists?	Stuff you know; stuff you know you don't know; and stuff you don't know you don't know.
+What is the career goal suggested by the knowledge pyramid?	Move topics from "don't know you don't know" into "know you don't know," and deepen only the few that are worth expert-level investment.
+What common failure happens when architects try to maintain deep expertise in too many areas?	They spread themselves too thin and end up stale or ineffective across all of them.
+What is stale expertise in an architect?	Outdated knowledge that the architect still treats as current and authoritative.
+What is the Frozen Caveman antipattern in architecture?	Overreacting to an old failure or pet risk and letting that outdated fear dominate new architecture decisions.
+What is the 20-minute rule for architects?	Spend at least 20 minutes each day learning something new or broadening technical knowledge.
+Why is the 20-minute rule aimed more at breadth than depth?	Because its purpose is to keep expanding awareness of possible solutions, not to build mastery in only one area.
+What is a personal technology radar?	A structured way to track technologies and techniques by how strongly you should avoid, assess, try, or adopt them.
+What are the four quadrants of the Thoughtworks Technology Radar?	Tools; languages and frameworks; techniques; and platforms.
+What are the four rings of the Thoughtworks Technology Radar?	Hold; assess; trial; and adopt.
+What does the Hold ring mean on a technology radar?	Do not start new work with that technology, or deliberately avoid that habit or tool.
+What does the Assess ring mean on a technology radar?	The technology is worth investigating further but is not yet ready for active use.
+What does the Trial ring mean on a technology radar?	The technology is worth piloting on low-risk work to understand it in practice.
+What does the Adopt ring mean on a technology radar?	The technology or practice is one you actively endorse and are ready to use.
+Why is building a personal radar useful even if the specific entries change over time?	The exercise forces deliberate thinking about your technology portfolio instead of drifting with hype or habit.
+Why should an architect treat a technology portfolio like a financial portfolio?	Because deliberate diversification reduces career risk and balances mainstream demand against exploratory bets.
+Why can't architecture decisions usually be answered by search engines or an LLM alone?	Because the right choice depends on context-specific trade-offs such as constraints, risks, people, and business drivers.
+In the auction example, what is the main architectural advantage of using a topic over queues?	Better extensibility and looser producer coupling, because new consumers can subscribe without changing the producer.
+In the auction example, what is a major trade-off of using a topic instead of queues?	Topics make data access broader and can weaken security and control over who consumes the messages.
+In the auction example, what contract trade-off exists between topics and queues?	Topics favor one shared homogeneous contract, while queues allow consumer-specific heterogeneous contracts.
+In the auction example, what operational advantage can queues have over topics?	Queues can support per-consumer monitoring and autoscaling more directly.
+What does it mean to translate business drivers into architecture?	Convert business goals and constraints into concrete architectural concerns such as scalability, performance, and availability.
+What is the Bottleneck Trap for architects?	When an architect owns critical-path code and becomes the team's delivery bottleneck because they cannot code full-time.
+How can an architect avoid the Bottleneck Trap while still coding?	Let the team own the critical path and instead code lower-risk business functionality or supporting work.
+Why can proofs of concept help an architect stay hands-on?	They require real code, expose implementation details, and help validate architectural decisions.
+Why should an architect write production-quality proof-of-concept code when possible?	Because POCs often become reference code, and writing them well reinforces good engineering habits.
+What kinds of work can help an architect stay hands-on without blocking the team?	Proofs of concept, technical debt reduction, bug fixes, automation, architectural fitness functions, and code reviews.
