@@ -500,3 +500,45 @@ Why does `Weak<T>` help prevent reference cycles in Rust?	Because weak reference
 How do you access the value behind a `Weak<T>` in Rust?	Call `upgrade()`, which returns `Option<Rc<T>>`.
 Why does `Weak::upgrade()` return `Option<Rc<T>>` in Rust?	Because the value may already have been dropped if no strong references remain.
 What do `Rc::strong_count` and `Rc::weak_count` report in Rust?	The number of strong owning references and weak non-owning references to the allocation.
+What is "fearless concurrency" in Rust?	Rust's ownership and type systems turn many concurrency mistakes into compile-time errors instead of runtime bugs.
+Why can Rust catch many concurrency bugs at compile time?	Because ownership, borrowing, and trait bounds constrain how data is shared or transferred across threads.
+What model of threads does Rust's standard library use?	A 1:1 model, where each language thread maps to one operating system thread.
+What does `thread::spawn` do in Rust?	It starts a new thread and runs the given closure on that thread.
+Why can a spawned thread stop early in Rust?	If the main thread exits first, spawned threads are shut down even if they have not finished.
+What does `thread::spawn` return in Rust?	A `JoinHandle<T>` for the spawned thread.
+What does `JoinHandle::join()` do in Rust?	It blocks the current thread until the spawned thread finishes.
+How does the placement of `join()` affect concurrency in Rust?	Calling it earlier can prevent interleaving by making one thread wait before doing more work.
+Why is `move` commonly used with `thread::spawn` closures?	It transfers ownership of captured values into the spawned thread.
+Why doesn't a spawned closure usually borrow local variables from its parent thread?	Rust cannot guarantee the borrowed data will outlive the spawned thread.
+What problem does `move` solve for thread closures in Rust?	It prevents the spawned thread from holding references to data that may be dropped in the parent thread.
+Why can't the original thread use a value after moving it into a spawned thread?	Ownership has been transferred, so using it again would violate Rust's ownership rules.
+What is message-passing concurrency?	A concurrency style where threads communicate by sending values to each other.
+What is a channel in Rust concurrency?	A mechanism with a sender and receiver used to pass values between threads.
+What does `mpsc` stand for in Rust channels?	Multiple producer, single consumer.
+What does `Sender::send` do in Rust?	It sends a value through the channel, moving ownership of that value.
+Why is a sent value unavailable afterward in the sending thread?	`send` takes ownership, so the value has been moved to the receiver side.
+What does `Receiver::recv` do in Rust?	It blocks until a message arrives or the channel closes.
+What does `Receiver::try_recv` do in Rust?	It checks for a message without blocking and returns immediately.
+Why can `Receiver` be used directly in a `for` loop?	It implements iteration over incoming messages until the channel closes.
+When does iteration over a Rust channel receiver stop?	When the channel is closed and no more messages can arrive.
+Why can messages from multiple producer threads arrive in different orders?	Thread scheduling is nondeterministic.
+What is a `Mutex<T>` in Rust?	A mutual-exclusion primitive that allows only one thread at a time to access guarded data.
+What must a thread do before accessing data inside a `Mutex<T>`?	Acquire the lock with `lock()`.
+What does `Mutex::lock()` return in Rust?	A `LockResult<MutexGuard<T>>`.
+What is a `MutexGuard<T>` in Rust?	A smart pointer representing a held mutex lock and access to the protected data.
+Why does Rust reduce the risk of forgetting to unlock a mutex?	`MutexGuard` releases the lock automatically when it is dropped.
+What is poisoning in Rust mutexes?	A state where locking can fail because another thread panicked while holding the lock.
+Why doesn't moving a plain `Mutex<T>` into multiple threads work?	Ownership would be moved into the first spawned closure, leaving nothing for the others.
+Why is `Rc<T>` not suitable for sharing ownership across threads?	Its reference counting is not thread-safe.
+Why is `Arc<T>` suitable for sharing ownership across threads?	It provides atomically reference-counted shared ownership that is thread-safe.
+Why does `Arc<T>` have a performance cost compared with `Rc<T>`?	Atomic reference counting adds synchronization overhead.
+Why is `Arc<Mutex<T>>` a common Rust concurrency pattern?	`Arc` shares ownership across threads, and `Mutex` provides synchronized mutable access.
+What is a deadlock?	A situation where threads wait on each other indefinitely because each holds a lock the other needs.
+Can Rust's type system prevent all deadlocks?	No; deadlocks are logical concurrency errors Rust cannot eliminate automatically.
+What does the `Send` trait mean in Rust?	Ownership of values of that type can be transferred safely between threads.
+What does the `Sync` trait mean in Rust?	References to values of that type can be shared safely between threads.
+Why does `Rc<T>` implement neither `Send` nor `Sync`?	Its reference counting is not safe to update from multiple threads.
+Why does `RefCell<T>` not implement `Sync`?	Its runtime borrow checking is not thread-safe.
+Why can `Mutex<T>` be shared across threads safely?	It implements synchronization for access to the protected data.
+When do types automatically implement `Send` or `Sync` in Rust?	When all of their component types also implement the trait.
+Why is manually implementing `Send` or `Sync` unsafe?	You must guarantee thread-safety invariants yourself.
