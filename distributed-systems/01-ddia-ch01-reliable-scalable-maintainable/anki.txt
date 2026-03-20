@@ -10,7 +10,7 @@ What makes systematic software faults especially dangerous?	They are correlated 
 Give examples of systematic software faults (DDIA Ch. 1).	Bug on bad input; runaway resource usage; dependency slowdown/corruption; cascading failures.
 Why can software bugs lie dormant for a long time?	They’re triggered only under unusual circumstances when hidden assumptions break.
 Name practical techniques to reduce impact of software faults.	Thorough testing; process isolation; crash/restart; monitoring/analysis in prod; careful design of assumptions.
-How can interfaces reduce human error?	Good abstractions/APIs/admin UIs make the right thing easy and discourage risky actions.
+How can interfaces reduce human error?	By making safe actions easy and risky actions harder through good abstractions, APIs, and user interfaces.
 Name techniques for fast recovery from human errors.	Roll back config quickly; gradual rollout; recompute data; tooling for recovery.
 Why is monitoring/telemetry important for reliability?	Early warning signals; validate assumptions/constraints; faster diagnosis during incidents.
 What are load parameters?	Quantitative measures describing load (e.g., RPS, read/write ratio, active users, cache hit rate).
