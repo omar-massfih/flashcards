@@ -1,0 +1,42 @@
+What is modularity in software architecture?	The logical grouping of related code into cohesive units such as packages, namespaces, classes, functions, or components.
+Why is modularity considered an implicit architectural characteristic?	Sustainable systems need modular distinction and orderly communication even when requirements never state that explicitly.
+What is the difference between modularity and granularity?	Modularity is about breaking a system into parts; granularity is about how large or small those parts are.
+Why can poor granularity create architecture antipatterns?	Badly sized services or components can become tightly coupled, leading to brittle distributed designs such as distributed monoliths.
+Why should architects care about how developers package code?	Packaging affects reuse, coupling, analysis, and how hard the system is to restructure later.
+Why is modularity useful even when physical separation has not happened yet?	Logical separation affects coupling and future restructuring even inside one monolith or codebase.
+What is cohesion?	The degree to which the parts of a module belong together.
+What is functional cohesion?	A module where all parts contribute directly to one well-defined responsibility.
+What is sequential cohesion?	A relationship where one part's output becomes another part's input in sequence.
+What is communicational cohesion?	A grouping where parts operate on the same data or contribute to the same output.
+What is procedural cohesion?	A grouping where parts mainly belong together because they must run in a specific order.
+What is temporal cohesion?	A grouping based mainly on things that must happen at the same time, such as startup tasks.
+What is logical cohesion?	A grouping of operations that are conceptually related but not strongly functionally related.
+What is coincidental cohesion?	A module whose contents are unrelated except for being placed together.
+What does a high LCOM score indicate?	A lack of cohesion in methods, suggesting a class may really contain multiple unrelated responsibilities.
+What is afferent coupling?	The number of incoming dependencies on a code artifact.
+What is efferent coupling?	The number of outgoing dependencies from a code artifact to others.
+Why does high efferent coupling often increase instability?	Because the artifact depends on many others and is more likely to break when they change.
+What does abstractness measure?	The ratio of abstract artifacts to the total of abstract plus concrete artifacts in a codebase or module.
+What does instability measure?	The ratio of outgoing coupling to total incoming plus outgoing coupling.
+What does Distance from the Main Sequence measure?	How far a module is from the ideal balance between abstractness and instability.
+What does the Zone of Uselessness represent?	Code that is too abstract and therefore hard to use productively.
+What does the Zone of Pain represent?	Code that is too concrete and rigid, making it brittle and hard to maintain.
+Why do architecture metrics still require interpretation?	Because they expose structural patterns but cannot fully distinguish good complexity from bad complexity or explain intent.
+What is connascence?	A way of describing coupling where changing one element requires another to change to preserve system correctness.
+What is the difference between static and dynamic connascence?	Static connascence appears in source structure, while dynamic connascence depends on runtime behavior or ordering.
+What is Connascence of Name?	Multiple elements must agree on the same identifier or name.
+What is Connascence of Type?	Multiple elements must agree on the same type.
+What is Connascence of Meaning?	Multiple elements must agree on the meaning of a value or convention, such as a magic number or string.
+What is Connascence of Position?	Multiple elements must agree on the ordering of values, such as positional parameters.
+What is Connascence of Algorithm?	Multiple elements must agree on the same algorithm in order to work correctly together.
+What is Connascence of Timing?	Correctness depends on elements happening at the right time relative to one another.
+What is Connascence of Values?	Several values must change together to preserve correctness.
+What is Connascence of Identity?	Multiple elements must reference the same specific entity.
+Why is static connascence generally preferable to dynamic connascence?	Static forms are easier to analyze and refactor, while dynamic forms are usually more fragile and harder to reason about.
+What does the strength of connascence describe?	How hard a form of coupling is to change or refactor.
+What does the locality of connascence describe?	How close the coupled elements are to one another in the codebase or architecture.
+What does the degree of connascence describe?	How many elements are affected by the coupling.
+What is the Rule of Degree for connascence?	Refactor stronger forms of connascence into weaker forms when possible.
+What is the Rule of Locality for connascence?	As distance between elements increases, prefer weaker forms of connascence.
+What are the three general modularity guidelines based on connascence?	Minimize overall connascence; minimize connascence across boundaries; maximize connascence within boundaries.
+Why is connascence useful to architects?	It gives more precise language for identifying, discussing, and refactoring different kinds of coupling.
