@@ -88,3 +88,67 @@ Why is observability critical in data engineering?	Because bad data and broken p
 What is incident response in data engineering?	The process of identifying, diagnosing, communicating, and resolving failures in data systems as quickly and reliably as possible.
 What is infrastructure as code (IaC) in data engineering?	Managing infrastructure and cloud resources through version-controlled code rather than manual setup.
 What does pipelines as code mean?	Defining pipeline tasks and dependencies in code so orchestration systems can execute them repeatably.
+Why are reversible decisions valuable in architecture?	They let teams adjust course cheaply as requirements, technologies, and constraints change.
+What is a one-way door decision in architecture?	A decision that is difficult or nearly impossible to reverse once made.
+What is a two-way door decision in architecture?	A decision that can be reversed with relatively low cost or risk.
+Why must architecture decisions account for trade-offs?	Because improving one quality such as speed, cost, simplicity, or flexibility often limits another.
+What is data architecture?	The design of systems to support an enterprise's evolving data needs through flexible, reversible decisions reached by evaluating trade-offs.
+What is the difference between operational and technical data architecture?	Operational architecture defines what must happen for people, processes, and business needs; technical architecture defines how data is ingested, stored, transformed, and served.
+What makes data architecture "good"?	It serves business needs with reusable building blocks while staying flexible and making appropriate trade-offs.
+Why is agility central to good data architecture?	Because business requirements, data use cases, and technology choices keep changing.
+Why is bad data architecture costly to change?	It is often tightly coupled, rigid, overcentralized, or built with poor tool choices.
+Why should architects choose common components carefully?	Shared components can improve collaboration and reuse, but forcing one-size-fits-all tools can slow domain-specific work.
+What is availability in a data system?	The percentage of time a service or component is operable.
+What is recovery time objective (RTO)?	The maximum acceptable duration of an outage.
+What is recovery point objective (RPO)?	The maximum acceptable amount of data loss after recovery.
+Why should data systems be designed for failure?	Because hardware, software, networks, and dependencies eventually fail, so resilience must be built in.
+What is elasticity in data architecture?	The ability of a system to scale up and down automatically with changing workload.
+Why is scaling down as important as scaling up in the cloud?	It reduces cost when demand falls instead of paying for idle capacity.
+Why is architecture considered a leadership function?	Architects shape technology choices, mentor engineers, and align technical direction with business goals.
+What does "always be architecting" mean?	Continually reassessing the current state, target state, and migration path as business and technology evolve.
+What does it mean to build loosely coupled systems?	Break systems into components that interact through stable interfaces so each part can change independently.
+Why does loose coupling improve team autonomy?	Teams can test, deploy, and evolve their services with fewer dependencies on other teams.
+Why are APIs and message schemas important in loosely coupled systems?	They hide internal implementation details behind stable contracts.
+Why do reversible technology choices matter in data architecture?	They reduce lock-in and make it easier to replace tools or patterns as better options emerge.
+What is zero-trust security?	A model that assumes no user, device, or network location should be trusted automatically.
+Why is the hardened-perimeter security model insufficient in cloud systems?	Insiders, phishing, and internet-exposed control planes make "inside equals trusted" unsafe.
+What is the cloud shared responsibility model?	The provider secures the cloud infrastructure, while the customer secures applications, configurations, identities, and data inside the cloud.
+Why should data engineers think like security engineers?	Because cloud systems push many security responsibilities onto the teams building and operating the data platform.
+What is FinOps?	A practice for managing cloud spending through collaboration among engineering, finance, and business teams.
+Why does cloud architecture require FinOps thinking?	Because elastic, pay-as-you-go systems make costs dynamic and easy to overspend without active management.
+Why should architects define domains from the real business rather than copying other companies?	Because each organization's processes and constraints differ, so useful boundaries must match local reality.
+Why is a distributed system often used in data architecture?	To improve scalability, availability, and reliability beyond what a single machine can provide.
+Why can't a single machine usually provide strong scalability and availability?	It has hard resource limits and remains a single point of failure.
+What is the main difference between a single-tier and a multitier architecture?	A single-tier architecture tightly couples application and data on one server; a multitier architecture separates concerns across layers.
+Why is single-tier architecture risky in production?	Failure or heavy load in one part can take down the whole system.
+What problem does multitier architecture mainly solve?	It reduces tight coupling between layers such as data, application logic, and presentation.
+What is a monolith in architecture?	A system where many responsibilities are bundled into one tightly coupled codebase or deployment unit.
+Why are monoliths hard to evolve?	Tight coupling makes changes, reuse, and component replacement risky.
+What is a microservices architecture?	A design of small, decentralized, loosely coupled services that can evolve independently.
+Why can moving from a monolith to microservices be difficult?	Extracting services safely requires untangling coupling in both the technology and the organization.
+What is multitenancy in a data system?	Sharing an underlying system among multiple teams, organizations, or customers while preserving isolation.
+What are the two main concerns in multitenant systems?	Performance isolation and security isolation.
+What is an event in event-driven architecture?	A record that something happened, usually reflecting a change of state.
+What is event-driven architecture?	An architecture where producers emit events that are routed asynchronously to consumers through loosely coupled components.
+Why is event-driven architecture useful for loosely coupled systems?	It lets multiple consumers react to the same events without tight direct dependencies on producers.
+What is a brownfield project?	A project that modifies or replaces parts of an existing system while constrained by legacy choices.
+What is a greenfield project?	A project built on a clean slate without needing to preserve a legacy architecture.
+What is the strangler pattern?	Replacing a legacy system gradually by surrounding and incrementally substituting its parts with new components.
+What is a data warehouse?	A centralized system optimized for structured reporting and analytics.
+What is a data mart?	A refined subset of warehouse data tailored to one department, team, or business line.
+What is a data lake?	A central storage system, usually on object storage, that keeps large volumes of structured and unstructured data in raw form.
+Why did first-generation data lakes often become "data swamps"?	They accumulated poorly governed data without enough schema management, discovery, or maintenance discipline.
+What is a data lakehouse?	An architecture that combines lake-style object storage with warehouse-style management features such as transactions and governed tables.
+Why are cloud data warehouses and data lakes converging?	Both increasingly separate compute from storage and support large-scale analytics, semistructured data, and multiple processing engines.
+What is the modern data stack?	A modular analytics architecture built from cloud-based, plug-and-play components for ingestion, storage, transformation, governance, and analysis.
+What is Lambda architecture?	An architecture that combines separate batch and streaming pipelines plus a serving layer to present unified results.
+Why is Lambda architecture hard to maintain?	It requires multiple systems and code paths that are difficult to reconcile.
+What is Kappa architecture?	An architecture that treats streaming as the main backbone for ingestion, processing, storage, and replay.
+Why can Kappa architecture be expensive in practice?	Keeping huge historical datasets in streaming-centric systems can be more complex and costly than batch storage and processing.
+What is the Dataflow model's main idea?	Treat both batch and streaming data as event streams processed with a unified programming model.
+Why is "batch as a special case of streaming" useful?	It reduces duplicated code paths and unifies batch and real-time processing concepts.
+What is an IoT gateway?	A hub that connects low-power devices and securely forwards their data to downstream systems.
+Why do IoT architectures often need special handling for late or irregular data?	Devices may be offline, bandwidth-constrained, or intermittently connected.
+What is edge computing in IoT?	Processing data on or near the device before sending it downstream.
+What is a data mesh?	A decentralized approach where domains own and serve their data as products instead of pushing everything into one central platform.
+What are the four core ideas of data mesh?	Domain-oriented ownership; data as a product; self-serve data infrastructure; federated computational governance.
