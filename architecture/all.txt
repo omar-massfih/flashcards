@@ -97,3 +97,35 @@ What is the Rule of Degree for connascence?	Refactor stronger forms of connascen
 What is the Rule of Locality for connascence?	As distance between elements increases, prefer weaker forms of connascence.
 What are the three general modularity guidelines based on connascence?	Minimize overall connascence; minimize connascence across boundaries; maximize connascence within boundaries.
 Why is connascence useful to architects?	It gives more precise language for identifying, discussing, and refactoring different kinds of coupling.
+What are the two main activities in structural design for software architecture?	Architectural characteristics analysis and logical component design.
+What is the problem domain in software architecture?	The set of functional requirements describing what the system must do.
+What do architectural characteristics describe relative to the problem domain?	The system capabilities and constraints that matter to success but are independent of domain behavior.
+Why does defining architectural characteristics distinguish architecture from coding or design?	Architects must uncover important system capabilities beyond domain functionality and shape the structure to support them.
+What three criteria must a requirement meet to count as an architectural characteristic?	It must be a nondomain design consideration, influence structural design, and be critical or important to success.
+Why do the authors prefer the term "architectural characteristics" over "non-functional requirements"?	It better reflects concerns that are essential to system success instead of implying they are secondary.
+What is the difference between domain behavior and system capabilities in architecture?	The domain describes what the system does, while architectural characteristics describe how the system must succeed operationally and structurally.
+Why is performance often an architectural characteristic even if it is not in the requirements document?	It can be critical to success and may require structural choices even when not stated explicitly.
+When does security rise from a coding concern to an architectural characteristic?	When the system needs special structural support, not just normal secure coding practices.
+Why is scalability often a structural architectural concern?	Because beyond a certain point it usually requires a different architecture style, not just better local code.
+What is an implicit architectural characteristic?	An important system characteristic that is rarely written in the requirements but is necessary for success.
+What is an explicit architectural characteristic?	A characteristic that is directly stated in requirements or other formal instructions.
+Why are implicit architectural characteristics easy to miss?	They are often assumed by the problem domain and therefore never written down explicitly.
+Why shouldn't architects try to support every possible architectural characteristic?	Each supported characteristic adds complexity, cost, and trade-offs to the design.
+What is availability as an architectural characteristic?	How much of the time the system is expected to be operational and accessible.
+What is continuity as an architectural characteristic?	The system's ability to support disaster recovery and continued operation after disruption.
+What is recoverability as an architectural characteristic?	How quickly the system can return to service and restore needed state after failure.
+What is robustness as an architectural characteristic?	The ability to handle errors and boundary conditions while continuing to operate.
+What is scalability as an operational architectural characteristic?	The ability to keep operating effectively as load, users, or requests increase.
+What is extensibility as a structural architectural characteristic?	How well the architecture supports adding new functionality.
+What is maintainability as a structural architectural characteristic?	How easy it is to change, fix, and enhance the system.
+What is portability as a structural architectural characteristic?	The ability to run the system across multiple environments or platforms.
+What are cloud architectural characteristics?	Characteristics shaped by cloud capabilities and constraints, such as on-demand scaling, zone resilience, and regional data restrictions.
+What is zone-based availability in cloud architecture?	Using multiple availability zones so failures in one zone do not take down the whole system.
+What is region-based privacy and security in cloud architecture?	Designing data placement and controls to satisfy laws or policies about where data may be stored.
+What are cross-cutting architectural characteristics?	Important constraints and qualities that span many parts of the system, such as security, privacy, accessibility, and supportability.
+What is supportability as an architectural characteristic?	The degree to which the system provides diagnostics, logging, and operational help for debugging and support.
+Why are architectural characteristic definitions often ambiguous across organizations?	The industry lacks universal standard definitions, so companies create their own terminology and interpretations.
+What is a ubiquitous language in software architecture?	A shared, organization-specific vocabulary used consistently to reduce ambiguity and misunderstanding.
+Why do architectural characteristics force trade-offs?	Improving one characteristic often weakens another because system qualities are interdependent.
+Why do the authors advise aiming for the "least worst architecture"?	Because no design can maximize every desirable characteristic, so architects must balance competing trade-offs pragmatically.
+Why is iterative architecture valuable when dealing with architectural characteristics?	The easier the architecture is to change, the less pressure there is to get every characteristic exactly right on the first attempt.
