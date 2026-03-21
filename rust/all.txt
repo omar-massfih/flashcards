@@ -542,3 +542,40 @@ Why does `RefCell<T>` not implement `Sync`?	Its runtime borrow checking is not t
 Why can `Mutex<T>` be shared across threads safely?	It implements synchronization for access to the protected data.
 When do types automatically implement `Send` or `Sync` in Rust?	When all of their component types also implement the trait.
 Why is manually implementing `Send` or `Sync` unsafe?	You must guarantee thread-safety invariants yourself.
+What is a future in Rust?	A value representing work that may not be ready yet but can produce a result later.
+What do `async` and `await` let you express in Rust?	Potential pause points and eventual results without manually writing the coordination logic.
+Why is async especially useful for I/O-bound work?	It lets the program do other work while waiting on operations such as network or file I/O.
+Why can futures in Rust be lazy?	They do nothing until they are polled or awaited.
+What does `async fn` compile to conceptually?	A function that returns a type implementing `Future` whose `Output` is the function's return type.
+What does the `await` keyword do in Rust?	It waits for a future to become ready and yields control to the runtime while waiting.
+Why is `await` a postfix keyword in Rust?	It makes chains of async method calls read naturally from left to right.
+Why can't `main` itself usually be `async` in plain Rust?	Async code needs a runtime to drive futures, and `main` is where that runtime must be started.
+What is an async runtime in Rust?	A library that executes, schedules, and coordinates asynchronous tasks and futures.
+What does `block_on` do in Rust async code?	It runs a future to completion while blocking the current thread.
+What does each `await` point represent under the hood?	A state-machine transition point where control can return to the runtime.
+Why is an async block often described as a state machine?	The compiler transforms it into states representing progress between await points.
+What is a task in Rust async programming?	A runtime-managed unit of asynchronous execution, similar in role to a lightweight thread.
+What does `spawn_task` do in async Rust?	It schedules an async task to run concurrently under the runtime.
+Why can a spawned async task stop early?	It may be shut down when the parent async context or runtime ends before it completes.
+What does awaiting a task handle do?	It waits for that spawned task to complete.
+What does `join` do for futures in Rust async code?	It waits for multiple futures to complete and returns their outputs together.
+What does the `join!` macro allow that `join` does not?	Waiting on an arbitrary fixed number of futures known at compile time.
+Why can code inside one async block still run linearly?	Because it only yields control at `await` points; everything between them is synchronous.
+Why can an async program still hang if a channel receiver loop never ends?	The receiver may wait forever unless all senders are dropped or the channel is closed.
+Why is `async move` often needed with channels or tasks?	It moves captured values into the async block so they can be dropped or owned correctly there.
+What problem does `yield_now().await` solve?	It voluntarily gives control back to the runtime so other futures can make progress.
+What does it mean for one future to starve others?	It monopolizes execution by doing too much work without yielding.
+What is a stream in Rust async programming?	An asynchronous sequence of values that become ready over time.
+How is a stream related to an iterator?	A stream is like an asynchronous iterator.
+Why does `StreamExt` exist separately from `Stream`?	It provides higher-level convenience methods such as `next` on top of the lower-level `Stream` trait.
+Why do you need `StreamExt` in scope to call `.next()` on a stream?	Because `next` is provided by the extension trait, not by `Stream` itself.
+What does `Future::poll` return?	A `Poll` indicating either `Ready(output)` or `Pending`.
+Why does `Future::poll` take `self: Pin<&mut Self>`?	Some futures are self-referential and must not move in memory while being polled.
+What problem does `Pin` solve in async Rust?	It prevents moving self-referential futures after they have been pinned.
+What does the `Unpin` trait mean?	A type can be safely moved even when used through a pinned pointer.
+Why do some async futures need pinning?	The compiler-generated state machine may contain internal references to its own state.
+Why can collections of futures require explicit pinning?	Moving futures into a collection may move self-referential future values, which is unsafe unless they are pinned.
+How do threads and async tasks relate in Rust?	They are complementary: threads are OS-managed units, while tasks are runtime-managed async units.
+When are threads usually the better choice in Rust?	For highly parallelizable CPU-bound work.
+When is async usually the better choice in Rust?	For highly concurrent I/O-bound work.
+Can Rust programs combine threads and async?	Yes; using both together is common and often the best fit.
