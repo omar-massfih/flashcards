@@ -152,3 +152,52 @@ Why do IoT architectures often need special handling for late or irregular data?
 What is edge computing in IoT?	Processing data on or near the device before sending it downstream.
 What is a data mesh?	A decentralized approach where domains own and serve their data as products instead of pushing everything into one central platform.
 What are the four core ideas of data mesh?	Domain-oriented ownership; data as a product; self-serve data infrastructure; federated computational governance.
+Why should data teams choose architecture before tools?	Architecture is the strategic blueprint, while tools are tactical ways to realize it.
+Why is choosing technology before architecture risky?	It often leads to a cobbled-together stack optimized around tools instead of business needs.
+What is cargo-cult engineering in data teams?	Copying complex practices from large tech companies without having the scale or need to justify them.
+Why should small data teams prefer managed services and SaaS tools?	They reduce operational burden so the team can focus on problems that directly add business value.
+Why should teams inventory their skills before choosing data technologies?	Technology choices should match the team's actual strengths, languages, and workflows.
+Why is speed to market important in data technology decisions?	Delivering value early and often matters more than endlessly debating ideal tooling.
+Why can long delays in choosing technologies hurt data teams?	Slow decisions delay delivery and can make the team appear unable to create value.
+What does interoperability mean in data engineering?	How easily different tools and systems connect, exchange data, and work together.
+Why is interoperability a key technology-selection criterion?	Data stacks usually involve multiple tools, so hard integrations add time, risk, and maintenance cost.
+Why are standards such as JDBC and ODBC useful?	They make it easier for many tools to connect to databases through common interfaces.
+Why can REST integrations still be painful even when widely supported?	REST is not truly uniform in practice, so each API often has its own quirks.
+What is total cost of ownership (TCO) in data engineering?	The full estimated cost of a technology or initiative, including direct and indirect costs.
+Why does the book recommend an opex-first approach for data engineering?	It preserves flexibility, reduces up-front commitment, and fits cloud pay-as-you-go services.
+What is total opportunity cost of ownership (TOCO)?	The cost of the opportunities you give up by committing to a given technology, stack, or process.
+Why is TOCO important in fast-moving data ecosystems?	A tool that looks good today may later trap the team in high switching costs or obsolete practices.
+Why are inflexible data technologies compared to bear traps?	They are easy to adopt but painful and expensive to escape later.
+What is an immutable technology in data engineering?	A foundational technology likely to remain useful for a long time, such as object storage or SQL.
+What is a transitory technology in data engineering?	A tool or framework that may rise quickly in popularity and then fade just as quickly.
+What does the Lindy effect suggest about technology choices?	The longer a technology has already lasted, the more likely it is to remain useful.
+How should teams combine immutable and transitory technologies?	Use immutable technologies as the stable base and build transitory tools around them.
+Why should teams reevaluate technology choices regularly?	The data tooling landscape changes quickly, so good choices today may be weak choices later.
+Why is object storage treated as an immutable cloud technology?	It is a durable long-lived primitive that remains useful even as surrounding tools change.
+What is simple lift and shift in cloud migration?	Moving on-premises systems directly to cloud VMs without redesigning them for cloud economics.
+What is data gravity in cloud architecture?	Once large amounts of data live on a platform, the cost and difficulty of moving them elsewhere increases.
+Why do cloud egress fees matter in technology decisions?	They can make it expensive to move data out of a cloud and create lock-in over time.
+What is a hybrid cloud strategy?	Running some workloads on premises and others in the cloud on an ongoing basis.
+Why can hybrid cloud be attractive for analytics workloads?	Data can often flow cheaply into the cloud for analysis while only smaller results need to move back.
+What is multicloud?	Running workloads across more than one public cloud provider.
+Why might a company adopt multicloud?	To use best-of-breed services, stay close to customer workloads, or support multiple platform ecosystems.
+What is the main downside of multicloud?	It adds significant complexity in networking, security, integration, and operations.
+What is the book's default advice on workload location?	Choose the simplest deployment model that meets current business needs, usually a single cloud unless there is a compelling reason otherwise.
+Why should teams have an escape plan even with a simple deployment strategy?	Every platform creates some lock-in, so teams should preserve the ability to change course later.
+What is the core question in build versus buy decisions?	Whether building the tool yourself creates enough competitive advantage to justify the cost and effort.
+When should data teams usually buy or adopt instead of build?	When the problem is already well solved and custom work would mostly be undifferentiated heavy lifting.
+What is community-managed open source software?	Open source software maintained mainly by a user and contributor community rather than sold as a managed product.
+What is commercial open source software (COSS)?	An open source core combined with paid managed services, distributions, or enhancements from a vendor.
+What should you evaluate before adopting an open source project?	Its mindshare, maturity, support model, roadmap, contributor activity, and maintenance burden.
+What should you evaluate before adopting a managed vendor product?	Its value over self-hosting, pricing, support, release transparency, and company viability.
+What is the main risk of a monolithic data system?	It is brittle and hard to change because many functions and dependencies are tightly coupled.
+Why is modularity attractive in modern data stacks?	It allows teams to swap tools, choose best-of-breed components, and reduce long-term lock-in.
+What is a distributed monolith?	A distributed system whose services still share too many dependencies or a common environment, preserving monolithic pain points.
+How can ephemeral infrastructure reduce distributed-monolith pain?	By giving each job or workload its own temporary environment and dependencies.
+When is serverless attractive in data engineering?	For simple, discrete workloads where convenience and pay-per-use economics outweigh infrastructure management.
+Why can serverless become unexpectedly expensive?	High event volume, long execution time, or inefficient per-request overhead can drive costs up quickly.
+What are containers in modern data platforms?	Lightweight isolated execution environments that package code and dependencies without a full VM.
+Why are containers useful in data engineering?	They isolate dependencies and make complex workloads more portable and repeatable.
+Why should infrastructure be treated as code?	Automating infrastructure with versioned definitions makes deployments more repeatable, auditable, and recoverable.
+What is the main lesson of benchmark wars in data technology?	Vendor benchmarks often hide unrealistic assumptions, so technology choices must be tested against your real workloads and costs.
+Why should data engineers be skeptical of vendor performance benchmarks?	Benchmarks may use unrealistic data sizes, asymmetric tuning, or misleading cost assumptions.
