@@ -1,0 +1,4 @@
+Why can't Rust keywords normally be used as identifiers?	They are reserved by the language parser for current or future language syntax.
+What is a raw identifier in Rust?	An identifier written with the `r#` prefix so a reserved keyword can be used as a name.
+How do you call a function named with a raw identifier in Rust?	Use the `r#` prefix both at definition and call sites, such as `r#match(...)`.
+Why are raw identifiers useful across Rust editions?	A name that was legal in an older edition may become a keyword in a newer one, and `r#name` preserves compatibility.
