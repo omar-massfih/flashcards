@@ -1,0 +1,12 @@
+What is a Rust edition?	A coherent opt-in package of language changes and tooling updates released every few years.
+Why do Rust editions exist?	They group larger language-evolution steps without breaking existing code by default.
+Does upgrading the Rust compiler force a project onto a new edition?	No; a project stays on its chosen edition until it explicitly opts in.
+Can crates from different Rust editions be used together?	Yes; edition differences affect parsing within each crate, not whether crates can link together.
+What are the three Rust release channels?	Nightly, beta, and stable.
+What is the stable channel for?	Production use with the strongest guarantees that upgrades should be painless.
+What is the nightly channel for?	Trying unstable features and experimental compiler behavior behind feature flags.
+What is a feature flag in Rust?	An explicit opt-in that enables an unstable language or library feature on nightly.
+Why are unstable feature flags unavailable on stable Rust?	Stable is reserved for features whose behavior is committed and supported without opt-in instability.
+What does `rustup toolchain install nightly` do?	It installs the nightly Rust toolchain alongside other installed channels.
+What does `rustup override set nightly` do in a project directory?	It makes that directory use nightly Rust by default without changing the global default toolchain.
+What idea does Rust describe as "stability without stagnation"?	Stable Rust should remain reliable to upgrade while still evolving steadily through frequent releases and experimentation on nightly.
