@@ -1,0 +1,22 @@
+What three sources can architects use to identify architectural characteristics?	Domain concerns, project requirements, and implicit domain knowledge.
+Why must architects translate domain concerns into architectural characteristics?	Stakeholders express business goals, while architects need measurable system qualities to drive structural decisions.
+What is a composite architectural characteristic?	A quality with no single objective measure that must be decomposed into measurable subcharacteristics.
+Why is agility a composite architectural characteristic?	Because it depends on measurable qualities such as deployability, modularity, and testability.
+What translation mistake should architects avoid when mapping business goals to qualities?	False equivalence, such as reducing a composite concern to only one characteristic.
+Why is focusing only on performance risky when a business process must finish on time?	Timeliness may also depend on availability, scalability, reliability, recoverability, and auditability.
+What must architects do with business goals that start as composite characteristics?	Decompose them and define the resulting characteristics objectively.
+Why is implicit domain knowledge important when identifying architectural characteristics?	Requirements rarely capture real usage patterns, domain habits, and hidden risks that affect design.
+How can expected user counts imply scalability requirements?	Large projected concurrency translates a business metric into the need to handle growth without serious degradation.
+What is the difference between scalability and elasticity (software architecture)?	Scalability handles long-term growth in load; elasticity handles short-term bursts in demand.
+Why might a consumer ordering system need elasticity even if average traffic is modest?	Demand often arrives in bursts, such as lunch or event spikes, rather than evenly over time.
+Why can external service integrations influence architectural characteristics?	Dependency failures can affect reliability, availability, and resilience unless the system degrades gracefully.
+Why should architects avoid making the whole system fail when a noncritical external service is unavailable?	Graceful degradation is often better than introducing unnecessary brittleness.
+Why can mobile accessibility create architectural concerns beyond UX alone?	Mobile users are sensitive to page-load time and responsiveness, so performance targets may affect the design.
+When does customizability become an architectural characteristic?	When supporting variations in behavior requires structural mechanisms rather than only local code changes.
+What is an architecture kata?	A timeboxed exercise where teams derive architectural characteristics and a design from a domain problem, requirements, and context.
+Why is additional context valuable in an architecture kata?	It surfaces realistic constraints and considerations that may not appear in the formal requirements.
+Why should architects collaborate with developers and operators when choosing how to support a quality?	The right balance between architecture and design depends on implementation cost, feasibility, and operational trade-offs.
+What question helps determine whether a candidate architectural characteristic is truly important?	If you had to remove one, which one would least threaten the system's success?
+Why should teams keep the final list of architectural characteristics short?	Supporting too many qualities increases complexity before the domain problem itself is solved.
+What does an architectural characteristics worksheet help a team do?	Capture candidate qualities, separate driving concerns from others, and prioritize the top decision drivers.
+What is the risk of asking stakeholders to choose from a long unconstrained list of architectural qualities?	They often ask for all of them, which leads to an overcomplicated architecture.
