@@ -1,0 +1,36 @@
+Why must data engineers understand how source systems generate data?	Data creation patterns, quirks, and constraints directly affect ingestion, correctness, and downstream usefulness.
+Why are files still a common source-system interface in data engineering?	Files remain a universal data-exchange medium, especially when systems do not expose convenient programmatic interfaces.
+What is an application database (Data engineering)?	A database that stores an application's current operational state.
+What is an OLTP system (Data engineering)?	A database optimized for low-latency, high-concurrency reads and writes of individual records.
+Why are OLTP systems poorly suited to large-scale analytics?	Analytical queries scan lots of data and can create contention or structural performance problems for transactional workloads.
+What is an OLAP system (Data engineering)?	A database optimized for large interactive analytics queries rather than high-rate lookups of individual records.
+Why might a data engineer read from an OLAP system as a source?	Downstream workflows such as ML training or reverse ETL may need data produced in analytics systems.
+Why should data engineers understand whether a source database relaxes ACID guarantees?	The consistency model affects correctness assumptions, failure handling, and the risk of subtle data errors.
+What is change data capture (CDC) in data engineering?	A method for extracting each insert, update, and delete event from a database.
+Why is CDC valuable in data engineering?	It enables near-real-time replication and event streams without repeatedly rescanning full tables.
+Why are database logs useful to data engineers?	They support recoverability and can be mined for CDC and event-stream generation.
+What is the insert-only pattern in data storage?	A pattern that preserves history by inserting new versions of a record instead of updating rows in place.
+What is a main downside of insert-only tables?	They grow quickly and make current-state lookups more expensive because the latest version must be found.
+What is the difference between a message and a stream (Data engineering)?	A message is a discrete item typically removed after delivery; a stream is an append-only retained log of ordered events.
+Why are streams useful when you care about event history?	They retain events long enough for replay, aggregation, and time-based analysis across many records.
+What is event time in data ingestion?	The time when the original event was generated in the source system.
+What is ingestion time in data pipelines?	The time when an event is first stored or accepted by a downstream system.
+What is process time in data pipelines?	The time when the ingested data is actually transformed or otherwise processed.
+Why should data pipelines record event, ingestion, and processing timestamps?	These timestamps help track latency, diagnose delays, and understand data movement through the pipeline.
+What is a document store?	A NoSQL database that stores nested documents, often resembling JSON objects, in collections keyed for retrieval.
+Why can document-store schema flexibility become a problem for data engineers?	Poorly managed schema evolution can create inconsistent, bloated data and break downstream ingestion.
+Why can extracting data from a document store with full scans be expensive?	Full scans can slow the source database and may incur significant read costs in serverless offerings.
+What is a wide-column database good at?	Handling massive data volumes with very high write rates and very low lookup latency.
+Why do wide-column databases often feed a separate analytics system?	They excel at row-key access and fast scans but are not designed for complex analytical queries.
+When is a graph database a good fit?	When the main question is about connectivity or multi-step traversal between entities.
+What is a search database mainly useful for?	Fast text search and log analysis across semantically or structurally rich data.
+What does REST statelessness mean?	Each API call is independent and does not rely on server-side session state from previous calls.
+How does GraphQL differ from REST for data retrieval?	GraphQL lets clients request multiple data shapes in one query and returns data matching that requested shape.
+What is a webhook?	An event-triggered HTTP call from the source system to a consumer endpoint; effectively a reverse API.
+What is gRPC designed for?	Efficient remote procedure calls and bidirectional data exchange over HTTP/2 using Protocol Buffers.
+Why should data engineers establish a feedback loop with source-system teams?	Schema changes, outages, and application changes upstream can silently break downstream pipelines if they are not communicated.
+What is a data contract in data engineering?	A written agreement describing what data is extracted, how it is extracted, how often, and who owns each side of the integration.
+What is the purpose of an SLA with source-system owners?	To set service expectations for reliability, quality, and availability of the upstream data source.
+What is an SLO in data engineering?	A measurable objective used to track whether actual service performance meets the SLA.
+Why does source-system observability matter to data engineers?	Monitoring helps detect outages, schema drift, and quality failures before they silently damage downstream systems.
+Why should data engineers plan for backfills after a source-system outage?	Once the source recovers, pipelines may need to restore missed data so downstream systems become complete again.
