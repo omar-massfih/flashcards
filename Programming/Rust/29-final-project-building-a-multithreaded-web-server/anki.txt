@@ -1,0 +1,8 @@
+What is a thread pool?	A fixed set of worker threads that wait for jobs and execute them as tasks arrive.
+Why is a thread pool preferable to spawning unlimited threads for a server?	It bounds resource usage while still allowing multiple requests to be processed concurrently.
+Why should `ThreadPool::execute` accept `FnOnce() + Send + 'static`?	Each job may run once on another thread and must be safe to transfer and outlive the caller's stack frame.
+Why is the channel receiver wrapped in `Arc<Mutex<Receiver<Job>>>`?	Workers need shared ownership of one receiver, and only one worker may pull a job from it at a time.
+Why is `while let Ok(job) = receiver.lock().unwrap().recv()` a subtle bug here?	The lock guard can live for the whole loop body, causing a worker to hold the mutex while executing the job and blocking other workers from receiving work.
+Why does binding `let message = receiver.lock().unwrap().recv();` before `match` avoid that problem?	The temporary lock guard is dropped at the end of the `let` statement, so the mutex is released before the job runs.
+Why is `Option<JoinHandle<()>>` useful in the final `Worker` design?	It allows `take()` to move the thread handle out during shutdown and leave `None` behind.
+What does implementing `Drop` for `ThreadPool` achieve?	It ensures workers are signaled to stop and their threads are joined during cleanup.
