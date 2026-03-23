@@ -1,0 +1,23 @@
+What is a machine in Google's production terminology?	A piece of hardware, or sometimes a VM, that can run server software.
+What is a server in Google's production terminology?	A piece of software that implements a service.
+Why is software essential for managing hardware at Google's scale?	Hardware failures are frequent enough at scale that they must be abstracted and handled automatically.
+What is Borg?	A distributed cluster operating system that schedules and manages jobs across a cluster.
+What kinds of workloads can Borg run?	Long-running server processes and batch jobs such as MapReduce.
+Why can Google not rely on fixed IP addresses and ports to identify tasks?	Tasks can be restarted or moved to different machines, so their network location is fluid.
+What problem does the Borg Naming Service (BNS) solve?	It provides stable names for tasks and maps those names to the current IP address and port.
+Why do jobs declare resource requirements to Borg?	So Borg can place tasks efficiently and safely across machines.
+Why does Borg consider failure domains when placing tasks?	To avoid putting too many replicas behind the same shared point of failure, such as a rack switch.
+What happens if a Borg task uses more resources than it requested?	Borg kills and restarts the task.
+What is Colossus?	A cluster-wide filesystem layer over distributed storage that provides filesystem semantics plus replication and encryption.
+What is Bigtable?	A distributed NoSQL database for very large datasets, modeled as a sparse sorted map.
+What is Spanner?	A globally consistent distributed database with an SQL-like interface.
+What is Google Front End (GFE)?	A reverse proxy that terminates client connections and routes requests to the appropriate backend service.
+What does Global Software Load Balancing (GSLB) do?	It directs traffic to suitable locations with available capacity, including at DNS, service, and RPC levels.
+What is Chubby used for in Google's production environment?	Distributed locking, master election, and storage of small pieces of consistent coordination data.
+What is Borgmon?	A monitoring system that scrapes metrics for alerting and historical analysis.
+What RPC system underlies service-to-service communication at Google?	Stubby, whose open source descendant is gRPC.
+Why might Google use an RPC boundary even for work that could be a local call?	It makes later refactoring into a separate service easier.
+Why are protocol buffers used for RPC payloads?	They serialize structured data compactly, quickly, and with less ambiguity than XML.
+What is one operational advantage of a single shared repository?	Engineers can fix problems across project boundaries and submit those changes through the same review flow.
+Why does Google run broad automated testing when a changelist is submitted?	To detect breakage in any code that depends directly or indirectly on the change.
+What is push-on-green?	A release model that automatically pushes a new version to production after it passes tests.
