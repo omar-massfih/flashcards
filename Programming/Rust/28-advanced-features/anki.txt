@@ -1,0 +1,54 @@
+What is unsafe Rust?	A subset of Rust that permits certain operations the compiler cannot fully verify for memory safety.
+Why does Rust include unsafe features?	Some valid low-level operations are too hard for static analysis to prove safe, and systems programming sometimes requires them.
+What are the five unsafe superpowers in Rust?	Dereferencing raw pointers; calling unsafe functions or methods; accessing mutable statics; implementing unsafe traits; and accessing union fields.
+Why should unsafe blocks be kept small?	Smaller unsafe regions make auditing and debugging memory-safety issues easier.
+Why is it good practice to wrap unsafe code in a safe abstraction?	It confines the unsafety to a small implementation boundary while exposing a safe API to callers.
+What is a raw pointer in Rust?	A pointer type, `*const T` or `*mut T`, that is not subject to the usual reference guarantees.
+How do raw pointers differ from references in Rust?	They may alias mutably, be null, point to invalid memory, and have no automatic cleanup guarantees.
+Why is dereferencing a raw pointer unsafe?	Rust cannot guarantee that the pointer is valid, aligned, non-null, and points to initialized data.
+Why might a Rust programmer use raw pointers anyway?	They are useful for FFI, low-level systems work, and building safe abstractions the borrow checker cannot express directly.
+What makes a function unsafe in Rust?	It has preconditions the compiler cannot verify, so callers must uphold its documented safety contract.
+Can a safe Rust function contain unsafe code internally?	Yes; a common pattern is a safe API implemented using a small audited unsafe block.
+Why does implementing `split_at_mut` require unsafe code?	The borrow checker cannot prove that the two returned mutable subslices are non-overlapping even when the programmer knows they are.
+What is FFI?	A foreign function interface for calling code across language boundaries.
+Why are functions declared in `extern` blocks generally unsafe to call?	Rust cannot verify that foreign code obeys Rust's safety expectations.
+What does `#[unsafe(no_mangle)]` do for an exported Rust function?	It prevents Rust from changing the symbol name so other languages can link to it directly.
+Why is reading or writing `static mut` unsafe?	Global mutable state can cause data races or violate aliasing guarantees if used incorrectly.
+What is an unsafe trait?	A trait whose required invariants the compiler cannot verify automatically.
+Why is implementing an unsafe trait itself unsafe?	The implementation promises to uphold invariants that Rust cannot check.
+Why is accessing a union field unsafe in Rust?	Rust cannot know which field's type is currently valid in the union's storage.
+What is Miri?	A Rust tool that runs code and detects many kinds of undefined behavior dynamically.
+Why is Miri useful when working with unsafe Rust?	It can catch many invalid pointer and memory-usage errors that the compiler cannot prove statically.
+Why doesn't a clean Miri run prove unsafe code is sound?	Miri checks only executed paths and only the classes of undefined behavior it understands.
+What is an associated type in a trait?	A type placeholder chosen by each trait implementation and used in the trait's method signatures.
+Why might a trait use an associated type instead of a generic type parameter?	It lets each implementing type choose one concrete associated type and avoids multiple trait implementations that differ only by that type.
+What is a default type parameter in Rust?	A generic parameter with a default concrete type used unless an implementation overrides it.
+Why are default type parameters useful?	They allow common cases to stay concise while preserving customization for advanced cases.
+What problem does fully qualified syntax solve in Rust?	It disambiguates which trait or type implementation to use when multiple items share the same name.
+What is the general form of fully qualified syntax in Rust?	`<Type as Trait>::function(...)`.
+What is a supertrait?	A trait that another trait requires as a prerequisite.
+Why declare one trait as a supertrait of another?	So the dependent trait can use the methods or associated items of the required trait.
+What is the newtype pattern in Rust?	A tuple struct wrapper that creates a distinct type around an existing type.
+Why is the newtype pattern useful beyond trait coherence?	It can enforce type distinctions, hide implementation details, and constrain an API.
+How does a type alias differ from a newtype?	A type alias is only a synonym, while a newtype creates a distinct type checked separately by the compiler.
+What is the never type `!` in Rust?	A type with no values used for computations that never return normally.
+Why can an expression of type `!` fit where another type is expected?	Because execution never reaches a value there, Rust can coerce `!` into any type.
+What is a dynamically sized type (DST) in Rust?	A type whose size is known only at runtime, such as `str` or trait objects.
+Why must dynamically sized types be used behind pointers?	The compiler needs pointer metadata, such as length or vtable information, to handle values whose size is not known at compile time.
+What does the `Sized` trait represent in Rust?	That a type's size is known at compile time.
+What does `T: ?Sized` mean in a generic bound?	`T` may or may not have a compile-time known size, overriding the default `Sized` requirement.
+Why must a `?Sized` generic usually be behind a pointer like `&T`?	The compiler cannot pass or store an unsized value directly by value.
+What is a function pointer in Rust?	The `fn` type, representing a pointer to a function.
+Why can function pointers be passed where closure traits are expected?	Function pointers implement `Fn`, `FnMut`, and `FnOnce`.
+When might you require `fn` instead of a generic closure bound?	When interfacing with external code or APIs that can accept only plain functions, not capturing closures.
+Why can a function return `impl Fn(...)` for a closure?	The compiler can hide the concrete closure type behind an opaque return type.
+Why can't two separate `impl Fn(...)` return values usually be stored together in one `Vec`?	Each use of `impl Trait` is a distinct opaque concrete type, even if the signatures match.
+How can you store multiple different returned closures in one collection?	Use a trait object such as `Box<dyn Fn(...) -> ...>`.
+How are macros more powerful than functions?	They can accept variable syntax shapes and run before compilation finishes, allowing them to generate code structures functions cannot.
+What is a declarative macro?	A `macro_rules!` macro that matches token patterns and expands them into code.
+What are the three main kinds of procedural macros in Rust?	Custom derive macros, attribute-like macros, and function-like macros.
+Why do procedural macros live in a special crate type?	They are compiled as compiler plugins that transform token streams during compilation.
+What is the input and output model of a procedural macro?	It takes a `TokenStream`, transforms it, and returns a new `TokenStream`.
+What does a custom derive macro do?	It generates code for a type annotated with `#[derive(...)]`.
+What does an attribute-like macro do?	It defines a custom attribute that transforms the item the attribute is attached to.
+What does a function-like macro do?	It looks like a function call but transforms the tokens inside its invocation at compile time.
