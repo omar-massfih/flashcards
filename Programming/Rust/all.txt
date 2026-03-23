@@ -579,3 +579,148 @@ How do threads and async tasks relate in Rust?	They are complementary: threads a
 When are threads usually the better choice in Rust?	For highly parallelizable CPU-bound work.
 When is async usually the better choice in Rust?	For highly concurrent I/O-bound work.
 Can Rust programs combine threads and async?	Yes; using both together is common and often the best fit.
+How does Rust support encapsulation?	By making items private by default and exposing only selected modules, types, fields, or methods with `pub`.
+Why keep struct fields private in Rust?	To preserve invariants and force mutation to go through methods that keep related state consistent.
+Does Rust support inheritance between structs?	No; Rust has no built-in struct inheritance mechanism.
+How can Rust reuse behavior without inheritance?	By sharing behavior through traits, including default trait method implementations.
+How does Rust support polymorphism without inheritance?	With generics and trait bounds for compile-time abstraction, and trait objects for runtime abstraction.
+What is bounded parametric polymorphism in Rust?	Using generics together with trait bounds so code works over many types that satisfy specified capabilities.
+What is a trait object in Rust?	A pointer to a value implementing a trait together with runtime information for calling that trait's methods.
+How do you write a trait object type in Rust?	Use a pointer type such as `&dyn Trait` or `Box<dyn Trait>`.
+When are trait objects useful in Rust?	When you need one value or collection to hold multiple concrete types that share common behavior.
+Why does `Vec<Box<dyn Draw>>` allow more flexibility than `Vec<T>` with `T: Draw`?	It can hold different concrete `Draw` implementors in one collection instead of requiring all elements to have the same concrete type.
+When are generics with trait bounds preferable to trait objects?	When all values are the same concrete type and you want static dispatch and monomorphized code.
+What compile-time guarantee do trait objects still provide?	Any value used as that trait object must implement the trait.
+Why is using trait objects safer than duck typing?	Rust checks trait implementation at compile time instead of failing later because a method is missing.
+What is static dispatch?	Method resolution decided at compile time for a known concrete type.
+What is dynamic dispatch in Rust?	Method resolution performed at runtime through a trait object's dispatch table.
+Why do trait objects require dynamic dispatch?	The compiler does not know all concrete types that might be used through the trait object.
+What is the main trade-off of dynamic dispatch?	More runtime flexibility in exchange for method-lookup overhead and fewer optimization opportunities such as inlining.
+What is the state pattern?	An object-oriented pattern where behavior changes based on an internal state value represented by state-specific types.
+Why is `Option<Box<dyn State>>` used in the blog post example?	It lets the code temporarily take ownership of the current state so it can be replaced with a new one.
+Why does the blog post example call `Option::take()` on the state field?	To move the current state out, leave `None` temporarily, and then install the next state without violating ownership rules.
+What is one advantage of the trait-object state-pattern design?	Adding a new state mainly requires a new state type implementing the trait rather than changing many `match` sites.
+What is one downside of the trait-object state-pattern design?	Invalid states and transitions are prevented only by runtime structure, not by the type system.
+Why are some state objects coupled to one another in the traditional state-pattern version?	Each state decides which concrete state comes next, so inserting a new intermediate state requires editing existing transitions.
+How does encoding states as types improve the blog-post workflow in Rust?	It turns invalid states and transitions into compile-time errors.
+Why don't `DraftPost` and `PendingReviewPost` define a `content` method in the typed-state version?	Because unpublished posts should not expose content at all, and omitting the method makes misuse fail to compile.
+Why do `request_review` and `approve` take ownership of `self` in the typed-state version?	They consume the old state and return a new type, preventing accidental reuse of an outdated state value.
+What is the main trade-off of encoding states as types instead of hiding all state changes internally?	Callers must work with different concrete types and rebind values as they move through the workflow.
+Why might the typed-state approach be more idiomatic Rust than the classic object-oriented state pattern?	It uses the type system to rule out invalid states instead of relying mainly on runtime indirection.
+Why must `match` expressions be exhaustive in Rust?	Every possible value must be handled so execution never reaches an unaccounted-for case.
+Why can `let` use tuple or struct patterns?	A `let` binding can destructure a value and bind multiple names at once.
+Why can chained `if let` and `else if` sometimes express logic more conveniently than `match`?	They can combine unrelated boolean conditions and pattern matches in one control-flow chain.
+What does `while let` do in Rust?	It repeats a loop for as long as a value continues to match a pattern.
+What is an irrefutable pattern?	A pattern that matches every possible value of the expected type.
+What is a refutable pattern?	A pattern that can fail to match some possible values.
+Which Rust contexts require irrefutable patterns?	`let` bindings, function parameters, and `for` loop patterns.
+Which Rust contexts are designed for refutable patterns?	`match` arms, `if let`, `while let`, and `let...else`.
+Why does `let Some(x) = value;` fail to compile?	`let` requires an irrefutable pattern, but `Some(x)` does not match `None`.
+What happens if `let...else` uses an irrefutable pattern?	The compiler warns because the `else` branch can never run.
+Why can a named variable pattern inside `match` unexpectedly shadow an outer variable?	Pattern bindings create new variables in the match arm's scope rather than comparing against existing ones.
+What does `|` mean in a Rust pattern?	It creates an OR-pattern that matches if any of the alternatives match.
+What does `1..=5` mean in a Rust pattern?	An inclusive range pattern that matches any value from 1 through 5.
+Why are range patterns limited to numbers and `char` in Rust?	The compiler must be able to determine at compile time whether the range is valid and non-empty.
+Can Rust patterns destructure nested enums, structs, and tuples in one step?	Yes; patterns can be nested to match and bind deeply structured values in a single expression.
+What does `_` mean in a Rust pattern?	Match this part of the value but do not bind it.
+What is the difference between `_` and `_name` in a Rust pattern?	`_` does not bind the value at all, while `_name` still binds it and can therefore move ownership.
+Why does `if let Some(_s) = s` move `s` but `if let Some(_) = s` does not?	`_s` binds the inner value, but `_` only matches and ignores it without binding.
+What does `..` do in a Rust pattern?	It matches and ignores the remaining unmatched parts of a value.
+Why can `..` be used only once in a tuple pattern?	Using it more than once would make it ambiguous how many elements each `..` should absorb.
+What is a match guard in Rust?	An extra `if` condition attached to a `match` arm that must also be true for the arm to match.
+Why are match guards useful?	They express conditions that cannot be captured by pattern syntax alone.
+How can a match guard help avoid variable-shadowing problems?	You can bind a new name in the pattern and compare it to an outer variable in the guard.
+How does a match guard interact with an OR-pattern like `4 | 5 | 6 if cond`?	The guard applies to the entire OR-pattern, not just the last alternative.
+What does `@` do in a Rust pattern?	It binds a matched value to a variable while also testing that value against another subpattern.
+Why is `id @ 3..=7` useful in a Rust pattern?	It both checks that `id` is in the range and keeps the matched value available for the arm's code.
+What is unsafe Rust?	A subset of Rust that permits certain operations the compiler cannot fully verify for memory safety.
+Why does Rust include unsafe features?	Some valid low-level operations are too hard for static analysis to prove safe, and systems programming sometimes requires them.
+What are the five unsafe superpowers in Rust?	Dereferencing raw pointers; calling unsafe functions or methods; accessing mutable statics; implementing unsafe traits; and accessing union fields.
+Why should unsafe blocks be kept small?	Smaller unsafe regions make auditing and debugging memory-safety issues easier.
+Why is it good practice to wrap unsafe code in a safe abstraction?	It confines the unsafety to a small implementation boundary while exposing a safe API to callers.
+What is a raw pointer in Rust?	A pointer type, `*const T` or `*mut T`, that is not subject to the usual reference guarantees.
+How do raw pointers differ from references in Rust?	They may alias mutably, be null, point to invalid memory, and have no automatic cleanup guarantees.
+Why is dereferencing a raw pointer unsafe?	Rust cannot guarantee that the pointer is valid, aligned, non-null, and points to initialized data.
+Why might a Rust programmer use raw pointers anyway?	They are useful for FFI, low-level systems work, and building safe abstractions the borrow checker cannot express directly.
+What makes a function unsafe in Rust?	It has preconditions the compiler cannot verify, so callers must uphold its documented safety contract.
+Can a safe Rust function contain unsafe code internally?	Yes; a common pattern is a safe API implemented using a small audited unsafe block.
+Why does implementing `split_at_mut` require unsafe code?	The borrow checker cannot prove that the two returned mutable subslices are non-overlapping even when the programmer knows they are.
+What is FFI?	A foreign function interface for calling code across language boundaries.
+Why are functions declared in `extern` blocks generally unsafe to call?	Rust cannot verify that foreign code obeys Rust's safety expectations.
+What does `#[unsafe(no_mangle)]` do for an exported Rust function?	It prevents Rust from changing the symbol name so other languages can link to it directly.
+Why is reading or writing `static mut` unsafe?	Global mutable state can cause data races or violate aliasing guarantees if used incorrectly.
+What is an unsafe trait?	A trait whose required invariants the compiler cannot verify automatically.
+Why is implementing an unsafe trait itself unsafe?	The implementation promises to uphold invariants that Rust cannot check.
+Why is accessing a union field unsafe in Rust?	Rust cannot know which field's type is currently valid in the union's storage.
+What is Miri?	A Rust tool that runs code and detects many kinds of undefined behavior dynamically.
+Why is Miri useful when working with unsafe Rust?	It can catch many invalid pointer and memory-usage errors that the compiler cannot prove statically.
+Why doesn't a clean Miri run prove unsafe code is sound?	Miri checks only executed paths and only the classes of undefined behavior it understands.
+What is an associated type in a trait?	A type placeholder chosen by each trait implementation and used in the trait's method signatures.
+Why might a trait use an associated type instead of a generic type parameter?	It lets each implementing type choose one concrete associated type and avoids multiple trait implementations that differ only by that type.
+What is a default type parameter in Rust?	A generic parameter with a default concrete type used unless an implementation overrides it.
+Why are default type parameters useful?	They allow common cases to stay concise while preserving customization for advanced cases.
+What problem does fully qualified syntax solve in Rust?	It disambiguates which trait or type implementation to use when multiple items share the same name.
+What is the general form of fully qualified syntax in Rust?	`<Type as Trait>::function(...)`.
+What is a supertrait?	A trait that another trait requires as a prerequisite.
+Why declare one trait as a supertrait of another?	So the dependent trait can use the methods or associated items of the required trait.
+What is the newtype pattern in Rust?	A tuple struct wrapper that creates a distinct type around an existing type.
+Why is the newtype pattern useful beyond trait coherence?	It can enforce type distinctions, hide implementation details, and constrain an API.
+How does a type alias differ from a newtype?	A type alias is only a synonym, while a newtype creates a distinct type checked separately by the compiler.
+What is the never type `!` in Rust?	A type with no values used for computations that never return normally.
+Why can an expression of type `!` fit where another type is expected?	Because execution never reaches a value there, Rust can coerce `!` into any type.
+What is a dynamically sized type (DST) in Rust?	A type whose size is known only at runtime, such as `str` or trait objects.
+Why must dynamically sized types be used behind pointers?	The compiler needs pointer metadata, such as length or vtable information, to handle values whose size is not known at compile time.
+What does the `Sized` trait represent in Rust?	That a type's size is known at compile time.
+What does `T: ?Sized` mean in a generic bound?	`T` may or may not have a compile-time known size, overriding the default `Sized` requirement.
+Why must a `?Sized` generic usually be behind a pointer like `&T`?	The compiler cannot pass or store an unsized value directly by value.
+What is a function pointer in Rust?	The `fn` type, representing a pointer to a function.
+Why can function pointers be passed where closure traits are expected?	Function pointers implement `Fn`, `FnMut`, and `FnOnce`.
+When might you require `fn` instead of a generic closure bound?	When interfacing with external code or APIs that can accept only plain functions, not capturing closures.
+Why can a function return `impl Fn(...)` for a closure?	The compiler can hide the concrete closure type behind an opaque return type.
+Why can't two separate `impl Fn(...)` return values usually be stored together in one `Vec`?	Each use of `impl Trait` is a distinct opaque concrete type, even if the signatures match.
+How can you store multiple different returned closures in one collection?	Use a trait object such as `Box<dyn Fn(...) -> ...>`.
+How are macros more powerful than functions?	They can accept variable syntax shapes and run before compilation finishes, allowing them to generate code structures functions cannot.
+What is a declarative macro?	A `macro_rules!` macro that matches token patterns and expands them into code.
+What are the three main kinds of procedural macros in Rust?	Custom derive macros, attribute-like macros, and function-like macros.
+Why do procedural macros live in a special crate type?	They are compiled as compiler plugins that transform token streams during compilation.
+What is the input and output model of a procedural macro?	It takes a `TokenStream`, transforms it, and returns a new `TokenStream`.
+What does a custom derive macro do?	It generates code for a type annotated with `#[derive(...)]`.
+What does an attribute-like macro do?	It defines a custom attribute that transforms the item the attribute is attached to.
+What does a function-like macro do?	It looks like a function call but transforms the tokens inside its invocation at compile time.
+What is a thread pool?	A fixed set of worker threads that wait for jobs and execute them as tasks arrive.
+Why is a thread pool preferable to spawning unlimited threads for a server?	It bounds resource usage while still allowing multiple requests to be processed concurrently.
+Why should `ThreadPool::execute` accept `FnOnce() + Send + 'static`?	Each job may run once on another thread and must be safe to transfer and outlive the caller's stack frame.
+Why is the channel receiver wrapped in `Arc<Mutex<Receiver<Job>>>`?	Workers need shared ownership of one receiver, and only one worker may pull a job from it at a time.
+Why is `while let Ok(job) = receiver.lock().unwrap().recv()` a subtle bug here?	The lock guard can live for the whole loop body, causing a worker to hold the mutex while executing the job and blocking other workers from receiving work.
+Why does binding `let message = receiver.lock().unwrap().recv();` before `match` avoid that problem?	The temporary lock guard is dropped at the end of the `let` statement, so the mutex is released before the job runs.
+Why is `Option<JoinHandle<()>>` useful in the final `Worker` design?	It allows `take()` to move the thread handle out during shutdown and leave `None` behind.
+What does implementing `Drop` for `ThreadPool` achieve?	It ensures workers are signaled to stop and their threads are joined during cleanup.
+Why can't Rust keywords normally be used as identifiers?	They are reserved by the language parser for current or future language syntax.
+What is a raw identifier in Rust?	An identifier written with the `r#` prefix so a reserved keyword can be used as a name.
+How do you call a function named with a raw identifier in Rust?	Use the `r#` prefix both at definition and call sites, such as `r#match(...)`.
+Why are raw identifiers useful across Rust editions?	A name that was legal in an older edition may become a keyword in a newer one, and `r#name` preserves compatibility.
+What does the `derive` attribute do in Rust?	It generates a default implementation of a trait for a struct or enum at compile time.
+Why can't every standard-library trait be derived automatically?	Some traits, such as `Display`, require domain-specific behavior the compiler cannot infer sensibly.
+What does deriving `Debug` enable?	Programmer-facing debug formatting, such as `{:?}` and diagnostics from macros like `assert_eq!`.
+What does deriving `PartialEq` enable?	Equality and inequality comparisons using `==` and `!=`.
+What does deriving `PartialOrd` enable?	Partial ordering comparisons such as `<`, `>`, `<=`, and `>=`.
+What does deriving `Clone` enable?	Explicit duplication of a value through the `clone()` method.
+What does deriving `Copy` mean?	The type can be duplicated by simple bitwise copy without requiring explicit `clone()`.
+Why can a type be `Copy` only if all its parts are `Copy`?	Every field must support trivial duplication for the whole value to do so safely.
+What does deriving `Hash` enable?	Converting values into hash representations for hashed collections such as `HashMap`.
+What does deriving `Default` enable?	Creating a standard default value with `Default::default()`.
+What does `cargo fmt` do?	It reformats Rust code according to the standard community style.
+What does `cargo clippy` do?	It runs extra lints that catch common mistakes and suggest more idiomatic Rust.
+What is `rust-analyzer`?	A language-server-based tool that powers IDE features such as completion, jump-to-definition, and inline diagnostics.
+What is a Rust edition?	A coherent opt-in package of language changes and tooling updates released every few years.
+Why do Rust editions exist?	They group larger language-evolution steps without breaking existing code by default.
+Does upgrading the Rust compiler force a project onto a new edition?	No; a project stays on its chosen edition until it explicitly opts in.
+Can crates from different Rust editions be used together?	Yes; edition differences affect parsing within each crate, not whether crates can link together.
+What are the three Rust release channels?	Nightly, beta, and stable.
+What is the stable channel for?	Production use with the strongest guarantees that upgrades should be painless.
+What is the nightly channel for?	Trying unstable features and experimental compiler behavior behind feature flags.
+What is a feature flag in Rust?	An explicit opt-in that enables an unstable language or library feature on nightly.
+Why are unstable feature flags unavailable on stable Rust?	Stable is reserved for features whose behavior is committed and supported without opt-in instability.
+What does `rustup toolchain install nightly` do?	It installs the nightly Rust toolchain alongside other installed channels.
+What does `rustup override set nightly` do in a project directory?	It makes that directory use nightly Rust by default without changing the global default toolchain.
+What idea does Rust describe as "stability without stagnation"?	Stable Rust should remain reliable to upgrade while still evolving steadily through frequent releases and experimentation on nightly.
