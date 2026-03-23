@@ -1,0 +1,28 @@
+How does Rust support encapsulation?	By making items private by default and exposing only selected modules, types, fields, or methods with `pub`.
+Why keep struct fields private in Rust?	To preserve invariants and force mutation to go through methods that keep related state consistent.
+Does Rust support inheritance between structs?	No; Rust has no built-in struct inheritance mechanism.
+How can Rust reuse behavior without inheritance?	By sharing behavior through traits, including default trait method implementations.
+How does Rust support polymorphism without inheritance?	With generics and trait bounds for compile-time abstraction, and trait objects for runtime abstraction.
+What is bounded parametric polymorphism in Rust?	Using generics together with trait bounds so code works over many types that satisfy specified capabilities.
+What is a trait object in Rust?	A pointer to a value implementing a trait together with runtime information for calling that trait's methods.
+How do you write a trait object type in Rust?	Use a pointer type such as `&dyn Trait` or `Box<dyn Trait>`.
+When are trait objects useful in Rust?	When you need one value or collection to hold multiple concrete types that share common behavior.
+Why does `Vec<Box<dyn Draw>>` allow more flexibility than `Vec<T>` with `T: Draw`?	It can hold different concrete `Draw` implementors in one collection instead of requiring all elements to have the same concrete type.
+When are generics with trait bounds preferable to trait objects?	When all values are the same concrete type and you want static dispatch and monomorphized code.
+What compile-time guarantee do trait objects still provide?	Any value used as that trait object must implement the trait.
+Why is using trait objects safer than duck typing?	Rust checks trait implementation at compile time instead of failing later because a method is missing.
+What is static dispatch?	Method resolution decided at compile time for a known concrete type.
+What is dynamic dispatch in Rust?	Method resolution performed at runtime through a trait object's dispatch table.
+Why do trait objects require dynamic dispatch?	The compiler does not know all concrete types that might be used through the trait object.
+What is the main trade-off of dynamic dispatch?	More runtime flexibility in exchange for method-lookup overhead and fewer optimization opportunities such as inlining.
+What is the state pattern?	An object-oriented pattern where behavior changes based on an internal state value represented by state-specific types.
+Why is `Option<Box<dyn State>>` used in the blog post example?	It lets the code temporarily take ownership of the current state so it can be replaced with a new one.
+Why does the blog post example call `Option::take()` on the state field?	To move the current state out, leave `None` temporarily, and then install the next state without violating ownership rules.
+What is one advantage of the trait-object state-pattern design?	Adding a new state mainly requires a new state type implementing the trait rather than changing many `match` sites.
+What is one downside of the trait-object state-pattern design?	Invalid states and transitions are prevented only by runtime structure, not by the type system.
+Why are some state objects coupled to one another in the traditional state-pattern version?	Each state decides which concrete state comes next, so inserting a new intermediate state requires editing existing transitions.
+How does encoding states as types improve the blog-post workflow in Rust?	It turns invalid states and transitions into compile-time errors.
+Why don't `DraftPost` and `PendingReviewPost` define a `content` method in the typed-state version?	Because unpublished posts should not expose content at all, and omitting the method makes misuse fail to compile.
+Why do `request_review` and `approve` take ownership of `self` in the typed-state version?	They consume the old state and return a new type, preventing accidental reuse of an outdated state value.
+What is the main trade-off of encoding states as types instead of hiding all state changes internally?	Callers must work with different concrete types and rebind values as they move through the workflow.
+Why might the typed-state approach be more idiomatic Rust than the classic object-oriented state pattern?	It uses the type system to rule out invalid states instead of relying mainly on runtime indirection.
