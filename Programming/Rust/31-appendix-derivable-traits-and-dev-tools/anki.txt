@@ -1,0 +1,13 @@
+What does the `derive` attribute do in Rust?	It generates a default implementation of a trait for a struct or enum at compile time.
+Why can't every standard-library trait be derived automatically?	Some traits, such as `Display`, require domain-specific behavior the compiler cannot infer sensibly.
+What does deriving `Debug` enable?	Programmer-facing debug formatting, such as `{:?}` and diagnostics from macros like `assert_eq!`.
+What does deriving `PartialEq` enable?	Equality and inequality comparisons using `==` and `!=`.
+What does deriving `PartialOrd` enable?	Partial ordering comparisons such as `<`, `>`, `<=`, and `>=`.
+What does deriving `Clone` enable?	Explicit duplication of a value through the `clone()` method.
+What does deriving `Copy` mean?	The type can be duplicated by simple bitwise copy without requiring explicit `clone()`.
+Why can a type be `Copy` only if all its parts are `Copy`?	Every field must support trivial duplication for the whole value to do so safely.
+What does deriving `Hash` enable?	Converting values into hash representations for hashed collections such as `HashMap`.
+What does deriving `Default` enable?	Creating a standard default value with `Default::default()`.
+What does `cargo fmt` do?	It reformats Rust code according to the standard community style.
+What does `cargo clippy` do?	It runs extra lints that catch common mistakes and suggest more idiomatic Rust.
+What is `rust-analyzer`?	A language-server-based tool that powers IDE features such as completion, jump-to-definition, and inline diagnostics.
