@@ -1,0 +1,50 @@
+Why should data engineers understand raw storage ingredients even when using managed services?	Underlying media still determine durability, latency, throughput, and cost trade-offs in higher-level systems.
+Why are magnetic disks still common in large-scale data storage?	They offer much lower cost per gigabyte than SSDs.
+What are the main performance limits of magnetic disks?	Seek time, rotational latency, relatively low IOPS, and transfer speeds that do not scale proportionally with capacity.
+Why do SSDs outperform magnetic disks for random access workloads?	They eliminate mechanical movement, yielding far lower latency and much higher IOPS.
+Why are SSDs standard for OLTP systems?	Transactional databases need fast random reads, writes, and high IOPS.
+Why are SSDs not always the default for large-scale analytics storage?	They remain significantly more expensive per gigabyte than magnetic disks.
+What makes RAM different from disk-based storage?	It is attached to the CPU, is volatile, and offers far lower latency and much higher bandwidth.
+Why is RAM usually used as a cache or processing layer rather than as the main durable storage medium?	It is expensive, capacity-limited, and loses data when power is removed.
+What is serialization in data storage?	The process of encoding data into a standard format suitable for storage or transmission.
+Why is serialization an important storage design choice?	It affects interoperability, CPU overhead, query latency, and storage efficiency.
+What is compression in storage systems?	Encoding data into a smaller form to reduce space usage and improve effective scan and network throughput.
+What is the main trade-off of compression?	Lower storage and transfer costs in exchange for extra CPU time and latency to compress or decompress data.
+What is caching in data systems?	Keeping frequently or recently accessed data in a faster storage layer for quicker retrieval.
+Why do storage systems use a cache hierarchy?	Faster storage is more expensive and smaller, so systems place hot data on fast media and colder data on cheaper, slower tiers.
+Why does distributed storage exist?	To scale capacity and performance beyond a single machine while adding redundancy and fault tolerance.
+What is eventual consistency in distributed storage?	A model where replicas may temporarily disagree, but reads converge to the latest state after enough time.
+What is strong consistency in distributed storage?	A model where reads always reflect a current, agreed-upon state after writes complete.
+Why might a system choose eventual consistency over strong consistency?	Eventual consistency can improve scale and availability by avoiding the latency and coordination costs of strict synchronization.
+Why must data engineers understand a database's consistency model?	It affects query correctness, latency, resource usage, and when stale reads are possible.
+What is file storage?	A storage model that organizes finite byte streams into a filesystem with directory-style references and support for random access updates.
+What is block storage?	Storage that exposes raw addressable blocks to a client, leaving layout and filesystem management to the operating system or database.
+Why is block storage well suited to transactional databases?	It supports efficient fine-grained random reads and writes.
+What is object storage?	A key-value storage model for immutable byte objects written and read as whole streams.
+Why is object storage attractive for modern data engineering?	It offers massive scalability, high durability, low operational overhead, and strong support for batch reads and writes.
+Why is object storage a poor fit for high-frequency transactional updates?	Objects cannot be updated in place, so changes generally require rewriting the full object.
+How does object storage differ from hierarchical file storage?	Objects are addressed by keys in a bucket rather than by traversing a true directory tree.
+Why can directory-like operations be expensive in object storage?	Apparent folders are usually key-prefix filters, so listing them may require scanning many object keys.
+Why is object versioning useful in object storage?	It preserves previous object versions for recovery, auditing, rollback, or reproducibility.
+What is the main cost trade-off of object versioning?	Retaining historical versions increases storage costs because old object data continues to occupy space.
+What is a storage class or storage tier in cloud object storage?	A pricing and access tier that trades off storage cost against durability, availability, retrieval speed, or retrieval cost.
+What is hot data (storage tier)?	Data that must be accessed immediately or very frequently and is therefore stored on fast, expensive media.
+What is cold data (storage tier)?	Rarely accessed data kept mainly for archival, backup, compliance, or emergency recovery.
+Why should data engineers automate data lifecycle policies?	Automatic tiering or deletion reduces storage cost and enforces retention rules consistently.
+What is data retention in storage architecture?	The policy for how long data is kept and when it should be archived or deleted.
+Why should data retention decisions consider business value, time, compliance, and cost?	Useful retention balances downstream value and legal obligations against storage and retrieval expense.
+What is a single-tenant storage model?	Each tenant gets isolated storage resources such as separate databases or buckets.
+What is a multitenant storage model?	Multiple tenants share the same storage system while being separated logically by schema, keys, or permissions.
+What is schema on write?	A model where data must conform to a predefined schema before it is stored.
+What is schema on read?	A model where raw data is stored first and interpreted according to schema when it is queried later.
+What is the main trade-off between schema on write and schema on read?	Schema on write improves standardization and downstream usability, while schema on read provides flexibility at the cost of more work later.
+Why is separating compute from storage attractive in modern data systems?	It allows durable shared storage with elastic, ephemeral compute that can scale up and down on demand.
+Why was colocating compute with storage historically attractive?	Local data access reduces network transfer and can improve query and processing performance.
+What is zero-copy cloning in object-store-based systems?	Creating a new logical copy by reusing pointers to existing data instead of physically copying the underlying files.
+Why can zero-copy cloning be risky if misunderstood?	Shallow copies may still depend on shared underlying files, so deleting or altering those files can break cloned data.
+What is a data catalog in data engineering?	A centralized metadata system for discovering, describing, and governing datasets across an organization.
+Why are data catalogs valuable beyond simple search?	They support lineage, governance, collaboration, and easier discovery of trustworthy data.
+What is a data warehouse (Data engineering storage)?	An OLAP-oriented storage and query system designed for analytics and reporting over curated data.
+What is a data lake (Data engineering storage)?	A large storage environment, usually on object storage, that keeps raw or lightly processed data in many formats.
+What is a data lakehouse (Data engineering storage)?	An architecture that combines lake-style object storage with warehouse-like metadata, schema, and update-management features.
+Why are data lakehouses attractive?	They keep open, interoperable storage formats while adding warehouse-style management capabilities.
