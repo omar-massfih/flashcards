@@ -151,3 +151,25 @@ What question helps determine whether a candidate architectural characteristic i
 Why should teams keep the final list of architectural characteristics short?	Supporting too many qualities increases complexity before the domain problem itself is solved.
 What does an architectural characteristics worksheet help a team do?	Capture candidate qualities, separate driving concerns from others, and prioritize the top decision drivers.
 What is the risk of asking stakeholders to choose from a long unconstrained list of architectural qualities?	They often ask for all of them, which leads to an overcomplicated architecture.
+Why are architecture characteristics often hard to define precisely?	Their meanings are often vague, differ across groups, and many are really composites of smaller qualities.
+Why should architects decompose composite architecture characteristics?	Decomposition turns vague umbrella terms into specific subcharacteristics that can be defined and measured objectively.
+Why can average response time be a misleading performance metric?	Averages can hide serious outliers that affect a small percentage of requests.
+Why do advanced teams often use statistical models for operational metrics?	Models can detect when real behavior drifts outside expected ranges instead of relying only on arbitrary thresholds.
+What is a performance budget in software architecture?	A concrete limit for an aspect of performance, such as latency, render time, or page weight.
+Why do page-weight budgets matter for web performance?	Network bandwidth is physically limited, so too many bytes directly slow delivery, especially on constrained mobile links.
+Why are structural architecture characteristics harder to measure than operational ones?	There are few comprehensive architecture-quality metrics, so architects usually rely on narrower code-structure measures.
+What is Cyclomatic Complexity (CC)?	A metric that measures code complexity by counting the number of distinct execution paths created by decision points.
+How does Cyclomatic Complexity relate to decision points?	Each additional branch or decision increases the number of possible execution paths and therefore raises CC.
+What can Cyclomatic Complexity not tell you by itself?	Whether the complexity is essential to the problem domain or accidental because of poor design.
+What is accidental complexity in software architecture?	Complexity introduced by poor structure or implementation choices rather than by the inherent problem being solved.
+What rough threshold is often considered acceptable for Cyclomatic Complexity?	Industry guidance often treats values under 10 as acceptable, though many architects prefer code to stay under 5 when possible.
+How can test-driven development indirectly reduce Cyclomatic Complexity?	It encourages small, focused behaviors and therefore tends to produce shorter, better-factored methods.
+Why is code coverage an incomplete measure of testability?	Code can have high coverage while still using weak or meaningless assertions that provide little confidence.
+What kinds of metrics can indicate deployability?	Measures such as deployment success rate, deployment duration, and the number of issues caused by deployments.
+What is governance in software architecture?	The architect's responsibility to steer software development so important qualities and rules are maintained over time.
+What is an architectural fitness function?	Any mechanism that objectively assesses some architecture characteristic or combination of characteristics.
+Why is a fitness function not limited to one special tool or framework?	A fitness function is a perspective on automated verification and can be implemented with tests, monitors, metrics, or chaos tools.
+Why are cyclic dependencies harmful to modularity?	They make components hard to reuse independently and encourage a tightly coupled Big Ball of Mud.
+What kinds of architecture rules can tools like ArchUnit or NetArchTest enforce?	Rules about allowed dependencies, layer access, package structure, and other modularity constraints.
+What risk exists whenever teams are measured by a metric?	People may game the metric instead of improving the real quality it was meant to represent.
+What is chaos engineering from an architectural-governance perspective?	The practice of deliberately injecting failures to verify that the system can tolerate real-world disruptions.

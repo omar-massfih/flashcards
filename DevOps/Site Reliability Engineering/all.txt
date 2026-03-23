@@ -55,3 +55,23 @@ Why are protocol buffers used for RPC payloads?	They serialize structured data c
 What is one operational advantage of a single shared repository?	Engineers can fix problems across project boundaries and submit those changes through the same review flow.
 Why does Google run broad automated testing when a changelist is submitted?	To detect breakage in any code that depends directly or indirectly on the change.
 What is push-on-green?	A release model that automatically pushes a new version to production after it passes tests.
+Why can making a service more reliable eventually become worse rather than better?	Extreme reliability can slow feature delivery, raise costs sharply, and produce little user-visible benefit.
+What are the two main cost dimensions of increasing reliability?	The cost of extra redundant resources and the opportunity cost of engineering time spent reducing risk instead of building user-facing features.
+What does it mean for SRE to make a service "reliable enough, but no more"?	Align reliability with the business's actual risk tolerance instead of overinvesting in unnecessary availability.
+Why does SRE treat the availability target as both a minimum and a maximum?	Falling short hurts users, but greatly exceeding the target can waste opportunities to ship features, reduce costs, or pay down technical debt.
+What is time-based availability?	Availability measured as the proportion of time a system is up during a period.
+Why is time-based availability often less meaningful for globally distributed Google services?	A service may still be serving some traffic somewhere even when part of it is impaired, so pure uptime does not reflect user experience well.
+What is yield-based availability in SRE?	Availability measured as the proportion of successful requests or successful units of work.
+Why does Google often measure availability as request success rate instead of uptime?	Request success rate better reflects user-visible reliability in globally distributed services that are rarely completely down everywhere.
+Why can request-success-rate availability also work for nonserving systems?	Batch, pipeline, and storage systems usually still have a measurable notion of successful versus failed units of work.
+What kinds of factors help determine the risk tolerance of a consumer service?	User expectations, revenue impact, whether the service is paid or free, competitor reliability, and whether the service targets consumers or enterprises.
+Why can different failure types imply different risk tolerance decisions?	Some failures merely degrade experience, while others, such as privacy breaches, can damage trust so severely that full shutdown is preferable.
+How can cost help determine the right availability target for a service?	A team can compare the value of one more increment of availability against the engineering and infrastructure cost required to achieve it.
+Why might latency targets differ even between two advertising systems?	The acceptable latency depends on the surrounding user experience and business context, not on ads as a category.
+Why might an infrastructure service need multiple levels of service?	Different clients may value latency, throughput, consistency, and cost differently.
+How can the same infrastructure offer different service levels without different hardware?	By changing provisioning, redundancy, geographic constraints, and configuration to trade cost against latency or reliability.
+What problem is an error budget meant to solve organizationally?	It gives product development and SRE a shared objective metric for negotiating release risk instead of relying on politics, fear, or habit.
+How is an error budget formed from an SLO?	The SLO sets the target reliability, actual performance is measured, and the gap between perfect reliability and the target defines the allowed unreliability budget.
+What release rule follows from the error-budget model?	As long as the service remains within its error budget, new releases may continue.
+Why does an outage from a network or datacenter failure still consume error budget?	The whole team shares responsibility for availability, regardless of whether the cause was a release or infrastructure event.
+How can loosening an SLO change product behavior?	It increases the error budget, allowing the team to take more release risk and move faster.
