@@ -173,3 +173,21 @@ Why are cyclic dependencies harmful to modularity?	They make components hard to 
 What kinds of architecture rules can tools like ArchUnit or NetArchTest enforce?	Rules about allowed dependencies, layer access, package structure, and other modularity constraints.
 What risk exists whenever teams are measured by a metric?	People may game the metric instead of improving the real quality it was meant to represent.
 What is chaos engineering from an architectural-governance perspective?	The practice of deliberately injecting failures to verify that the system can tolerate real-world disruptions.
+Why is it often wrong to assume one set of architectural characteristics for an entire modern system?	Modern architectures often contain multiple independently scoped parts with different operational and structural needs.
+What is an architecture quantum?	The smallest independently deployable part of a system that defines the scope for a set of architectural characteristics.
+What four traits characterize an architecture quantum?	Independent deployment; high functional cohesion; low external implementation static coupling; and synchronous communication with other quanta.
+What does independently deployable mean for an architecture quantum?	It includes everything needed to run on its own, including required data and dependencies.
+Why do many legacy systems form a single architecture quantum?	A single shared database and lockstep deployment make the whole system one indivisible runtime unit.
+What does high functional cohesion mean in the context of architecture quanta?	The quantum performs a unified, purposeful business function rather than mixing unrelated responsibilities.
+What is a bounded context in domain-driven design?	A localized domain model whose internals are visible inside the context but opaque to other contexts.
+What is semantic coupling in software architecture?	The natural coupling imposed by the business domain and problem being solved.
+What is implementation coupling in software architecture?	Coupling introduced by architectural and design choices about how the system is built.
+What is static coupling in software architecture?	The structural wiring of dependencies where changing one thing may break another.
+What is dynamic coupling in software architecture?	The runtime communication relationship between architecture quanta.
+Why can shared dependencies collapse services into the same architecture quantum?	If multiple services depend on the same coupling point, they no longer vary independently.
+Why is synchronous communication especially important when analyzing architecture quanta?	Synchronous calls expose timing and scalability mismatches immediately and can force tighter operational coupling.
+Why can asynchronous communication soften the impact of differing architectural characteristics between quanta?	A queue can buffer bursts and decouple sender and receiver timing.
+How can architectural-characteristic scope help choose between monolithic and distributed styles?	If one set of characteristics is sufficient, a monolith may work; multiple distinct sets often suggest a distributed style.
+Why does persistence choice affect quantum boundaries in distributed systems?	Shared versus partitioned data can widen or narrow the runtime scope of coupling between services.
+How can clusters of architectural characteristics guide service boundaries?	Each distinct cluster of qualities often indicates a separate architecture quantum.
+How does the cloud complicate the scoping of architectural characteristics?	Architects must account for either the behavior of orchestrated containers or the capabilities and limits of provider-managed services.
