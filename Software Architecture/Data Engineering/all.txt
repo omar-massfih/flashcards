@@ -287,3 +287,50 @@ What is a data warehouse (Data engineering storage)?	An OLAP-oriented storage an
 What is a data lake (Data engineering storage)?	A large storage environment, usually on object storage, that keeps raw or lightly processed data in many formats.
 What is a data lakehouse (Data engineering storage)?	An architecture that combines lake-style object storage with warehouse-like metadata, schema, and update-management features.
 Why are data lakehouses attractive?	They keep open, interoperable storage formats while adding warehouse-style management capabilities.
+What does the mantra "All data is unbounded until it's bounded" mean?	Most business data originates as an ongoing event stream and is only later cut into batches by artificial boundaries such as time or size.
+What ingestion frequencies are common in data engineering?	Batch, micro-batch, and near real-time streaming.
+Why does a streaming ingestion architecture still often contain batch boundaries downstream?	Downstream storage, analytics, and ML steps often still process data in batches, making batch frequency a bottleneck.
+What is synchronous ingestion?	A tightly coupled workflow where downstream stages wait for upstream stages or whole batches to finish before starting.
+What is asynchronous ingestion?	A loosely coupled workflow where individual events can be processed as they become available, often with buffering between stages.
+Why are tightly coupled synchronous ingestion pipelines brittle?	A failure in one stage can block or force reruns of the entire downstream workflow.
+What role does a stream or queue buffer play in asynchronous ingestion?	It absorbs bursts and decouples producer and consumer rates so downstream systems are less likely to be overwhelmed.
+Why do serialization and deserialization matter during ingestion?	Data is only useful at the destination if it can be correctly encoded for transport and decoded for downstream use.
+Why should ingestion systems be designed for elastic throughput?	Data rates are often bursty, and the system must scale to handle spikes and backlogs without becoming a bottleneck.
+How are reliability and durability related in ingestion?	If ingestion is unreliable, source data may be lost before it ever reaches durable downstream storage.
+Why is understanding source schema one of the hardest parts of ingestion?	Connecting to a source is often easy, but correctly interpreting how its fields, relationships, and update patterns work is much harder.
+What is a schema registry in streaming systems?	A metadata repository that stores schema definitions and versions so producers and consumers can serialize and deserialize messages consistently.
+What is the difference between push, pull, and poll ingestion?	Push sends data from the source to the target; pull has the target read from the source; poll repeatedly checks for changes and pulls when changes are found.
+What are the two common ways batch ingestion cuts data?	By time interval or by accumulated size, such as bytes or event count.
+What is the difference between full snapshot extraction and differential extraction?	A snapshot copies the entire current dataset each time, while differential extraction captures only changes since the last read.
+Why are many small inserts or updates a poor ingestion pattern for analytical stores?	They create excessive file churn and force inefficient repeated scans or object creation work.
+What is batch-oriented change data capture (CDC)?	A pattern that periodically queries for rows changed since the last extraction time.
+What is the main limitation of batch-oriented CDC?	It may capture only the latest state of changed rows rather than the full sequence of intermediate changes.
+What is continuous CDC?	A pattern that treats each database write as an event and captures changes continuously for replication or streaming analytics.
+What is log-based CDC?	Reading a database's change log or binary log to capture every write event in sequence.
+How does synchronous replication differ from asynchronous CDC replication?	Synchronous replication keeps a same-type replica fully in sync for failover or read offloading, while asynchronous CDC sends delayed change events to more loosely coupled downstream targets.
+Why are read replicas useful for ingestion workloads?	They let engineers run large extraction scans without overloading the primary production database.
+Why must engineers test CDC carefully before enabling it on production systems?	CDC consumes database CPU, memory, disk, and network resources and can create operational problems if enabled blindly.
+Why are JDBC and ODBC less ideal for some modern data-engineering ingestion use cases?	They are row-oriented and handle nested or columnar data awkwardly compared with direct file export or modern APIs.
+Why should engineers prefer managed data connectors when possible?	Connector plumbing is usually undifferentiated work that managed tools can automate, monitor, and maintain for you.
+Why is object storage an excellent medium for file exchange?	It is scalable, secure, reliable, and can move large files between teams and systems efficiently.
+Why is CSV risky as an ingestion format?	It lacks a uniform standard, does not encode schema natively, and is easy to break with delimiter, quoting, and escaping issues.
+Why are formats like Parquet, Avro, Arrow, ORC, or JSON often better than CSV for ingestion?	They preserve schema more robustly and often handle nested data and downstream processing more efficiently.
+What is schema evolution in event ingestion?	Changes to event structure over time, such as adding fields, removing fields, or changing data types.
+Why can schema evolution break downstream pipelines even when ingestion still succeeds?	Automation may load the new shape successfully while reports, transformations, or models still rely on old assumptions.
+What is late-arriving data in streaming systems?	Events whose event time is earlier than the time they are actually ingested or processed.
+Why is late-arriving data a problem for downstream analytics?	If ingestion time is mistaken for event time, reports and analyses can misrepresent when things actually happened.
+What do ordering and at-least-once delivery imply for stream ingestion?	Messages may arrive out of order or more than once, so consumers must handle duplicates and reordering safely.
+What is replay in an event-streaming platform?	The ability to reread retained events from a chosen point in history to reprocess a time range.
+Why is setting TTL a trade-off in streaming systems?	Too short risks dropping useful events; too long can create excessive backlog and delay.
+What is a dead-letter queue?	A separate destination for events that cannot be processed successfully so they do not block normal ingestion.
+Why are dead-letter queues operationally valuable?	They isolate bad events, preserve them for diagnosis, and may allow later reprocessing after the root cause is fixed.
+Why are managed webhook architectures usually preferable to ad hoc webhook handlers?	Serverless functions, queues, and object storage make webhook ingestion more reliable, scalable, and maintainable.
+Why is data sharing not quite the same as ingestion?	Shared datasets can be queried or integrated without the consumer taking physical possession of the data.
+Why should data engineers communicate closely with upstream software teams?	Better communication improves source data quality and reduces surprise schema changes and broken pipelines.
+Why should ingestion teams think of business stakeholders as customers?	Even basic automation of data movement can create major business value for analysts, marketers, and executives.
+Why is monitoring especially critical in the ingestion stage?	If ingestion fails, all downstream analytics and ML systems become stale or blind.
+What should ingestion monitoring track at minimum?	Uptime, latency, and data volumes processed.
+Why are data-quality regressions often harder to detect than software outages?	They may appear as subtle statistical distortions rather than obvious binary failures.
+Why should engineers fix data-quality issues at the source whenever possible?	Upstream fixes are usually more reliable and simpler than compensating for bad data downstream.
+Why does ingestion usually need real orchestration rather than simple cron jobs as complexity grows?	Ingestion feeds a dependency graph of downstream tasks that must be coordinated as complete workflows, not isolated schedules.
+Why should ingestion code be decoupled from both source and destination systems?	Tight coupling makes pipelines brittle, harder to change, and more expensive to maintain.
