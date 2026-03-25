@@ -191,3 +191,24 @@ How can architectural-characteristic scope help choose between monolithic and di
 Why does persistence choice affect quantum boundaries in distributed systems?	Shared versus partitioned data can widen or narrow the runtime scope of coupling between services.
 How can clusters of architectural characteristics guide service boundaries?	Each distinct cluster of qualities often indicates a separate architecture quantum.
 How does the cloud complicate the scoping of architectural characteristics?	Architects must account for either the behavior of orchestrated containers or the capabilities and limits of provider-managed services.
+What is component-based thinking in software architecture?	Seeing a system as a set of logical components that interact to perform business functions.
+Why should architects create a logical architecture before jumping to a physical architecture?	Logical architecture clarifies where functionality lives and how responsibilities fit together before physical deployment choices are made.
+Why is a logical architecture generally independent of the physical architecture?	It focuses on what the system does and how responsibilities are partitioned, not yet on how those parts are deployed.
+Why should component identification be iterative rather than “perfect” up front?	Architects learn more as requirements evolve, so components should be refined through continuous feedback and restructuring.
+What is the Workflow approach to identifying initial components?	Derive candidate components from the major happy-path workflows or processing steps in the system.
+What is the Actor/Action approach to identifying initial components?	Derive candidate components from the major actions performed by each actor, including the system itself.
+What is the Entity Trap in component design?	Creating components from domain entities, such as `Order Manager`, instead of from clear functional responsibilities.
+Why is the Entity Trap harmful?	It creates ambiguously named, overly coarse-grained dumping-ground components that are hard to maintain, test, and deploy.
+What kind of component name often signals the Entity Trap?	A vague name with suffixes like `Manager`, `Controller`, `Handler`, `Processor`, or `Engine`.
+Why are user stories assigned to components during logical architecture design?	To fill the empty buckets and give each component concrete roles and responsibilities.
+What does cohesion mean when analyzing component roles and responsibilities?	How well the operations in a component belong together around a unified purpose.
+How can an architect spot a component that is taking on too much responsibility?	Role-and-responsibility statements start accumulating conjunctive phrases such as `and`, `also`, or `in addition`.
+Why does moving responsibilities into separate logical components improve maintainability?	Each component ends up with a clearer role, less code, and simpler testing and deployment.
+How can architectural characteristics affect component granularity?	Qualities such as scalability, reliability, elasticity, and agility may justify splitting or combining components beyond purely functional boundaries.
+Why might one functionally unified component be split because of architectural characteristics?	Different parts of the same workflow may need different levels of scalability, availability, or reliability.
+What is static coupling between components?	Direct synchronous dependency where components communicate or depend on one another structurally.
+What is temporal coupling between components?	A dependency where correctness relies on actions happening in a particular order or timing relationship.
+Why is temporal coupling harder to detect than static coupling?	It usually emerges from runtime sequencing or transactions rather than obvious structural dependencies in code.
+What does the Law of Demeter state in software architecture?	A component or service should have limited knowledge of other components or services.
+How does the Law of Demeter reduce coupling?	By deferring knowledge of downstream actions to nearer components instead of making one component know too much about the rest of the system.
+What important trade-off accompanies applying the Law of Demeter?	It often redistributes coupling to different components rather than reducing total system-wide coupling.
