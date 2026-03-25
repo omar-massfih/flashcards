@@ -106,3 +106,20 @@ Why do published SLOs help users?	They set realistic expectations about how the 
 Why keep a tighter internal SLO than the one advertised externally?	It provides a safety margin so teams can respond to chronic problems before users notice.
 Why should services avoid significantly overachieving their published SLOs?	Users will build dependencies on actual behavior rather than stated guarantees, creating future risk.
 What is SRE's role in SLAs?	Help define measurable indicators and reduce the risk of missing targets, while business and legal teams own the agreement itself.
+What is toil in SRE?	Operational work tied to running a service that is manual, repetitive, automatable, tactical, lacking enduring value, and that scales linearly with service growth.
+What is overhead in SRE?	Administrative work not directly tied to running a production service, such as meetings, HR tasks, reviews, and training.
+Why is some grungy work not considered toil?	If it creates a lasting improvement to the service, it has enduring value and is therefore engineering work rather than toil.
+Why does manually running a script still count as toil?	The human hands-on time is still manual operational work even if the script automates the individual steps.
+Why is interrupt-driven work usually toil?	It is reactive and tactical rather than strategic and proactive.
+What does it mean for toil to have no enduring value?	After the task is finished, the service is in essentially the same state as before.
+Why is work that scales linearly with service growth considered toil?	Healthy SRE practices aim for services to grow substantially without requiring proportional increases in manual work.
+Why does Google aim to keep toil below 50% of an SRE's time?	SRE needs at least half of its time for engineering work that reduces future toil or improves the service.
+Why does toil tend to expand if left unchecked?	Manual operational work naturally fills available time unless teams deliberately automate and eliminate it.
+What organizational benefit comes from reducing toil?	The SRE organization can scale sublinearly with service size instead of growing like a traditional ops team.
+Why is keeping the 50% engineering promise important to SRE hiring and morale?	SREs join expecting meaningful engineering work, and breaking that promise makes the role feel like ordinary ops.
+Why does on-call create a floor on toil?	Primary and secondary on-call duties guarantee a baseline amount of interrupt handling and operational work.
+What qualifies as engineering work in SRE?	Work that is novel, requires human judgment, follows a strategy, and creates a lasting improvement in the service.
+What is software engineering work in SRE?	Writing or changing code, including automation, tooling, reliability features, and infrastructure code improvements.
+What is systems engineering work in SRE?	One-time configuration or production-system improvements that create lasting benefits, such as monitoring, tuning, and productionization work.
+Why is excessive toil dangerous for an individual SRE?	It causes career stagnation, low morale, boredom, and eventual burnout.
+Why is excessive toil dangerous for the SRE organization?	It blurs the engineering identity of SRE, slows product progress, invites more operational dumping, and drives attrition.
