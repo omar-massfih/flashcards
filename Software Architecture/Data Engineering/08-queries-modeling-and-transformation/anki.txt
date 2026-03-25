@@ -1,0 +1,59 @@
+What is a query in data engineering?	A request that reads data or acts on data in a database or other queryable store.
+What does DDL do in SQL?	It defines or changes database objects such as databases, schemas, tables, and users.
+What does DML do in SQL?	It reads or manipulates data within database objects.
+What does DCL do in SQL?	It controls permissions and access to database objects or data.
+What does TCL do in SQL?	It controls transaction behavior, including commit and rollback.
+What are the main stages in the life of a SQL query?	Parse and validate the SQL; convert it to an executable representation; optimize the plan; then execute it.
+What is the job of a query optimizer?	To find an efficient execution strategy that minimizes resource cost and improves query performance.
+Why can average latency or coarse query metrics be misleading when analyzing performance?	They can hide bursts, tail behavior, or resource-heavy stages that dominate real cost and user experience.
+Why can pre-joining data improve analytical query performance?	It avoids repeating the same expensive joins for common access patterns.
+What is row explosion in a join?	A large multiplicative increase in output rows caused by many-to-many matches or repeated join keys.
+Why are CTEs often preferable to deeply nested subqueries or manual intermediate tables?	They make complex query logic easier to read, reason about, and often optimize.
+Why should you avoid full table scans when possible?	They waste compute, scan unnecessary data, and can be slow and expensive.
+What is pruning in query optimization?	Reducing the amount of data scanned by selecting only needed columns, partitions, clusters, or indexed rows.
+Why must engineers understand a database's commit and consistency model?	Query correctness, concurrency behavior, and update cost all depend on how the database handles commits and snapshots.
+What is vacuuming in a database?	Removing dead or obsolete records and storage artifacts left behind by updates, deletes, or index operations.
+Why is vacuuming important?	It reduces table bloat, improves optimizer accuracy, and can improve query and index performance.
+Why are cached query results valuable in analytical systems?	They can return repeated query results much faster and more cheaply than rerunning the full query.
+What is the fast-follower pattern for streaming analytics?	A CDC-fed analytics database that trails a production database slightly and serves near-real-time analytical queries.
+What is the main idea of the Kappa architecture?	Treat streaming storage as both the real-time transport layer and the retained historical store for querying and processing.
+What is a session window in stream processing?	A per-key window that groups events separated by less than a configured inactivity gap.
+What is a fixed-time or tumbling window in stream processing?	A nonoverlapping window that processes all events arriving within each fixed time interval.
+What is a sliding or hopping window in stream processing?	A window of fixed length that is emitted repeatedly at a smaller step interval, so windows overlap.
+What is a watermark in stream processing?	A time threshold used to decide whether an event is on time or late for a given window.
+What is enrichment in streaming data processing?	Joining or augmenting stream events with external reference data to create a more useful output stream.
+What is a data model?	A deliberate structure for data that reflects business definitions, relationships, workflows, and logic.
+What are the conceptual, logical, and physical levels of a data model?	Conceptual captures business meaning and relationships; logical adds keys and detailed structure; physical maps the model into a concrete database implementation.
+What is the grain of data in a data model?	The level of detail at which data is stored and queried, usually tied to a key and often a timestamp or date.
+Why should analytical data usually be modeled at the lowest grain possible?	Fine-grained data can be aggregated later, but lost detail cannot generally be reconstructed.
+What is normalization in database modeling?	Structuring relational data to reduce redundancy and preserve referential integrity.
+What does first normal form (1NF) require?	Unique rows with a primary key and fields containing single, nonrepeating values.
+What does second normal form (2NF) add beyond 1NF?	It removes partial dependencies on part of a composite key.
+What does third normal form (3NF) add beyond 2NF?	It removes transitive dependencies so nonkey fields depend only on the key.
+What is the core idea of the Inmon data warehouse approach?	Integrate enterprise data into a centralized, highly normalized warehouse and then serve departmental needs through downstream data marts.
+What is the core idea of the Kimball approach?	Model analytical data around fact and dimension tables, often in star schemas optimized for business reporting.
+What is a fact table in a Kimball model?	A table of quantitative event data stored at the lowest practical grain.
+What is a dimension table in a Kimball model?	A descriptive reference table that provides context for facts, such as who, what, where, or when.
+What is a Type 2 slowly changing dimension?	A dimension pattern that preserves full history by inserting a new row when an attribute changes.
+What is the core idea of a data vault?	Store business keys, their relationships, and their descriptive history separately in hubs, links, and satellites using an insert-only pattern.
+Why do wide denormalized tables work especially well in columnar analytical systems?	Columnar storage makes sparse, wide schemas and selective column reads efficient while avoiding many joins.
+What is a transformation in data engineering?	A process that manipulates data and persists the result for downstream use.
+How is a transformation different from a query?	A query retrieves data, while a transformation persists intermediate or final results for later consumption.
+Why is orchestration essential for transformations?	Complex pipelines depend on coordinating many intermediate steps, dependencies, and outputs across systems.
+What is a broadcast join in distributed processing?	A join where a small table is copied to all nodes so each node can join it locally to a partition of a larger table.
+What is a shuffle hash join in distributed processing?	A join where both sides are repartitioned by join key across nodes before local joins are performed.
+Why are broadcast joins usually cheaper than shuffle hash joins?	They avoid the expensive redistribution of both datasets across the cluster.
+Why should ETL and ELT be treated as local pipeline patterns rather than whole-organization dogma?	Modern systems mix approaches, so the right extraction and transformation pattern depends on the specific use case.
+What is the truncate-and-reload update pattern?	Clearing old table contents and recomputing the full result set from scratch.
+What is the insert-only update pattern?	Only adding new rows and deriving the current state later through views, deduplication, or downstream tables.
+Why are deletes and merges expensive in columnar or file-based systems?	They usually require copy-on-write behavior that rewrites files or partitions rather than changing rows in place.
+Why can frequent near-real-time merges overwhelm a columnar warehouse?	Repeated copy-on-write updates create heavy rewrite overhead and backlog instead of efficient bulk processing.
+What is data wrangling?	Cleaning and reshaping messy source data into a usable form for downstream modeling and analysis.
+What is a view in a database?	A virtual table defined by a query over other data.
+What is a materialized view?	A persisted precomputed result that behaves like a table or view for faster downstream queries.
+What is a federated query?	A query that reads from external data sources such as object storage or another database without first ingesting all data locally.
+What is data virtualization?	A query layer that provides access across external data sources without primarily storing the data itself.
+What is query pushdown in federation or virtualization?	Pushing parts of a query, such as filters, down to the source system to reduce transferred data and external work.
+What is a streaming transformation?	A transformation that continuously processes and emits results as events arrive rather than waiting for a batch.
+What is a streaming DAG?	A directed graph of continuous stream-processing steps such as enrich, join, split, and republish.
+What is the key difference between micro-batch and true streaming?	Micro-batch processes small batches on a schedule, while true streaming processes events continuously one at a time or near one at a time.
