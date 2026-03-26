@@ -1,0 +1,30 @@
+Why is trust the root concern when serving data?	If users do not trust the data's correctness, freshness, and reliability, even a sophisticated serving stack will go unused.
+How do data validation and data observability support trust in served data?	Validation checks correctness at points in the lifecycle, while observability provides ongoing visibility into data health and pipeline behavior.
+Why do serving SLAs and SLOs matter in data engineering?	They set expectations for freshness, availability, and quality so downstream users can depend on data products operationally.
+Why should data engineers start serving design from use cases and users rather than tools?	The right serving architecture depends on the action the data should trigger and who needs to take that action.
+What is a data product?	A product that uses data to help a user accomplish an end goal.
+Why should data engineers think in terms of the user's "job to be done"?	It clarifies why the user needs the data product and what outcome the product must enable.
+What makes self-service data products difficult in practice?	Most users either want predefined answers or already use more powerful tools, so successful self-service requires the right audience, guardrails, and scope.
+What is the difference between data definition and data logic?	Data definition specifies what a concept means; data logic specifies how metrics and results are computed from data.
+Why are data definitions and data logic critical in serving?	Without shared definitions and reusable logic, dashboards, analyses, and models will produce inconsistent and untrustworthy results.
+How does a data mesh change data serving responsibilities?	Each domain team becomes responsible both for serving its data to others and for consuming shared data in its own products and workflows.
+What is business analytics?	Using historical and current data to support strategic decisions through dashboards, reports, and ad hoc analysis.
+What does operational analytics require from a serving layer?	Using data to trigger or support immediate action, often with low-latency or real-time requirements.
+What does embedded analytics require from a serving layer?	User-facing analytics delivered inside an application so end users can act directly on their own data.
+What are the three main performance concerns in embedded analytics?	Data latency, query performance, and high concurrency.
+Why should streaming data be tied to a concrete action rather than used just because it is available?	Real-time data creates value only when it enables decisions or automation that benefit from immediate response.
+Why should data engineers separate serving workloads into appropriate compute resources or warehouses?	Isolating workloads improves performance predictability, concurrency management, and cost attribution.
+What role do streaming systems play in serving data?	They enable low-latency serving, emitted metrics, and operational analytics use cases that cannot wait for batch refreshes.
+What is query federation in serving data?	Serving queries by combining results from multiple underlying systems without fully centralizing the data first.
+What is a semantic or metrics layer?	A reusable layer that centralizes business definitions and metric logic so many downstream queries can stay consistent.
+Why are semantic or metrics layers valuable in serving?	They reduce repeated business-logic code and help answer the recurring question of whether reported numbers are correct.
+Why are notebooks an important serving interface for data science?	Data scientists often consume served data directly in notebooks for exploration, feature engineering, and model training.
+Why is credential handling in notebooks a major concern?	Notebook workflows often leak secrets into code or repos unless teams enforce better credential management practices.
+What does reverse ETL do in the serving stage?	Sending processed data from analytical systems back into operational source systems where end users already work.
+Why is reverse ETL valuable?	It puts enriched or modeled data directly into operational tools, reducing friction for the end user.
+What special risk does reverse ETL introduce?	It creates feedback loops, so bad logic can repeatedly amplify harmful actions unless guardrails and monitoring exist.
+Why is serving the lifecycle stage with the largest security surface?	Data is exposed to the widest range of people, applications, and systems at this stage.
+Why is the principle of least privilege especially important in serving?	Serving should grant only the minimum read or write access needed for each person or system to do its job.
+Why are semantic layers, lineage, and catalogs important in serving from a data-management perspective?	They help users understand what data means, where it came from, and why it should be trusted.
+What should DataOps monitor in the serving stage?	Data health, serving latency, data quality, access and security, served versions, and uptime against SLOs.
+Why is serving highly entangled with orchestration?	Serving depends on many upstream tasks completing on time, so orchestration coordinates when data becomes available to consumers.
