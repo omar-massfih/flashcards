@@ -1,0 +1,21 @@
+What is monitoring in SRE?	Collecting, processing, aggregating, and displaying real-time quantitative data about a system.
+What is white-box monitoring?	Monitoring based on internal system metrics and signals exposed by components such as logs, runtime interfaces, or metrics endpoints.
+What is black-box monitoring?	Monitoring that tests externally visible system behavior as a user would experience it.
+Why should paging alerts have high signal and low noise?	Frequent low-value pages cause alert fatigue, slower response, and missed real incidents.
+What is the difference between a symptom and a cause in monitoring?	A symptom tells you what is broken for users; a cause suggests why it is broken.
+Why is black-box monitoring especially valuable for paging?	It pages humans only when a real user-visible problem is actively happening.
+Why is white-box monitoring especially valuable for debugging and prevention?	It can reveal internal failures, masked errors, and imminent problems before they become obvious to users.
+What are the four golden signals of monitoring?	Latency, traffic, errors, and saturation.
+What does latency measure in monitoring?	The time it takes to service a request.
+Why should successful and failed request latency be tracked separately?	Fast failures can make overall latency look better even while users are experiencing broken requests.
+What does traffic measure in monitoring?	The amount of demand being placed on a system, expressed in a system-appropriate rate such as requests per second.
+What do errors measure in monitoring?	The rate of requests that fail explicitly, implicitly, or by violating an expected service policy such as a latency target.
+What does saturation measure in monitoring?	How full the system is with respect to its most constrained resources and how close it is to degraded performance.
+Why can high-percentile latency be an early warning sign of saturation?	Tail latency often rises before average utilization reaches 100 percent or before a system visibly fails.
+Why is monitoring only the mean often misleading?	Averages can hide imbalanced resource usage and long tails that dominate user experience.
+How do latency histograms help with monitoring?	They show the distribution of request times, making slow-tail behavior visible instead of collapsing everything into one average.
+Why should measurement resolution vary by metric and use case?	Different signals change at different speeds, so overcollecting wastes resources while undercollecting hides important behavior.
+How can internal sampling with later aggregation reduce monitoring cost?	It preserves high-resolution local observations while exporting only summarized distributions for storage and analysis.
+What makes a good page in SRE?	It is urgent, actionable, requires human judgment, and points to a novel or unresolved problem.
+Why are pages with rote, algorithmic responses a red flag?	If the response is predictable, it should usually be automated instead of interrupting a human.
+What long-term trade-off should teams consider when designing monitoring?	A short-term drop in availability or sensitivity may be worthwhile if it reduces pager load and enables durable system improvements.
