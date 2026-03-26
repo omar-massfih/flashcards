@@ -212,3 +212,26 @@ Why is temporal coupling harder to detect than static coupling?	It usually emerg
 What does the Law of Demeter state in software architecture?	A component or service should have limited knowledge of other components or services.
 How does the Law of Demeter reduce coupling?	By deferring knowledge of downstream actions to nearer components instead of making one component know too much about the rest of the system.
 What important trade-off accompanies applying the Law of Demeter?	It often redistributes coupling to different components rather than reducing total system-wide coupling.
+What is a Big Ball of Mud?	An architecture with no clear structure, widespread coupling, and uncontrolled growth.
+Why is a Big Ball of Mud so dangerous?	Because changes have unpredictable ripple effects, making the system hard to maintain, test, deploy, and evolve.
+What is top-level partitioning in software architecture?	The primary way an architecture organizes its highest-level components.
+What is technical partitioning in architecture?	Organizing top-level components by technical capabilities such as presentation, business logic, or persistence.
+What is domain partitioning in architecture?	Organizing top-level components around business domains or workflows rather than technical layers.
+What is a major advantage of technical partitioning?	It clearly separates technical concerns and makes certain categories of code easy to find.
+What is a major disadvantage of technical partitioning?	Business workflows get smeared across multiple layers, increasing global coupling around domain changes.
+What is a major advantage of domain partitioning?	It aligns the codebase more closely with how the business actually works and changes.
+Why has industry interest shifted toward domain partitioning?	It better supports domain-driven design, cross-functional teams, and migration toward modular monoliths and microservices.
+What does Conway's Law say?	System designs tend to mirror the communication structures of the organizations that build them.
+What is the Inverse Conway Maneuver?	Deliberately shaping team structures to encourage the architecture you want.
+What is the key distinction between monolithic and distributed architectures?	Monolithic styles deploy as a single unit, while distributed styles consist of multiple deployment units communicating remotely.
+Why do distributed architectures share a distinct set of trade-offs?	Remote communication introduces network-related failure modes and operational complexity that monoliths largely avoid.
+What does the fallacy "the network is reliable" warn against?	Distributed systems must assume network failures will happen even when services themselves are healthy.
+What does the fallacy "latency is zero" warn against?	Remote calls are always slower than local calls, and tail latency can make fine-grained distributed designs impractical.
+What does the fallacy "bandwidth is infinite" warn against?	Distributed communication consumes real network capacity, and excessive payloads or chatty interactions can seriously hurt performance.
+What does the fallacy "the network is secure" warn against?	Every distributed endpoint increases the attack surface and must be explicitly secured.
+What does the fallacy "the topology never changes" warn against?	Network infrastructure changes regularly, and those changes can invalidate architectural assumptions.
+What does the fallacy "there is only one administrator" warn against?	Distributed systems depend on coordination across many operational owners, not one person with full control.
+What does the fallacy "transport cost is zero" warn against?	Distributed architectures require additional infrastructure and therefore real monetary cost.
+What does the fallacy "the network is homogeneous" warn against?	Real networks mix vendors and environments, so interoperability and behavior are not perfectly uniform.
+What does the fallacy "versioning is easy" warn against?	Supporting evolving service contracts creates difficult trade-offs about scope, compatibility, and deprecation.
+Why should architects favor simpler designs when possible?	Architectural decisions often outlive the assumptions that motivated them, so simpler designs age better.
