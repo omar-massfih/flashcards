@@ -235,3 +235,23 @@ What does the fallacy "transport cost is zero" warn against?	Distributed archite
 What does the fallacy "the network is homogeneous" warn against?	Real networks mix vendors and environments, so interoperability and behavior are not perfectly uniform.
 What does the fallacy "versioning is easy" warn against?	Supporting evolving service contracts creates difficult trade-offs about scope, compatibility, and deprecation.
 Why should architects favor simpler designs when possible?	Architectural decisions often outlive the assumptions that motivated them, so simpler designs age better.
+What is the layered architecture style?	An architecture style that organizes components into horizontal layers, each with a specific technical responsibility.
+Why is layered architecture so common in legacy systems?	It is simple, familiar, and relatively inexpensive to build and maintain.
+Why is layered architecture considered a technically partitioned style?	Top-level components are organized by technical role rather than by business domain.
+Why does layered architecture fit poorly with domain-driven design?	A single business domain gets spread across multiple technical layers, making domain changes harder.
+What is a closed layer in layered architecture?	A layer that requests cannot skip on the way to lower layers.
+What is an open layer in layered architecture?	A layer that requests may bypass to reach a lower layer directly.
+What are layers of isolation in layered architecture?	The idea that changes in one layer should not affect others as long as the layer contracts stay the same.
+What trade-off comes with using open layers?	They can reduce indirection for some requests, but they increase coupling and make the system more brittle.
+Why might architects add a Services layer to a layered architecture?	To isolate shared objects or utilities and prevent upper layers from accessing them directly through the Business layer.
+Why must open and closed layer rules be documented clearly?	Without clear access rules, developers create tightly coupled paths that are hard to test, maintain, and deploy.
+What is the Architecture Sinkhole antipattern?	A situation where requests pass through multiple layers with little or no business logic added along the way.
+Why is the Architecture Sinkhole antipattern harmful?	It adds unnecessary processing and object creation, hurting performance and wasting resources.
+How can the 80-20 rule help identify whether the sinkhole antipattern is a serious problem?	If most requests simply pass through layers without meaningful work, layered architecture is probably a poor fit.
+Why are cloud deployment options limited for layered architecture?	Because the style is usually monolithic and layered workflows often traverse most of the stack, making separated deployments latency-sensitive.
+Why does layered architecture have weak fault tolerance?	A failure in one part of the monolith can crash the entire deployment unit.
+Why does layered architecture have poor deployability?	Even small changes usually require redeploying the entire unit, increasing coordination cost and deployment risk.
+Why do scalability and elasticity rate poorly in layered architecture?	The monolithic architecture quantum forces the system to scale largely as a whole rather than by independently scaling parts.
+When is layered architecture a good choice?	For small, simple applications or early-stage systems with tight budget and time constraints.
+When should layered architecture be avoided?	When the system is large enough that maintainability, agility, testability, and deployability start to degrade badly.
+Why is governance relatively strong for layered architecture?	Common structural testing tools and fitness functions can enforce layer boundaries and access rules effectively.
