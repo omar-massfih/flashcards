@@ -1,0 +1,17 @@
+Why is the data engineering lifecycle unlikely to disappear even as tools get easier?	Simpler tools move data engineers up the value chain rather than removing the need for people to design, operate, and improve data systems.
+Why won't easier data tooling eliminate data engineers?	As organizations find new ways to use data, they still need engineers to build and evolve the foundations and workflows behind those uses.
+How has the cloud changed the practical value of open source in data engineering?	Many open source tools are now available as managed services, making them far easier to adopt and operate.
+Why are managed data connectors so compelling?	They offload undifferentiated plumbing work so engineers can focus on business-specific problems.
+Why will metadata become even more important in future data systems?	Schema, hierarchy, lineage, and semantic metadata are critical for automation and interoperability across tools and clouds.
+How are orchestration platforms expected to evolve?	They will become more data-aware and absorb capabilities such as catalog integration, lineage, IaC, deployment, testing, and monitoring.
+What is “enterprisey” data engineering in the book's positive sense?	Applying stronger management, governance, operations, and reliability practices as data tooling becomes easier to use.
+Why are titles and responsibilities in data work likely to keep morphing?	Simpler tools and deeper product integration are blurring the boundaries between data engineering, software engineering, data science, and ML engineering.
+What kind of role may emerge between data engineering and ML engineering?	An operational ML-focused engineer who automates training, monitoring, and model pipelines for well-understood ML workflows.
+Why will software engineers increasingly need data-engineering skills?	Data applications are fusing application logic with streaming, data quality, modeling, and real-time analytics.
+Why do the authors think the modern data stack is limited?	It remains fundamentally batch- and warehouse-centric, which constrains low-latency real-time applications.
+What is the live data stack?	A data stack that fuses real-time data movement, analytics, ML, and applications into continuous feedback loops.
+Why might dashboards and reports increasingly give way to automation?	If a repeated analytical question always leads to the same action, that action is a candidate for automatic triggering.
+Why do the authors expect streaming ingestion to displace batch ingestion in many cases?	Batching at the head of the pipeline becomes an avoidable bottleneck when systems can ingest and process data continuously.
+Why will data modeling likely need to change for a streaming-first world?	Traditional warehouse-centered batch models are poorly suited to continuous event flows and real-time definitions.
+What does the fusion of the application and data layers mean?	Application stacks and data stacks increasingly become one integrated system rather than separate silos connected by duct tape.
+Why will tighter feedback between applications and ML matter?	It enables applications to adapt in near real time as data changes, creating smarter products and faster learning loops.

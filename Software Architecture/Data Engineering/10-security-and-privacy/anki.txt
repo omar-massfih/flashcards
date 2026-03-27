@@ -1,0 +1,13 @@
+Why should security be treated as a first concern in data engineering?	Data engineers handle sensitive data, credentials, and access paths, so one breach can destroy trust and seriously damage the business.
+Why is privacy a major concern for data engineers beyond ethics?	Privacy laws and regulations can impose severe legal and financial consequences for mishandling sensitive data.
+Why are people often considered the weakest link in security?	Human error, phishing, carelessness, and poor judgment often compromise systems more easily than technical controls do.
+What is the power of negative thinking in security?	Deliberately imagining failure and attack scenarios so you can prevent them instead of assuming everything will be fine.
+Why is not collecting sensitive data often the best privacy protection?	Data that is never ingested cannot be leaked, misused, or exposed later.
+Why should engineers be deeply skeptical of requests for credentials or sensitive information?	Attackers often succeed by impersonation or social engineering rather than by breaking systems directly.
+What is security theater?	Performing security mainly for compliance optics rather than creating real protection against likely threats.
+What is active security?	A proactive approach that studies real threats and organizational vulnerabilities instead of relying only on static checklists.
+What is a broken-glass process for sensitive data?	An emergency-only access path with explicit approval and immediate revocation after the urgent work is done.
+Why do many cloud security breaches still happen on the customer side?	Misconfigurations, excessive permissions, and operational mistakes are usually the customer's responsibility.
+Why is encryption necessary but not sufficient for security?	Encryption helps against interception and storage theft, but compromised credentials or bad permissions can still expose data.
+Why is key handling as important as encryption itself?	Poorly protected keys can nullify the protection that encryption is supposed to provide.
+Why can unexpected billing spikes indicate a security problem?	Compromised accounts or malicious workloads may consume compute or storage in unusual ways.

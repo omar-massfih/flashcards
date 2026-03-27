@@ -1,0 +1,23 @@
+What is row-based serialization?	A format that stores data row by row, with each record or object kept as a unit.
+Why is CSV called the "nonstandard standard"?	The label covers many incompatible delimiter, quoting, and escaping conventions rather than one strict specification.
+Why should CSV generally be avoided inside data pipelines?	It is error-prone, lacks native schema support, and usually performs poorly compared with modern formats.
+Why should archived CSV data include a full format specification?	Future consumers need the exact delimiter, quoting, escaping, and related settings to parse it correctly.
+What is JSONL?	A file format that stores one JSON object per line for bulk semistructured data.
+Why is JSONL often useful right after API or application ingestion?	It preserves semistructured records conveniently before later conversion into faster analytical formats.
+Why is Avro useful in data engineering?	It provides row-oriented binary serialization with explicit schema metadata and broad ecosystem support.
+What is columnar serialization?	A format that stores data by columns rather than as full rows.
+Why is columnar serialization well suited to analytics?	Queries often need only a subset of fields, so reading just the required columns reduces scan work dramatically.
+Why does columnar data usually compress well?	Similar values sit together, making repetition and redundancy easier for compression algorithms to exploit.
+Why is columnar storage a poor fit for transactional updates?	Updating one field often requires decompressing, rewriting, and recompressing part of a column rather than changing a single row in place.
+Why are partitioning and clustering important in columnar storage?	They limit how much data must be scanned or rewritten for queries and updates.
+Why is Parquet especially valuable in a polyglot data-lake environment?	It is portable, schema-aware, supports nested data, and performs well across many tools.
+What is Apache Arrow's main idea?	Use a common binary columnar format for in-memory processing, exchange, and storage to reduce serialization overhead.
+How can Arrow reduce serialization and deserialization costs?	Data can often be read or shared in the same binary layout instead of being repeatedly converted between formats.
+What is shredding in Arrow-style nested data handling?	Mapping positions within nested structures such as JSON documents into separate columns.
+What problem does Hudi aim to solve in data lakes?	Combining analytical columnar performance with support for incremental updates and deletes.
+What problem does Iceberg aim to solve in data lakes?	Managing large tables with schema evolution, snapshots, and time travel over many underlying files.
+What is a database storage engine?	The database layer responsible for how data is physically stored, organized, indexed, and retrieved on disk.
+Why do storage engines strongly influence database behavior?	They determine physical layout, indexing, serialization, and how well the system matches hardware and workload patterns.
+What is lossless compression?	Compression that can be reversed to recover an exact bit-for-bit copy of the original data.
+Why are lossy compression algorithms usually unsuitable for analytical data serialization?	Analytics requires exact fidelity, while lossy methods intentionally discard information.
+What trade-off distinguishes gzip or bzip2 from speed-first compressors such as Snappy, LZ4, or Zstandard?	Traditional compressors often achieve better ratios, while speed-first compressors sacrifice some compression to improve read and write speed.

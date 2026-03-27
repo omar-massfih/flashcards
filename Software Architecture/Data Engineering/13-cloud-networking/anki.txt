@@ -1,0 +1,8 @@
+Why are data egress charges important in cloud networking design?	Clouds usually make inbound traffic free but charge for outbound traffic, which can create significant cost and lock-in.
+What is an availability zone in cloud networking?	The smallest customer-visible topology unit, representing isolated infrastructure within a cloud region.
+Why should high-throughput cluster workloads usually stay within one availability zone?	Single-zone placement usually gives the best bandwidth, lowest latency, and lowest inter-VM networking cost.
+Why can traffic between VMs in the same zone still incur charges if designed poorly?	Using public or external IP paths can trigger egress costs even when the machines are nearby.
+How does networking typically compare within a zone, across zones, and across regions?	Within a zone is usually fastest and cheapest; cross-zone is somewhat slower and may cost more; cross-region is slower still and often costs even more.
+Why can an entire cloud region still fail despite multiple zones?	Some failures are correlated at the regional level, especially when regional code or configuration changes go wrong.
+Why are direct network connections to a cloud valuable?	They can improve bandwidth and latency while reducing public-internet egress charges.
+Why are data egress fees considered a barrier to interoperability?	They make cross-cloud movement, large-scale sharing, and provider switching financially painful.

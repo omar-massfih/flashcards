@@ -423,3 +423,64 @@ Why is the principle of least privilege especially important in serving?	Serving
 Why are semantic layers, lineage, and catalogs important in serving from a data-management perspective?	They help users understand what data means, where it came from, and why it should be trusted.
 What should DataOps monitor in the serving stage?	Data health, serving latency, data quality, access and security, served versions, and uptime against SLOs.
 Why is serving highly entangled with orchestration?	Serving depends on many upstream tasks completing on time, so orchestration coordinates when data becomes available to consumers.
+Why should security be treated as a first concern in data engineering?	Data engineers handle sensitive data, credentials, and access paths, so one breach can destroy trust and seriously damage the business.
+Why is privacy a major concern for data engineers beyond ethics?	Privacy laws and regulations can impose severe legal and financial consequences for mishandling sensitive data.
+Why are people often considered the weakest link in security?	Human error, phishing, carelessness, and poor judgment often compromise systems more easily than technical controls do.
+What is the power of negative thinking in security?	Deliberately imagining failure and attack scenarios so you can prevent them instead of assuming everything will be fine.
+Why is not collecting sensitive data often the best privacy protection?	Data that is never ingested cannot be leaked, misused, or exposed later.
+Why should engineers be deeply skeptical of requests for credentials or sensitive information?	Attackers often succeed by impersonation or social engineering rather than by breaking systems directly.
+What is security theater?	Performing security mainly for compliance optics rather than creating real protection against likely threats.
+What is active security?	A proactive approach that studies real threats and organizational vulnerabilities instead of relying only on static checklists.
+What is a broken-glass process for sensitive data?	An emergency-only access path with explicit approval and immediate revocation after the urgent work is done.
+Why do many cloud security breaches still happen on the customer side?	Misconfigurations, excessive permissions, and operational mistakes are usually the customer's responsibility.
+Why is encryption necessary but not sufficient for security?	Encryption helps against interception and storage theft, but compromised credentials or bad permissions can still expose data.
+Why is key handling as important as encryption itself?	Poorly protected keys can nullify the protection that encryption is supposed to provide.
+Why can unexpected billing spikes indicate a security problem?	Compromised accounts or malicious workloads may consume compute or storage in unusual ways.
+Why is the data engineering lifecycle unlikely to disappear even as tools get easier?	Simpler tools move data engineers up the value chain rather than removing the need for people to design, operate, and improve data systems.
+Why won't easier data tooling eliminate data engineers?	As organizations find new ways to use data, they still need engineers to build and evolve the foundations and workflows behind those uses.
+How has the cloud changed the practical value of open source in data engineering?	Many open source tools are now available as managed services, making them far easier to adopt and operate.
+Why are managed data connectors so compelling?	They offload undifferentiated plumbing work so engineers can focus on business-specific problems.
+Why will metadata become even more important in future data systems?	Schema, hierarchy, lineage, and semantic metadata are critical for automation and interoperability across tools and clouds.
+How are orchestration platforms expected to evolve?	They will become more data-aware and absorb capabilities such as catalog integration, lineage, IaC, deployment, testing, and monitoring.
+What is “enterprisey” data engineering in the book's positive sense?	Applying stronger management, governance, operations, and reliability practices as data tooling becomes easier to use.
+Why are titles and responsibilities in data work likely to keep morphing?	Simpler tools and deeper product integration are blurring the boundaries between data engineering, software engineering, data science, and ML engineering.
+What kind of role may emerge between data engineering and ML engineering?	An operational ML-focused engineer who automates training, monitoring, and model pipelines for well-understood ML workflows.
+Why will software engineers increasingly need data-engineering skills?	Data applications are fusing application logic with streaming, data quality, modeling, and real-time analytics.
+Why do the authors think the modern data stack is limited?	It remains fundamentally batch- and warehouse-centric, which constrains low-latency real-time applications.
+What is the live data stack?	A data stack that fuses real-time data movement, analytics, ML, and applications into continuous feedback loops.
+Why might dashboards and reports increasingly give way to automation?	If a repeated analytical question always leads to the same action, that action is a candidate for automatic triggering.
+Why do the authors expect streaming ingestion to displace batch ingestion in many cases?	Batching at the head of the pipeline becomes an avoidable bottleneck when systems can ingest and process data continuously.
+Why will data modeling likely need to change for a streaming-first world?	Traditional warehouse-centered batch models are poorly suited to continuous event flows and real-time definitions.
+What does the fusion of the application and data layers mean?	Application stacks and data stacks increasingly become one integrated system rather than separate silos connected by duct tape.
+Why will tighter feedback between applications and ML matter?	It enables applications to adapt in near real time as data changes, creating smarter products and faster learning loops.
+What is row-based serialization?	A format that stores data row by row, with each record or object kept as a unit.
+Why is CSV called the "nonstandard standard"?	The label covers many incompatible delimiter, quoting, and escaping conventions rather than one strict specification.
+Why should CSV generally be avoided inside data pipelines?	It is error-prone, lacks native schema support, and usually performs poorly compared with modern formats.
+Why should archived CSV data include a full format specification?	Future consumers need the exact delimiter, quoting, escaping, and related settings to parse it correctly.
+What is JSONL?	A file format that stores one JSON object per line for bulk semistructured data.
+Why is JSONL often useful right after API or application ingestion?	It preserves semistructured records conveniently before later conversion into faster analytical formats.
+Why is Avro useful in data engineering?	It provides row-oriented binary serialization with explicit schema metadata and broad ecosystem support.
+What is columnar serialization?	A format that stores data by columns rather than as full rows.
+Why is columnar serialization well suited to analytics?	Queries often need only a subset of fields, so reading just the required columns reduces scan work dramatically.
+Why does columnar data usually compress well?	Similar values sit together, making repetition and redundancy easier for compression algorithms to exploit.
+Why is columnar storage a poor fit for transactional updates?	Updating one field often requires decompressing, rewriting, and recompressing part of a column rather than changing a single row in place.
+Why are partitioning and clustering important in columnar storage?	They limit how much data must be scanned or rewritten for queries and updates.
+Why is Parquet especially valuable in a polyglot data-lake environment?	It is portable, schema-aware, supports nested data, and performs well across many tools.
+What is Apache Arrow's main idea?	Use a common binary columnar format for in-memory processing, exchange, and storage to reduce serialization overhead.
+How can Arrow reduce serialization and deserialization costs?	Data can often be read or shared in the same binary layout instead of being repeatedly converted between formats.
+What is shredding in Arrow-style nested data handling?	Mapping positions within nested structures such as JSON documents into separate columns.
+What problem does Hudi aim to solve in data lakes?	Combining analytical columnar performance with support for incremental updates and deletes.
+What problem does Iceberg aim to solve in data lakes?	Managing large tables with schema evolution, snapshots, and time travel over many underlying files.
+What is a database storage engine?	The database layer responsible for how data is physically stored, organized, indexed, and retrieved on disk.
+Why do storage engines strongly influence database behavior?	They determine physical layout, indexing, serialization, and how well the system matches hardware and workload patterns.
+What is lossless compression?	Compression that can be reversed to recover an exact bit-for-bit copy of the original data.
+Why are lossy compression algorithms usually unsuitable for analytical data serialization?	Analytics requires exact fidelity, while lossy methods intentionally discard information.
+What trade-off distinguishes gzip or bzip2 from speed-first compressors such as Snappy, LZ4, or Zstandard?	Traditional compressors often achieve better ratios, while speed-first compressors sacrifice some compression to improve read and write speed.
+Why are data egress charges important in cloud networking design?	Clouds usually make inbound traffic free but charge for outbound traffic, which can create significant cost and lock-in.
+What is an availability zone in cloud networking?	The smallest customer-visible topology unit, representing isolated infrastructure within a cloud region.
+Why should high-throughput cluster workloads usually stay within one availability zone?	Single-zone placement usually gives the best bandwidth, lowest latency, and lowest inter-VM networking cost.
+Why can traffic between VMs in the same zone still incur charges if designed poorly?	Using public or external IP paths can trigger egress costs even when the machines are nearby.
+How does networking typically compare within a zone, across zones, and across regions?	Within a zone is usually fastest and cheapest; cross-zone is somewhat slower and may cost more; cross-region is slower still and often costs even more.
+Why can an entire cloud region still fail despite multiple zones?	Some failures are correlated at the regional level, especially when regional code or configuration changes go wrong.
+Why are direct network connections to a cloud valuable?	They can improve bandwidth and latency while reducing public-internet egress charges.
+Why are data egress fees considered a barrier to interoperability?	They make cross-cloud movement, large-scale sharing, and provider switching financially painful.
