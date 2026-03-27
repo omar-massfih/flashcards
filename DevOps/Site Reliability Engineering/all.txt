@@ -144,3 +144,22 @@ How can internal sampling with later aggregation reduce monitoring cost?	It pres
 What makes a good page in SRE?	It is urgent, actionable, requires human judgment, and points to a novel or unresolved problem.
 Why are pages with rote, algorithmic responses a red flag?	If the response is predictable, it should usually be automated instead of interrupting a human.
 What long-term trade-off should teams consider when designing monitoring?	A short-term drop in availability or sensitivity may be worthwhile if it reduces pager load and enables durable system improvements.
+Why is automation described as a force multiplier rather than a panacea in SRE?	Automation amplifies whatever process it is applied to, so poor automation can create as many problems as it solves.
+Why can automation be more valuable as a platform than as a one-off script?	A reusable platform centralizes fixes, can be extended, and can expose metrics and process details for further improvement.
+How does automation help reduce MTTR for common faults?	It can detect and remediate routine failures faster than humans, shortening recovery time for recurring problems.
+Why is faster action an important benefit of automation?	Machines can react immediately to well-defined failures, while waiting for humans can add unnecessary delay.
+What does decoupling operator from operation mean?	Once a task is automated, the ability to run it no longer depends on a specific human performing it manually.
+What is a key trade-off of higher-level automation abstractions?	They are easier to use and reason about, but when the abstraction leaks they can fail systemically in messy real-world conditions.
+Why do real-world rollout and failover abstractions often leak?	Networks, machines, staging steps, and verification can fail in partial ways that simple abstractions do not model well.
+Why is autonomous behavior preferable to external glue logic when possible?	A system designed to handle its own routine conditions is more robust than one that depends on separate automation to keep functioning.
+Why is rarely executed automation especially fragile?	Infrequent execution means slower feedback, poorer testing, and more bit rot between uses.
+Why should automation that applies fixes be idempotent?	It should be safe to run repeatedly without causing additional harm if retried or triggered again.
+What organizational problem appears when service owners stop maintaining the automation for their own systems?	Automation becomes less accurate and relevant because the people closest to changing systems no longer keep it in sync.
+Why are the most functional automation tools often written by the teams that use them?	The users best understand the real workflow, edge cases, and changing requirements the automation must handle.
+What lesson did MySQL on Borg illustrate about automation?	When failures are inevitable, automation should optimize for fast recovery rather than assuming failures can be avoided.
+What broader lesson did Borg illustrate about automation?	The highest leverage comes from redesigning systems to be autonomous rather than layering manual or external automation on top of fragile workflows.
+Why is self-introspection important for autonomous systems?	A system needs awareness of its own state and failures in order to repair or adapt itself without waiting for human intervention.
+Why is reliability described as the fundamental feature behind automation choices?	The goal is not automation for its own sake, but resilient systems that continue operating and recover safely at scale.
+What risk does highly effective automation create for human operators?	If humans stop interacting with the system, they may lose the skill and mental model needed to manage it when automation fails.
+What failure pattern does "automation enabling failure at scale" describe?	A bug in powerful automation can rapidly spread a mistake across huge portions of production.
+What safeguards help limit automation-caused disasters at scale?	Idempotent workflows, sanity checks, auditability, and rate limiting help stop bad automation from propagating unchecked.
