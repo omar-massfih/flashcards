@@ -1,0 +1,20 @@
+What is the modular monolith architecture style?	A monolithic architecture style that groups functionality by business domain into modules within a single deployment unit.
+Why is modular monolith considered a domain-partitioned architecture?	Because its top-level organization is based on business domains or subdomains rather than technical layers.
+What trade-off comes with the monolithic structure option in modular monolith architecture?	It is simpler to maintain and deploy, but it requires strict governance to prevent excessive reuse and blurry module boundaries.
+When does the modular structure option work best in modular monolith architecture?	When modules are relatively independent or require distinct expertise, making cleaner boundaries worth the extra structure.
+Why can the modular structure option lose effectiveness when modules depend heavily on one another?	Frequent intermodule communication creates compile-time dependencies and dependency-management pain, such as JAR or DLL hell.
+What is the peer-to-peer communication approach in modular monolith architecture?	One module directly invokes classes or methods in another module.
+What is the mediator approach in modular monolith architecture?	A mediator component accepts requests and routes them to the appropriate modules, reducing direct module-to-module dependencies.
+What trade-off comes with using a mediator in modular monolith architecture?	Modules become less coupled to one another, but they are all coupled to the mediator.
+What data topology is most common in modular monolith architecture?	A single shared database, though independent modules may also have their own databases when that better fits their context.
+What warning signs suggest a modular monolith is getting too big?	Changes take too long, unrelated areas break unexpectedly, teams interfere with one another, or startup time becomes excessive.
+What is a primary risk of excessive code reuse in modular monolith architecture?	It blurs module boundaries and can turn the system into an unstructured monolith.
+What does too much intermodule communication usually indicate in modular monolith architecture?	The domain boundaries were probably defined poorly and need to be reconsidered.
+Why do domain-aligned cross-functional teams fit modular monolith architecture well?	They can own a module end to end, from interface through data, with less cross-team coordination.
+Why do technically organized teams fit modular monolith architecture poorly?	Domain changes cut across every technical team, increasing communication overhead and slowing delivery.
+What are the main strengths of modular monolith architecture?	Low cost, conceptual simplicity, and good modularity within a monolithic deployment.
+Why are deployability and testability only modestly better in modular monolith than in layered architecture?	Modules improve separation of concerns, but the system is still deployed and tested largely as one monolith.
+Why does modular monolith architecture rate poorly for scalability and elasticity?	The monolithic deployment forces most scaling decisions to happen at the whole-system level rather than per module.
+Why does modular monolith architecture have weak fault tolerance and availability?	A failure such as an out-of-memory condition can crash the entire deployment unit, and monolith startup times increase recovery time.
+When is modular monolith architecture a good choice?	When budgets or timelines are tight, teams are domain-focused, or a new system needs a simpler starting point with room to evolve later.
+When should modular monolith architecture be avoided?	When the system needs strong operational characteristics such as high scalability, elasticity, availability, fault tolerance, or frequent technology-layer changes.
