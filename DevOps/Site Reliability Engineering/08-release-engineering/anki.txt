@@ -1,0 +1,22 @@
+What is release engineering?	The discipline of building, packaging, and delivering software in a reliable, repeatable, automated way.
+Why do SREs care about release engineering?	Reliable services depend on releases being reproducible, intentional, and safe from source code through deployment.
+Why do release engineers define shared release best practices?	To make releases consistent and repeatable so teams do not reinvent brittle processes for building and shipping software.
+Why do release engineers and SREs collaborate closely?	They need shared rollout, canary, and rollback strategies that let changes reach production safely.
+What does the self-service model mean in release engineering?	Product teams can run their own release processes using shared tools, automation, and guardrails.
+Why does a self-service release model improve scale?	Central release engineers provide platforms and policies, while individual teams release independently without waiting on a central gatekeeper.
+Why can frequent releases reduce change complexity?	Each release contains fewer changes, which makes testing, debugging, and rollback easier.
+What is push on green in release engineering?	A model that automatically deploys each build that passes all required tests.
+What is a hermetic build?	A build that produces the same result from the same source revision regardless of the machine environment because it uses pinned tools and dependencies.
+Why are hermetic builds important in release engineering?	They make builds repeatable, reduce environmental drift, and let teams rebuild older releases reliably.
+What is cherry picking in release engineering?	Rebuilding from an older release revision while selectively including specific later changes.
+Why should build tools be versioned with the source revision being built?	So rebuilding an older release does not silently pick up newer compiler or tool behavior.
+Why enforce policies and access controls in the release process?	To make release actions intentional, auditable, and limited to the people allowed to approve or perform them.
+Why archive reports of the changes included in each release?	They help SREs understand what changed and speed troubleshooting when a release causes problems.
+Why rerun tests on the release branch instead of trusting mainline test results?	The release branch may contain cherry-picked code combinations that never existed together on the mainline.
+Why should deployment strategy match a service's risk profile?	Low-risk services can move fast, while high-risk or sensitive services need slower, more carefully staged rollouts.
+Why are configuration changes treated as a significant release risk?	A bad configuration can destabilize a service even when the binary itself is unchanged.
+Why store configuration in source control with mandatory code review?	It creates an auditable change history and reduces the chance of ad hoc, unsafe configuration changes.
+What trade-off comes with managing configuration directly from the mainline?	It is simple and decouples binaries from config, but the checked-in config can drift from the running config until jobs pick up the change.
+What is the advantage of packaging configuration separately from binaries?	Teams can snapshot, version, and deploy configuration independently without rebuilding the binary.
+When is an external configuration store a better choice than packaging config with a release?	When configuration must change frequently or dynamically while the binary is already running.
+Why should teams invest in release engineering early in a product's lifecycle?	Good release practices are cheaper to establish early than to retrofit after the system has grown large and complex.
