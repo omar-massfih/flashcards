@@ -275,3 +275,20 @@ Why does modular monolith architecture rate poorly for scalability and elasticit
 Why does modular monolith architecture have weak fault tolerance and availability?	A failure such as an out-of-memory condition can crash the entire deployment unit, and monolith startup times increase recovery time.
 When is modular monolith architecture a good choice?	When budgets or timelines are tight, teams are domain-focused, or a new system needs a simpler starting point with room to evolve later.
 When should modular monolith architecture be avoided?	When the system needs strong operational characteristics such as high scalability, elasticity, availability, fault tolerance, or frequent technology-layer changes.
+What is the pipeline architecture style?	An architecture style that processes data through a sequence of self-contained filters connected by one-way pipes.
+What are the two component types in pipeline architecture?	Filters, which perform the work, and pipes, which pass data from one filter to the next.
+Why should filters in pipeline architecture usually be stateless and single-purpose?	Small focused filters are easier to compose, replace, test, and reason about than filters that accumulate multiple responsibilities.
+Why does pipeline architecture encourage compositional reuse?	Simple one-way filters can be recombined into many useful workflows without tightly coupling them.
+How can pipeline architecture be deployed as a distributed architecture?	Each filter, or group of filters, can be deployed as a separate service with synchronous or asynchronous remote communication between them.
+Why can pipeline architecture use either a single database or multiple databases?	Although the style is often monolithic, different filters may own or read different data stores depending on the workflow.
+What is a common risk of overloading filters in pipeline architecture?	The architecture loses its single-purpose modularity and starts collapsing into an unstructured monolith.
+What does bidirectional communication between filters usually indicate in pipeline architecture?	Either the style is a poor fit or the filters have been defined with the wrong boundaries.
+Why is error handling difficult in pipeline architecture?	Once the pipeline is in motion, it can be hard to decide how to stop, unwind, or recover from failures cleanly.
+Why do contracts between filters require strict governance in pipeline architecture?	Changes to the data passed through a pipe can break downstream filters that depend on that contract.
+What are the main strengths of pipeline architecture?	Low cost, conceptual simplicity, and good modularity through narrowly scoped filters.
+Why are deployability and testability only moderate in pipeline architecture?	Filters improve modularity, but the style is still commonly deployed and tested as a monolith.
+Why does pipeline architecture usually score poorly on scalability and elasticity?	Most implementations are monolithic, so the whole deployment unit tends to scale together rather than by filter.
+Why does pipeline architecture usually have weak fault tolerance and availability?	A failure in one part of the monolith can crash the whole deployment unit, and recovery is slowed by monolith startup time.
+What trade-off comes with distributing a pipeline asynchronously?	It can improve scalability, elasticity, and fault tolerance, but it increases cost and architectural complexity.
+When is pipeline architecture a good choice?	When the system has distinct, ordered, deterministic, one-way processing steps and needs a simple workflow-oriented structure.
+When should pipeline architecture be avoided?	When the workflow requires back-and-forth communication, is highly nondeterministic, or needs strong monolithic scalability and fault-tolerance characteristics.
