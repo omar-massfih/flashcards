@@ -185,3 +185,18 @@ What trade-off comes with managing configuration directly from the mainline?	It 
 What is the advantage of packaging configuration separately from binaries?	Teams can snapshot, version, and deploy configuration independently without rebuilding the binary.
 When is an external configuration store a better choice than packaging config with a release?	When configuration must change frequently or dynamically while the binary is already running.
 Why should teams invest in release engineering early in a product's lifecycle?	Good release practices are cheaper to establish early than to retrofit after the system has grown large and complex.
+Why does SRE treat simplicity as a prerequisite for reliability?	Simpler systems have fewer surprises, are easier to understand, and are less likely to fail in unexpected ways.
+Why is balancing stability and agility a central SRE concern?	Systems must stay reliable while still changing fast enough to support product progress.
+Why can reliable engineering practices improve developer agility instead of slowing it?	Fast, trustworthy releases make it easier to detect, isolate, and fix bugs quickly.
+Why is "boring" a positive quality in production software?	Predictable software is easier to operate safely than software that behaves in surprising or clever ways.
+Why should SRE teams push back on accidental complexity?	It increases operational risk without adding corresponding business value.
+Why is dead or disabled code dangerous in production systems?	Unused code creates confusion and can later be reactivated or interacted with in unsafe, poorly understood ways.
+Why is deleting unused code usually better than commenting it out or hiding it behind a disabled flag?	Version control can recover deleted code, while dead code left in place adds noise and ongoing risk.
+Why can every new line of production code be considered a liability?	Each additional line increases the chance of defects, maintenance burden, and operational failure.
+Why is the "negative lines of code" idea valuable in SRE?	Removing unnecessary code often makes systems easier to understand, test, and operate reliably.
+Why are minimal APIs valuable for system simplicity?	Smaller APIs are easier to understand and maintain, and they let teams focus on making a smaller surface area work well.
+Why does loose coupling promote both reliability and agility?	Components can be changed, tested, and deployed independently with less risk of breaking unrelated parts of the system.
+Why is API versioning a simplicity pattern in distributed systems?	It lets clients upgrade safely on their own schedule instead of forcing lockstep changes across the whole system.
+Why can backward- and forward-compatible data formats improve simplicity?	They reduce coordination burden and make systems easier to evolve without breaking consumers.
+Why are small releases usually better than large releases?	They make it easier to understand the effect of each change and to identify which change caused a problem.
+How do smaller releases make troubleshooting easier?	When fewer things change at once, regressions are easier to isolate and reason about.
