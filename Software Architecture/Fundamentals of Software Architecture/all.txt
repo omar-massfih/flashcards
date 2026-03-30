@@ -292,3 +292,21 @@ Why does pipeline architecture usually have weak fault tolerance and availabilit
 What trade-off comes with distributing a pipeline asynchronously?	It can improve scalability, elasticity, and fault tolerance, but it increases cost and architectural complexity.
 When is pipeline architecture a good choice?	When the system has distinct, ordered, deterministic, one-way processing steps and needs a simple workflow-oriented structure.
 When should pipeline architecture be avoided?	When the workflow requires back-and-forth communication, is highly nondeterministic, or needs strong monolithic scalability and fault-tolerance characteristics.
+What is the microkernel architecture style?	A monolithic architecture style that splits functionality between a minimal core system and independent plug-in components.
+When is microkernel architecture a natural fit?	When a system needs product-style extensibility or domain-specific customization without constantly changing the whole core.
+What is the core system in microkernel architecture?	The minimal stable functionality needed to run the system, often representing the application's happy path.
+Why does microkernel architecture move cyclomatic complexity out of the core system?	Isolating specialized logic in plug-ins improves extensibility, maintainability, and testability.
+What are plug-in components in microkernel architecture?	Standalone components that add specialized processing, features, or customization around the core system.
+Why should plug-in components ideally avoid dependencies on one another?	Plug-in-to-plug-in dependencies create transitive version conflicts and make the architecture much harder to manage.
+What is the trade-off between compile-based and runtime-based plug-ins?	Compile-based plug-ins are simpler to manage, while runtime plug-ins allow addition or removal without redeploying the whole application.
+What benefits come from remote plug-in access in microkernel architecture?	It can improve decoupling, throughput, runtime changeability, and asynchronous responsiveness.
+What trade-off comes with implementing microkernel plug-ins as remote services?	The style becomes distributed and more complex and costly, while requests still depend on the monolithic core system.
+What is a plug-in registry in microkernel architecture?	A structure the core system uses to discover which plug-ins exist and how to invoke them.
+Why are standard contracts important between the core system and plug-ins?	They let the core interact with plug-ins consistently without specialized logic for each one.
+Why do microkernel plug-ins usually avoid direct access to the shared central database?	Keeping database access in the core system reduces coupling so schema changes affect fewer components.
+Why might a plug-in component own its own data store?	To keep plug-in-specific rules or state self-contained and isolated from the rest of the system.
+Why is a volatile core a major risk in microkernel architecture?	If the core changes constantly, the architecture loses the stability and isolation that justify using plug-ins in the first place.
+Why are plug-in dependencies a major risk in microkernel architecture?	The core must resolve conflicting transitive dependencies, which adds significant operational and design complexity.
+Why are testability and deployability above average in microkernel architecture?	Changes can often be isolated to self-contained plug-ins, reducing the scope and risk of testing and deployment.
+Why do scalability, elasticity, and fault tolerance rate poorly in microkernel architecture?	The architecture is typically monolithic, and all requests still pass through the core system.
+When is microkernel architecture a good choice?	When the system needs extensibility, user customization, or localized business-rule variation around a stable core.
