@@ -1,0 +1,18 @@
+Why is time-series data a strong foundation for alerting at scale?	It lets teams aggregate many low-level signals, reason over history, and build alerts from the same data used for dashboards and debugging.
+Why is alerting on single-machine failures usually unacceptable at Google scale?	Single-machine signals are too noisy to be actionable in systems that should already tolerate routine component failures.
+Why did time-series monitoring replace many custom check scripts?	A shared metrics format lowers collection overhead, avoids repeated subprocess work, and makes alerting and charting use the same underlying data.
+Why does a common metrics exposition format help monitoring scale?	It enables mass collection with low overhead and makes rules reusable across many similar targets.
+Why does a schemaless textual metrics interface make instrumentation easier to adopt?	Developers can add new metrics with very low friction because they do not need to coordinate on a rigid schema first.
+What maintenance trade-off comes with decoupling metric definitions from alert rules?	Renaming or changing metrics becomes riskier because rule correctness depends on separate configuration staying in sync.
+Why are synthetic collection variables useful in a monitoring system?	They make collection failures, name-resolution failures, and health-check failures visible as first-class signals.
+Why are labels so important in time-series monitoring?	They let teams slice, group, and aggregate metrics across dimensions such as instance, job, service, code, shard, or location.
+Why is aggregation the cornerstone of alerting in distributed systems?	It turns many task-level signals into service-level indicators that are stable enough to alert on.
+Why are counters usually better than gauges for sampled monitoring?	Counters preserve the total amount of work between samples, while gauges can miss transient activity that happens between collections.
+Why is summing rates often safer than taking the rate of a summed counter?	Summing per-series rates is more robust to counter resets, restarts, and missing samples.
+Why is it useful that monitoring rules create new derived time-series?	The computed results can be inspected later as charts or queried during debugging instead of disappearing after alert evaluation.
+Why should an alert condition usually hold for multiple evaluation cycles before firing?	This reduces flapping and prevents transient or missed collections from causing false pages.
+What is the role of an alert manager in a monitoring system?	It routes, deduplicates, inhibits, and groups alert notifications before sending them to people or ticket systems.
+Why is a hierarchical monitoring topology useful?	It scales collection and aggregation, avoids a single global bottleneck, and preserves drill-down visibility through multiple layers.
+Why is black-box probing still necessary even with strong white-box monitoring?	White-box metrics can miss user-visible failures that happen before requests ever reach the target or that only appear from the outside.
+Why should monitoring rules be separated from target lists?	Reusing the same rule logic across many targets reduces repetition and lowers configuration maintenance cost.
+Why should monitoring configurations have automated tests?	Synthetic and regression tests catch rule mistakes early and verify that alert logic behaves as intended before rollout.
