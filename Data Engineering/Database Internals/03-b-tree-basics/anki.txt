@@ -1,0 +1,18 @@
+Why are binary search trees a poor fit for disk-based storage?	Their low fanout creates tall trees with many pointer traversals and frequent rebalancing, which leads to too many costly disk accesses and pointer updates.
+Why does a disk-friendly tree structure need high fanout and low height?	Higher fanout stores more keys per node and reduces the number of levels and disk seeks needed during lookup.
+What is fanout in a tree-based storage structure?	The maximum number of child pointers a node can have.
+How are fanout and tree height related?	Higher fanout lowers tree height because each node covers a larger part of the key space.
+Why are B-trees well suited for disk-based storage?	They keep many keys in each node, reduce tree height, improve locality, and minimize the number of disk seeks per lookup.
+Why can B-trees support both point queries and range scans efficiently?	Keys are stored in sorted order, so the tree can both locate exact items quickly and iterate through key ranges in order.
+What is a B+-tree?	A B-tree variant that stores values only in leaf nodes while internal nodes store only separator keys and child pointers.
+Why are B+-trees commonly treated as the default form of B-trees?	They are the widespread practical variant used by many storage engines and textbooks often refer to them simply as B-trees.
+Why can leaf-level sibling pointers be useful in B-trees?	They let range scans continue across neighboring leaves without repeatedly going back up to parent nodes.
+Why does B-tree lookup require relatively few disk seeks even for very large datasets?	Each node contains many keys, so one disk read narrows the search space by a large factor.
+What causes a B-tree node split?	An insertion overflows a node beyond its maximum capacity.
+What happens during a B-tree split?	A new sibling node is allocated, roughly half the entries move to it, and a separator key is promoted to the parent.
+Why can a split propagate all the way to the root in a B-tree?	If the parent is already full, promoting the separator overflows that parent too, forcing recursive splits upward.
+What happens when a B-tree root splits?	A new root is created above the old root and its new sibling, increasing the tree height by one.
+What causes a B-tree node merge?	A deletion leaves neighboring nodes underfull enough that their contents fit into a single node.
+What happens during a B-tree merge?	Entries from one sibling are copied into the other, the parent's separator or pointer is removed, and one node disappears.
+Why can merges propagate upward in a B-tree?	Removing a separator or pointer from a parent can make that parent underfull as well.
+Why can B-trees tolerate node occupancy well below 100%?	Keeping slack space reduces the frequency of splits and merges while still preserving strong lookup performance.
