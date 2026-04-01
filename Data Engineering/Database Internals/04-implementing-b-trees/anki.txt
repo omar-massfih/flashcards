@@ -1,0 +1,20 @@
+Why can sibling links be useful in a B-tree?	They let the engine move to neighboring nodes on the same level without first climbing back up through parent nodes.
+What trade-off comes with storing sibling links in a B-tree?	Splits and merges become more complex because neighboring pages' sibling pointers must also be updated.
+Why does a B-tree internal node have one more child pointer than separator keys?	Each separator divides key ranges between subtrees, so an internal node with N separator keys must point to N + 1 child ranges.
+Why can storing a high key simplify internal-node layout?	It avoids the special unpaired rightmost-pointer case by letting each child pointer travel with a corresponding key bound.
+What problem do overflow pages solve in a B-tree?	They allow variable-size records to exceed a fixed page's direct payload capacity without resizing the primary page.
+How are overflow pages usually linked in a B-tree?	The primary page stores the first overflow page ID, and additional overflow pages point to the next overflow page in the chain.
+Why do B-tree implementations often keep only part of a large record in the primary page?	Keeping a bounded payload in-page preserves predictable free space and spills only the excess bytes to overflow pages.
+Why is keeping keys sorted inside a B-tree node essential?	Binary search only works on sorted keys, so maintaining order is required for efficient lookup and correct insertion points.
+How does binary search work with indirection pointers in a slotted B-tree page?	The search probes sorted cell offsets, follows each chosen offset to the cell, and compares the key stored in that cell.
+What are breadcrumbs in a B-tree?	An in-memory stack of visited parent nodes and child indices collected during descent so splits or merges can be propagated upward.
+Why can breadcrumbs be preferable to stored parent pointers in a B-tree?	They avoid persistent parent-pointer maintenance while still allowing the algorithm to walk back up the search path when structure changes propagate.
+What is rebalancing in a B-tree?	Redistributing entries between neighboring nodes to postpone splits or merges and improve average node occupancy.
+How do B*-trees differ from ordinary B-trees during overflow?	They try to redistribute entries across siblings first and, when needed, split two full nodes into three roughly two-thirds-full nodes.
+What optimization becomes possible when inserted keys are monotonically increasing in a B-tree?	The engine can optimize right-edge inserts because most new entries go into the rightmost leaf and splits occur mostly on the right side.
+Why is bulk loading efficient for sorted B-tree input?	The tree can be built bottom-up from leaf pages using rightmost appends, avoiding most normal split and merge work.
+Why is whole-file compression usually a poor fit for mutable B-tree storage?	Updating a small part of the tree could require locating and recompressing large file regions instead of touching only affected pages.
+Why is page-wise compression a practical fit for B-tree storage?	Pages can be compressed and decompressed independently during normal page reads and writes.
+What is page fragmentation in a slotted B-tree page?	A state where enough logical free space exists overall, but it is broken into scattered gaps rather than one contiguous region.
+Why can deletes fragment a B-tree page?	Deleting a record often removes only its cell offset, leaving the old cell bytes behind as unreachable gaps.
+What does vacuum or compaction do in B-tree storage?	It rewrites pages to reclaim space from unreachable cells, restore contiguous free space, and often rewrite cells in logical order.
