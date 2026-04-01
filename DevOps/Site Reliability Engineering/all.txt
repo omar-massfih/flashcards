@@ -218,3 +218,18 @@ Why is a hierarchical monitoring topology useful?	It scales collection and aggre
 Why is black-box probing still necessary even with strong white-box monitoring?	White-box metrics can miss user-visible failures that happen before requests ever reach the target or that only appear from the outside.
 Why should monitoring rules be separated from target lists?	Reusing the same rule logic across many targets reduces repetition and lowers configuration maintenance cost.
 Why should monitoring configurations have automated tests?	Synthetic and regression tests catch rule mistakes early and verify that alert logic behaves as intended before rollout.
+Why does Google cap purely operational work for SREs?	So at least half of SRE time remains available for engineering work that automates operations and improves the service.
+What is the SRE target split between engineering and operational work?	At least 50% engineering work, with no more than 50% total operational work and no more than 25% spent on-call.
+Why do many teams use both primary and secondary on-call rotations?	They can separate urgent paging work from other production tasks and provide backup if the primary misses or needs help with a page.
+Why are multi-site on-call rotations attractive?	They can support follow-the-sun coverage and reduce or eliminate unhealthy night shifts.
+What trade-off comes with multi-site on-call rotations?	They reduce night work but add coordination and communication overhead across sites.
+What is a sustainable upper bound for incident load in this chapter's framing?	About two incidents per 12-hour on-call shift, because handling each incident and its follow-up takes substantial time.
+Why should paging alerts be grouped toward a 1:1 alert-to-incident ratio?	Duplicate or fan-out alerts waste attention and make it harder for the on-call engineer to focus on the underlying incident.
+Why must paging alerts be actionable and tied to SLO-threatening symptoms?	Otherwise they create noise, fatigue, and operational overload without improving service reliability.
+What helps on-call engineers feel safe enough to think clearly during incidents?	Clear escalation paths, well-defined incident-management procedures, and a blameless postmortem culture.
+Why are blameless postmortems important to on-call culture?	They focus on learning from system behavior and improving safeguards instead of punishing individuals.
+What is operational overload in an SRE team?	A state where operational work exceeds sustainable limits and crowds out the engineering work needed to reduce future toil.
+What is a common monitoring-related cause of operational overload?	Misconfigured or noisy alerts that page too often, page for low-priority issues, or produce many alerts for one incident.
+What does "give back the pager" mean in SRE?	The SRE team asks the developer team to retake exclusive on-call responsibility until the service meets operational standards again.
+Why is operational underload also a problem for SREs?	If engineers are rarely exposed to production, they lose familiarity, confidence, and troubleshooting sharpness.
+How can SRE teams reduce the risk of operational underload?	Size rotations so each engineer is on-call at least once or twice per quarter and use drills to keep production skills fresh.
