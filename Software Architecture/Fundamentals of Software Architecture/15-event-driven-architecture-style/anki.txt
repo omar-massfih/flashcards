@@ -1,0 +1,26 @@
+What is the event-driven architecture style?	A distributed asynchronous architecture style built from decoupled components that trigger and react to events.
+How does an event-based model differ from a request-based model?	A request-based model synchronously asks the system to do specific work, while an event-based model reacts to something that has already happened.
+What is a derived event in event-driven architecture?	A new event an event processor publishes after completing some processing in response to an earlier event.
+Why are derived events essential in event-driven architecture?	They let downstream processing continue asynchronously without tightly coupling processors to one another.
+What is the difference between an event and a message in architecture?	An event announces something that already happened, while a message is usually a command or request for something to be done.
+Why are events usually more decoupled than messages?	Events are typically broadcast without requiring a direct response, while messages are usually directed to a specific receiver and often expect one.
+What is an extensible derived event?	A derived event that may currently have no consumers but still provides a hook for adding future behavior without changing existing processors.
+Why can asynchronous communication improve responsiveness without improving end-to-end performance?	It can acknowledge acceptance of work quickly even when the full processing still takes a long time in the background.
+What is a major trade-off of asynchronous communication in event-driven architecture?	It improves responsiveness and decoupling but makes error handling and user feedback more difficult.
+Why are broadcast capabilities important in event-driven architecture?	They let one processor publish an event without knowing which other processors will react or what actions they will take.
+What is the main trade-off between data-based and key-based event payloads?	Data-based payloads favor performance and fewer lookups, while key-based payloads favor simpler contracts, less bandwidth, and lower static coupling.
+Why can data-based event payloads create stamp coupling?	Many consumers share the same large payload structure even though each one only uses part of it.
+What is an anemic event in event-driven architecture?	An event whose payload lacks enough context for downstream processors to make decisions or complete useful work.
+What is the Swarm of Gnats antipattern in event-driven architecture?	Triggering too many overly fine-grained derived events from one action, overwhelming the system and obscuring the overall event flow.
+How can architects avoid the Swarm of Gnats antipattern?	Model derived events around meaningful outcomes or state changes rather than emitting many tiny low-level events.
+What is a poison event in event-driven architecture?	An event that keeps triggering a looping chain of responses indefinitely between processors.
+What is request-reply processing in event-driven architecture?	A pseudo-synchronous messaging pattern where a requester sends work asynchronously and later waits for a correlated reply.
+Why is the correlation-ID technique usually preferred over temporary reply queues in request-reply processing?	It avoids the overhead of creating and deleting a dedicated temporary queue for every request.
+What is the choreographed event-driven topology?	A topology where processors react to events directly and no central component controls the workflow.
+What is the mediator topology in event-driven architecture?	An orchestrated topology where an event mediator controls workflow steps and coordinates processors through directed messages.
+What is the main trade-off between choreographed and mediator event-driven topologies?	Choreography favors scalability and decoupling, while mediation favors workflow control, state tracking, and error handling.
+What is the main database-topology trade-off in event-driven architecture?	More isolated databases improve fault isolation, scalability, and change control, but often increase synchronous data-fetching between processors.
+Why is too much synchronous communication a warning sign in event-driven architecture?	It undermines the style's asynchronous decoupling and suggests either poor boundaries or a poor architectural fit.
+Why can event-driven architecture be difficult to test and debug?	Its asynchronous, parallel, and nondeterministic event flows make end-to-end behavior hard to predict and reproduce.
+Why is event-driven architecture considered highly evolutionary?	New behavior can often be added by introducing new processors that subscribe to existing events instead of changing current ones.
+When is event-driven architecture a good choice?	When a system must react to events with high responsiveness, scalability, extensibility, and tolerance for asynchronous eventual consistency.
