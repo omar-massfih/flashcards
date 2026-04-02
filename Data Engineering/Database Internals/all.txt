@@ -70,3 +70,43 @@ Why is page-wise compression a practical fit for B-tree storage?	Pages can be co
 What is page fragmentation in a slotted B-tree page?	A state where enough logical free space exists overall, but it is broken into scattered gaps rather than one contiguous region.
 Why can deletes fragment a B-tree page?	Deleting a record often removes only its cell offset, leaving the old cell bytes behind as unreachable gaps.
 What does vacuum or compaction do in B-tree storage?	It rewrites pages to reclaim space from unreachable cells, restore contiguous free space, and often rewrite cells in logical order.
+What are the ACID properties of a database transaction?	Atomicity, consistency, isolation, and durability.
+What is the role of the page cache in a database system?	It caches disk pages in memory, stages updates there first, and reduces disk I/O.
+What does it mean for a cached page to be dirty?	Its in-memory contents differ from the on-disk version and must be flushed for durability.
+What is pinning in a page cache?	Keeping a page in memory so it is not evicted while it is likely to be needed.
+Why are upper B-tree levels good candidates for pinning in the page cache?	They are touched by many operations but occupy only a small fraction of the tree.
+Why can prefetching help a database page cache?	It loads pages before they are needed, reducing stalls during predictable access patterns such as range scans.
+What is the goal of a page-replacement policy?	To evict pages that are least likely to be needed again soon.
+Why is FIFO usually a poor page-replacement policy for databases?	It ignores repeated accesses, so frequently reused pages such as upper B-tree nodes can be evicted too early.
+Why is LRU often better than FIFO for page replacement?	It accounts for recency of access instead of only initial load order.
+Why are CLOCK-style eviction algorithms attractive in database systems?	They approximate recency with low overhead and work well in concurrent implementations.
+What does LFU-based eviction try to optimize?	It keeps frequently accessed pages in cache by favoring usage frequency over simple recency.
+What is a write-ahead log (WAL)?	An append-only disk log that records changes before the corresponding data pages are written back.
+Why does a database need write-ahead logging?	It preserves enough information to recover committed work after a crash and to undo incomplete work.
+What is a log sequence number (LSN)?	A unique monotonically increasing identifier assigned to each log record.
+When can a transaction be considered committed with WAL?	Only after the log has been forced through the LSN of its commit record.
+What is a checkpoint in transaction recovery?	A recovery marker showing that changes up to a certain point are sufficiently reflected on disk, reducing restart work.
+Why are fuzzy checkpoints used instead of fully synchronous checkpoints?	They let pages be flushed asynchronously, avoiding long pauses while still bounding recovery work.
+What is the difference between physical and logical logging?	Physical logging records page state or byte-level changes, while logical logging records operations to apply.
+Why do many recovery systems combine physical redo with logical undo?	Physical redo speeds crash recovery, while logical undo works better with concurrency during normal operation.
+What does a steal policy allow in buffer management?	A dirty page modified by an uncommitted transaction may be flushed to disk before that transaction commits.
+What does a no-force policy allow in buffer management?	A transaction may commit before all of its modified pages have been flushed to disk.
+Why does a steal/no-force design require both undo and redo support?	Uncommitted changes may already be on disk and committed changes may still be only in memory.
+What is ARIES?	A recovery algorithm that uses write-ahead logging with steal/no-force buffering, repeating history during redo and then undoing incomplete transactions.
+What are the three phases of ARIES recovery?	Analysis, redo, and undo.
+What happens during the analysis phase of ARIES?	The system reconstructs which pages were dirty and which transactions were still in progress at the time of the crash.
+What happens during the redo phase of ARIES?	The system repeats logged history to restore the database state up to the crash point.
+What happens during the undo phase of ARIES?	The system rolls back the effects of incomplete transactions in reverse order.
+What is serializability in transaction processing?	The guarantee that a concurrent schedule has the same result as some serial execution of the same transactions.
+What is a dirty read?	Reading data written by another transaction before that transaction commits.
+What is a nonrepeatable read?	Reading the same row twice in one transaction and seeing different committed values.
+What is a phantom read?	Repeating the same range query in one transaction and seeing a different set of rows.
+What is a lost update?	One transaction's write overwrites another transaction's write without preserving both effects.
+What is snapshot isolation?	Each transaction reads from a stable snapshot and usually commits only if its writes do not conflict with concurrent committed writes.
+What is optimistic concurrency control (OCC)?	A scheme where transactions run mostly without blocking and are validated for conflicts before commit.
+What is multiversion concurrency control (MVCC)?	A concurrency-control approach that keeps multiple timestamped versions so readers can access older committed data while writers produce new versions.
+What is two-phase locking (2PL)?	A locking protocol with a growing phase that acquires locks and a shrinking phase that releases them, without acquiring new locks after any release.
+What is a deadlock in transaction processing?	A cycle where transactions wait on one another's locks and none of them can proceed.
+What is the difference between a lock and a latch in a database system?	Locks protect logical data access for transactions, while latches protect in-memory physical structures such as pages during short critical sections.
+What is latch crabbing in a B-tree?	A technique that acquires the child latch before releasing the parent latch so upper-level latches are held only as long as needed.
+Why do Blink-Trees help concurrent B-tree access?	They use sibling links and high keys so searches can continue correctly even while splits are only partially reflected in parent pointers.
