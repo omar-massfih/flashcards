@@ -1,0 +1,19 @@
+What is troubleshooting best understood as?	An iterative hypothesis-testing process that uses observations plus system knowledge to narrow down likely causes.
+Why is system knowledge important in troubleshooting?	It makes hypotheses more plausible, helps interpret signals correctly, and reduces wasted investigation time.
+What is a common reasoning pitfall in troubleshooting?	Chasing improbable explanations, old favorite failures, or misleading correlations instead of starting with simpler likely causes.
+Why is correlation not enough to prove a cause during troubleshooting?	Correlated events may share a hidden cause or coincide by chance rather than causing one another.
+What should a good problem report include for troubleshooting?	The expected behavior, the actual behavior, and ideally a way to reproduce the issue.
+Why is opening a bug for every issue useful in troubleshooting?	It creates a searchable record of symptoms, investigation, and remediation that others can follow later.
+Why should triage come before root-cause analysis during an outage?	Stopping the bleeding protects users and the system, while root-causing can wait until the situation is stabilized.
+Why are logs valuable in troubleshooting?	They reveal what a process was doing at a particular time and help reconstruct behavior that metrics alone cannot explain.
+Why is adjustable logging verbosity useful in production troubleshooting?	It lets you inspect more detail when needed without always paying the cost of maximal logging.
+Why is exposing current component state useful for troubleshooting?	It helps operators inspect configuration, recent requests, dependencies, and derived values without guessing from outside the system.
+What does "simplify and reduce" mean in troubleshooting?	Narrow the problem by checking component boundaries, using controlled test inputs, and reducing the search space step by step.
+Why is divide-and-conquer effective in troubleshooting distributed systems?	It lets you isolate which half or layer of the system is behaving incorrectly before drilling deeper.
+Why is "what changed recently?" a productive troubleshooting heuristic?	Working systems often fail after a change in code, configuration, environment, or workload, so recent changes are good suspects.
+Why should troubleshooting tests be ordered by likelihood and risk?	You usually learn fastest and safest by checking common low-risk explanations before rarer or riskier ones.
+Why can active testing mislead troubleshooting?	Changing the system to test a hypothesis can alter later observations and create confounding side effects.
+Why should troubleshooting notes be explicit and timestamped?	They prevent repeated work, preserve reasoning, support handoffs, and make postmortems easier to write.
+Why are negative results valuable in troubleshooting and experiments?	They conclusively rule out possibilities, narrow the design space, and can save others from repeating the same dead ends.
+Why can proving a single definitive root cause be difficult in production systems?	Failures often depend on multiple interacting factors and may be hard or unsafe to reproduce exactly.
+What two design choices make troubleshooting easier across systems?	Strong observability from the start and well-understood, observable interfaces between components.
