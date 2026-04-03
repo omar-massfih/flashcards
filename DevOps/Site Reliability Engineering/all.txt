@@ -252,3 +252,17 @@ Why should troubleshooting notes be explicit and timestamped?	They prevent repea
 Why are negative results valuable in troubleshooting and experiments?	They conclusively rule out possibilities, narrow the design space, and can save others from repeating the same dead ends.
 Why can proving a single definitive root cause be difficult in production systems?	Failures often depend on multiple interacting factors and may be hard or unsafe to reproduce exactly.
 What two design choices make troubleshooting easier across systems?	Strong observability from the start and well-understood, observable interfaces between components.
+What is the most important behavioral rule at the start of an emergency response?	Do not panic; stay calm enough to follow process, think clearly, and bring in help quickly.
+Why is hands-on emergency training important?	People rarely respond optimally by instinct, so good emergency response depends on preparation and repeated practice.
+What is the main value of proactive disaster testing?	It reveals hidden dependencies, flawed assumptions, and weak recovery paths before a real outage does.
+Why must rollback procedures be tested before risky changes or tests?	An untested rollback can fail when you need it most and extend the outage instead of shortening it.
+What is a key lesson from test-induced emergencies?	A well-scoped test can still uncover system interactions you did not understand, so rapid abort and recovery matter as much as test design.
+Why is thorough canarying important even for seemingly low-risk changes?	Rare combinations of conditions can trigger severe failures that a lighter rollout would miss.
+Why are out-of-band communication systems important during emergencies?	Primary internal tools and networks may fail along with the production systems you are trying to repair.
+What is a major risk of overly noisy alerting during an emergency?	It overwhelms responders, disrupts communication, and makes it harder to focus on the actual mitigation work.
+Why can highly efficient automation be dangerous in emergencies?	A small bug or bad input can propagate destructive actions across the fleet much faster than humans can react.
+What should responders do quickly when automation is causing damage?	Disable or freeze the automation to stop further harm before continuing detailed investigation.
+Why is diverting traffic often an effective emergency mitigation?	It keeps user requests succeeding by moving load away from broken locations or components while recovery proceeds.
+Why is communication quality especially important during an emergency?	Clear frequent updates help teams coordinate mitigation, avoid duplicated effort, and keep the organization informed.
+Why should teams document outages thoroughly after mitigation?	So the organization can learn from the failure, prevent recurrence, and improve both systems and response processes.
+Why is accountability for postmortem follow-up important?	Without follow-through, organizations repeat the same outages despite already having learned the lessons once.
