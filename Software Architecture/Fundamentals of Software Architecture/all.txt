@@ -356,3 +356,22 @@ Why is too much synchronous communication a warning sign in event-driven archite
 Why can event-driven architecture be difficult to test and debug?	Its asynchronous, parallel, and nondeterministic event flows make end-to-end behavior hard to predict and reproduce.
 Why is event-driven architecture considered highly evolutionary?	New behavior can often be added by introducing new processors that subscribe to existing events instead of changing current ones.
 When is event-driven architecture a good choice?	When a system must react to events with high responsiveness, scalability, extensibility, and tolerance for asynchronous eventual consistency.
+What is the space-based architecture style designed to solve?	Extreme scalability, elasticity, and concurrency problems caused by central database bottlenecks in high-load systems.
+How does space-based architecture remove the database from the critical request path?	It keeps transactional data in replicated in-memory grids inside processing units and writes to the database asynchronously.
+What is a processing unit in space-based architecture?	A deployable unit containing application logic plus the in-memory data grid and replication capability needed to process requests.
+What is virtualized middleware in space-based architecture?	The collection of infrastructure components that route requests, coordinate data replication, manage orchestration, and scale processing units up or down.
+What is the role of the data grid in space-based architecture?	It keeps same-named in-memory caches synchronized across processing-unit instances.
+Why is the data grid the most critical part of space-based architecture?	It replaces direct database dependency during normal processing by synchronizing the in-memory state that all units rely on.
+What is replicated caching in space-based architecture?	A model where each processing unit keeps its own in-memory copy of the cache and updates are replicated to the others.
+What is distributed caching in space-based architecture?	A model where processing units access a centralized external cache rather than storing full cache state locally.
+What is the main trade-off between replicated and distributed caching?	Replicated caching favors performance and fault tolerance, while distributed caching favors stronger consistency and support for larger or more dynamic datasets.
+When is replicated caching usually the better choice in space-based architecture?	When the cache is relatively small, data is fairly static, update rates are modest, and performance or fault tolerance matters most.
+When is distributed caching usually the better choice in space-based architecture?	When cache volumes are large, update rates are high, or consistency requirements are stronger than raw speed.
+Why is a near-cache usually not recommended in space-based architecture?	It introduces inconsistent front-cache contents across processing units, which makes performance and behavior less predictable.
+What is a data pump in space-based architecture?	An asynchronous mechanism for sending cache updates from processing units to downstream database-writing components.
+Why are data pumps used in space-based architecture?	They preserve asynchronous processing and eventual consistency without forcing processing units to write directly to the database.
+Why does space-based architecture usually provide only eventual consistency with the database?	Cache updates are propagated to the database asynchronously through data pumps and data writers rather than committed inline with the request.
+What is a data collision in space-based architecture?	A conflict where the same cached data is updated in multiple active replicas before replication completes, leaving caches inconsistent.
+What factors increase the likelihood of data collisions in replicated caches?	More active instances sharing the cache, higher update rates, smaller cache sizes, and higher replication latency.
+Why is space-based architecture hard to test?	Its main strengths appear only under very high load, and simulating that scale and elasticity is expensive and operationally risky.
+When is space-based architecture a good choice?	When a system needs extreme responsiveness, scalability, and elasticity under highly variable or bursty concurrent load.
