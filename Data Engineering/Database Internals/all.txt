@@ -110,3 +110,21 @@ What is a deadlock in transaction processing?	A cycle where transactions wait on
 What is the difference between a lock and a latch in a database system?	Locks protect logical data access for transactions, while latches protect in-memory physical structures such as pages during short critical sections.
 What is latch crabbing in a B-tree?	A technique that acquires the child latch before releasing the parent latch so upper-level latches are held only as long as needed.
 Why do Blink-Trees help concurrent B-tree access?	They use sibling links and high keys so searches can continue correctly even while splits are only partially reflected in parent pointers.
+What problem does copy-on-write solve in B-tree implementations?	It preserves consistency for concurrent readers and writers by modifying copied pages instead of overwriting live ones in place.
+How does copy-on-write update a B-tree?	It copies the pages on the modified path, updates the copies, and atomically switches the topmost pointer to the new hierarchy.
+Why can readers run without synchronization in a copy-on-write B-tree?	They read immutable old pages that are never modified in place.
+What is the main trade-off of copy-on-write B-trees?	They simplify concurrency and crash safety but require extra copying work and temporary extra space.
+Why can LMDB avoid a page cache and write-ahead log?	It uses memory mapping plus copy-on-write, so committed structure changes are published atomically through root switching.
+What is a lazy B-tree in this chapter's sense?	A B-tree variant that buffers updates in auxiliary in-memory structures instead of applying each change to tree pages immediately.
+Why can buffering updates improve B-tree write performance?	It batches multiple same-node changes together, reducing repeated random writes and structural modifications.
+How does an LA-Tree differ from per-node buffering schemes?	It buffers updates for entire subtrees and cascades them downward in batches rather than updating nodes individually right away.
+What is the main idea behind FD-Trees?	Keep a small mutable head B-tree for recent writes and store older data in larger immutable sorted runs.
+Why do FD-Trees reduce random write costs?	Most writes first hit the small head tree, and bulk propagation to lower levels happens through sequential merges into immutable runs.
+How are deletes usually represented in FD-Trees?	As tombstones that hide older values in lower levels until compaction or propagation removes them.
+What is the main idea behind a Bw-Tree?	Represent a logical node as a base node plus an append-only chain of delta records, with an in-memory mapping table pointing to the newest version.
+How do Bw-Trees reduce write amplification?	Updates append small delta records instead of rewriting whole pages for every change.
+Why do Bw-Trees use a mapping table?	It lets the tree update logical node pointers atomically without rewriting parent pages on every modification.
+How do Bw-Trees tame concurrency without latches?	They use compare-and-swap to install new mapping-table pointers to appended delta nodes atomically.
+What is the main read-time trade-off in a Bw-Tree?	Readers may need to traverse and apply a chain of deltas to reconstruct the current logical node state.
+What is consolidation in a Bw-Tree?	Merging a logical node's base page and accumulated delta chain into a new compact base node.
+How do split and merge operations work differently in a Bw-Tree than in a classic B-tree?	They proceed through multistep structural modification operations recorded with special delta nodes rather than in-place page rewrites.
