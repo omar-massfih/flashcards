@@ -266,3 +266,21 @@ Why is diverting traffic often an effective emergency mitigation?	It keeps user 
 Why is communication quality especially important during an emergency?	Clear frequent updates help teams coordinate mitigation, avoid duplicated effort, and keep the organization informed.
 Why should teams document outages thoroughly after mitigation?	So the organization can learn from the failure, prevent recurrence, and improve both systems and response processes.
 Why is accountability for postmortem follow-up important?	Without follow-through, organizations repeat the same outages despite already having learned the lessons once.
+Why does effective incident management matter?	It limits disruption and helps restore normal operations faster than ad hoc response.
+What is a common failure mode of unmanaged incidents?	Technical debugging overwhelms responders, communication breaks down, and uncoordinated changes make the outage worse.
+Why is sharp focus on only the technical problem dangerous during an incident?	It can crowd out mitigation, coordination, and communication, even when those are the highest-leverage actions.
+What is freelancing during an incident?	People making uncoordinated changes outside the incident structure, often with good intentions but harmful effects.
+Why is freelancing dangerous during incident response?	It creates conflicting actions, hidden state changes, and extra confusion for the people trying to stabilize the system.
+Why is clear separation of responsibilities important in incident management?	It reduces confusion, limits duplicated effort, and lets people act autonomously within a defined role.
+What is the role of the incident commander?	Hold the high-level state of the incident, structure the response, assign responsibilities, and remove roadblocks.
+What is the role of Ops during an incident?	Make operational changes to the system and work to mitigate and restore service.
+Why should Ops be the only group changing the system during an incident?	Restricting changes to one coordinated group reduces conflicting actions and preserves a shared view of system state.
+What is the role of communications during an incident?	Provide clear periodic updates to responders, stakeholders, and sometimes customers so others can stay informed without interrupting Ops.
+Why is a live incident state document critical?	It preserves shared real-time context, supports handoffs, and creates a record for later postmortem analysis.
+What should a good incident handoff include?	A live verbal or equivalent walkthrough of current state, explicit transfer of command, and clear acknowledgment from the new incident commander.
+Why should the transfer of incident command be explicit?	Everyone must know exactly who is leading at all times, especially during shift or time-zone handoffs.
+When should you declare an incident?	Declare early when impact is significant, multiple teams are needed, or focused troubleshooting has not solved the problem quickly.
+Why is it usually better to declare an incident early?	Starting the response structure too early is cheaper than waiting too long and losing coordination while the problem grows.
+What does "stop the bleeding" mean in incident management?	Prioritize mitigation and service restoration first, while preserving enough evidence for later root-cause analysis.
+Why should responders periodically reconsider their approach during an incident?	The current tactic may no longer be the best option as new information appears, so teams must reassess instead of blindly persisting.
+Why should incident roles rotate over time across team members?	Practice in different roles builds resilience, broadens skill coverage, and prevents the process from depending on a few individuals.
