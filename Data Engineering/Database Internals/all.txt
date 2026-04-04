@@ -128,3 +128,30 @@ How do Bw-Trees tame concurrency without latches?	They use compare-and-swap to i
 What is the main read-time trade-off in a Bw-Tree?	Readers may need to traverse and apply a chain of deltas to reconstruct the current logical node state.
 What is consolidation in a Bw-Tree?	Merging a logical node's base page and accumulated delta chain into a new compact base node.
 How do split and merge operations work differently in a Bw-Tree than in a classic B-tree?	They proceed through multistep structural modification operations recorded with special delta nodes rather than in-place page rewrites.
+What is the main trade-off between mutable and immutable storage structures?	Mutable structures optimize reads by updating records in place, while immutable structures optimize writes by appending new records and reconciling duplicates later.
+Why are immutable storage structures often safer for concurrency?	Once written, their contents do not change, so readers can access shared structures without worrying about in-place modification.
+What problem does log-structured storage primarily try to reduce?	Write amplification from many small random updates by turning them into sequential append-like writes.
+What is the main idea behind an LSM tree?	Buffer writes in memory, flush them to immutable disk tables, and merge those tables later through compaction.
+Why are LSM trees often write-optimized relative to B-trees?	Writes usually avoid locating and rewriting existing on-disk records, instead appending buffered data to new immutable files.
+Why are reads more expensive in LSM trees than in B-trees?	Relevant data may be spread across multiple memory- and disk-resident components and must be merged and reconciled.
+What is a memtable in an LSM tree?	The mutable in-memory table that receives current reads and writes before its contents are flushed to disk.
+Why does an LSM tree still need a write-ahead log?	Memtable contents are only in memory until flush, so the log is needed for durability and crash recovery.
+How are deletes usually represented in LSM trees?	As tombstones that mark older values as deleted until compaction can safely remove the shadowed records.
+Why can't an LSM tree implement delete by simply removing a key from the memtable?	Older copies may still exist in disk tables, so the value could reappear unless a tombstone suppresses it.
+What is reconciliation in an LSM tree?	The process of resolving multiple versions of the same key across components and keeping only the newest live value.
+What is compaction in an LSM tree?	A maintenance process that merges immutable tables, discards shadowed or deleted data, and rewrites the merged result into new tables.
+Why does compaction create write amplification in LSM trees?	Data may be rewritten multiple times as it moves through levels during maintenance.
+Why must tombstones be preserved during compaction until the right point?	Dropping them too early can resurrect older shadowed values still present in other tables.
+What is leveled compaction?	A strategy that organizes tables into levels with size targets and merges overlapping ranges into the next level.
+What is size-tiered compaction?	A strategy that groups and merges tables of similar size rather than enforcing nonoverlapping levels as strictly as leveled compaction.
+What are the three main amplification trade-offs in LSM trees?	Read amplification, write amplification, and space amplification.
+What does the RUM conjecture say about storage structures?	You cannot simultaneously minimize read cost, update cost, and memory overhead; improving two tends to worsen the third.
+Why are SSTables a natural fit for LSM trees?	They can be written sequentially once, searched efficiently, and merged later without in-place updates.
+How does an LSM merge iterator work?	It keeps the current head item from each source in priority order and repeatedly emits the smallest key while refilling from the corresponding source.
+Why can Bloom filters reduce read amplification in LSM trees?	They let the system skip tables that definitely do not contain a searched key.
+What guarantee does a Bloom filter provide?	It may return false positives, but it does not return false negatives.
+What is the main idea behind Bitcask?	Append key-value records directly to log files and keep an in-memory directory pointing to the latest value for each key.
+What is the main limitation of Bitcask's design?	It is excellent for point lookups but does not support efficient range scans because data is not kept in key order.
+What is the main idea behind WiscKey?	Keep keys in an LSM-tree index while storing values separately in append-only value logs.
+Why can WiscKey reduce compaction costs?	Compaction mostly rewrites smaller keys and pointers instead of repeatedly rewriting large values.
+What is the main trade-off of WiscKey?	It reduces write and compaction costs for large values but makes range scans more random-I/O heavy because values are not stored in sorted order.
