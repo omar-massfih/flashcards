@@ -390,3 +390,32 @@ What modern architectural lesson came from the failure of orchestration-driven S
 What is the Accidental SOA antipattern?	Gradually letting an integration tool such as an ESB grow into the central orchestrator and coupling point for the whole architecture.
 How can architects use ESBs safely today without rebuilding orchestration-driven SOA?	Keep them narrowly focused on integration concerns and enforce clear boundaries so orchestration and coupling do not spread across the whole system.
 When is orchestration-driven SOA still useful today?	Primarily in integration-heavy environments where legacy systems, packages, and newer services must participate in coordinated workflows.
+What is the core idea behind microservices architecture?	Build an application as a set of independently deployable, domain-aligned services that each own the functionality and data needed for their bounded context.
+Why is microservices sometimes called a "share nothing" architecture?	Because each bounded context avoids coupling to code, schemas, and databases outside its own service boundary.
+How does domain-driven design influence microservices?	Microservices physically implement bounded contexts so each service aligns with a specific domain, subdomain, or workflow.
+Why does microservices often prefer duplication over reuse?	Reusing code or data across service boundaries increases coupling, while duplication preserves service independence.
+What is the main performance trade-off of microservices?	Work that was once local becomes network communication, increasing latency, security overhead, and coordination cost.
+What does good microservice granularity try to capture?	A cohesive domain capability or workflow boundary rather than an arbitrarily tiny technical unit.
+Why is making microservices too small a common failure mode?	Overly fine-grained services need excessive communication and coordination, creating a distributed system with lots of overhead and little benefit.
+How can transactions help reveal better service boundaries in microservices?	If multiple pieces must repeatedly participate in one transaction, they may belong in the same service boundary.
+Why can heavy choreography between services suggest the wrong granularity?	If useful work requires many services to constantly call one another, the boundaries may be too fragmented and should be reconsidered.
+Why is data isolation required in microservices?	A shared database or schema creates coupling that breaks bounded contexts and makes services hard to evolve independently.
+What is the usual database pattern in microservices?	Database per service, where each service owns its own schema or database and exposes data to others only through contracts.
+Why is a single shared database a poor fit for microservices?	It creates broad coupling around schema changes, scalability, availability, and deployment coordination, undermining service independence.
+When can a few microservices share a database without abandoning bounded context entirely?	When they are really part of a broader bounded context that legitimately needs shared data and coordinated change.
+What should an API Gateway do in microservices?	Handle routing and cross-cutting concerns such as security, logging, and monitoring without containing business logic.
+Why should the API layer avoid business orchestration in microservices?	Business logic in the gateway turns it into a mediator, weakening domain boundaries and reintroducing central coupling.
+What is operational reuse in microservices?	Sharing operational capabilities like logging, monitoring, and circuit breaking without coupling business-domain code.
+How does the Sidecar pattern support microservices?	It attaches shared operational components to each service so teams can standardize cross-cutting behavior without centralizing domain logic.
+What is a service mesh in microservices?	An operational layer that connects service sidecars to provide consistent control over concerns like discovery, traffic management, and observability.
+What is choreography in microservices?	A coordination style where services call or react to one another directly without a central coordinator.
+What is orchestration in microservices?	A coordination style where a dedicated mediator service manages the workflow across multiple services.
+What is the trade-off between choreography and orchestration in microservices?	Choreography preserves decoupling but can make coordination harder, while orchestration simplifies workflow control but introduces more coupling.
+Why should architects usually avoid transactions across microservice boundaries?	They create strong runtime coupling and often indicate that the service boundaries are too fine-grained.
+What is a saga in microservices?	A distributed transaction pattern that coordinates a sequence of local service operations and uses compensation if part of the workflow fails.
+What is a compensating transaction in a saga?	An action that semantically undoes an earlier successful step when a later step in the saga fails.
+What is the Grains of Sand antipattern in microservices?	Creating services so small that the system becomes dominated by interservice communication and coordination overhead.
+Why is sharing custom libraries risky in microservices?	Shared code leaks functionality across bounded contexts, so changes in one place can break supposedly independent services.
+What kind of team topology fits microservices best?	Domain-aligned cross-functional teams, because the architecture is partitioned around business domains rather than technical layers.
+Why do microservices score highly on deployability and evolvability?	Small, independently deployable services let teams change and release parts of the system without coordinating the whole architecture.
+Why does microservices often have strong fault tolerance?	Failures are more isolated because services are separately deployed and do not all share the same process or data boundary.
