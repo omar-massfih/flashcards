@@ -284,3 +284,19 @@ Why is it usually better to declare an incident early?	Starting the response str
 What does "stop the bleeding" mean in incident management?	Prioritize mitigation and service restoration first, while preserving enough evidence for later root-cause analysis.
 Why should responders periodically reconsider their approach during an incident?	The current tactic may no longer be the best option as new information appears, so teams must reassess instead of blindly persisting.
 Why should incident roles rotate over time across team members?	Practice in different roles builds resilience, broadens skill coverage, and prevents the process from depending on a few individuals.
+Why are postmortems essential in SRE?	Without a formal learning process, incidents recur and can compound in complexity, impact, and operator burden.
+What is a postmortem in SRE?	A written record of an incident, its impact, mitigation, root causes, and follow-up actions to reduce recurrence.
+What are the primary goals of writing a postmortem?	Document the incident, understand contributing causes, and create effective preventive actions.
+When should teams define postmortem criteria?	Before incidents happen, so everyone knows in advance which events require a postmortem.
+Why can any stakeholder be allowed to request a postmortem?	Important learning opportunities are not always captured by rigid objective thresholds alone.
+What does a blameless postmortem assume about participants?	That they acted with good intentions and made reasonable choices based on the information available at the time.
+What is the main benefit of blameless postmortems?	They focus attention on fixing systems and processes rather than punishing individuals.
+Why should postmortems stay constructive rather than becoming venting documents?	The goal is to improve resilience through actionable learning, not to release frustration in ways that reduce trust.
+Why is collaboration important when writing postmortems?	Multiple people hold different pieces of incident context, so collaboration improves accuracy, depth, and solution coverage.
+Why is an unreviewed postmortem nearly worthless?	Its lessons and action items may be incomplete, unchallenged, or never properly absorbed by the organization.
+Why should completed postmortems be stored in a shared repository?	So others can find past incidents, learn from them, and avoid repeating similar mistakes.
+Why does postmortem culture require active cultivation?	It depends on repeated reinforcement, visible support, and habits that make learning from failure normal rather than exceptional.
+How can organizations reinforce postmortem culture beyond writing documents?	By sharing notable postmortems, discussing them publicly, and using them in training and incident role-play.
+Why should leadership participate in postmortem culture?	Visible support from senior leaders signals that learning and transparency matter more than blame avoidance.
+Why is visible recognition for good incident handling and postmortem work important?	It rewards the behaviors the organization wants repeated, such as quick mitigation, honesty, and thoughtful follow-through.
+What is the ultimate purpose of postmortem culture?	To turn failures into organization-wide learning that makes future incidents less likely or less damaging.
