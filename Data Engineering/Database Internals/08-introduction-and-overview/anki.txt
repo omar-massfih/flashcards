@@ -1,0 +1,28 @@
+What makes distributed systems fundamentally harder than single-node systems?	Independent processes communicate over unreliable networks, so latency, message loss, reordering, and partial failure all affect correctness.
+Why does concurrency already resemble a distributed-systems problem?	Multiple execution contexts can observe and update shared state in different orders, so outcomes become nondeterministic unless coordination constrains them.
+Why is adding a shared database not enough to make distributed state simple?	Processes still depend on slow, failure-prone communication and cannot always tell whether remote state is current, delayed, or unavailable.
+Why is it dangerous to assume the network is reliable in a distributed system?	Messages or responses can be delayed, dropped, or interrupted even after a connection succeeds.
+Why should distributed systems never assume zero latency?	Every remote call pays transport, software-stack, and processing costs, so remote communication is never instantaneous.
+Why is infinite bandwidth a bad assumption in distributed systems?	As load, message size, or node count grows, links can saturate and slow or block useful work.
+Why is remote processing time part of the distributed-systems problem?	A remote node must schedule and execute work after receiving a message, so end-to-end latency includes both communication and processing delays.
+What is backpressure in a distributed system?	A way to slow producers when consumers cannot keep up, preventing queues from growing without bound and amplifying overload.
+Why can simply enlarging queues make a distributed system worse?	Queued work still waits unprocessed, so bigger queues can increase latency without improving throughput.
+Why is synchronized physical time hard to rely on in distributed systems?	Clocks on different machines drift, so timestamps alone are unsafe for exact ordering or coordination unless timing bounds are known.
+Why should local and remote execution not be treated as interchangeable?	Remote execution adds latency, serialization, failure modes, and consistency concerns that local calls do not have.
+What is a partial failure in a distributed system?	A failure where some components or links are broken while the rest of the system continues running.
+What is a cascading failure in a distributed system?	A failure that spreads because trouble in one part increases load or instability in other parts.
+How do backoff and jitter help during distributed-system failures?	Backoff spaces out retries, and jitter randomizes them so many clients do not retry in lockstep.
+What is a circuit breaker in distributed systems?	A mechanism that detects repeated failures and temporarily stops sending work to a failing dependency so it can recover.
+Why should distributed systems validate exchanged data with checksums or similar mechanisms?	To detect corruption before bad data is propagated and replicated to other nodes.
+What do acknowledgments add to message passing?	They let the sender learn that the receiver got a specific message, even though either the message or the acknowledgment may still be lost.
+Why are retransmits alone not enough for reliable distributed operations?	If the sender cannot tell whether an earlier attempt already succeeded, retries can create duplicates and unintended side effects.
+Why is idempotence important in distributed systems?	It makes repeated execution safe when retries or duplicate deliveries occur.
+Why is exactly-once delivery usually really about exactly-once processing?	Messages may be transmitted more than once under the hood, but the important guarantee is that duplicates are ignored so the operation's effect happens only once.
+What does the Two Generals' Problem show?	Two parties cannot achieve guaranteed agreement over an unreliable asynchronous channel because there is always uncertainty about the last acknowledgment.
+What does the FLP impossibility result show?	In a fully asynchronous system, no deterministic consensus algorithm can guarantee termination if even one process may crash.
+What is a partially synchronous distributed system?	One that behaves asynchronously at times but usually satisfies enough timing assumptions for practical coordination algorithms to work.
+What is a crash-stop failure model?	A model where a failed process stops taking further steps and does not recover within the current execution.
+What is a crash-recovery failure model?	A model where a process may fail, later recover, and continue participating using durable state.
+What is an omission fault?	A failure where a process or link skips expected actions, such as sending, receiving, or exposing some messages or results.
+What is a Byzantine fault?	A failure where a process continues acting but produces arbitrary or contradictory behavior instead of following the algorithm.
+Why do many practical distributed algorithms assume crash faults instead of Byzantine faults?	Crash-fault models are easier to reason about and implement, while Byzantine tolerance is much more complex and expensive.
