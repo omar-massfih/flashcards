@@ -1,0 +1,21 @@
+When should engineers reach for distributed consensus?	Whenever a system needs a consistent view of critical shared state such as leader election, locking, leases, queue commits, or configuration values.
+Why are ad hoc coordination methods like heartbeats and gossip unsafe for critical state?	They cannot reliably solve asynchronous consensus problems, so they can lead to split-brain, corruption, or avoidable unavailability during failures.
+Why can eventual consistency be an unacceptable burden for some systems?	Developers may need complex application logic to cope with stale or conflicting data, especially around critical state.
+Why did STONITH-style split-brain prevention fail in the content-repository example?	Simple timeouts and mutual shutdown commands cannot distinguish real failure from a slow or partitioned network.
+Why is requiring humans to resolve failover often a poor substitute for consensus?	Human intervention reduces availability, scales poorly, and usually cannot determine the correct leader better than a consensus system can.
+What is the FLP impossibility result's practical lesson?	No asynchronous consensus algorithm can guarantee progress under an unreliable network, so systems rely on redundancy, backoff, and making progress most of the time.
+Why are backoff and randomized delays important in consensus systems?	They reduce collisions such as dueling proposers and help preserve liveness under contention.
+Why is persistent logging required in consensus implementations?	Replicas must remember prior promises and accepted proposals after restart in order to preserve safety.
+Why are consensus algorithms usually exposed through higher-level services instead of directly to applications?	Datastores, locks, queues, and coordination services are much easier and safer for application engineers to use than raw consensus primitives.
+Why are replicated state machines so useful?	They turn low-level agreement on operation order into practical services such as consistent datastores, configuration stores, and locking systems.
+Why can a stable leader improve consensus performance?	Once established, it can reduce message rounds for new proposals and simplify consistent reads.
+What is the main risk of dueling proposers in Paxos-like systems?	Competing proposers can repeatedly interrupt one another so that the system livelocks and makes no progress.
+What problem do quorum leases try to solve?	They reduce read latency and increase throughput by allowing certain replicas to serve strongly consistent reads for leased data.
+Why do wide-area consensus systems often use proxies or stable connections?	They reduce TCP setup overhead, hide topology details, and help clients avoid repeatedly opening long-distance connections.
+Why are batching and pipelining useful in consensus systems?	They amortize network and disk costs across more operations and keep replicas busy instead of idle between round trips.
+Why is disk latency so important to consensus performance?	Replicas must durably log key protocol commitments, so synchronous writes directly affect how fast operations can complete.
+Why are five replicas a common practical deployment size for consensus systems?	They tolerate one planned outage plus one unexpected failure while still retaining a majority quorum.
+Why does adding replicas not automatically improve availability?	Majority quorums get larger, and colocating extra replicas in the wrong failure domain can reduce redundancy rather than increase it.
+What are the main trade-offs when choosing replica locations for a consensus system?	You balance larger failure-domain tolerance against higher latency, different traffic patterns, and higher resource cost.
+Why can colocating too many leaders in one region be risky?	It concentrates bandwidth use and creates large traffic shifts and failover disruption if that region fails.
+What should operators monitor especially closely in consensus-based systems?	Replica health and lag, leader existence and churn, transaction progress, proposal rates, throughput, and latency.

@@ -1,0 +1,17 @@
+Why do periodic data pipelines often become fragile as they grow?	Organic growth, uneven work distribution, scheduling delays, and operational complexity eventually break assumptions that were safe when the pipeline was first tuned.
+Why can uneven chunk sizes make batch pipelines slow and brittle?	End-to-end completion is limited by the worst chunk, so one oversized or pathological chunk can stall the whole pipeline.
+Why can restarting a hanging periodic pipeline make matters worse?	Without checkpointing, killing and rerunning the job throws away completed work and wastes both compute and human effort.
+Why do periodic pipelines interact poorly with shared batch schedulers?	Startup can be delayed unpredictably, jobs can overlap with later runs, and preemption risk rises when demand for shared resources is high.
+Why is lowering the run interval of a periodic pipeline not always a way to make progress faster?	Once execution time and scheduler delay approach the interval, runs begin to overlap or preempt each other, potentially halting progress instead of improving freshness.
+Why do periodic pipelines often have weaker monitoring than continuous pipelines?	They commonly report metrics only after completion, so failures or stalls during execution can leave operators blind in real time.
+Why are large periodic pipelines especially prone to thundering-herd failures?	Many workers can start at once, overwhelming shared schedulers, storage, or network services, and naive retry logic can amplify the surge.
+What is a moire load pattern in pipeline operations?	Multiple pipelines with different cycles occasionally align and jointly overload a shared resource even though each looks safe in isolation.
+When should a system move away from a periodic pipeline design?	When the workload is effectively continuous or business demands require freshness beyond what periodic execution can safely provide.
+What is the role of the Task Master in Workflow?	It keeps pipeline state in memory for speed while synchronously journaling mutations to durable storage for correctness and recovery.
+Why are Workflow workers designed to be stateless?	Stateless workers can be discarded or replaced freely, while correctness remains anchored in the Task Master's durable task state and leases.
+Why are leases central to Workflow correctness?	A worker may commit results only for work whose current lease it still holds, which prevents orphaned or duplicated workers from corrupting pipeline state.
+Why does Workflow require uniquely named output files per worker attempt?	Unique filenames ensure that orphaned workers cannot overwrite the outputs of valid workers even if they continue running after losing their lease.
+Why does Workflow version tasks and configuration?	If configuration changes during processing, workers using the old configuration cannot commit, preserving consistency at the cost of discarded work.
+Why does Workflow include a server token in task metadata?	It prevents a rogue or misconfigured Task Master from accepting operations that belong to a different master instance.
+What are Workflow's four main correctness guarantees?	Configuration barriers, valid lease ownership, unique output filenames, and Task Master identity validation through a server token.
+How does Workflow support business continuity across datacenter failures?	Local workflows do the work, while a global Workflow tracks reference tasks and heartbeat state so another site can seize in-progress work if one site disappears.

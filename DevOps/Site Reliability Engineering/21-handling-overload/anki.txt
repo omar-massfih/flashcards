@@ -1,0 +1,20 @@
+Why is graceful overload handling fundamental to reliability?	No load-balancing policy can prevent every overload, so systems must continue serving as much useful work as possible while failing safely.
+Why is queries per second usually a poor capacity metric?	Request cost can vary widely over time and across request types, so equal query counts often do not represent equal resource consumption.
+Why are per-customer quotas important during global overload?	They ensure that misbehaving customers absorb the errors while well-behaved customers remain protected.
+Why can quota totals safely add up to more than total fleet capacity?	Service owners rely on the fact that not all customers will hit their maximum negotiated usage at the same time.
+Why can rejecting out-of-quota requests at the backend still be too expensive?	If rejections are frequent, the backend may spend a large fraction of its resources just saying no instead of serving useful work.
+What is client-side adaptive throttling?	A scheme where clients self-regulate and drop some requests locally after observing too many backend rejections.
+Why does adaptive throttling use both attempted requests and accepted requests?	The gap between them estimates how aggressively the backend is rejecting traffic, which lets the client infer when it should slow itself down.
+What is the trade-off when tuning the adaptive-throttling multiplier?	A lower multiplier wastes fewer backend resources on rejections but propagates state changes more slowly; a higher multiplier does the opposite.
+Why can adaptive throttling work poorly for very sporadic clients?	Their local sample of backend behavior is too small and stale to estimate overload accurately.
+Why is criticality useful in overload control?	It lets systems preferentially preserve the most user-important traffic and shed less important work first.
+Why should criticality propagate automatically through RPC stacks?	So downstream services make overload decisions consistent with the original user-facing importance of the request.
+Why is criticality orthogonal to latency requirements?	A request can be highly sheddable yet still require low latency when it is served, so urgency and importance are different dimensions.
+What is the purpose of task-level utilization signals in overload protection?	They let each backend reject lower-priority traffic as its own local resource usage approaches unsafe levels.
+Why is smoothing important in executor-load-based protection?	It ignores very short spikes but reacts when elevated load persists long enough to threaten latency or stability.
+Why should immediate retries be allowed when only a small subset of backends are overloaded?	The request can often succeed on another backend with negligible extra latency, turning retries into a form of organic load balancing.
+Why must retries be tightly controlled during overload?	Without limits they can multiply traffic and create retry storms or combinatorial explosions across service stacks.
+Why should only the layer immediately above an overloaded dependency perform retries?	If multiple layers retry the same failing work, the retry volume can explode combinatorially.
+Why are per-request and per-client retry budgets both useful?	One caps how many times a single request can bounce, while the other caps the overall retry share a client is injecting into the system.
+Why can connection management itself become an overload problem at scale?	Health checks, idle connections, and bursts of connection churn can consume significant CPU and memory even when request traffic is light.
+Why can batch proxy backends help with connection-related overload?	They absorb connection bursts and shield core backends, acting like a fuse while also reducing direct connection fan-out to the serving tier.

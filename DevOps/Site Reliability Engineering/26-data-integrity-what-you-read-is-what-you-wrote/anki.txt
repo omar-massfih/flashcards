@@ -1,0 +1,18 @@
+Why are data-integrity requirements often stricter than uptime intuitions suggest?	A tiny percentage of corrupted bytes can make an artifact unusable, so acceptable corruption budgets are effectively near zero.
+What is the key to superior data integrity?	Proactive detection combined with rapid repair and recovery before users are seriously affected.
+Why should backup strategy be driven by recovery needs rather than backup mechanics?	Backups matter only insofar as they let you restore the right data within the time and freshness requirements the service actually needs.
+Why is replication not the same as recoverability?	Replication copies corruption and erroneous deletions just as faithfully as correct state, so it does not protect against many common integrity failures.
+Why is diversity important in data protection?	Backups and replicas should avoid sharing the same failure modes, because bugs or faults in one layer can otherwise destroy all copies at once.
+Why do large systems usually need a tiered backup strategy?	Different restore-time and freshness goals require a mix of nearby fast restores, somewhat older local copies, and slower but more isolated offsite backups.
+Why is retention a critical backup decision?	Slowly discovered corruption or deletion bugs may require restore points from far back in time, not just the most recent backup.
+Why is point-in-time recovery especially valuable for creeping data corruption?	It lets operators recover affected subsets to different historical moments instead of relying on one blunt restore point.
+Why can exabyte-scale backup and restore not be treated as just a larger terabyte problem?	Monolithic verify-copy-restore workflows become too slow, so systems need trust points, incrementals, sharding, and parallelism to keep recovery relevant.
+What are trust points in large-scale backup strategy?	Immutable portions of data that have been verified and can be copied and protected more efficiently than repeatedly reprocessing the entire dataset.
+What is the first line of defense against accidental deletion in user-facing systems?	Trash-style user undeletion for recent deletions, backed by soft deletion beneath the product.
+Why can soft deletion be more valuable than revision history for deletion protection?	Revision history may not preserve deleted items, while soft deletion is explicitly designed to protect against accidental or malicious deletion.
+Why is early detection so important for data integrity incidents?	Bad data propagates, and the longer corruption or deletion goes unnoticed, the harder and less complete recovery becomes.
+Why should cloud applications use out-of-band data validation?	Even trusted storage APIs and consistency mechanisms can have imperfect implementations, so critical invariants must be independently checked.
+Why is out-of-band data validation hard to get right?	If it is too strict engineers ignore it, but if it is too weak user-visible corruption can slip through undetected.
+What should validators focus on first?	Invariants whose violation would be disastrous to users, such as missing or inconsistent core references between pieces of data.
+Why should recovery procedures be exercised continuously rather than trusted on paper?	Backups, tools, dependencies, and capacity can silently rot, and only end-to-end restore tests prove that recent data can actually be recovered.
+What does it mean to deliver a recovery system rather than just a backup system?	Teams define availability goals for data, continuously prove they can restore within those goals, and treat backup creation as only one part of that outcome.

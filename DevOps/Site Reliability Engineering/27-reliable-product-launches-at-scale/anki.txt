@@ -1,0 +1,19 @@
+Why is launch coordination a useful dedicated specialty inside SRE?	Launches create cross-team, high-risk, time-sensitive problems that differ from ordinary service operation and benefit from concentrated experience.
+What advantages does a Launch Coordination Engineer bring to a launch?	Breadth of launch experience, a cross-functional view, and objective mediation among SRE, developers, product, and other stakeholders.
+Why is a launch checklist valuable?	It makes launches more repeatable and reliable by forcing teams to answer common high-risk questions and follow proven remedies.
+What keeps a launch checklist from becoming unmanageably large?	Only include questions justified by real risk, and ensure every required action is concrete, practical, and worth the cost to developers.
+Why are Launch Coordination Engineers well positioned to identify simplification opportunities?	They repeatedly see where teams struggle, where approvals or tooling create friction, and where common infrastructure could remove repeated pain.
+Why is abstract first-principles thinking important for unusual launches?	New product categories may not fit old checklists, so reviewers must reason from reliability goals before turning them back into concrete launch checks.
+Why should launch reviews examine architecture and dependencies early?	Understanding request flow and shared-service dependencies reveals hidden stakeholders, bottlenecks, and provisioning needs before launch pressure peaks.
+Why is capacity planning especially important for launches?	Publicity, promotions, and steep ramp-ups can produce traffic far beyond steady-state demand, so capacity must account for both load and redundancy.
+Why should launch planning include explicit failure-mode analysis?	Teams need to know how the service behaves when dependencies, machines, networks, or abusive clients fail so they can add mitigations before launch day.
+Why is client behavior a launch-specific reliability concern?	Auto-refresh, sync, retries, and other automated behaviors can multiply load far beyond direct user action and destabilize a new service quickly.
+Why must manual operational processes be documented before a launch?	Reliability cannot depend on tacit knowledge held by one engineer, especially during emergencies or handoffs.
+Why should product launches treat external dependencies explicitly?	Third-party code, vendors, partners, or external events can become launch blockers or failure sources outside the team's direct control.
+Why do complicated launches need an explicit rollout plan?	Multiple systems often must be enabled in a precise order, with fallback plans ready if timing, publicity, or dependencies do not line up.
+Why are gradual and staged rollouts safer than push-button global launches?	They expose changes to real traffic incrementally so teams can observe problems early and limit blast radius.
+Why are canaries so important during launches?	They validate new behavior on a small subset of production before the rollout expands to the whole fleet or user base.
+Why are feature flag frameworks valuable for launch safety?	They let teams expose new functionality gradually, measure impact, and disable problematic changes quickly without a full rollback.
+Why should automated clients use exponential backoff and jitter?	They reduce synchronized retries and request bursts that could otherwise overload a freshly launched or degraded service.
+Why can server-controlled client configuration improve launch reliability?	It lets teams quickly tune sync rates, retries, or dormant features in the field without waiting for a full client rollout.
+Why are overload tests essential before a launch?	Services often behave nonlinearly near saturation, and only realistic load tests reveal whether they degrade gracefully or collapse.

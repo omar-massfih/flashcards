@@ -1,0 +1,20 @@
+Why is server overload the most common trigger for cascading failures?	When some replicas overload and fail, their work shifts to the remaining replicas, increasing the chance that those fail as well.
+Why can resource exhaustion turn a local problem into a broader outage?	Running out of CPU, memory, threads, or file descriptors can reduce useful work or crash tasks, which pushes more load onto the rest of the fleet.
+What is the GC death spiral?	A vicious cycle where memory pressure increases garbage collection, which consumes CPU, slows requests, increases in-flight work, and creates even more memory pressure.
+Why can service unavailability be hard to recover from once tasks start crash-looping?	Freshly restarted tasks are bombarded immediately, so the service may need traffic to drop far below nominal levels before enough tasks stay healthy to stabilize.
+Why must systems distinguish process health checks from service health checks?	Process checks tell the scheduler whether the binary is alive, while service checks tell the load balancer whether it should currently receive traffic.
+What is the most important first step for preventing cascading failures?	Load test the service until it fails and observe exactly how it breaks and recovers.
+Why are small queues often better than large queues for steady traffic?	Large queues mainly add latency and memory pressure, while small queues force earlier rejection when the server cannot keep up.
+When can larger queues make sense despite their costs?	For bursty workloads where short spikes can be absorbed without causing sustained overload.
+Why should graceful degradation paths be exercised regularly?	Code paths used only during rare overloads are more likely to be broken when they are finally needed.
+Why can naive retries cause cascading failures?	They amplify load during failures, consuming more resources and potentially pushing already stressed backends into meltdown.
+What retry strategy is safest under failure conditions?	Use randomized exponential backoff with strict retry limits and avoid retrying the same failure at multiple layers.
+Why is jitter important when backing off retries?	Without jitter, many clients can retry in lockstep and create synchronized retry waves that worsen overload.
+Why is deadline propagation important in RPC systems?	It ensures downstream servers know how much time is actually left, so they avoid spending work on requests whose callers have already given up.
+Why should servers check remaining deadline before expensive work stages?	To avoid doing work that can no longer finish in time to be useful to the caller.
+What is cancellation propagation in distributed systems?	Propagating the fact that a request is no longer needed so lower layers can stop doing doomed or redundant work.
+Why is bimodal latency dangerous for server pools?	A small fraction of requests that hang until deadline can exhaust threads or other resources and cause many otherwise healthy requests to fail.
+Why are extremely long deadlines dangerous even when average latency is low?	They let a few stuck requests monopolize resources for far too long, which can dominate system capacity.
+Why can slow startup and cold caches trigger cascading failures?	Recently started tasks may be much less efficient, so routing normal traffic to them immediately can overload them before they warm up.
+What are common triggering conditions for cascading failures?	Process death, updates, rollouts, organic growth, planned drains, request-profile changes, and shifts in available resource slack.
+What are common immediate mitigation steps during a cascading failure?	Add resources, stop health-check-driven churn, cautiously restart wedged servers, drop traffic, enter degraded modes, remove batch load, or block known-bad traffic.

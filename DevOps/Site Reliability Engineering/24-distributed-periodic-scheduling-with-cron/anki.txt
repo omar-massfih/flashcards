@@ -1,0 +1,12 @@
+Why does cron often prefer skipping a launch over risking a double launch?	Recovering from a missed run is usually more manageable than undoing a duplicated side effect such as payroll or mass email.
+Why does large-scale cron need to track launch state instead of being fire-and-forget?	Isolated datacenter jobs consume reserved resources, can fail partially, and often need monitoring and recovery after scheduler or leader failure.
+Why is strong consistency so important in a distributed cron service?	The system must know unambiguously whether each scheduled launch did or did not happen in order to avoid missed or duplicate launches.
+Why must a cron leader stop interacting with the datacenter scheduler as soon as it loses leadership?	Otherwise an old and new leader might both issue conflicting launch actions, causing duplicate or inconsistent job state.
+Why do cron followers need to track open launches?	If the leader fails mid-launch, a new leader must determine exactly which launches started but were not conclusively finished.
+What are the two fundamental ways to recover from a partial cron launch?	Either external launch operations must be idempotent, or the system must be able to look up their exact state afterward.
+Why should cron job launch identity include scheduled launch time?	It disambiguates repeated runs of the same job and prevents a later leader from confusing one launch with another.
+Why is losing snapshots more serious than losing recent logs in distributed cron?	Snapshots represent the durable baseline state, while losing only recent logs usually causes a bounded rewind to the last snapshot.
+Why is it reasonable to store cron logs locally but back up snapshots remotely?	Remote storage is expensive for frequent small log writes, but snapshots are critical enough to justify extra protection.
+What distributed-systems problem often appears in large cron deployments?	The thundering herd: many users schedule jobs for the same obvious time, creating synchronized launch spikes.
+How can a distributed cron system reduce midnight-style launch spikes?	Let users mark some schedule fields as flexible and deterministically spread launch times across the allowed range by hashing configuration.
+Why can distributed cron spikes still happen even after spreading flexible jobs?	Some jobs genuinely need to run at specific times because of real temporal dependencies or external events.
