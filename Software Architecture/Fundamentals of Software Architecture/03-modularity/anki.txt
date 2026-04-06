@@ -6,11 +6,6 @@ Why should architects care about how developers package code?	Packaging affects 
 Why is modularity useful even when physical separation has not happened yet?	Logical separation affects coupling and future restructuring even inside one monolith or codebase.
 What is cohesion?	The degree to which the parts of a module belong together.
 What is functional cohesion?	A module where all parts contribute directly to one well-defined responsibility.
-What is sequential cohesion?	A relationship where one part's output becomes another part's input in sequence.
-What is communicational cohesion?	A grouping where parts operate on the same data or contribute to the same output.
-What is procedural cohesion?	A grouping where parts mainly belong together because they must run in a specific order.
-What is temporal cohesion?	A grouping based mainly on things that must happen at the same time, such as startup tasks.
-What is logical cohesion?	A grouping of operations that are conceptually related but not strongly functionally related.
 What is coincidental cohesion?	A module whose contents are unrelated except for being placed together.
 What does a high LCOM score indicate?	A lack of cohesion in methods, suggesting a class may really contain multiple unrelated responsibilities.
 What is afferent coupling?	The number of incoming dependencies on a code artifact.

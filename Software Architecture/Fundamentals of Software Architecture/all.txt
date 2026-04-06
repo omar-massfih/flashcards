@@ -33,15 +33,8 @@ What is the career goal suggested by the knowledge pyramid?	Move topics from "do
 What common failure happens when architects try to maintain deep expertise in too many areas?	They spread themselves too thin and end up stale or ineffective across all of them.
 What is stale expertise in an architect?	Outdated knowledge that the architect still treats as current and authoritative.
 What is the Frozen Caveman antipattern in architecture?	Overreacting to an old failure or pet risk and letting that outdated fear dominate new architecture decisions.
-What is the 20-minute rule for architects?	Spend at least 20 minutes each day learning something new or broadening technical knowledge.
-Why is the 20-minute rule aimed more at breadth than depth?	Because its purpose is to keep expanding awareness of possible solutions, not to build mastery in only one area.
-What is a personal technology radar?	A structured way to track technologies and techniques by how strongly you should avoid, assess, try, or adopt them.
 What are the four quadrants of the Thoughtworks Technology Radar?	Tools; languages and frameworks; techniques; and platforms.
-What are the four rings of the Thoughtworks Technology Radar?	Hold; assess; trial; and adopt.
-What does the Hold ring mean on a technology radar?	Do not start new work with that technology, or deliberately avoid that habit or tool.
-What does the Assess ring mean on a technology radar?	The technology is worth investigating further but is not yet ready for active use.
-What does the Trial ring mean on a technology radar?	The technology is worth piloting on low-risk work to understand it in practice.
-What does the Adopt ring mean on a technology radar?	The technology or practice is one you actively endorse and are ready to use.
+What do the four rings of a technology radar mean?	Hold means avoid for new work; assess means investigate further; trial means pilot on low-risk work; adopt means ready for active use.
 Why is building a personal radar useful even if the specific entries change over time?	The exercise forces deliberate thinking about your technology portfolio instead of drifting with hype or habit.
 Why should an architect treat a technology portfolio like a financial portfolio?	Because deliberate diversification reduces career risk and balances mainstream demand against exploratory bets.
 Why can't architecture decisions usually be answered by search engines or an LLM alone?	Because the right choice depends on context-specific trade-offs such as constraints, risks, people, and business drivers.
@@ -63,11 +56,6 @@ Why should architects care about how developers package code?	Packaging affects 
 Why is modularity useful even when physical separation has not happened yet?	Logical separation affects coupling and future restructuring even inside one monolith or codebase.
 What is cohesion?	The degree to which the parts of a module belong together.
 What is functional cohesion?	A module where all parts contribute directly to one well-defined responsibility.
-What is sequential cohesion?	A relationship where one part's output becomes another part's input in sequence.
-What is communicational cohesion?	A grouping where parts operate on the same data or contribute to the same output.
-What is procedural cohesion?	A grouping where parts mainly belong together because they must run in a specific order.
-What is temporal cohesion?	A grouping based mainly on things that must happen at the same time, such as startup tasks.
-What is logical cohesion?	A grouping of operations that are conceptually related but not strongly functionally related.
 What is coincidental cohesion?	A module whose contents are unrelated except for being placed together.
 What does a high LCOM score indicate?	A lack of cohesion in methods, suggesting a class may really contain multiple unrelated responsibilities.
 What is afferent coupling?	The number of incoming dependencies on a code artifact.
@@ -594,16 +582,3 @@ Why might a shared library beat a shared service in some contexts?	It can offer 
 Why might a shared service beat a shared library in some contexts?	It can better support heterogeneous platforms and high-volatility shared behavior without forcing recompilation across many services.
 Why might queues beat topics in some messaging contexts?	They allow heterogeneous messages, independent monitoring, and tighter control over security and consumers.
 Why might topics beat queues in some messaging contexts?	They reduce coupling and improve extensibility because new consumers can subscribe without changing the producer.
-Why should architects prioritize technical breadth over technical depth?	They must evaluate many technologies, trade-offs, and contexts across a system rather than specialize deeply in only one area.
-What is the difference between coupling and cohesion?	Coupling measures interdependence between parts, while cohesion measures how strongly the responsibilities within one part belong together.
-Why is an architectural quantum important?	It helps identify which parts of a system can vary independently in operational characteristics and which parts are still coupled together.
-What is the difference between technical partitioning and domain partitioning?	Technical partitioning groups by technical role such as UI or data access, while domain partitioning groups by business capability or workflow.
-What distinguishes an architectural style from an architectural pattern?	A style defines a broader named topology and structure, while a pattern is a contextualized solution to a recurring problem.
-When does a distributed architecture tend to be preferable to a monolith?	When different parts of the system need materially different characteristics, boundaries, or scaling behavior.
-Why is bounded context so important in microservices?	It preserves service independence by keeping code, data, and business meaning private to each service boundary.
-Why is data isolation critical in microservices?	Shared data structures create coupling that undermines bounded contexts, independent change, and deployability.
-What is the key difference between choreography and orchestration?	Choreography distributes workflow coordination among participants, while orchestration centralizes it in a mediator.
-What are the core sections of an Architectural Decision Record?	Title, Status, Context, Decision, and Consequences.
-What is the purpose of a risk matrix in architecture?	To combine impact and likelihood into a more objective way of assessing risk.
-What is domain-to-architecture isomorphism?	The fit between the shape of the business problem and the shape of the architecture.
-Why must trade-off analysis be repeated instead of done only once?	Context changes, and small differences in goals or environment can change which option is best.

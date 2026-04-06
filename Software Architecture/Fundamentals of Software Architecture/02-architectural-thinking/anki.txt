@@ -12,15 +12,8 @@ What is the career goal suggested by the knowledge pyramid?	Move topics from "do
 What common failure happens when architects try to maintain deep expertise in too many areas?	They spread themselves too thin and end up stale or ineffective across all of them.
 What is stale expertise in an architect?	Outdated knowledge that the architect still treats as current and authoritative.
 What is the Frozen Caveman antipattern in architecture?	Overreacting to an old failure or pet risk and letting that outdated fear dominate new architecture decisions.
-What is the 20-minute rule for architects?	Spend at least 20 minutes each day learning something new or broadening technical knowledge.
-Why is the 20-minute rule aimed more at breadth than depth?	Because its purpose is to keep expanding awareness of possible solutions, not to build mastery in only one area.
-What is a personal technology radar?	A structured way to track technologies and techniques by how strongly you should avoid, assess, try, or adopt them.
 What are the four quadrants of the Thoughtworks Technology Radar?	Tools; languages and frameworks; techniques; and platforms.
-What are the four rings of the Thoughtworks Technology Radar?	Hold; assess; trial; and adopt.
-What does the Hold ring mean on a technology radar?	Do not start new work with that technology, or deliberately avoid that habit or tool.
-What does the Assess ring mean on a technology radar?	The technology is worth investigating further but is not yet ready for active use.
-What does the Trial ring mean on a technology radar?	The technology is worth piloting on low-risk work to understand it in practice.
-What does the Adopt ring mean on a technology radar?	The technology or practice is one you actively endorse and are ready to use.
+What do the four rings of a technology radar mean?	Hold means avoid for new work; assess means investigate further; trial means pilot on low-risk work; adopt means ready for active use.
 Why is building a personal radar useful even if the specific entries change over time?	The exercise forces deliberate thinking about your technology portfolio instead of drifting with hype or habit.
 Why should an architect treat a technology portfolio like a financial portfolio?	Because deliberate diversification reduces career risk and balances mainstream demand against exploratory bets.
 Why can't architecture decisions usually be answered by search engines or an LLM alone?	Because the right choice depends on context-specific trade-offs such as constraints, risks, people, and business drivers.
