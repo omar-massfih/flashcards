@@ -1,0 +1,16 @@
+Why should architects build a reputation as objective arbiters of trade-offs rather than evangelists?	Context changes over time, so today's favored solution can become tomorrow's antipattern.
+Why do organizations value objective trade-off analysis from architects?	Critical decisions need sober judgment that others can trust, not attachment to a preferred technology or style.
+Why is documenting why a decision was made so important?	Future architects and developers need the rationale and trade-offs, not just the resulting structure.
+Why is reducing architectural choices to simple binaries often misleading?	Most decisions involve gradations, contextual weighting, and messy trade-offs rather than clean either-or answers.
+Why is code reuse not a free win in architecture?	Reuse introduces coupling and churn unless the reused code has good abstraction and low volatility.
+Why is high-volatility domain code usually a poor reuse target?	Frequent changes in shared domain code force widespread coordination and increase the risk of ripple effects.
+Why is plumbing code often a better reuse target than domain logic?	Frameworks, libraries, and infrastructure code usually have lower volatility and fewer business-driven changes.
+Why must architects repeat trade-off analysis even for similar situations?	Small contextual differences in teams, budgets, goals, or technology can change which option is best.
+What is the Out of Context antipattern in trade-off analysis?	Understanding the trade-offs but failing to weight them correctly for the actual business and technical context.
+Why is generic trade-off analysis not enough?	The same trade-offs matter differently depending on the specific priorities of the situation.
+Why do ADRs and diagrams support the Second Law?	They preserve the reasoning, context, and consequences behind decisions, not just the resulting implementation.
+Why is context essential in choosing between a shared library and a shared service?	Factors like heterogeneity, volatility, performance, and risk must be weighted differently depending on the environment.
+Why might a shared library beat a shared service in some contexts?	It can offer better performance, scalability, fault tolerance, and change safety when callers are homogeneous and versioning is manageable.
+Why might a shared service beat a shared library in some contexts?	It can better support heterogeneous platforms and high-volatility shared behavior without forcing recompilation across many services.
+Why might queues beat topics in some messaging contexts?	They allow heterogeneous messages, independent monitoring, and tighter control over security and consumers.
+Why might topics beat queues in some messaging contexts?	They reduce coupling and improve extensibility because new consumers can subscribe without changing the producer.

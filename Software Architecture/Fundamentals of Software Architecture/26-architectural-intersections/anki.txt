@@ -1,0 +1,21 @@
+Why can a technically sound architecture still fail without proper intersections?	If implementation, infrastructure, data, teams, or business context are misaligned, the architecture's intended qualities will not materialize.
+How can implementation drift undermine architectural characteristics?	Developers may optimize for local concerns like responsiveness or convenience in ways that break the architecture's intended scalability, elasticity, or decoupling.
+Why must source-code structure align with logical architecture?	When code organization diverges from the logical design, maintainability, testability, deployability, and evolvability all suffer.
+Why are automated governance tools useful for implementation alignment?	They help enforce structural rules and constraints so the implementation does not quietly drift away from the intended architecture.
+Why can violating architectural constraints cause the architecture to fail?	The style may rely on those restrictions to preserve change control, decoupling, performance, or some other critical quality.
+Why is the intersection of architecture and infrastructure so important?	Operational characteristics such as scalability, elasticity, availability, and fault tolerance depend on infrastructure as much as on design.
+How can cloud deployment still misalign with architecture even when cloud features are powerful?	Poor placement or configuration choices can negate benefits like performance, fault tolerance, elasticity, or data consistency.
+Why must database topology align with architectural style?	The wrong topology can weaken the style's intended superpowers, such as bounded context, change control, scalability, or fault tolerance.
+Why is database-per-service usually aligned with microservices?	It preserves bounded contexts and supports independent change, deployment, and ownership.
+Why should architects align database type with architectural characteristics?	Different databases amplify different qualities, so choosing one that supports the architecture's key characteristics strengthens the whole system.
+Why should architects align database choice with data structure and read/write priorities?	Misalignment between data shape or access pattern and database type leads to inefficiency and poor performance.
+Why can engineering practices determine whether an architecture succeeds?	Some styles assume mature practices such as automation, testing, continuous delivery, and operational collaboration.
+Why is microservices a poor fit for weak engineering practices?	Its benefits depend on automation, deployment maturity, testing discipline, and strong operational support.
+How can fitness functions help align engineering practices with architecture?	They measure whether the system is actually preserving the architectural characteristics that the practices are supposed to support.
+Why must team topology align with architecture?	If team structure fights the architecture's partitioning model, teams will struggle to build, change, and maintain the system effectively.
+How does partitioning type connect architecture and team topology?	Domain-partitioned architectures work best with domain-aligned teams, while technically partitioned architectures align better with technically specialized teams.
+Why is systems integration an important architectural intersection?	External systems can impose limits on compatibility, reliability, scalability, responsiveness, and coupling.
+Why must architecture align with enterprise standards and practices?	A solution that ignores enterprise constraints may be rejected or become an unsustainable one-off even if it is technically strong.
+What is domain-to-architecture isomorphism in the business intersection?	The fit between the business environment and the generic shape or style of the architecture.
+Why is business change especially hard for architecture?	Architects must handle both known unknowns and unknown unknowns, so rigid upfront design inevitably breaks down.
+Why are iterative and evolutionary approaches important for business alignment?	They let the architecture adapt as business needs change instead of assuming everything important is known in advance.
