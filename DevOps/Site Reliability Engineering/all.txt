@@ -20,8 +20,6 @@ What is an error budget?	The permitted amount of unreliability, equal to one min
 Why do error budgets reduce conflict between product development and SRE?	They align both groups around maximizing feature velocity without exceeding an agreed reliability limit.
 What should happen when a service exhausts its error budget?	Further risky changes should stop until reliability is brought back within target.
 Why does the error-budget model make outages a managed trade-off instead of a pure failure?	It treats some unreliability as an expected cost of innovation within agreed limits.
-What is an alert in SRE?	A signal that a human must take immediate action.
-What is a ticket in SRE?	A signal that a human should take action, but not immediately.
 Why is email-style “someone should look at this” monitoring considered flawed in SRE?	Monitoring should already decide whether human action is required instead of asking a person to interpret raw signals.
 What is the key metric for emergency response effectiveness in SRE?	Mean time to repair (MTTR).
 Why do playbooks improve incident response?	They reduce improvisation and help engineers respond faster and more consistently under pressure.
@@ -32,28 +30,10 @@ Why is capacity planning an SRE responsibility?	Capacity is tightly coupled to a
 What should capacity planning account for?	Both organic growth and inorganic demand such as launches or marketing events.
 Why must provisioning be handled carefully?	It is expensive, risky, and directly affects whether capacity will work when needed.
 Why are efficiency and performance part of the SRE mission?	SRE controls provisioning and helps shape software behavior, so it has major leverage over cost and service capacity.
-What is a machine in Google's production terminology?	A piece of hardware, or sometimes a VM, that can run server software.
-What is a server in Google's production terminology?	A piece of software that implements a service.
-Why is software essential for managing hardware at Google's scale?	Hardware failures are frequent enough at scale that they must be abstracted and handled automatically.
-What is Borg?	A distributed cluster operating system that schedules and manages jobs across a cluster.
-What kinds of workloads can Borg run?	Long-running server processes and batch jobs such as MapReduce.
-Why can Google not rely on fixed IP addresses and ports to identify tasks?	Tasks can be restarted or moved to different machines, so their network location is fluid.
-What problem does the Borg Naming Service (BNS) solve?	It provides stable names for tasks and maps those names to the current IP address and port.
-Why do jobs declare resource requirements to Borg?	So Borg can place tasks efficiently and safely across machines.
-Why does Borg consider failure domains when placing tasks?	To avoid putting too many replicas behind the same shared point of failure, such as a rack switch.
-What happens if a Borg task uses more resources than it requested?	Borg kills and restarts the task.
-What is Colossus?	A cluster-wide filesystem layer over distributed storage that provides filesystem semantics plus replication and encryption.
-What is Bigtable?	A distributed NoSQL database for very large datasets, modeled as a sparse sorted map.
-What is Spanner?	A globally consistent distributed database with an SQL-like interface.
-What is Google Front End (GFE)?	A reverse proxy that terminates client connections and routes requests to the appropriate backend service.
 What does Global Software Load Balancing (GSLB) do?	It directs traffic to suitable locations with available capacity, including at DNS, service, and RPC levels.
-What is Chubby used for in Google's production environment?	Distributed locking, master election, and storage of small pieces of consistent coordination data.
-What is Borgmon?	A monitoring system that scrapes metrics for alerting and historical analysis.
-What RPC system underlies service-to-service communication at Google?	Stubby, whose open source descendant is gRPC.
 Why might Google use an RPC boundary even for work that could be a local call?	It makes later refactoring into a separate service easier.
 Why are protocol buffers used for RPC payloads?	They serialize structured data compactly, quickly, and with less ambiguity than XML.
 What is one operational advantage of a single shared repository?	Engineers can fix problems across project boundaries and submit those changes through the same review flow.
-Why does Google run broad automated testing when a changelist is submitted?	To detect breakage in any code that depends directly or indirectly on the change.
 What is push-on-green?	A release model that automatically pushes a new version to production after it passes tests.
 Why can making a service more reliable eventually become worse rather than better?	Extreme reliability can slow feature delivery, raise costs sharply, and produce little user-visible benefit.
 What are the two main cost dimensions of increasing reliability?	The cost of extra redundant resources and the opportunity cost of engineering time spent reducing risk instead of building user-facing features.
@@ -123,7 +103,6 @@ What is software engineering work in SRE?	Writing or changing code, including au
 What is systems engineering work in SRE?	One-time configuration or production-system improvements that create lasting benefits, such as monitoring, tuning, and productionization work.
 Why is excessive toil dangerous for an individual SRE?	It causes career stagnation, low morale, boredom, and eventual burnout.
 Why is excessive toil dangerous for the SRE organization?	It blurs the engineering identity of SRE, slows product progress, invites more operational dumping, and drives attrition.
-What is monitoring in SRE?	Collecting, processing, aggregating, and displaying real-time quantitative data about a system.
 What is white-box monitoring?	Monitoring based on internal system metrics and signals exposed by components such as logs, runtime interfaces, or metrics endpoints.
 What is black-box monitoring?	Monitoring that tests externally visible system behavior as a user would experience it.
 Why should paging alerts have high signal and low noise?	Frequent low-value pages cause alert fatigue, slower response, and missed real incidents.
@@ -219,7 +198,6 @@ Why is black-box probing still necessary even with strong white-box monitoring?	
 Why should monitoring rules be separated from target lists?	Reusing the same rule logic across many targets reduces repetition and lowers configuration maintenance cost.
 Why should monitoring configurations have automated tests?	Synthetic and regression tests catch rule mistakes early and verify that alert logic behaves as intended before rollout.
 Why does Google cap purely operational work for SREs?	So at least half of SRE time remains available for engineering work that automates operations and improves the service.
-What is the SRE target split between engineering and operational work?	At least 50% engineering work, with no more than 50% total operational work and no more than 25% spent on-call.
 Why do many teams use both primary and secondary on-call rotations?	They can separate urgent paging work from other production tasks and provide backup if the primary misses or needs help with a page.
 Why are multi-site on-call rotations attractive?	They can support follow-the-sun coverage and reduce or eliminate unhealthy night shifts.
 What trade-off comes with multi-site on-call rotations?	They reduce night work but add coordination and communication overhead across sites.
@@ -301,7 +279,6 @@ Why should leadership participate in postmortem culture?	Visible support from se
 Why is visible recognition for good incident handling and postmortem work important?	It rewards the behaviors the organization wants repeated, such as quick mitigation, honesty, and thoughtful follow-through.
 What is the ultimate purpose of postmortem culture?	To turn failures into organization-wide learning that makes future incidents less likely or less damaging.
 Why is outage tracking necessary in addition to postmortems?	Postmortems cover deep learning for major incidents, while outage tracking reveals frequency, toil, trends, and smaller recurring issues across services.
-What is the role of Escalator in Google's alerting workflow?	It tracks whether a human has acknowledged an alert and escalates to the next destination if acknowledgment does not occur in time.
 What is the main purpose of Outalator?	To track outages as higher-level incident records by storing alerts, annotations, groupings, and metadata for later review and analysis.
 Why is grouping multiple alerts into one incident so important?	A single underlying event often triggers many alerts, so grouping reduces duplication and separates incident volume from raw alert volume.
 Why is flexible tagging valuable in outage tracking?	It lets teams add lightweight metadata such as causes, actions, customers, or bogus alerts without waiting for a rigid global taxonomy.
