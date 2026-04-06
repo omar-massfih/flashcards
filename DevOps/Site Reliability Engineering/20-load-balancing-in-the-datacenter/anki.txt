@@ -1,0 +1,17 @@
+Why does poor in-datacenter load balancing waste capacity?	A service can only accept traffic until its most loaded backend saturates, so imbalance leaves reserved capacity idle on less loaded backends.
+What is the main limitation of simple flow-control-based backend health detection?	A fixed active-request threshold can misclassify slow or long-lived backends and only protects against very extreme overload.
+What is lame duck state for a backend?	A state in which the backend is still alive and can finish existing work but explicitly asks clients to stop sending it new requests.
+Why is lame duck state useful during shutdowns and restarts?	It lets active requests drain cleanly, reducing user-facing errors during pushes, maintenance, or machine failures.
+When might a service need a larger backend subset per client?	When there are far fewer clients than backends or when some clients generate bursty or highly uneven traffic.
+What properties should a good subsetting algorithm have?	It should spread load uniformly, minimize churn on failures or restarts, and adapt gracefully as the numbers of clients or backends change.
+Why does naive random subsetting perform poorly at scale?	It creates large variance in how many clients connect to each backend, forcing significant overprovisioning to cover the hottest backends.
+What is the main idea behind deterministic subsetting?	Partition clients into rounds and assign each round a shuffled backend list so each backend is used evenly while churn stays low.
+Why should deterministic subsetting reshuffle differently for different rounds?	Using different shuffles spreads the impact of backend failures across the fleet instead of concentrating overload within one fixed subset.
+Why do highly variable request costs make simple Round Robin especially weak?	Some backends get unlucky with much more expensive requests, so equal request counts do not translate into equal resource consumption.
+Why can machine diversity hurt naive load balancing?	The same request may cost different amounts of work on different machines, so equal traffic can still produce unequal utilization.
+What are antagonistic neighbors in datacenter load balancing?	Other colocated processes whose competition for shared resources degrades a backend's performance in ways the load balancer did not predict.
+Why do task restarts complicate backend load balancing?	Recently restarted tasks may perform worse for a while, so sending them normal traffic immediately can create transient imbalance or latency spikes.
+What is the main sinkholing risk of Least-Loaded Round Robin?	A badly unhealthy backend may fail requests very quickly, appear lightly loaded, and attract even more traffic unless recent errors are penalized.
+Why is active-request count only an imperfect proxy for backend capacity?	Some requests spend most of their time waiting on I/O, so equal active counts do not necessarily mean equal CPU or resource saturation.
+Why does each client's local view limit Least-Loaded Round Robin?	A client sees only its own outstanding requests, not the full load other clients are already sending to the same backend.
+What is the core idea of Weighted Round Robin?	Clients use backend-reported capability signals such as utilization, query rate, and errors to weight how much traffic each backend should receive.

@@ -300,3 +300,90 @@ How can organizations reinforce postmortem culture beyond writing documents?	By 
 Why should leadership participate in postmortem culture?	Visible support from senior leaders signals that learning and transparency matter more than blame avoidance.
 Why is visible recognition for good incident handling and postmortem work important?	It rewards the behaviors the organization wants repeated, such as quick mitigation, honesty, and thoughtful follow-through.
 What is the ultimate purpose of postmortem culture?	To turn failures into organization-wide learning that makes future incidents less likely or less damaging.
+Why is outage tracking necessary in addition to postmortems?	Postmortems cover deep learning for major incidents, while outage tracking reveals frequency, toil, trends, and smaller recurring issues across services.
+What is the role of Escalator in Google's alerting workflow?	It tracks whether a human has acknowledged an alert and escalates to the next destination if acknowledgment does not occur in time.
+What is the main purpose of Outalator?	To track outages as higher-level incident records by storing alerts, annotations, groupings, and metadata for later review and analysis.
+Why is grouping multiple alerts into one incident so important?	A single underlying event often triggers many alerts, so grouping reduces duplication and separates incident volume from raw alert volume.
+Why is flexible tagging valuable in outage tracking?	It lets teams add lightweight metadata such as causes, actions, customers, or bogus alerts without waiting for a rigid global taxonomy.
+How does historical outage data help during incident response?	It helps responders ask what happened last time, compare patterns, and reuse prior diagnoses or mitigations.
+How can outage tracking improve shift handoff and periodic reviews?	It can generate compact reports that include subjects, tags, and important annotations so engineers quickly see recent lowlights and open concerns.
+What is a nonobvious benefit of cross-team outage visibility?	It helps teams notice when a dependent service appears unhealthy but its owners have not yet been alerted, allowing faster manual escalation or mitigation.
+How can an outage tracker serve as a system of record beyond human paging?	Teams can send notifications to dummy escalation targets so auditable technical events and periodic jobs are recorded, tagged, and reviewed.
+Why is testing essential for predicting future reliability after changes?	Each passing test before and after a change demonstrates an area of equivalence and reduces uncertainty about how the system will behave in production.
+How does test coverage affect reliability and release pace?	Higher coverage reduces uncertainty per change, allowing more changes before predicted reliability falls below an acceptable threshold.
+What is a zero-MTTR bug in reliability testing?	A bug caught by preproduction system-level testing before release, so user-facing repair time is effectively zero because the push is blocked.
+Why do tests improve user-facing MTBF even if they do not prove reliability?	Catching bugs before release prevents some failures from ever reaching users, increasing the time users experience between failures.
+Why are production tests necessary in addition to hermetic tests?	Production is not fully hermetic because live rollouts, configurations, and dependencies create combinations that offline tests may never exercise.
+What is the purpose of a configuration test in production?	To compare the version-controlled configuration with the way production is actually configured and detect unsafe drift or mismatched rollout state.
+Why are configuration tests especially valuable in distributed systems?	Patterns of passes and failures can reveal unsafe configuration combinations across request paths that individual teams may not notice locally.
+What is the goal of a stress test in SRE?	To discover the limits of a system or component and identify where graceful degradation stops and catastrophic failure begins.
+Why are higher-order bugs especially dangerous during canary rollouts?	Their effects can compound with traffic growth, causing operational workload and user-visible damage to increase very quickly.
+Where should a team start if an important system has very little test coverage?	Begin with the highest-impact areas such as mission-critical code, external APIs, and simple smoke tests that catch obviously broken releases.
+Why should every reported bug become a test case when possible?	Turning bugs into tests builds a regression suite that prevents previously fixed failures from silently returning.
+Why should teams treat a broken main build as urgent?	Broken head slows everyone down, weakens release readiness, and makes later diagnosis harder as more changes pile on.
+Why are reproducible and dependency-aware build systems valuable for testing?	They rebuild and retest only what changed while preserving determinism, making feedback faster, cheaper, and more trustworthy.
+Why do scalable SRE tools need strong testing even if they are not user-facing features?	Their side effects can still damage production systems, capacity, or data, so they require the same seriousness about risk and validation.
+Why should a break-glass release path keep tests running instead of disabling them entirely?	Late test results can still quickly expose mistakes in the rushed change and guide the next corrective push.
+Why should break-glass actions be noisy?	Because bypassing normal validation increases reliability risk and should trigger follow-up work to make the emergency path less necessary next time.
+Why are production probes useful even when the same requests already passed integration and release tests?	They exercise the real production combination of frontends, backends, rollout states, and configuration, which may differ from tested environments.
+What does a failing production probe usually imply?	That production is not equivalent to the tested release environment, which is a strong signal that the site is misconfigured or broken.
+Why is software engineering inside SRE so valuable?	SREs understand production constraints firsthand, so they can build internal tools that improve reliability, scalability, and operational efficiency more effectively than teams far from production.
+Why does software development help SRE teams scale with service growth?	Automation and better tools reduce the amount of manual operational work, allowing supported services to grow faster than headcount.
+Why can software projects be good for individual SREs as well as the organization?	They provide career growth, preserve coding skills, balance interrupt-driven work, and attract a wider mix of engineers into SRE.
+What is the core weakness of traditional capacity planning?	It is brittle, laborious, and imprecise because humans must continually reshape concrete resource allocations as assumptions change.
+Why is traditional capacity planning brittle to change?	Small changes in demand, efficiency, delivery dates, or requirements can invalidate allocations and force widespread rework across multiple planning periods.
+Why is intent-based capacity planning more resilient than demand-only planning?	When supply, demand, or constraints change, the plan can be regenerated from the updated intent instead of manually patched in fragile ways.
+Why is moving from implementation requests toward intent useful in capacity planning?	Higher-level intent exposes flexibility and trade-offs, making it easier to find better allocations and explain the consequences of unmet requirements.
+Why are dependencies crucial to intent-based capacity planning?	Where one service can run is constrained by where its dependent services can run and by latency or locality requirements between them.
+Why are performance metrics essential for capacity planning?	They translate higher-level demand into the lower-level resource usage required by dependent services and infrastructure.
+Why must prioritization be explicit in intent-driven planning?	When capacity is insufficient, the system needs transparent rules for which requirements or service goals should be sacrificed first.
+Why was Auxon a good SRE-led software project?	The team both understood the production pain deeply and directly felt the consequences when the tool failed or succeeded.
+Why is approximation often a good early strategy in SRE software projects?	A simpler initial solution can prove the concept and create momentum while the team learns the harder parts of the problem space.
+How should teams use approximation without trapping themselves later?	Abstract the approximated component behind a clean interface so it can be replaced as understanding and requirements mature.
+Why is modularity especially important when requirements are fuzzy?	It lets teams keep shipping while preserving the ability to swap implementations and adapt as the surrounding ecosystem changes.
+Why was agnosticism an important design principle for Auxon?	Accepting many data sources and surrounding tools lowered adoption friction and kept the system broadly useful across divergent teams.
+Why is launch and iterate especially important for SRE software projects?	Production problems and requirements are often partly unknown, so shipping something useful early creates learning and credibility faster than waiting for a perfect design.
+Why do internal SRE tools still need strong product thinking?	Even expert internal users need usable workflows, documentation, support, and a believable roadmap or they will build their own alternatives.
+Why is choosing the right early customers important for an internal SRE product?	Teams with real pain and no entrenched solution are more likely to adopt early, prove value, and become advocates.
+Why can white-glove support be worthwhile for early adopters of an internal tool?	It reduces onboarding friction, addresses emotional resistance to automation, and helps create successful reference users.
+Why should engineers building SRE software remain active in production work?	Staying embedded in operations keeps the team grounded in real problems and preserves the perspective that makes SRE-built tools valuable.
+Why is introducing software development into SRE an organizational change, not just a technical one?	It requires new habits, roles, expectations, and coordination beyond the usual reflex of solving local pain with ad hoc scripts.
+What capabilities may an SRE organization need to add for successful product-style development?	Product management, agile process leadership, customer advocacy, and other skills common on software product teams.
+Why should SRE software efforts deliver visible value early?	Early useful releases build credibility, attract support, and make it easier to sustain staffing and broader adoption.
+Why should SRE software teams hold themselves to normal production standards?	If an internal tool becomes critical to how SREs work, weak review, testing, or readiness practices will quickly destroy trust in the effort.
+Why isn't adding more power to one machine enough for internet-scale serving?	Physical latency limits and single-point-of-failure risk mean large systems must distribute traffic across many machines and locations.
+What does optimal load balancing depend on?	It depends on the level being optimized, the hardware or software context, and the nature of the traffic itself.
+Why can different request types need different global load-balancing strategies?	Interactive requests often optimize for latency, while transfers such as uploads may sacrifice latency to maximize throughput or use underutilized paths.
+What is the main weakness of returning multiple IP addresses in DNS and letting clients choose?	It gives very little control over traffic distribution because clients typically choose arbitrarily.
+Why does recursive DNS resolution make load balancing harder?	Authoritative nameservers often see the resolver's IP address rather than the end user's, which obscures the true client location.
+How does EDNS0 help DNS-based load balancing?	It lets recursive resolvers include client subnet information so authoritative nameservers can return answers better suited to the actual user.
+Why are large shared DNS resolvers difficult for traffic steering?	One resolver may serve users spread across wide regions, so one DNS answer may be suboptimal for many of those users.
+Why does DNS caching complicate frontend load balancing?	A single authoritative reply may be reused for many users until TTL expiry, making both impact estimation and rapid traffic shifts difficult.
+Why do DNS-based load balancers need awareness of resolver size and geography?	Knowing roughly how many users sit behind a resolver and where they are helps estimate the effect of each DNS answer.
+Why is closest not always the best datacenter in DNS load balancing?	The best location must also have healthy infrastructure, enough capacity, and sometimes better cache or congestion characteristics.
+Why is DNS load balancing alone insufficient for frontend traffic management?	DNS changes propagate slowly, resolver behavior is indirect, and DNS replies can only list a limited number of addresses.
+Why is always choosing the least-loaded backend hard for stateful protocols?	The balancer must keep connection affinity, which requires tracking state for all ongoing connections.
+Why does naive modulo hashing break badly when a backend is removed?	Changing the number of backends remaps almost all connections, which can reset nearly every active session.
+Why is consistent hashing useful in load balancing?	It keeps mappings relatively stable as backends are added or removed, reducing disruption to existing connections.
+What is Direct Server Response in load balancing?	A technique where the balancer forwards requests to a backend but the backend replies directly to the client.
+Why can Direct Server Response save a lot of load-balancer bandwidth?	For request-response patterns like HTTP, only the relatively small requests pass through the balancer while large responses bypass it.
+What is the main scaling drawback of layer-2 load balancing with DSR?	Balancers and backends must remain in the same broadcast domain, which becomes impractical at very large scale.
+How does GRE packet encapsulation help VIP load balancing scale?	The balancer can tunnel packets to backends across routed networks, so backends no longer need layer-2 adjacency with the balancer.
+What is the main trade-off of GRE encapsulation for load balancing?	Encapsulation adds header overhead, which increases packet size and can trigger MTU issues and fragmentation.
+Why does poor in-datacenter load balancing waste capacity?	A service can only accept traffic until its most loaded backend saturates, so imbalance leaves reserved capacity idle on less loaded backends.
+What is the main limitation of simple flow-control-based backend health detection?	A fixed active-request threshold can misclassify slow or long-lived backends and only protects against very extreme overload.
+What is lame duck state for a backend?	A state in which the backend is still alive and can finish existing work but explicitly asks clients to stop sending it new requests.
+Why is lame duck state useful during shutdowns and restarts?	It lets active requests drain cleanly, reducing user-facing errors during pushes, maintenance, or machine failures.
+When might a service need a larger backend subset per client?	When there are far fewer clients than backends or when some clients generate bursty or highly uneven traffic.
+What properties should a good subsetting algorithm have?	It should spread load uniformly, minimize churn on failures or restarts, and adapt gracefully as the numbers of clients or backends change.
+Why does naive random subsetting perform poorly at scale?	It creates large variance in how many clients connect to each backend, forcing significant overprovisioning to cover the hottest backends.
+What is the main idea behind deterministic subsetting?	Partition clients into rounds and assign each round a shuffled backend list so each backend is used evenly while churn stays low.
+Why should deterministic subsetting reshuffle differently for different rounds?	Using different shuffles spreads the impact of backend failures across the fleet instead of concentrating overload within one fixed subset.
+Why do highly variable request costs make simple Round Robin especially weak?	Some backends get unlucky with much more expensive requests, so equal request counts do not translate into equal resource consumption.
+Why can machine diversity hurt naive load balancing?	The same request may cost different amounts of work on different machines, so equal traffic can still produce unequal utilization.
+What are antagonistic neighbors in datacenter load balancing?	Other colocated processes whose competition for shared resources degrades a backend's performance in ways the load balancer did not predict.
+Why do task restarts complicate backend load balancing?	Recently restarted tasks may perform worse for a while, so sending them normal traffic immediately can create transient imbalance or latency spikes.
+What is the main sinkholing risk of Least-Loaded Round Robin?	A badly unhealthy backend may fail requests very quickly, appear lightly loaded, and attract even more traffic unless recent errors are penalized.
+Why is active-request count only an imperfect proxy for backend capacity?	Some requests spend most of their time waiting on I/O, so equal active counts do not necessarily mean equal CPU or resource saturation.
+Why does each client's local view limit Least-Loaded Round Robin?	A client sees only its own outstanding requests, not the full load other clients are already sending to the same backend.
+What is the core idea of Weighted Round Robin?	Clients use backend-reported capability signals such as utilization, query rate, and errors to weight how much traffic each backend should receive.

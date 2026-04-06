@@ -1,0 +1,18 @@
+Why is testing essential for predicting future reliability after changes?	Each passing test before and after a change demonstrates an area of equivalence and reduces uncertainty about how the system will behave in production.
+How does test coverage affect reliability and release pace?	Higher coverage reduces uncertainty per change, allowing more changes before predicted reliability falls below an acceptable threshold.
+What is a zero-MTTR bug in reliability testing?	A bug caught by preproduction system-level testing before release, so user-facing repair time is effectively zero because the push is blocked.
+Why do tests improve user-facing MTBF even if they do not prove reliability?	Catching bugs before release prevents some failures from ever reaching users, increasing the time users experience between failures.
+Why are production tests necessary in addition to hermetic tests?	Production is not fully hermetic because live rollouts, configurations, and dependencies create combinations that offline tests may never exercise.
+What is the purpose of a configuration test in production?	To compare the version-controlled configuration with the way production is actually configured and detect unsafe drift or mismatched rollout state.
+Why are configuration tests especially valuable in distributed systems?	Patterns of passes and failures can reveal unsafe configuration combinations across request paths that individual teams may not notice locally.
+What is the goal of a stress test in SRE?	To discover the limits of a system or component and identify where graceful degradation stops and catastrophic failure begins.
+Why are higher-order bugs especially dangerous during canary rollouts?	Their effects can compound with traffic growth, causing operational workload and user-visible damage to increase very quickly.
+Where should a team start if an important system has very little test coverage?	Begin with the highest-impact areas such as mission-critical code, external APIs, and simple smoke tests that catch obviously broken releases.
+Why should every reported bug become a test case when possible?	Turning bugs into tests builds a regression suite that prevents previously fixed failures from silently returning.
+Why should teams treat a broken main build as urgent?	Broken head slows everyone down, weakens release readiness, and makes later diagnosis harder as more changes pile on.
+Why are reproducible and dependency-aware build systems valuable for testing?	They rebuild and retest only what changed while preserving determinism, making feedback faster, cheaper, and more trustworthy.
+Why do scalable SRE tools need strong testing even if they are not user-facing features?	Their side effects can still damage production systems, capacity, or data, so they require the same seriousness about risk and validation.
+Why should a break-glass release path keep tests running instead of disabling them entirely?	Late test results can still quickly expose mistakes in the rushed change and guide the next corrective push.
+Why should break-glass actions be noisy?	Because bypassing normal validation increases reliability risk and should trigger follow-up work to make the emergency path less necessary next time.
+Why are production probes useful even when the same requests already passed integration and release tests?	They exercise the real production combination of frontends, backends, rollout states, and configuration, which may differ from tested environments.
+What does a failing production probe usually imply?	That production is not equivalent to the tested release environment, which is a strong signal that the site is misconfigured or broken.

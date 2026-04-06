@@ -1,0 +1,9 @@
+Why is outage tracking necessary in addition to postmortems?	Postmortems cover deep learning for major incidents, while outage tracking reveals frequency, toil, trends, and smaller recurring issues across services.
+What is the role of Escalator in Google's alerting workflow?	It tracks whether a human has acknowledged an alert and escalates to the next destination if acknowledgment does not occur in time.
+What is the main purpose of Outalator?	To track outages as higher-level incident records by storing alerts, annotations, groupings, and metadata for later review and analysis.
+Why is grouping multiple alerts into one incident so important?	A single underlying event often triggers many alerts, so grouping reduces duplication and separates incident volume from raw alert volume.
+Why is flexible tagging valuable in outage tracking?	It lets teams add lightweight metadata such as causes, actions, customers, or bogus alerts without waiting for a rigid global taxonomy.
+How does historical outage data help during incident response?	It helps responders ask what happened last time, compare patterns, and reuse prior diagnoses or mitigations.
+How can outage tracking improve shift handoff and periodic reviews?	It can generate compact reports that include subjects, tags, and important annotations so engineers quickly see recent lowlights and open concerns.
+What is a nonobvious benefit of cross-team outage visibility?	It helps teams notice when a dependent service appears unhealthy but its owners have not yet been alerted, allowing faster manual escalation or mitigation.
+How can an outage tracker serve as a system of record beyond human paging?	Teams can send notifications to dummy escalation targets so auditable technical events and periodic jobs are recorded, tagged, and reviewed.

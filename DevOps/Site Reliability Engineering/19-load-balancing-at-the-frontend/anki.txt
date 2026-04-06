@@ -1,0 +1,19 @@
+Why isn't adding more power to one machine enough for internet-scale serving?	Physical latency limits and single-point-of-failure risk mean large systems must distribute traffic across many machines and locations.
+What does optimal load balancing depend on?	It depends on the level being optimized, the hardware or software context, and the nature of the traffic itself.
+Why can different request types need different global load-balancing strategies?	Interactive requests often optimize for latency, while transfers such as uploads may sacrifice latency to maximize throughput or use underutilized paths.
+What is the main weakness of returning multiple IP addresses in DNS and letting clients choose?	It gives very little control over traffic distribution because clients typically choose arbitrarily.
+Why does recursive DNS resolution make load balancing harder?	Authoritative nameservers often see the resolver's IP address rather than the end user's, which obscures the true client location.
+How does EDNS0 help DNS-based load balancing?	It lets recursive resolvers include client subnet information so authoritative nameservers can return answers better suited to the actual user.
+Why are large shared DNS resolvers difficult for traffic steering?	One resolver may serve users spread across wide regions, so one DNS answer may be suboptimal for many of those users.
+Why does DNS caching complicate frontend load balancing?	A single authoritative reply may be reused for many users until TTL expiry, making both impact estimation and rapid traffic shifts difficult.
+Why do DNS-based load balancers need awareness of resolver size and geography?	Knowing roughly how many users sit behind a resolver and where they are helps estimate the effect of each DNS answer.
+Why is closest not always the best datacenter in DNS load balancing?	The best location must also have healthy infrastructure, enough capacity, and sometimes better cache or congestion characteristics.
+Why is DNS load balancing alone insufficient for frontend traffic management?	DNS changes propagate slowly, resolver behavior is indirect, and DNS replies can only list a limited number of addresses.
+Why is always choosing the least-loaded backend hard for stateful protocols?	The balancer must keep connection affinity, which requires tracking state for all ongoing connections.
+Why does naive modulo hashing break badly when a backend is removed?	Changing the number of backends remaps almost all connections, which can reset nearly every active session.
+Why is consistent hashing useful in load balancing?	It keeps mappings relatively stable as backends are added or removed, reducing disruption to existing connections.
+What is Direct Server Response in load balancing?	A technique where the balancer forwards requests to a backend but the backend replies directly to the client.
+Why can Direct Server Response save a lot of load-balancer bandwidth?	For request-response patterns like HTTP, only the relatively small requests pass through the balancer while large responses bypass it.
+What is the main scaling drawback of layer-2 load balancing with DSR?	Balancers and backends must remain in the same broadcast domain, which becomes impractical at very large scale.
+How does GRE packet encapsulation help VIP load balancing scale?	The balancer can tunnel packets to backends across routed networks, so backends no longer need layer-2 adjacency with the balancer.
+What is the main trade-off of GRE encapsulation for load balancing?	Encapsulation adds header overhead, which increases packet size and can trigger MTU issues and fragmentation.
