@@ -1,0 +1,21 @@
+How should a production service handle implausible new configuration input?	Reject or quarantine the bad input, keep serving the last known good state, and alert humans.
+Why is it usually safer to keep serving the previous configuration than to accept suspicious new data?	Preserving a known-good state usually maintains service function while humans investigate the bad input.
+Why should nonemergency rollouts be progressive?	Staged rollout limits blast radius and lets teams detect unexpected behavior before the whole fleet is affected.
+What is the safest default response when a rollout behaves unexpectedly?	Roll back first, then diagnose afterward.
+How should SLOs be defined?	In terms of user-visible experience rather than internal server-centric metrics.
+How is an error budget defined?	The allowed amount of unreliability for a service over a period, equal to 1 minus the SLO.
+How do error budgets help balance reliability and feature velocity?	Teams can keep launching changes while within budget, but should freeze risky changes when the budget is exhausted.
+Why do error budgets reduce tension between SRE and product development?	They replace opinion-based launch debates with a shared quantitative rule.
+What are the only three useful outputs of monitoring?	Pages, tickets, and logs.
+Why are email-only alerts considered dangerous?	They rely on indefinite human vigilance and are likely to be ignored over time.
+What does an "N + 2" capacity target mean?	The system should handle peak load with the two largest instances unavailable, possibly in degraded mode.
+Why should capacity planning use load tests instead of tradition?	System behavior changes over time, so historical assumptions about capacity may no longer be true.
+Why should launches not be sized only for day-one steady-state assumptions?	Launches can attract unusually high traffic precisely when reliability matters most.
+How should a well-designed service behave under overload?	It should degrade gracefully and preserve core functionality with reasonable but reduced results.
+Why is graceful load shedding important during severe overload?	It protects the system from collapse by rejecting or delaying some work so the rest can still succeed.
+How should clients retry RPCs safely?	With exponential backoff and jitter.
+Why are mobile clients especially risky in retry storms?	Bad retry behavior can persist for weeks across millions of devices because code updates are slow to deploy.
+Why include product developers in on-call or ticket handling?	It creates incentives to reduce toil and keeps developers connected to operational reality.
+What minimum team size does the appendix recommend for a sustainable on-call rotation?	At least eight people, and preferably two geographically separated groups of about six each.
+What does it mean if on-call engineers routinely handle more than two significant events per shift?	The monitoring, design, or operational burden is unhealthy and response quality is likely to degrade.
+Why should teams practice hypothetical outages even if incidents are rare?	Rare incidents can leave responders out of practice, so drills keep response skills and documentation sharp.

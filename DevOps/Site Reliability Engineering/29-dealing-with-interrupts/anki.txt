@@ -1,0 +1,19 @@
+Why do many SRE teams use a single primary on-caller for pages?	It minimizes team-wide interruption and avoids the bystander effect by making ownership of response explicit.
+What metrics help determine how a team should handle interrupts?	Response expectations, backlog size, severity, frequency, and how many people are available to handle the work.
+Why is focusing only on fastest-response metrics insufficient when designing interrupt handling?	It ignores human costs such as stress, boredom, context switching, and lost deep-work time.
+Why does interrupt management need to account for the human element?	Because humans are not efficient interrupt-processing machines, and team structures that ignore this reduce productivity and morale.
+Why are constant interruptions especially harmful to project work?	They repeatedly break cognitive flow and impose expensive context switches that destroy long stretches of productive time.
+Why can doing interrupts full-time feel less stressful than mixing interrupts with project work?	When interrupts are the main job, they stop feeling like constant context-switching disruptions and become the current focus of work.
+What is the idea behind "polarizing time" for SRE teams?	Engineers should spend clearly separated blocks of time doing either project work or interrupt work, rather than mixing both constantly.
+Why is polarized time better than treating engineers as always interruptible?	It reduces context switching, protects make time, and lets people know what kind of work they should focus on each day.
+How should a primary on-caller's week be treated with respect to project work?	It should be considered interrupt time, not project time, because on-call duties can disrupt deep work at any moment.
+Why should teams stop randomly assigning tickets across all members?	Random assignment spreads interruptions widely and destroys focus for the whole team.
+How should ticket work ideally be staffed?	As a dedicated interrupt role for one or more people, rather than as ad hoc work distributed across the team.
+Why should ongoing operational responsibilities be attached to roles instead of individuals when possible?	Role-based ownership makes handoffs easier and prevents long-lived operational tasks from interrupting people after their interrupt shift ends.
+What does "be on interrupts, or don't be" mean?	People should either be explicitly assigned to handle interrupts or protected from them, rather than partially doing both.
+Why is it harmful when engineers unofficially help with tickets outside the assigned interrupt role?	It hides the true interrupt load and makes the queue look more manageable than it really is.
+Why should teams analyze tickets and not just grind through them?	Because repeated ticket patterns often have root causes that can be fixed, reducing future interrupt volume.
+What is the value of a ticket handoff process?	It preserves context between rotations and helps the team spot recurring causes instead of repeatedly relearning the same issues.
+Why should teams regularly scrub pages and tickets for patterns?	To identify classes of interrupts that can be silenced, automated, or fixed at the source.
+How can policy reduce interrupt load?	By setting clearer requirements for requestors, pushing appropriate preparatory work back to customers, or deprecating support for low-value painful systems.
+What principle should guide policies for handling customer interrupts?	Requests should be meaningful, rational, and complete, and responses should still be helpful and timely.

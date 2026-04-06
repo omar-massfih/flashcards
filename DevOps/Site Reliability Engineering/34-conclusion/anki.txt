@@ -1,0 +1,9 @@
+Why is splitting SRE time between operations and engineering so important?	It lets engineers both experience real system failures directly and build the tools or abstractions that make future operations easier.
+What does it mean that SRE plays both "pilot" and "engineer/designer"?	SRE both operates systems in production and turns those operational lessons into code, products, and platforms that improve those systems.
+Why is codifying operational experience into software so powerful?	It turns hard-won production knowledge into reusable systems that can be shared across teams instead of being trapped in individual experience.
+How do SRE activities evolve as systems mature?	The work shifts from directly handling small-scale tasks to automating and abstracting those tasks across very large fleets.
+Why does the conclusion compare SRE evolution to the aviation industry?	The analogy shows how much system complexity, safety, and scale can grow while the operator interface remains usable by a small, highly trained group.
+What does the aircraft analogy suggest about good operational interfaces?	They should be simple enough for normal operation, yet flexible enough for skilled operators to handle emergencies effectively.
+What does the conclusion suggest about the ideal size and posture of an SRE team?	It should stay as compact as possible while operating at a high level of abstraction through good systems, APIs, and failsafes.
+Why must a compact SRE team still have deep system knowledge?	Abstractions and automation only work well when operators understand how the underlying systems behave and fail.
+What is the long-term direction implied by the conclusion for SRE organizations?	Build increasingly reliable underlying systems and better abstractions so small teams can safely operate ever-larger infrastructure.

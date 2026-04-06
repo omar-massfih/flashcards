@@ -1,0 +1,19 @@
+Why is the "API as contract" metaphor useful for SRE communication?	It emphasizes that team interfaces need deliberate design, because fixing a bad communication contract later is painful.
+What is the main purpose of a production meeting in SRE?	To create a shared understanding of service health and use operational evidence to improve the service.
+Why are production meetings especially valuable for service improvement?	They connect operational behavior back to design, configuration, and implementation decisions in a regular feedback loop.
+What default agenda items are especially important in an SRE production meeting?	Upcoming changes, metrics, outages, paging events, nonpaging events, and prior action items.
+Why should production meetings review paging and nonpaging events separately?	The distinction helps teams decide what should page, what should merely be tracked, and what should be removed as noise.
+Why is compulsory attendance important for an SRE team's production meeting?	The meeting only works if the people responsible for the service leave with the same picture of what is happening.
+Why should partner product development teams attend production meetings when possible?	SRE's operational feedback loses much of its value if the teams making design and implementation decisions are absent.
+Why does SRE's global distribution make collaboration especially important?	Teams span sites and time zones, so written communication and intentional coordination are essential for shared understanding.
+What is the trade-off of specialization in SRE team structure?	It improves mastery of a focused area but increases the risk of silos and loss of broader system understanding.
+Why do significant SRE projects usually require multiple people?	Because nontrivial reliability and infrastructure work rarely succeeds as a singleton effort.
+Why is strong written communication especially important for cross-site SRE work?	It offsets the latency and ambiguity of distance and helps teams collaborate effectively across time zones.
+What problem did the Viceroy project solve within SRE?	It replaced many duplicative team-specific monitoring dashboard efforts with a common solution.
+Why did duplicative monitoring projects arise before Viceroy?	Teams were rewarded for solving local needs quickly, while cross-team collaboration was harder and shared infrastructure acted more like a toolkit than a finished product.
+What is a key downside of casual contributions in cross-site projects?	They can dilute ownership, leaving delivered features unsupported after contributors move on.
+What is a core recommendation for structuring cross-site engineering projects?	Divide the project into clear components, assign them to small groups, and define explicit deliverables and deadlines.
+Why should cross-site projects document decisions and standards aggressively?	Written design, reviews, and norms reduce the coordination costs created by distance and contributor churn.
+Why is early collaboration between SRE and product development especially valuable?	SRE can influence architecture and behavior before reliability problems become expensive or impossible to retrofit.
+In the DFP-to-F1 migration case, what distinctive value did SRE bring early in the project?	SRE drove the scalable infrastructure design, operational model, capacity planning, monitoring, and rollout preparation.
+Why did defining interfaces early help the DFP-to-F1 migration collaboration?	It let product development and SRE work in parallel while staying aligned on where business logic and infrastructure changes met.

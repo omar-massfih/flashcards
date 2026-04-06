@@ -1,0 +1,16 @@
+Why should SRE onboarding favor structure over "trial by fire"?	Structured onboarding builds confidence, makes progress visible, and teaches durable reasoning skills instead of relying on repeated reactive work.
+What is wrong with using ticket queues and interrupts as the main way to train new SREs?	It overemphasizes reactive work, teaches narrow procedural habits, and often delays deeper understanding of systems and reliability principles.
+Why is it useful to include comprehension questions in an on-call learning checklist?	They verify that the trainee has internalized how the system works rather than merely reading documents passively.
+Why should new SREs get targeted project work instead of mostly menial work?	Meaningful projects build ownership, technical depth, and trust much faster than repetitive grunt work alone.
+Why are reverse engineering skills important for SREs?	SREs routinely face systems they have never seen before, so they must infer behavior from logs, tools, RPC boundaries, and system signals.
+Why do SREs need statistical and comparative thinking during incidents?	Because diagnosing large systems often depends on comparing populations, versions, regions, or behaviors to isolate what is different.
+Why do SREs need improvisation skills in addition to procedures?	Because real incidents often break assumptions and standard playbooks, requiring flexible reasoning and alternate approaches under pressure.
+What makes reverse-engineering exercises valuable in SRE training?	They force trainees to discover system behavior from first principles and instrumentation, which strengthens debugging instincts and reveals stale assumptions.
+Why are postmortems especially valuable for aspiring on-callers?	They expose real failure modes, trigger conditions, and mitigations, helping new SREs build a mental map of how production systems actually fail.
+What is the purpose of disaster role-playing exercises for SRE teams?	They let engineers practice incident reasoning together, share techniques across experience levels, and rehearse rare or hypothetical failures safely.
+Why should SRE teams create realistic break-fix exercises before a trainee goes on-call?	Hands-on failures build reflexes with real monitoring and tooling before the trainee has to respond under actual production pressure.
+How can documentation become an apprenticeship tool in SRE?	New SREs can refresh outdated training docs with guidance from experts, learning the system while improving the team's shared knowledge.
+Why should new SREs shadow on-call before joining the rotation?	Shadowing exposes them to real incidents without full responsibility and helps both the trainee and the team assess readiness.
+Why can reverse shadowing be a useful final step before independent on-call?	It lets the trainee lead real incident handling while an experienced SRE silently validates decisions and steps in if needed.
+Why should going on-call be treated as a milestone rather than the end of training?	Because on-call marks a transition to more self-directed learning, not the completion of learning about a changing production system.
+Why should SRE teams run ongoing learning sessions even for experienced engineers?	Systems keep changing, so regular talks on new architecture, features, and operational changes keep the whole team current.

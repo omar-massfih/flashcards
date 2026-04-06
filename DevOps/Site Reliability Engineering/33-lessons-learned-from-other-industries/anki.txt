@@ -1,0 +1,18 @@
+What does "hope is not a strategy" mean in SRE and similar high-reliability fields?	Teams should actively test failures, prepare for disasters, and build resilience instead of assuming bad events will not happen.
+What is the purpose of disaster testing in SRE?	To verify assumptions about system behavior, expose weaknesses, and make systems more robust before uncontrolled outages occur.
+What is swing capacity?	Reserve capacity that can be deployed during emergencies or anticipated surges to keep systems operating under abnormal load.
+Why do some industries prefer simulations over live drills?	When real-world testing could endanger lives or critical equipment, realistic simulation provides safer practice.
+Why do some industries still rely on live drills despite having simulations?	Because practicing real responses builds operational reflexes and exposes practical weaknesses that thought exercises alone can miss.
+Why do some industries invest heavily in detailed requirements gathering and design before implementation?	When the cost of failure is extremely high, careful upfront design reduces risk more effectively than fast iteration.
+What does defense in depth mean in reliability engineering?	Building multiple layers of protection and fallback so one failure does not immediately become a catastrophe.
+What is the core purpose of a blameless postmortem?	To understand what happened, evaluate the response, and make changes that reduce the chance of recurrence without focusing on individual blame.
+Why do many non-software industries scrutinize near misses?	Near misses reveal latent hazards before they cause serious harm, making them valuable opportunities for prevention.
+Why do some industries resist automation more than SRE does?	They may prioritize slow, observable human decision chains when rapid automated mistakes could cause catastrophic harm.
+What lesson does the chapter draw from automation failures in finance?	Automation can amplify bad configuration or logic extremely quickly, so speed is dangerous without strong controls.
+What kind of automation benefit is illustrated by laser eye surgery systems?	Automation can eliminate entire classes of human error by validating inputs and matching the correct data to the correct patient.
+What principles define structured and rational decision making in SRE?	Agree on decision criteria up front, make inputs and assumptions explicit, and prefer data over status, intuition, or hierarchy.
+What is a HiPPO in decision making?	The Highest-Paid Person's Opinion, which should not override better data.
+Why are some industries much slower to change working technology?	When systems are already highly reliable and the cost of failure is extreme, avoiding change can be safer than pursuing innovation.
+How does Google's reliability culture differ from many other high-reliability industries?	Google balances reliability with a much higher appetite for velocity and ongoing change.
+Why can Google use mechanisms like error budgets in ways many other industries cannot?	Many Google services do not directly put lives at risk, so the organization can tolerate calculated risk to fund innovation.
+What is a key overall lesson from comparing SRE with other industries?	Core reliability principles are broadly shared, but their implementation depends heavily on the stakes of failure, rate of change, and tolerance for risk.
