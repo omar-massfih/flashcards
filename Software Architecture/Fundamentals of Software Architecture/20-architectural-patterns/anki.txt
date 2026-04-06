@@ -1,0 +1,19 @@
+Why should architects distinguish patterns from best practices?	A pattern is situational and trade-off driven, whereas calling something a best practice wrongly implies it should always be used.
+Why should architects choose the pattern before the tool or framework?	Tools often mix several patterns and implementation details, so starting from the pattern keeps the design aligned to the real problem.
+What problem does the reuse pattern in distributed systems try to solve?	Separating concerns that benefit from strong coupling, such as operational capabilities, from domain concerns that should stay decoupled.
+Why can duplication be preferable to reuse in microservices domain design?	Sharing domain code across service boundaries increases coupling, while duplication preserves bounded-context independence.
+What is the core idea of hexagonal architecture?	Keep domain logic in the center and interact with the outside world through ports and adapters.
+What problem does the Sidecar pattern solve in microservices?	It isolates shared operational concerns such as monitoring, logging, and circuit breaking from domain logic.
+What trade-off does the Sidecar pattern introduce?	It standardizes cross-cutting operations, but each platform needs its own sidecar implementation and the sidecar can grow complex or drift.
+What is the core difference between orchestration and choreography as communication patterns?	Orchestration centralizes workflow coordination in a mediator, while choreography lets participating services coordinate directly without a central owner.
+Why does orchestration help with workflow state management?	A central orchestrator owns workflow progress, making state easier to query, coordinate, and recover.
+Why does orchestration simplify error handling and retries?	The orchestrator has enough workflow context to detect failures, retry steps, and manage boundary conditions consistently.
+What are the main architectural costs of orchestration?	It can create a bottleneck, a single point of failure, tighter service coupling, and less scalability than choreography.
+What are the main advantages of choreography?	It improves decoupling, removes central chokepoints, and often scales and responds better.
+What are the main drawbacks of choreography?	Without a workflow owner, state tracking, error handling, and recovery become more distributed and harder to manage.
+What problem does CQRS solve?	It separates reads from writes so each side can be optimized, secured, or scaled differently.
+How does CQRS typically structure data flow?	Writes go to one store, and the resulting data is synchronized to a separate read model, often asynchronously.
+Why can CQRS support differing architectural characteristics better than a single read/write store?	Read and write paths can use different data models, scaling strategies, and security boundaries.
+What is the Domain-Broker pattern?	An event-driven pattern where related domains or service groups own separate brokers instead of sharing one global broker.
+Why can the Domain-Broker pattern improve distributed systems?	It better matches domain boundaries and increases isolation, scalability, and fault tolerance.
+What trade-off does the Domain-Broker pattern introduce?	It improves isolation and scale, but it adds infrastructure, cost, moving parts, and more difficult queue or topic discovery.

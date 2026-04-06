@@ -1,0 +1,23 @@
+What is the Covering Your Assets antipattern in architectural decisions?	Avoiding or deferring decisions out of fear of choosing incorrectly.
+How can an architect avoid the Covering Your Assets antipattern?	Make the decision at the last responsible moment and collaborate closely with teams who must implement it.
+What is the last responsible moment for an architectural decision?	The point where the cost of further delay becomes greater than the risk reduced by waiting.
+Why does collaboration with development teams improve architectural decisions?	It gives the architect faster feedback on implementation realities and helps expose hidden constraints early.
+What is the Groundhog Day antipattern in architectural decisions?	The same decision gets debated repeatedly because people do not understand why it was made.
+How can an architect avoid the Groundhog Day antipattern?	Provide clear technical and business justification for the decision.
+Why is business justification important in an architectural decision?	It explains why the decision is worth the cost and effort from the organization's perspective.
+What is the Email-Driven Architecture antipattern?	Architectural decisions are communicated through scattered emails instead of being maintained in a single authoritative record.
+How can an architect avoid the Email-Driven Architecture antipattern?	Communicate the context of the decision by email if needed, but link everyone to a single system of record for the actual decision.
+What does architecturally significant mean?	A decision that materially affects system structure, architectural characteristics, dependencies, interfaces, or construction techniques.
+Why can a technology choice still be an architectural decision?	If it materially affects an important architectural characteristic, such as performance, scalability, or reliability.
+What kinds of decisions about dependencies are architecturally significant?	Those that affect coupling between components or services and thereby influence qualities like modularity, agility, reliability, or testability.
+Why are interface decisions architecturally significant?	They shape how parts of the system are accessed, versioned, orchestrated, and changed over time.
+What is an Architectural Decision Record (ADR)?	A short document that captures a specific architectural decision, its context, rationale, and consequences.
+Why are ADRs effective for documenting architecture?	They record not just what was chosen, but why it was chosen and what trade-offs were accepted.
+What are the core sections of an ADR?	Title, Status, Context, Decision, and Consequences.
+What does the Status field in an ADR communicate?	Whether the decision is still proposed, accepted, or has been superseded by a later decision.
+Why is the Superseded ADR status valuable?	It preserves decision history and shows why a previous accepted choice was replaced.
+What should the Context section of an ADR describe?	The forces, situation, and relevant alternatives that make the decision necessary.
+How should the Decision section of an ADR be written?	In a clear affirmative voice that states the decision directly and explains the rationale behind it.
+What is the main purpose of the Consequences section in an ADR?	To document the impact and trade-offs of the decision, including both costs and benefits.
+Why can ADRs be useful even for existing systems?	They help teams recover the reasoning behind major choices, validate whether those choices still make sense, and expose poor assumptions.
+Why are ADRs better stored in a dedicated shared repository than only inside one application repo?	Many decisions affect multiple systems or stakeholders, so ADRs need broader visibility and context than a single codebase can provide.

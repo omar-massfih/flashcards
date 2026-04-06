@@ -419,3 +419,191 @@ Why is sharing custom libraries risky in microservices?	Shared code leaks functi
 What kind of team topology fits microservices best?	Domain-aligned cross-functional teams, because the architecture is partitioned around business domains rather than technical layers.
 Why do microservices score highly on deployability and evolvability?	Small, independently deployable services let teams change and release parts of the system without coordinating the whole architecture.
 Why does microservices often have strong fault tolerance?	Failures are more isolated because services are separately deployed and do not all share the same process or data boundary.
+Why is there no universally correct architecture style?	The right choice depends on trade-offs among domain needs, architectural characteristics, data concerns, team realities, and organizational constraints.
+Why do architecture styles go in and out of fashion?	Industry preferences shift as architects react to past pain points, ecosystem changes, new capabilities, faster change, domain shifts, and external business pressures.
+What two things is an architect fundamentally designing when choosing a style?	The problem domain itself and the structural support needed to satisfy the required architectural characteristics.
+Why is domain knowledge necessary before choosing an architecture style?	Important domain behaviors and constraints influence what boundaries, workflows, and operational characteristics the architecture must support.
+Why are architectural characteristics often more decisive than the domain when selecting a generic architecture style?	Most styles can model many domains, but they differ sharply in how well they support qualities like scalability, deployability, performance, and fault tolerance.
+Why must architects consider data architecture when choosing a style?	Data location, schema ownership, and interaction with existing databases can strongly constrain service boundaries and communication patterns.
+Why does cloud deployment affect architecture-style choice?	Cloud environments change the trade-offs around elasticity, scalability, data movement, provisioning, and operational complexity.
+Why do organizational factors influence architecture-style decisions?	Cost, vendor constraints, acquisition plans, engineering maturity, and process realities can rule out designs that are technically attractive.
+Why does team and process maturity matter when choosing an architecture style?	Some styles, such as microservices, rely on strong engineering, deployment, testing, and operational practices to succeed.
+Why is a highly coupled problem domain a poor match for a highly decoupled architecture?	The architecture fights the domain's natural coordination needs, leading to excessive communication and awkward boundaries.
+What question helps decide between monolithic and distributed architecture?	Whether one coherent set of architectural characteristics is sufficient, or whether different parts of the system need meaningfully different characteristics.
+When does a monolith tend to be a good fit?	When the system can live within one main architectural quantum and does not need sharply different operational characteristics across parts.
+When does a distributed architecture tend to be a better fit?	When different parts of the system need different characteristics, boundaries, or scaling behaviors that a single quantum cannot support well.
+Why must architects decide where data should live early in distributed design?	Data ownership influences service boundaries, workflow design, and how information moves through the architecture.
+Why is synchronous communication the recommended default when possible?	It is usually simpler to design, implement, and debug than asynchronous communication.
+When should architects choose asynchronous communication?	When needed to meet characteristics such as scalability, reliability, throughput, or loose coupling that synchronous calls would compromise.
+What trade-off comes with asynchronous communication?	It can improve scale and resilience, but it adds complexity around synchronization, observability, debugging, and coordination.
+Why can a modular monolith be a strong choice for a simple system?	It keeps deployment and operational cost low while still organizing code around business domains.
+Why can a microkernel be a strong choice when customizability is a major requirement?	Its plug-in structure matches a domain that needs isolated, swappable customization points.
+Why should architects distinguish patterns from best practices?	A pattern is situational and trade-off driven, whereas calling something a best practice wrongly implies it should always be used.
+Why should architects choose the pattern before the tool or framework?	Tools often mix several patterns and implementation details, so starting from the pattern keeps the design aligned to the real problem.
+What problem does the reuse pattern in distributed systems try to solve?	Separating concerns that benefit from strong coupling, such as operational capabilities, from domain concerns that should stay decoupled.
+Why can duplication be preferable to reuse in microservices domain design?	Sharing domain code across service boundaries increases coupling, while duplication preserves bounded-context independence.
+What is the core idea of hexagonal architecture?	Keep domain logic in the center and interact with the outside world through ports and adapters.
+What problem does the Sidecar pattern solve in microservices?	It isolates shared operational concerns such as monitoring, logging, and circuit breaking from domain logic.
+What trade-off does the Sidecar pattern introduce?	It standardizes cross-cutting operations, but each platform needs its own sidecar implementation and the sidecar can grow complex or drift.
+What is the core difference between orchestration and choreography as communication patterns?	Orchestration centralizes workflow coordination in a mediator, while choreography lets participating services coordinate directly without a central owner.
+Why does orchestration help with workflow state management?	A central orchestrator owns workflow progress, making state easier to query, coordinate, and recover.
+Why does orchestration simplify error handling and retries?	The orchestrator has enough workflow context to detect failures, retry steps, and manage boundary conditions consistently.
+What are the main architectural costs of orchestration?	It can create a bottleneck, a single point of failure, tighter service coupling, and less scalability than choreography.
+What are the main advantages of choreography?	It improves decoupling, removes central chokepoints, and often scales and responds better.
+What are the main drawbacks of choreography?	Without a workflow owner, state tracking, error handling, and recovery become more distributed and harder to manage.
+What problem does CQRS solve?	It separates reads from writes so each side can be optimized, secured, or scaled differently.
+How does CQRS typically structure data flow?	Writes go to one store, and the resulting data is synchronized to a separate read model, often asynchronously.
+Why can CQRS support differing architectural characteristics better than a single read/write store?	Read and write paths can use different data models, scaling strategies, and security boundaries.
+What is the Domain-Broker pattern?	An event-driven pattern where related domains or service groups own separate brokers instead of sharing one global broker.
+Why can the Domain-Broker pattern improve distributed systems?	It better matches domain boundaries and increases isolation, scalability, and fault tolerance.
+What trade-off does the Domain-Broker pattern introduce?	It improves isolation and scale, but it adds infrastructure, cost, moving parts, and more difficult queue or topic discovery.
+What is the Covering Your Assets antipattern in architectural decisions?	Avoiding or deferring decisions out of fear of choosing incorrectly.
+How can an architect avoid the Covering Your Assets antipattern?	Make the decision at the last responsible moment and collaborate closely with teams who must implement it.
+What is the last responsible moment for an architectural decision?	The point where the cost of further delay becomes greater than the risk reduced by waiting.
+Why does collaboration with development teams improve architectural decisions?	It gives the architect faster feedback on implementation realities and helps expose hidden constraints early.
+What is the Groundhog Day antipattern in architectural decisions?	The same decision gets debated repeatedly because people do not understand why it was made.
+How can an architect avoid the Groundhog Day antipattern?	Provide clear technical and business justification for the decision.
+Why is business justification important in an architectural decision?	It explains why the decision is worth the cost and effort from the organization's perspective.
+What is the Email-Driven Architecture antipattern?	Architectural decisions are communicated through scattered emails instead of being maintained in a single authoritative record.
+How can an architect avoid the Email-Driven Architecture antipattern?	Communicate the context of the decision by email if needed, but link everyone to a single system of record for the actual decision.
+What does architecturally significant mean?	A decision that materially affects system structure, architectural characteristics, dependencies, interfaces, or construction techniques.
+Why can a technology choice still be an architectural decision?	If it materially affects an important architectural characteristic, such as performance, scalability, or reliability.
+What kinds of decisions about dependencies are architecturally significant?	Those that affect coupling between components or services and thereby influence qualities like modularity, agility, reliability, or testability.
+Why are interface decisions architecturally significant?	They shape how parts of the system are accessed, versioned, orchestrated, and changed over time.
+What is an Architectural Decision Record (ADR)?	A short document that captures a specific architectural decision, its context, rationale, and consequences.
+Why are ADRs effective for documenting architecture?	They record not just what was chosen, but why it was chosen and what trade-offs were accepted.
+What are the core sections of an ADR?	Title, Status, Context, Decision, and Consequences.
+What does the Status field in an ADR communicate?	Whether the decision is still proposed, accepted, or has been superseded by a later decision.
+Why is the Superseded ADR status valuable?	It preserves decision history and shows why a previous accepted choice was replaced.
+What should the Context section of an ADR describe?	The forces, situation, and relevant alternatives that make the decision necessary.
+How should the Decision section of an ADR be written?	In a clear affirmative voice that states the decision directly and explains the rationale behind it.
+What is the main purpose of the Consequences section in an ADR?	To document the impact and trade-offs of the decision, including both costs and benefits.
+Why can ADRs be useful even for existing systems?	They help teams recover the reasoning behind major choices, validate whether those choices still make sense, and expose poor assumptions.
+Why are ADRs better stored in a dedicated shared repository than only inside one application repo?	Many decisions affect multiple systems or stakeholders, so ADRs need broader visibility and context than a single codebase can provide.
+Why is analyzing architectural risk one of an architect's key responsibilities?	It helps identify operational and structural weaknesses early so teams can mitigate them before they cause production problems.
+What two dimensions does the architecture risk matrix use?	Overall impact and likelihood of occurrence.
+How does the architecture risk matrix make risk assessment more objective?	It turns subjective judgment into a numeric score by combining impact and likelihood ratings.
+What is a good rule when using the risk matrix and the likelihood is unclear?	Rate likelihood high until you can confirm otherwise.
+Why do architectural characteristics make good risk-assessment criteria?	They reflect the qualities most critical to the architecture's success, such as availability, scalability, or data integrity.
+Why is it useful to total risk both by criterion and by context?	It shows which quality attributes and which business areas deserve the most attention.
+Why can filtering a risk assessment to show only high-risk areas be useful?	It reduces noise so stakeholders can focus on the most urgent architectural problems.
+Why is a static risk assessment not enough?	It shows only a snapshot in time and does not reveal whether risk is improving, worsening, or staying flat.
+What does direction of risk add to a risk assessment?	It shows whether a given risk area is trending up, down, or remaining stable over time.
+Why are fitness functions useful for risk analysis?	They provide continuous measurement that helps architects detect risk trends objectively.
+What is risk storming?	A collaborative exercise for identifying, agreeing on, and mitigating architectural risk.
+Why shouldn't a single architect assess all architectural risk alone?	One person can miss important risks and rarely has complete knowledge of the whole system.
+Why should senior developers and tech leads participate in risk storming?	They contribute implementation-level knowledge and gain a deeper understanding of the architecture.
+What are the three phases of risk storming?	Identification, consensus, and mitigation.
+Why is the identification phase done individually in risk storming?	So participants record their own unbiased view of risk before group discussion influences them.
+What happens in the consensus phase of risk storming?	Participants compare their findings, discuss disagreements, and agree on the real risk level for each area.
+What happens in the mitigation phase of risk storming?	The group proposes architectural changes or other actions to reduce the agreed risks.
+How should unknown or unproven technology be rated during risk storming?	As the highest risk, because the team lacks enough knowledge to assess it confidently.
+Why can risk storming reveal problems before production does?	It combines diverse perspectives to uncover hidden weaknesses, implementation concerns, and risky assumptions early.
+Why should business stakeholders be involved in the risk mitigation phase?	Mitigation choices often cost money or reduce speed, so someone must decide whether the cost is justified by the risk reduction.
+How can risk storming influence architecture beyond just identifying problems?	It can drive refactoring, change system boundaries, and improve stakeholder negotiations about trade-offs.
+Why is risk storming not a one-time activity?	Architecture changes continuously, so teams need to revisit risk as features, load, and system structure evolve.
+Why is diagramming a critical skill for architects?	Architects must communicate technical ideas clearly enough for stakeholders to fund them and teams to build them.
+What is representational consistency in architecture diagrams?	Showing how a detailed view relates to the larger architecture before zooming in so viewers keep their bearings.
+Why is representational consistency important in architecture communication?	Without it, people can understand a local detail but still be confused about its place in the overall system.
+Why should architects use low-fidelity artifacts early in design?	They make it easier to iterate, collaborate, and discard weak ideas before investing heavily in polished diagrams.
+What is the Irrational Artifact Attachment antipattern?	The more time someone spends creating an artifact, the more irrationally attached they become to it.
+Why can low-tech or lightweight diagramming tools improve architectural thinking?	They reduce attachment to early ideas and encourage experimentation, discussion, and revision.
+How should architects use diagramming layers semantically rather than decoratively?	Use the base layer for the core topology and additional layers for contextual details such as technology choices, boundaries, or transactions.
+What is the goal of the C4 model?	To provide a practical modern way to diagram software through progressively deeper views such as context, container, component, and class.
+Why do many architects still use parts of UML even though much of it fell out of favor?	Some UML views, especially class and sequence diagrams, remain effective for communicating structure and workflow.
+Why should architecture diagrams always include titles or labels for important elements?	Unlabeled or ambiguously labeled items make diagrams harder to interpret and easier to misread.
+What do solid and dotted lines usually mean in architecture diagrams?	Solid lines usually indicate synchronous communication and dotted lines usually indicate asynchronous communication.
+Why is consistency more important than the exact arrow or shape conventions you choose?	Viewers can learn almost any notation, but inconsistent notation makes diagrams misleading.
+Why should organizations establish diagramming standards but allow exceptions?	Standards improve consistency, but rigid adherence can hurt clarity when the standard does not fit the problem well.
+Why is collaboration between architects and developers critical?	Architecture succeeds only when decisions flow both ways and the people implementing the system can clarify, challenge, and refine them.
+Why does a one-way handoff from architect to developers usually fail?	Important decisions get lost, implementation feedback never returns, and the architecture drifts away from reality.
+What is one key role of an architect in relation to the development team?	Create and communicate the right constraints so developers have guidance without being boxed in or abandoned.
+What happens when architectural constraints are too tight?	Developers lose flexibility, become frustrated, and cannot use the tools or approaches they need to implement the system effectively.
+What happens when architectural constraints are too loose?	Developers are forced to make too many architectural decisions themselves, causing confusion, proofs of concept, and reduced productivity.
+What is a control-freak architect?	An architect who over-specifies implementation details and imposes excessive constraints on the development team.
+Why is a control-freak architect usually ineffective?	They steal design ownership from developers, create frustration, and prevent the team from solving implementation problems in its own way.
+What is an armchair architect?	An architect who is too detached from the technology, business domain, or team to provide useful guidance.
+Why is an armchair architect usually ineffective?	They create boundaries that are too loose, forcing developers to fill architectural gaps without enough direction.
+What is elastic leadership in software architecture?	Adjusting the architect's level of involvement based on the team and project context rather than always leading the same way.
+What five factors help determine how involved an architect should be with a team?	Team familiarity, team size, overall experience, project complexity, and project duration.
+What is process loss in team effectiveness?	The gap between a team's potential productivity and its actual productivity caused by coordination overhead.
+Why can adding more people to a project reduce team effectiveness?	More people create more coordination and communication overhead, which can outweigh the extra capacity.
+What is pluralistic ignorance in a team setting?	When people privately doubt a decision but stay silent because they assume everyone else sees something they missed.
+Why should an architect watch for pluralistic ignorance in meetings?	It can hide weak decisions because no one feels safe enough to challenge the group.
+What is diffusion of responsibility in a software team?	As teams get larger, people assume someone else will handle an issue, so responsibilities become less clear and work gets dropped.
+What kinds of warning signs suggest a team may be too large?	Process loss, pluralistic ignorance, and diffusion of responsibility.
+When are checklists especially useful for software teams?	When tasks are frequently missed or error-prone and do not depend on a rigid procedural order.
+When are checklists a poor fit?	When the work is procedural with dependent steps or already routine and reliably performed without error.
+Why should architects avoid overusing checklists?	Too many checklists trigger diminishing returns, and developers start ignoring them.
+Why should checklist items be automated when possible?	Automation shortens checklists, removes toil, and improves the signal-to-noise ratio.
+Why should architects communicate design principles rather than just isolated decisions?	Principles give developers a framework for making good local choices within architectural boundaries.
+How can requiring technical and business justification improve a team's decisions?	It pushes developers to think not only about elegance or preference, but also about value, cost, and impact on the organization.
+Why are negotiation skills critical for software architects?	Architectural decisions are constantly challenged, so architects must resolve disagreements and gain support from stakeholders, peers, and developers.
+Why should architects pay attention to buzzwords and jargon during negotiation?	Exaggerated phrases often reveal the stakeholder's real concerns, such as time to market, performance, or availability.
+Why should architects gather as much information as possible before a negotiation?	Better facts make it easier to frame the trade-offs clearly and avoid arguing from incomplete assumptions.
+Why can expressing availability in downtime terms be better than using "nines" language?	Hours, minutes, and seconds make the trade-off more concrete and easier for stakeholders to reason about.
+Why should cost and time usually be a last-resort negotiation tactic?	Leading with money or schedule can put people on the defensive before you understand what concern matters most to them.
+What does "divide and conquer" mean in architectural negotiation?	Narrow a broad demand to the specific part of the system that truly needs it, reducing scope and cost.
+Why is demonstration often better than argument in technical negotiations?	Showing results in a production-like environment defeats abstract debate and reveals what actually works in context.
+Why should architects avoid letting technical disagreements become personal?	Calm, clear reasoning preserves collaboration, while personal conflict damages trust and decision quality.
+Why is providing justification important when negotiating with developers?	Developers are more likely to accept a constraint or decision when they understand the reason behind it.
+Why is it often better to state the reason before the demand in a negotiation?	People stop listening once they hear something they resist, so leading with justification improves the chance that they hear it.
+Why can collaborative phrasing improve negotiations with developers?	Questions and explanations keep the conversation open, while commands shut collaboration down.
+How can an architect get developer buy-in from disagreement?	Let the developer test or prove the alternative themselves so they either validate it or discover why it fails.
+Why should architects strive to be both pragmatic and visionary?	They must think strategically about the future while still delivering practical solutions that fit real constraints.
+What does being pragmatic mean for a software architect?	Accounting realistically for budget, time, team skills, trade-offs, and technical limitations.
+How does leading by example differ from leading by title?	Respect is earned through behavior, collaboration, and support rather than through authority alone.
+Why is language important in architectural leadership?	Small wording choices can either invite collaboration or make people defensive and resistant.
+What is one sign that an architect is integrating well with a development team?	The team sees the architect as a go-to person for questions, help, and guidance.
+Why should architects ask whether they are truly needed in a meeting?	Unnecessary meetings pull them away from mentoring, guiding, and unblocking the development team.
+Why are meeting agendas useful for architects?	They help decide whether to attend, whether only part of the meeting matters, or whether notes are enough.
+Why can a technically sound architecture still fail without proper intersections?	If implementation, infrastructure, data, teams, or business context are misaligned, the architecture's intended qualities will not materialize.
+How can implementation drift undermine architectural characteristics?	Developers may optimize for local concerns like responsiveness or convenience in ways that break the architecture's intended scalability, elasticity, or decoupling.
+Why must source-code structure align with logical architecture?	When code organization diverges from the logical design, maintainability, testability, deployability, and evolvability all suffer.
+Why are automated governance tools useful for implementation alignment?	They help enforce structural rules and constraints so the implementation does not quietly drift away from the intended architecture.
+Why can violating architectural constraints cause the architecture to fail?	The style may rely on those restrictions to preserve change control, decoupling, performance, or some other critical quality.
+Why is the intersection of architecture and infrastructure so important?	Operational characteristics such as scalability, elasticity, availability, and fault tolerance depend on infrastructure as much as on design.
+How can cloud deployment still misalign with architecture even when cloud features are powerful?	Poor placement or configuration choices can negate benefits like performance, fault tolerance, elasticity, or data consistency.
+Why must database topology align with architectural style?	The wrong topology can weaken the style's intended superpowers, such as bounded context, change control, scalability, or fault tolerance.
+Why is database-per-service usually aligned with microservices?	It preserves bounded contexts and supports independent change, deployment, and ownership.
+Why should architects align database type with architectural characteristics?	Different databases amplify different qualities, so choosing one that supports the architecture's key characteristics strengthens the whole system.
+Why should architects align database choice with data structure and read/write priorities?	Misalignment between data shape or access pattern and database type leads to inefficiency and poor performance.
+Why can engineering practices determine whether an architecture succeeds?	Some styles assume mature practices such as automation, testing, continuous delivery, and operational collaboration.
+Why is microservices a poor fit for weak engineering practices?	Its benefits depend on automation, deployment maturity, testing discipline, and strong operational support.
+How can fitness functions help align engineering practices with architecture?	They measure whether the system is actually preserving the architectural characteristics that the practices are supposed to support.
+Why must team topology align with architecture?	If team structure fights the architecture's partitioning model, teams will struggle to build, change, and maintain the system effectively.
+How does partitioning type connect architecture and team topology?	Domain-partitioned architectures work best with domain-aligned teams, while technically partitioned architectures align better with technically specialized teams.
+Why is systems integration an important architectural intersection?	External systems can impose limits on compatibility, reliability, scalability, responsiveness, and coupling.
+Why must architecture align with enterprise standards and practices?	A solution that ignores enterprise constraints may be rejected or become an unsustainable one-off even if it is technically strong.
+What is domain-to-architecture isomorphism in the business intersection?	The fit between the business environment and the generic shape or style of the architecture.
+Why is business change especially hard for architecture?	Architects must handle both known unknowns and unknown unknowns, so rigid upfront design inevitably breaks down.
+Why are iterative and evolutionary approaches important for business alignment?	They let the architecture adapt as business needs change instead of assuming everything important is known in advance.
+Why should architects build a reputation as objective arbiters of trade-offs rather than evangelists?	Context changes over time, so today's favored solution can become tomorrow's antipattern.
+Why do organizations value objective trade-off analysis from architects?	Critical decisions need sober judgment that others can trust, not attachment to a preferred technology or style.
+Why is documenting why a decision was made so important?	Future architects and developers need the rationale and trade-offs, not just the resulting structure.
+Why is reducing architectural choices to simple binaries often misleading?	Most decisions involve gradations, contextual weighting, and messy trade-offs rather than clean either-or answers.
+Why is code reuse not a free win in architecture?	Reuse introduces coupling and churn unless the reused code has good abstraction and low volatility.
+Why is high-volatility domain code usually a poor reuse target?	Frequent changes in shared domain code force widespread coordination and increase the risk of ripple effects.
+Why is plumbing code often a better reuse target than domain logic?	Frameworks, libraries, and infrastructure code usually have lower volatility and fewer business-driven changes.
+Why must architects repeat trade-off analysis even for similar situations?	Small contextual differences in teams, budgets, goals, or technology can change which option is best.
+What is the Out of Context antipattern in trade-off analysis?	Understanding the trade-offs but failing to weight them correctly for the actual business and technical context.
+Why is generic trade-off analysis not enough?	The same trade-offs matter differently depending on the specific priorities of the situation.
+Why do ADRs and diagrams support the Second Law?	They preserve the reasoning, context, and consequences behind decisions, not just the resulting implementation.
+Why is context essential in choosing between a shared library and a shared service?	Factors like heterogeneity, volatility, performance, and risk must be weighted differently depending on the environment.
+Why might a shared library beat a shared service in some contexts?	It can offer better performance, scalability, fault tolerance, and change safety when callers are homogeneous and versioning is manageable.
+Why might a shared service beat a shared library in some contexts?	It can better support heterogeneous platforms and high-volatility shared behavior without forcing recompilation across many services.
+Why might queues beat topics in some messaging contexts?	They allow heterogeneous messages, independent monitoring, and tighter control over security and consumers.
+Why might topics beat queues in some messaging contexts?	They reduce coupling and improve extensibility because new consumers can subscribe without changing the producer.
+Why should architects prioritize technical breadth over technical depth?	They must evaluate many technologies, trade-offs, and contexts across a system rather than specialize deeply in only one area.
+What is the difference between coupling and cohesion?	Coupling measures interdependence between parts, while cohesion measures how strongly the responsibilities within one part belong together.
+Why is an architectural quantum important?	It helps identify which parts of a system can vary independently in operational characteristics and which parts are still coupled together.
+What is the difference between technical partitioning and domain partitioning?	Technical partitioning groups by technical role such as UI or data access, while domain partitioning groups by business capability or workflow.
+What distinguishes an architectural style from an architectural pattern?	A style defines a broader named topology and structure, while a pattern is a contextualized solution to a recurring problem.
+When does a distributed architecture tend to be preferable to a monolith?	When different parts of the system need materially different characteristics, boundaries, or scaling behavior.
+Why is bounded context so important in microservices?	It preserves service independence by keeping code, data, and business meaning private to each service boundary.
+Why is data isolation critical in microservices?	Shared data structures create coupling that undermines bounded contexts, independent change, and deployability.
+What is the key difference between choreography and orchestration?	Choreography distributes workflow coordination among participants, while orchestration centralizes it in a mediator.
+What are the core sections of an Architectural Decision Record?	Title, Status, Context, Decision, and Consequences.
+What is the purpose of a risk matrix in architecture?	To combine impact and likelihood into a more objective way of assessing risk.
+What is domain-to-architecture isomorphism?	The fit between the shape of the business problem and the shape of the architecture.
+Why must trade-off analysis be repeated instead of done only once?	Context changes, and small differences in goals or environment can change which option is best.

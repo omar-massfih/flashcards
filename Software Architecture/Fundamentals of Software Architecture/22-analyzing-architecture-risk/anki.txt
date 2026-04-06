@@ -1,0 +1,22 @@
+Why is analyzing architectural risk one of an architect's key responsibilities?	It helps identify operational and structural weaknesses early so teams can mitigate them before they cause production problems.
+What two dimensions does the architecture risk matrix use?	Overall impact and likelihood of occurrence.
+How does the architecture risk matrix make risk assessment more objective?	It turns subjective judgment into a numeric score by combining impact and likelihood ratings.
+What is a good rule when using the risk matrix and the likelihood is unclear?	Rate likelihood high until you can confirm otherwise.
+Why do architectural characteristics make good risk-assessment criteria?	They reflect the qualities most critical to the architecture's success, such as availability, scalability, or data integrity.
+Why is it useful to total risk both by criterion and by context?	It shows which quality attributes and which business areas deserve the most attention.
+Why can filtering a risk assessment to show only high-risk areas be useful?	It reduces noise so stakeholders can focus on the most urgent architectural problems.
+Why is a static risk assessment not enough?	It shows only a snapshot in time and does not reveal whether risk is improving, worsening, or staying flat.
+What does direction of risk add to a risk assessment?	It shows whether a given risk area is trending up, down, or remaining stable over time.
+Why are fitness functions useful for risk analysis?	They provide continuous measurement that helps architects detect risk trends objectively.
+What is risk storming?	A collaborative exercise for identifying, agreeing on, and mitigating architectural risk.
+Why shouldn't a single architect assess all architectural risk alone?	One person can miss important risks and rarely has complete knowledge of the whole system.
+Why should senior developers and tech leads participate in risk storming?	They contribute implementation-level knowledge and gain a deeper understanding of the architecture.
+What are the three phases of risk storming?	Identification, consensus, and mitigation.
+Why is the identification phase done individually in risk storming?	So participants record their own unbiased view of risk before group discussion influences them.
+What happens in the consensus phase of risk storming?	Participants compare their findings, discuss disagreements, and agree on the real risk level for each area.
+What happens in the mitigation phase of risk storming?	The group proposes architectural changes or other actions to reduce the agreed risks.
+How should unknown or unproven technology be rated during risk storming?	As the highest risk, because the team lacks enough knowledge to assess it confidently.
+Why can risk storming reveal problems before production does?	It combines diverse perspectives to uncover hidden weaknesses, implementation concerns, and risky assumptions early.
+Why should business stakeholders be involved in the risk mitigation phase?	Mitigation choices often cost money or reduce speed, so someone must decide whether the cost is justified by the risk reduction.
+How can risk storming influence architecture beyond just identifying problems?	It can drive refactoring, change system boundaries, and improve stakeholder negotiations about trade-offs.
+Why is risk storming not a one-time activity?	Architecture changes continuously, so teams need to revisit risk as features, load, and system structure evolve.

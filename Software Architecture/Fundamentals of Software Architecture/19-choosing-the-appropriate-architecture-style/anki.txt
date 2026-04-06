@@ -1,0 +1,19 @@
+Why is there no universally correct architecture style?	The right choice depends on trade-offs among domain needs, architectural characteristics, data concerns, team realities, and organizational constraints.
+Why do architecture styles go in and out of fashion?	Industry preferences shift as architects react to past pain points, ecosystem changes, new capabilities, faster change, domain shifts, and external business pressures.
+What two things is an architect fundamentally designing when choosing a style?	The problem domain itself and the structural support needed to satisfy the required architectural characteristics.
+Why is domain knowledge necessary before choosing an architecture style?	Important domain behaviors and constraints influence what boundaries, workflows, and operational characteristics the architecture must support.
+Why are architectural characteristics often more decisive than the domain when selecting a generic architecture style?	Most styles can model many domains, but they differ sharply in how well they support qualities like scalability, deployability, performance, and fault tolerance.
+Why must architects consider data architecture when choosing a style?	Data location, schema ownership, and interaction with existing databases can strongly constrain service boundaries and communication patterns.
+Why does cloud deployment affect architecture-style choice?	Cloud environments change the trade-offs around elasticity, scalability, data movement, provisioning, and operational complexity.
+Why do organizational factors influence architecture-style decisions?	Cost, vendor constraints, acquisition plans, engineering maturity, and process realities can rule out designs that are technically attractive.
+Why does team and process maturity matter when choosing an architecture style?	Some styles, such as microservices, rely on strong engineering, deployment, testing, and operational practices to succeed.
+Why is a highly coupled problem domain a poor match for a highly decoupled architecture?	The architecture fights the domain's natural coordination needs, leading to excessive communication and awkward boundaries.
+What question helps decide between monolithic and distributed architecture?	Whether one coherent set of architectural characteristics is sufficient, or whether different parts of the system need meaningfully different characteristics.
+When does a monolith tend to be a good fit?	When the system can live within one main architectural quantum and does not need sharply different operational characteristics across parts.
+When does a distributed architecture tend to be a better fit?	When different parts of the system need different characteristics, boundaries, or scaling behaviors that a single quantum cannot support well.
+Why must architects decide where data should live early in distributed design?	Data ownership influences service boundaries, workflow design, and how information moves through the architecture.
+Why is synchronous communication the recommended default when possible?	It is usually simpler to design, implement, and debug than asynchronous communication.
+When should architects choose asynchronous communication?	When needed to meet characteristics such as scalability, reliability, throughput, or loose coupling that synchronous calls would compromise.
+What trade-off comes with asynchronous communication?	It can improve scale and resilience, but it adds complexity around synchronization, observability, debugging, and coordination.
+Why can a modular monolith be a strong choice for a simple system?	It keeps deployment and operational cost low while still organizing code around business domains.
+Why can a microkernel be a strong choice when customizability is a major requirement?	Its plug-in structure matches a domain that needs isolated, swappable customization points.
