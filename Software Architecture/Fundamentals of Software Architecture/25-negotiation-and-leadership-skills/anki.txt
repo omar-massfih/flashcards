@@ -1,0 +1,19 @@
+Why are negotiation skills critical for software architects?	Architectural decisions are constantly challenged, so architects must resolve disagreements and gain support from stakeholders, peers, and developers.
+Why should architects pay attention to buzzwords and jargon during negotiation?	Exaggerated phrases often reveal the stakeholder's real concerns, such as time to market, performance, or availability.
+Why should architects gather as much information as possible before a negotiation?	Better facts make it easier to frame the trade-offs clearly and avoid arguing from incomplete assumptions.
+Why can expressing availability in downtime terms be better than using "nines" language?	Hours, minutes, and seconds make the trade-off more concrete and easier for stakeholders to reason about.
+Why should cost and time usually be a last-resort negotiation tactic?	Leading with money or schedule can put people on the defensive before you understand what concern matters most to them.
+What does "divide and conquer" mean in architectural negotiation?	Narrow a broad demand to the specific part of the system that truly needs it, reducing scope and cost.
+Why is demonstration often better than argument in technical negotiations?	Showing results in a production-like environment defeats abstract debate and reveals what actually works in context.
+Why should architects avoid letting technical disagreements become personal?	Calm, clear reasoning preserves collaboration, while personal conflict damages trust and decision quality.
+Why is providing justification important when negotiating with developers?	Developers are more likely to accept a constraint or decision when they understand the reason behind it.
+Why is it often better to state the reason before the demand in a negotiation?	People stop listening once they hear something they resist, so leading with justification improves the chance that they hear it.
+Why can collaborative phrasing improve negotiations with developers?	Questions and explanations keep the conversation open, while commands shut collaboration down.
+How can an architect get developer buy-in from disagreement?	Let the developer test or prove the alternative themselves so they either validate it or discover why it fails.
+Why should architects strive to be both pragmatic and visionary?	They must think strategically about the future while still delivering practical solutions that fit real constraints.
+What does being pragmatic mean for a software architect?	Accounting realistically for budget, time, team skills, trade-offs, and technical limitations.
+How does leading by example differ from leading by title?	Respect is earned through behavior, collaboration, and support rather than through authority alone.
+Why is language important in architectural leadership?	Small wording choices can either invite collaboration or make people defensive and resistant.
+What is one sign that an architect is integrating well with a development team?	The team sees the architect as a go-to person for questions, help, and guidance.
+Why should architects ask whether they are truly needed in a meeting?	Unnecessary meetings pull them away from mentoring, guiding, and unblocking the development team.
+Why are meeting agendas useful for architects?	They help decide whether to attend, whether only part of the meeting matters, or whether notes are enough.

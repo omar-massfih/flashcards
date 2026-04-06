@@ -1,0 +1,23 @@
+Why is collaboration between architects and developers critical?	Architecture succeeds only when decisions flow both ways and the people implementing the system can clarify, challenge, and refine them.
+Why does a one-way handoff from architect to developers usually fail?	Important decisions get lost, implementation feedback never returns, and the architecture drifts away from reality.
+What is one key role of an architect in relation to the development team?	Create and communicate the right constraints so developers have guidance without being boxed in or abandoned.
+What happens when architectural constraints are too tight?	Developers lose flexibility, become frustrated, and cannot use the tools or approaches they need to implement the system effectively.
+What happens when architectural constraints are too loose?	Developers are forced to make too many architectural decisions themselves, causing confusion, proofs of concept, and reduced productivity.
+What is a control-freak architect?	An architect who over-specifies implementation details and imposes excessive constraints on the development team.
+Why is a control-freak architect usually ineffective?	They steal design ownership from developers, create frustration, and prevent the team from solving implementation problems in its own way.
+What is an armchair architect?	An architect who is too detached from the technology, business domain, or team to provide useful guidance.
+Why is an armchair architect usually ineffective?	They create boundaries that are too loose, forcing developers to fill architectural gaps without enough direction.
+What is elastic leadership in software architecture?	Adjusting the architect's level of involvement based on the team and project context rather than always leading the same way.
+What five factors help determine how involved an architect should be with a team?	Team familiarity, team size, overall experience, project complexity, and project duration.
+What is process loss in team effectiveness?	The gap between a team's potential productivity and its actual productivity caused by coordination overhead.
+Why can adding more people to a project reduce team effectiveness?	More people create more coordination and communication overhead, which can outweigh the extra capacity.
+What is pluralistic ignorance in a team setting?	When people privately doubt a decision but stay silent because they assume everyone else sees something they missed.
+Why should an architect watch for pluralistic ignorance in meetings?	It can hide weak decisions because no one feels safe enough to challenge the group.
+What is diffusion of responsibility in a software team?	As teams get larger, people assume someone else will handle an issue, so responsibilities become less clear and work gets dropped.
+What kinds of warning signs suggest a team may be too large?	Process loss, pluralistic ignorance, and diffusion of responsibility.
+When are checklists especially useful for software teams?	When tasks are frequently missed or error-prone and do not depend on a rigid procedural order.
+When are checklists a poor fit?	When the work is procedural with dependent steps or already routine and reliably performed without error.
+Why should architects avoid overusing checklists?	Too many checklists trigger diminishing returns, and developers start ignoring them.
+Why should checklist items be automated when possible?	Automation shortens checklists, removes toil, and improves the signal-to-noise ratio.
+Why should architects communicate design principles rather than just isolated decisions?	Principles give developers a framework for making good local choices within architectural boundaries.
+How can requiring technical and business justification improve a team's decisions?	It pushes developers to think not only about elegance or preference, but also about value, cost, and impact on the organization.

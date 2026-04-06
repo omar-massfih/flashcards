@@ -1,0 +1,13 @@
+Why is diagramming a critical skill for architects?	Architects must communicate technical ideas clearly enough for stakeholders to fund them and teams to build them.
+What is representational consistency in architecture diagrams?	Showing how a detailed view relates to the larger architecture before zooming in so viewers keep their bearings.
+Why is representational consistency important in architecture communication?	Without it, people can understand a local detail but still be confused about its place in the overall system.
+Why should architects use low-fidelity artifacts early in design?	They make it easier to iterate, collaborate, and discard weak ideas before investing heavily in polished diagrams.
+What is the Irrational Artifact Attachment antipattern?	The more time someone spends creating an artifact, the more irrationally attached they become to it.
+Why can low-tech or lightweight diagramming tools improve architectural thinking?	They reduce attachment to early ideas and encourage experimentation, discussion, and revision.
+How should architects use diagramming layers semantically rather than decoratively?	Use the base layer for the core topology and additional layers for contextual details such as technology choices, boundaries, or transactions.
+What is the goal of the C4 model?	To provide a practical modern way to diagram software through progressively deeper views such as context, container, component, and class.
+Why do many architects still use parts of UML even though much of it fell out of favor?	Some UML views, especially class and sequence diagrams, remain effective for communicating structure and workflow.
+Why should architecture diagrams always include titles or labels for important elements?	Unlabeled or ambiguously labeled items make diagrams harder to interpret and easier to misread.
+What do solid and dotted lines usually mean in architecture diagrams?	Solid lines usually indicate synchronous communication and dotted lines usually indicate asynchronous communication.
+Why is consistency more important than the exact arrow or shape conventions you choose?	Viewers can learn almost any notation, but inconsistent notation makes diagrams misleading.
+Why should organizations establish diagramming standards but allow exceptions?	Standards improve consistency, but rigid adherence can hurt clarity when the standard does not fit the problem well.
