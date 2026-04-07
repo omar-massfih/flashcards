@@ -183,3 +183,23 @@ What is a crash-recovery failure model?	A model where a process may fail, later 
 What is an omission fault?	A failure where a process or link skips expected actions, such as sending, receiving, or exposing some messages or results.
 What is a Byzantine fault?	A failure where a process continues acting but produces arbitrary or contradictory behavior instead of following the algorithm.
 Why do many practical distributed algorithms assume crash faults instead of Byzantine faults?	Crash-fault models are easier to reason about and implement, while Byzantine tolerance is much more complex and expensive.
+Why is failure detection hard in asynchronous distributed systems?	Without timing guarantees, a process that crashed can look the same as a process or network path that is merely very slow.
+What is the practical role of a failure detector in a distributed system?	To identify failed or unreachable processes so algorithms can stop relying on them and continue making progress without violating safety.
+What is the difference between a failed process and a suspected process?	A failed process has stopped executing, while a suspected process is believed to be faulty or unreachable but may still be alive.
+What trade-off does failure detection make between false positives and false negatives?	Marking processes failed quickly improves responsiveness but risks excluding live processes; waiting longer reduces false positives but delays recovery from real failures.
+Why can't a practical failure detector be both perfectly accurate and maximally fast?	In asynchronous systems, delay is indistinguishable from failure, so faster suspicion necessarily increases the risk of false positives.
+Why are failure detectors important for consensus and atomic broadcast?	They augment the asynchronous model with suspicion information that lets protocols make progress despite crashes or unreachable members.
+What is the difference between ping-based and heartbeat-based failure detection?	Pings actively query peers and wait for replies, while heartbeats have processes proactively announce that they are still alive.
+Why do heartbeat-and-timeout detectors depend heavily on timeout tuning?	A timeout that is too short creates false suspicions under delay, while a timeout that is too long delays detection of real failures.
+How does a timeout-free heartbeat detector avoid direct timeout assumptions?	It counts and propagates heartbeat information through fair paths, letting applications compare heartbeat counters rather than relying on fixed deadlines.
+Why can propagated heartbeat paths detect liveness despite a faulty direct link?	Other processes may still receive and relay the heartbeat, showing that the target is alive through an indirect path.
+What is the main idea of outsourced heartbeats?	When a direct ping fails, a process asks other peers to probe the suspect and report whether they can reach it.
+Why do outsourced heartbeats improve failure-detection decisions?	They combine direct and indirect reachability evidence, reducing the chance that one bad link is mistaken for a process failure.
+What is the main idea of a phi-accrual failure detector?	It reports a continuous suspicion level based on heartbeat arrival statistics instead of making an immediate binary up/down decision.
+How does a phi-accrual failure detector adapt to changing network conditions?	It uses recent heartbeat arrival samples to adjust the suspicion scale, so slower but normal conditions do not look identical to sudden failure.
+How does gossip-style failure detection form a more reliable cluster view?	Members periodically exchange heartbeat counters and timestamps with random peers, merging multiple local views into a broader view of member liveness.
+Why can gossip detect failure despite a broken link between two nodes?	Heartbeat information can still propagate through other members, so one link failure does not necessarily hide a live process.
+What is the trade-off of gossip-style failure detection?	It adds more messages to spread state, but produces a more reliable aggregate view than a single direct check.
+What is the main idea behind FUSE-style failure detection?	It propagates individual failure information by turning it into group failure: members that detect a failed peer stop responding themselves.
+How does FUSE use quiescence to propagate failure?	When a member detects a peer failure, it stops answering pings itself, so the absence of responses spreads the failure signal through the group.
+What is a downside of FUSE-style group failure propagation?	A link failure or partition around one member can be amplified into a group failure, which may or may not match the application's desired semantics.
