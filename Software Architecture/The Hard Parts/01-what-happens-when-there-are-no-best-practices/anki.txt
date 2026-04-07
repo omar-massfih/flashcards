@@ -1,0 +1,29 @@
+Why are software architecture problems often hard to solve with generic best practices?	They combine organization-specific constraints, politics, legacy context, and competing qualities in ways that rarely match someone else's exact scenario.
+Why should architects avoid looking for silver-bullet solutions?	Architectural decisions usually involve competing trade-offs, so no single technique can maximize productivity, reliability, simplicity, and every other goal at once.
+What does it mean to seek the least-worst architecture?	Choose the combination of trade-offs that best supports the goal, even though every option gives up something valuable.
+Why is trade-off analysis central to software architecture?	Architects often face novel consequential decisions where the main skill is objectively comparing costs, benefits, risks, and constraints.
+Why is architecture often described as the stuff that is hard to change later?	Architectural choices shape the system's structural foundation, so changing them later tends to be more expensive than changing ordinary design details.
+Why should architects evaluate architecture styles in their historical context?	A style often became dominant because of the constraints, economics, tooling, and ecosystem limits of its time.
+Why can a new operational capability trigger an architecture shift?	When infrastructure becomes cheaper or easier to manage, design trade-offs change and previously impractical architecture styles may become viable.
+Why does data deserve special architectural attention?	Data usually outlives applications and architectures, so design choices must preserve its availability, usability, and business value over time.
+Why do modern distributed architectures create tension with traditional data-architecture instincts?	Data architects often favor shared, tightly governed data, while distributed architectures often favor bounded contexts and lower coupling.
+What is operational data?	Data used to run day-to-day business operations, typically transactional data that the organization cannot function without for long.
+What is analytical data?	Data used for prediction, trend analysis, business intelligence, and strategic decisions rather than immediate transactional operations.
+Why do data and transactionality become harder in microservices-style architectures?	Splitting bounded contexts moves data ownership and transaction boundaries into the architecture instead of hiding them behind one shared database.
+What should an ADR's Context section capture?	The problem, relevant forces, and alternative solutions that make the architecture decision necessary.
+What should an ADR's Decision section capture?	The chosen architecture decision and the justification for why that option was selected.
+What should an ADR's Consequences section capture?	The effects, costs, benefits, and trade-offs accepted after applying the decision.
+Why are architecture fitness functions useful for governance?	They turn important architecture rules into objective checks that can run continuously instead of relying on occasional manual review.
+What makes an architecture fitness function objective?	It measures a clearly defined outcome, such as a true/false rule or numeric threshold, rather than a vague quality like "high performance."
+Why are composite architecture characteristics hard to govern directly?	They are broad labels made of smaller measurable qualities, so architects must decompose them before automating checks.
+What is the difference between atomic and holistic fitness functions?	Atomic fitness functions check one architecture characteristic; holistic fitness functions check interacting characteristics together.
+How can architects distinguish fitness functions from ordinary domain tests?	If the check requires domain knowledge, it is a domain test; if it validates an architecture characteristic, it is a fitness function.
+Why are dependency-cycle fitness functions valuable?	They catch modularity damage early, before accidental imports or references turn components into a tightly coupled knot.
+Why can layer-governance fitness functions be better than relying only on diagrams?	They continuously verify that implementation dependencies still respect the intended layer boundaries.
+Why should fitness functions run continuously when possible?	A check that runs rarely cannot prevent architectural drift, while continuous checks catch erosion early.
+Why might some fitness functions remain manual?	Some architecture or governance concerns require human judgment, legal review, or other validation that cannot be fully automated.
+Why should architects avoid overusing fitness functions?	Too many rigid checks can frustrate teams; fitness functions should protect important principles, not become an ivory-tower obstacle course.
+How do fitness functions act like professional checklists?	They make important but easy-to-skip architecture safeguards explicit and repeatable under schedule pressure.
+What is coupling in software architecture?	Two artifacts are coupled when a change in one may require a change in the other to preserve correct behavior.
+What is the difference between orchestrated and choreographed workflow coordination?	Orchestration uses a coordinator service to direct the workflow, while choreography distributes coordination across participating services.
+Why is a shared relational schema a major concern when breaking apart a monolith?	The schema concentrates data coupling, so service decomposition must also address table ownership, views, transactions, and reporting needs.
