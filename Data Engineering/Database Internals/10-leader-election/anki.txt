@@ -1,0 +1,28 @@
+Why do distributed algorithms often use a leader?	A leader reduces coordination overhead by letting one process coordinate steps, maintain shared ordering, or drive decisions instead of requiring every participant to contact every other participant.
+What are the key liveness and safety goals of leader election?	Liveness means election eventually completes and a leader exists most of the time; safety means at most one leader exists for the same role at a time.
+What is split brain in leader election?	A failure mode where two or more partitions independently elect leaders that serve the same role without knowing about each other.
+Why is leader election different from distributed locking?	With a lock, others mainly need eventual access; with leader election, participants need to know which process has the special coordination role.
+Why are long-lived leaders usually preferred?	Stable leadership reduces repeated synchronization, election overhead, and state handoff between processes.
+What is the main bottleneck risk of leader-based coordination?	The leader can become a throughput, latency, or availability bottleneck if too much work must pass through one process.
+How can systems reduce the bottleneck risk of a single leader?	Partition the data or work into independent replica sets, each with its own leader.
+Why must leader election be paired with failure detection?	The system needs to detect when the current leader has crashed or become unreachable so another leader can be elected.
+What is the core idea of the bully leader election algorithm?	Processes have unique ranks, and the highest-ranked reachable process becomes the leader.
+How does a process start a bully election?	It sends election messages to higher-ranked processes to check whether any of them are alive and should take over.
+When can a process declare itself leader in the bully algorithm?	When it finds no active process with a higher rank and then notifies lower-ranked processes of the result.
+Why can the bully algorithm produce split brain under network partitions?	Each partition may see no higher-ranked reachable leader and independently elect a leader.
+Why can unstable high-ranked nodes be harmful in the bully algorithm?	They repeatedly win elections and then fail, causing recurring reelections and poor liveness.
+How can host-quality metrics improve bully-style leader election?	The election can consider stability or quality, not only rank, reducing preference for unstable high-ranked nodes.
+How does next-in-line failover optimize bully-style election?	The old leader publishes alternative leaders, so a detector can contact the highest-ranked alternative first instead of running a full election.
+What is the candidate/ordinary optimization for leader election?	It splits processes into candidate and ordinary sets, so only candidate nodes can become leader and ordinary nodes query candidates during election.
+How does the candidate/ordinary optimization reduce election messages?	Ordinary nodes contact only the candidate set rather than every higher-ranked process.
+What is the main idea of the invitation leader election algorithm?	Processes start as leaders of their own groups and invite other groups to merge instead of competing by rank.
+What is the main benefit of invitation-style election?	It can create and merge process groups without restarting a full election from scratch.
+What topology assumption does the ring election algorithm make?	Processes are arranged in a logical ring and know their predecessor and successor relationships.
+How does the ring algorithm collect leader candidates?	An election message traverses the ring, and each reachable process contributes its identity or updates the current highest-ranked identity.
+How is the leader chosen in the ring algorithm?	After the election message completes a ring traversal, the highest-ranked live process seen during traversal is selected.
+Why can the ring algorithm still suffer split brain?	If the ring is partitioned, each partition may complete its own traversal and elect its own leader.
+Why is a cluster-wide majority important for avoiding split brain?	A majority quorum prevents two disjoint partitions from both obtaining enough votes to safely elect independent leaders.
+How do consensus algorithms use leaders differently from simple election algorithms?	They may allow temporary competing leaders but use quorums, terms, or ballots to detect conflicts and preserve safety.
+Why is allowing multiple temporary leaders sometimes a performance optimization?	The system can proceed speculatively and resolve conflicts through later quorum checks instead of blocking on perfect leader uniqueness upfront.
+How does Raft detect an out-of-date leader?	A leader that observes a higher term learns that a newer leader may exist and updates or steps down accordingly.
+Why is leader identity alone not enough for safe coordination?	Processes also need to know whether their local knowledge of the leader is still current despite failures, delays, and elections.
