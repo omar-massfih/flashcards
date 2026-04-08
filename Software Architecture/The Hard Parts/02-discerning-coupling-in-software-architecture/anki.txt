@@ -1,0 +1,25 @@
+Why is "decouple everything" poor architectural advice?	Useful systems still need communication and coordination, so architects must decide where coupling is appropriate rather than treating all coupling as poison.
+Why did microservices make transactionality a first-class architecture concern?	Moving databases inside service boundaries removes the single shared database that previously hid many integrity and transaction details.
+What is the first step in architectural trade-off analysis for entangled problems?	Identify which parts are entangled together before comparing their trade-offs.
+How should architects analyze coupling during trade-off analysis?	Determine how parts are coupled and how changes in one part might force changes in another.
+What microservices sizing problem motivates the coupling framework?	Services that are too small create transaction and orchestration pain, while services that are too large reduce scalability and deployment independence.
+Why distinguish static coupling from dynamic coupling?	Static coupling explains what must be wired together to run; dynamic coupling explains how runtime calls temporarily connect architectural parts.
+Why can a shared database collapse an otherwise distributed architecture into one quantum?	Services that depend on the same database cannot vary or deploy fully independently from that shared coupling point.
+Why can a mediator in event-driven architecture create a single architecture quantum?	If workflow coordination depends on the mediator, it becomes a holistic coupling point required for the architecture to function.
+Why can a broker-style event-driven architecture still be a single quantum?	Even without a central mediator, a shared database or other shared dependency can statically couple all services together.
+When can an event-driven architecture have multiple architecture quanta?	When groups of services have independent data stores and no static dependencies that prevent each group from running in a production-like ecosystem.
+Why can a tightly coupled user interface reduce microservice quanta to one?	If the UI cannot operate unless many backend services cooperate, it becomes a coupling point across those services.
+How can micro frontends support multiple architecture quanta?	Each service emits its own UI component, letting service and UI pieces vary more independently while the shell stays a loose integration surface.
+What operational dependencies can become static coupling points?	Databases, message brokers, operating systems, orchestration platforms, libraries, frameworks, and deployment configuration.
+Why can synchronous calls temporarily entangle otherwise independent quanta?	The caller's performance, responsiveness, scalability, and reliability become tied to the callee while it waits for a response.
+How can asynchronous communication soften dynamic coupling between quanta?	A queue or message channel can buffer work, letting services operate with more independent timing and capacity.
+What three forces define dynamic quantum coupling?	Communication, consistency, and coordination.
+Why can't communication, consistency, and coordination choices be made independently?	Each choice pulls on the others; for example, atomic consistency is easier with synchronous orchestration, while scale often favors asynchronous eventual choreography.
+Why is asynchronous atomic choreography a difficult combination?	It combines no central coordinator with all-or-nothing consistency, making failure handling and agreement hard.
+Why does synchronous atomic orchestration create very high coupling?	The workflow depends on immediate responses, all-or-nothing consistency, and a central coordinator at the same time.
+Why does asynchronous eventual choreography create very low coupling?	Services communicate without waiting, accept eventual consistency, and avoid a central workflow coordinator.
+Why is a static quantum diagram useful before reliability analysis?	It shows which dependencies must be tested or considered when a service, data store, broker, or platform component changes.
+Why does architecture quantum differ from DDD bounded context?	It overlaps around cohesion and domain boundaries, but architecture quantum also includes deployability and static/dynamic coupling.
+Why can two independently deployed services still be dynamically coupled?	Runtime workflows can tie their operational characteristics together even when their deployment and static dependencies are separate.
+How does static coupling affect the scope of architecture characteristics?	The quantum boundary identifies which pieces must share operational qualities such as scalability, reliability, or deployability.
+Why can differing elasticity between two services make synchronous communication risky?	A faster-scaling caller can become blocked by a slower-scaling callee, causing the whole workflow to bog down.
