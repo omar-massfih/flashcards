@@ -1,26 +1,3 @@
-What does it mean to say SRE implements DevOps?	DevOps is a broad philosophy for improving operations through collaboration and culture, while SRE is a more concrete role and practice set that implements many of those ideas.
-Why is treating operations purely as a cost center harmful?	It discourages investment in practices and engineering that improve reliability, speed, and long-term business outcomes.
-Why are rigid silos harmful in operations work?	They encourage local optimization, knowledge isolation, handoff blame, and weak feedback between design and production.
-What does the "accidents are normal" idea imply for operations culture?	Failures should be understood as system outcomes with missing safeguards, not mainly as individual mistakes to punish.
-Why is blame counterproductive after operational incidents?	It encourages hiding, confusion, and defensiveness instead of accurate learning and faster future recovery.
-Why does DevOps favor small frequent changes?	Smaller changes are easier to test, understand, roll back, and learn from than large batched changes.
-Why is measurement crucial to DevOps and SRE?	It creates an objective basis for understanding reality, verifying improvement, and aligning conversations across functions.
-How does SRE differ from DevOps in scope?	DevOps is a broad cultural and organizational philosophy, while SRE is a more service-oriented, opinionated operational discipline with specific practices.
-Why does SRE frame operations as a software problem?	Because recurring operational work can often be reduced or eliminated through software engineering, automation, and better system design.
-Why are SLOs culturally important in SRE?	They turn reliability into a shared stakeholder decision and make reliability discussions data-driven rather than blame-driven.
-Why does SRE treat toil as something to minimize rather than as the job itself?	Manual repetitive operations consume the engineering time needed to make services more reliable and scalable.
-What is the wisdom of production?	The practical understanding gained from observing how a system actually behaves under real production load, incidents, tickets, and user conditions.
-Why can too little operational exposure be a problem for SREs?	Without enough contact with production reality, engineers may lose the feedback needed to design and operate the service well.
-Why is the 50% toil cap better understood as a guarantee?	It guarantees space for engineering work that creates lasting operational improvement instead of letting toil consume the whole role.
-What is the Murphy-Beyer effect in SRE toil?	As automatable work disappears, the remaining toil is often the work that is hardest or least attractive to automate.
-How can reducing MTTR increase product development velocity?	Faster recovery and earlier problem discovery reduce the cleanup and interruption costs that otherwise slow feature work.
-Why is shared ownership important between SRE and product development?	It prevents a hard split between building and operating, aligns incentives, and spreads authority to fix production problems.
-Why should product developers and SREs use the same operational tooling?	Divergent tools create inconsistent behavior, duplicated effort, and weaker shared understanding of how the service is managed.
-Why does SRE sometimes support CI/CD for different reasons than DevOps?	DevOps often emphasizes business flow and collaboration, while SRE emphasizes the operational reliability benefits of smaller tested changes.
-Why are narrow reliability or launch incentives risky?	People can optimize the metric locally or game it unintentionally, harming the broader goal of reliable product velocity.
-Why does early SRE engagement improve product outcomes?	Reliability issues are cheaper to fix during design and build than after operational ownership has shifted.
-Why can withdrawal or delay of operational support be useful?	It creates an incentive to fix services that are too operationally costly instead of normalizing endless toil.
-Why does reliability work need career and financial parity with product development?	Without comparable esteem and incentives, organizations struggle to attract and retain people with the specialized skills needed for reliable operations.
 Why are SLOs central to SRE practice?	They turn reliability into a measurable target that can drive prioritization, alerting, risk management, and engineering trade-offs.
 Why are SLOs useful for deciding reliability work priority?	They estimate which work most improves user experience or protects the error budget, rather than relying on intuition alone.
 What organizational state is needed for error-budget-based SRE?	Stakeholders must approve fit-for-purpose SLOs, operators must believe they are defensible, the organization must use the budget for decisions, and there must be a refinement process.
