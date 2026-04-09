@@ -231,3 +231,212 @@ How do consensus algorithms use leaders differently from simple election algorit
 Why is allowing multiple temporary leaders sometimes a performance optimization?	The system can proceed speculatively and resolve conflicts through later quorum checks instead of blocking on perfect leader uniqueness upfront.
 How does Raft detect an out-of-date leader?	A leader that observes a higher term learns that a newer leader may exist and updates or steps down accordingly.
 Why is leader identity alone not enough for safe coordination?	Processes also need to know whether their local knowledge of the leader is still current despite failures, delays, and elections.
+Why is replication fundamental to fault tolerance?	Replication removes single points of failure by keeping multiple copies of data so the system can continue serving requests when some components fail.
+Why is replication especially valuable in multidatacenter deployments?	It improves availability through geographic redundancy and can reduce latency by placing data closer to clients.
+Why is keeping replicas perfectly in sync expensive?	Atomically updating multiple copies is equivalent to solving consensus, which adds significant coordination cost.
+What three events matter most when reasoning about replication visibility?	Write, replica update, and read.
+What does CAP mean by availability?	Every request to a nonfailing node eventually receives a response.
+What does CAP mean by consistency?	Operations appear atomic and linearizable rather than merely preserving database invariants.
+Why can't a distributed system guarantee both strong consistency and availability during a network partition?	Partitions prevent some nodes from coordinating, so the system must either reject some requests to preserve consistency or answer with potentially inconsistent data.
+What is a CP system in CAP terms?	A system that prefers rejecting requests over serving potentially inconsistent data during partitions.
+What is an AP system in CAP terms?	A system that continues serving requests during partitions even if some responses may be inconsistent.
+What does PACELC add beyond CAP?	It says that even when there is no partition, distributed systems still trade consistency against latency.
+Why should CAP be used carefully?	It concerns partitions rather than all failure types, and its formal definitions of consistency and availability differ from the looser meanings often used in practice.
+Why isn't partition tolerance really a tunable choice like consistency versus availability?	Real networks can partition whether we want them to or not, so systems must tolerate partitions instead of trading them away.
+What is harvest in a distributed query system?	The completeness of a response, such as returning 99 of 100 rows instead of failing the entire query.
+What is yield in a distributed query system?	The proportion of requests that complete successfully out of all attempted requests.
+Why is trading harvest for yield sometimes useful?	Returning partial but useful results can keep more requests successful during failures instead of failing them completely.
+What is a safe register?	A register where reads concurrent with a write may return arbitrary values from the register's range.
+What is a regular register?	A register where a read returns either the most recent completed write or a value from a write concurrent with that read.
+What is an atomic register?	A register that guarantees linearizability, so writes appear to take effect at a single instant.
+Why are consistency models useful in distributed systems?	They define which read and write histories are allowed, making it possible to reason about visibility despite replication and concurrency.
+Why is strict consistency mostly a theoretical model?	It requires instant global visibility based on real time, which is impossible in real distributed systems.
+What is linearizability?	Each operation appears to take effect exactly once at some point between invocation and completion, consistent with real-time order.
+What does linearizability prevent once a write becomes visible?	It prevents later reads from moving backward to older values, so stale reads are disallowed after the write's linearization point.
+Why is linearizability expensive in distributed systems?	It requires coordination and ordering, typically through consensus or similarly strong synchronization.
+What is the main difference between sequential consistency and linearizability?	Sequential consistency preserves per-process program order without requiring real-time order, while linearizability also respects real-time ordering.
+Why can sequential consistency still allow stale reads?	Operations can become visible later than their completion time as long as all processes observe a single consistent global order.
+What is causal consistency?	All processes must observe causally related operations in the same order, while unrelated concurrent writes may be seen in different orders.
+Why can causally unrelated writes be observed in different orders under causal consistency?	No happened-before relationship constrains them, so different replicas may receive and expose them in different orders.
+What is the main implementation idea behind causal consistency?	Track dependencies with logical metadata so an update becomes visible only after the updates it depends on have already been applied.
+What are vector clocks used for in replicated systems?	To capture partial causal order, detect divergent histories, and help reconcile conflicting versions.
+Why don't vector clocks fully solve conflict resolution by themselves?	They can detect that versions conflict, but application-specific logic is often still needed to decide how to merge them.
+What are session consistency models for?	They describe the guarantees a single client should observe while interacting with a replicated system.
+What is read-your-writes consistency?	A client's later reads must be able to observe its own earlier writes.
+What are monotonic reads?	Once a client has seen a value, later reads by that client cannot return an older value.
+What are monotonic writes?	Writes from the same client must become visible to others in the order the client issued them.
+What are writes-follow-reads?	A client's writes must be ordered after the writes whose effects that client has already observed.
+What is PRAM or FIFO consistency?	A model where writes from the same process are seen in order, but writes from different processes may be observed in different orders.
+What is eventual consistency?	If no new updates occur, all replicas eventually converge to the latest reconciled value.
+What are N, W, and R in tunable consistency?	N is replication factor, W is required write acknowledgments, and R is required read responses.
+Why does the condition R + W > N matter?	It guarantees overlap between read and write sets, so reads can observe the most recent completed write.
+How does increasing W or R affect a tunably consistent system?	It improves consistency but increases latency and requires more replicas to be available.
+Why don't quorum reads and writes automatically guarantee monotonic reads?	Incomplete writes may reach only some replicas, so different quorum reads can still alternate between old and newer values.
+How do witness replicas reduce storage cost without giving up quorum behavior?	Some replicas record that a write occurred instead of permanently storing full copies, and can temporarily hold real data when a copy replica is unavailable or times out.
+What is strong eventual consistency?	Replicas may diverge temporarily, but once all updates are delivered, they deterministically converge to the same correct state.
+Why are CRDTs useful in eventually consistent systems?	They allow replicas to apply updates independently and still merge their states without coordination conflicts.
+What is the core idea of grow-only and PN-counter CRDTs?	A grow-only counter lets each node increment only its own slot and merges by taking per-slot maxima; a PN-counter adds separate positive and negative counters so decrements can be represented by subtracting the negative total from the positive total.
+What is a last-write-wins register?	A register that resolves conflicting writes by keeping the value with the greatest timestamp.
+What is the main trade-off of last-write-wins conflict resolution?	It simplifies convergence but can discard concurrent updates that might both matter to the application.
+Why is direct one-to-many broadcast often a poor fit for large clusters?	It depends heavily on one sender, scales poorly with cluster size, and requires the broadcaster and each recipient to overlap in availability.
+What problem does anti-entropy solve in replicated systems?	It repairs replica divergence after primary delivery fails or some updates are missed.
+Why is full pairwise dataset comparison usually too expensive for replica repair?	It requires scanning and exchanging very large amounts of data even when only a small subset has diverged.
+What is read repair?	A coordinator detects inconsistent replica responses during a read and sends missing updates to lagging replicas.
+Why is read repair naturally scoped to hot data?	It only repairs the records that are actually being read rather than the whole dataset.
+What is the trade-off of blocking read repair?	It improves read monotonicity but hurts availability and latency because the read waits for repairs to complete.
+What is the trade-off of asynchronous read repair?	It returns results faster but does not immediately guarantee repaired replicas for later reads.
+Why can quorum reads still return consistent results without repairing every replica?	It is enough to consult a sufficiently overlapping subset of replicas rather than every copy in the system.
+What is a digest read?	A read where some replicas return only a hash of their local data so the coordinator can cheaply detect divergence.
+Why are digest reads useful on the happy path?	Matching digests let the coordinator confirm replicas agree without fetching full data from every replica.
+What must happen when digest reads disagree?	The coordinator must issue full reads to the differing replicas, reconcile the values, and repair lagging nodes.
+What is hinted handoff?	A write-side repair technique where a coordinator or replica temporarily stores a hint for a write that a target replica missed.
+Why aren't hinted writes normally counted as full replicas?	Hints are temporary repair records and are not meant to serve normal reads like real replicas.
+What is sloppy quorum?	A quorum technique that uses substitute healthy nodes when the intended replicas are unavailable.
+What trade-off do sloppy quorums make?	They improve availability and durability during failures but can weaken consistency because substitute nodes are not the intended replicas.
+Why can sloppy quorums break immediate read-your-write behavior?	A later read from the original replica set may miss a recent write that was temporarily stored on substitute nodes.
+What is the main purpose of Merkle trees in anti-entropy?	To compare compact hierarchical hashes instead of whole datasets and quickly narrow repair to inconsistent ranges.
+How does a Merkle tree help localize replica differences?	Mismatched hashes higher in the tree identify which subtree to descend into until the divergent data range is isolated.
+What is the main trade-off in Merkle tree design?	Finer trees give more precise repair ranges but increase tree size and maintenance cost.
+What do bitmap version vectors track?	Which writes from each peer a node has seen, including gaps where some updates are missing.
+Why are bitmap version vectors useful for anti-entropy?	They let replicas identify specific missing writes instead of rechecking broad data ranges.
+What is a downside of bitmap version vectors?	A long-down node can prevent aggressive log truncation because peers must preserve information needed to catch it up.
+What is the main idea of gossip dissemination?	Nodes randomly exchange hot information with peers so updates spread cooperatively through the cluster.
+What do infective, susceptible, and removed mean in gossip protocols?	Infective nodes actively spread an update, susceptible nodes have not yet seen it, and removed nodes stop propagating it.
+Why is redundancy essential to gossip?	Duplicate paths and repeated delivery make propagation robust even when some nodes or links fail.
+What does gossip latency measure?	How long the system takes to approach convergence on an update.
+How do gossip protocols decide when to stop spreading a message?	Nodes lose interest after enough duplicate sightings or according to a probability function that suggests the update is already widespread.
+Why are pure gossip protocols not message-optimal?	They intentionally send redundant messages to gain robustness and probabilistic delivery guarantees.
+What is the weakness of dissemination over only a spanning tree?	A single broken link can disconnect an entire subtree from the broadcast.
+Why combine tree-based broadcast with gossip?	The tree keeps normal dissemination efficient, while gossip helps recover from failures and repair connectivity.
+What is the main idea of Plumtree?	Use an eager spanning-tree-like broadcast for efficiency and lazy gossip links for recovery and repair.
+How does Plumtree's lazy push help reliability?	Nodes advertise message IDs broadly, and peers that missed a full message can request it and help heal the dissemination tree.
+Why can Plumtree tend toward low-latency dissemination trees over time?	Faster responders are more likely to become part of the eager broadcast structure.
+Why do gossip systems often maintain only partial views of the cluster?	Keeping a full membership view is expensive and unnecessary when reliable dissemination can work from overlapping subsets.
+What is the difference between active and passive views in HyParView?	Active view peers are used for dissemination, while passive view peers are reserves for replacing failed active neighbors.
+Why does HyParView use shuffle operations?	To refresh partial views and exchange membership information without requiring every node to know the whole cluster.
+How does HyParView recover from an active-peer failure?	The node removes the failed peer and promotes a replacement from its passive view if a connection can be established.
+What is the main benefit of hybrid gossip approaches like HyParView and Plumtree?	They reduce normal message cost while preserving strong failure recovery through broader fallback dissemination.
+How do hinted handoff, read repair, Merkle trees, and bitmap version vectors optimize different aspects of repair?	Hinted handoff targets recent missed writes, read repair targets queried data, Merkle trees target inconsistent ranges, and bitmap vectors target specific missing events.
+Why are multipartition transactions harder than node-local transactions?	They require coordination across servers so all participants either commit durably or roll back together.
+Why must distributed transactions be recoverable?	If execution fails or aborts, every participant must be able to roll back so the database returns to its prior consistent state.
+Why don't atomic commitment protocols tolerate Byzantine failures?	They assume participants honestly report commit or abort decisions rather than lying or choosing arbitrary outcomes.
+What does a transaction manager do in a distributed database?	It schedules, coordinates, executes, and tracks transactions so local visibility rules line up with global commit decisions.
+What are the two phases of two-phase commit?	A prepare phase that collects votes and a commit-or-abort phase that finalizes the decision.
+What happens during the prepare phase of two-phase commit?	The coordinator asks cohorts whether they can commit their part of the transaction and records their votes durably.
+Why does two-phase commit hurt availability?	A single unavailable participant can prevent a distributed transaction from committing.
+Why do cohorts log their decisions durably in two-phase commit?	So they can recover their state and learn or replay the final outcome after failures.
+Why is a cohort that voted yes still uncertain after a coordinator failure?	It promised not to abort on its own, but may not know whether the coordinator later committed or aborted.
+Why is two-phase commit called a blocking protocol?	If the coordinator fails at the wrong time, cohorts can be forced to wait indefinitely for the final decision.
+What is the worst coordinator failure point in two-phase commit?	After collecting yes votes but before notifying cohorts of the final outcome.
+Why can cohorts safely replay a commit decision learned from peers or logs?	Because a commit in two-phase commit is unanimous: if one cohort was told to commit, all cohorts must commit.
+What extra phase does three-phase commit add?	A prepare phase between voting and final commit so cohorts can distinguish safer recovery states.
+How does three-phase commit try to avoid blocking on coordinator failure?	It uses an extra state plus timeouts so cohorts can deterministically move toward abort or commit depending on how far the protocol progressed.
+Why is three-phase commit less practical than it sounds?	It assumes a synchronous environment without partition-like communication failures and can still split decisions under partitions.
+What is the main failure risk of three-phase commit during a network partition?	Some cohorts may decide to commit while others time out and abort, creating split brain.
+Why is two-phase commit still widely used despite blocking?	It is conceptually simple, has low message overhead, and is relatively easy to implement and debug.
+What is Calvin's core idea for distributed transactions?	Choose a deterministic global transaction order before execution so replicas can execute consistently with less runtime coordination.
+How does Calvin reduce coordination during execution?	Replicas agree on transaction order and boundaries in advance, then execute against the same ordered input without renegotiating conflicts.
+What role does the Calvin sequencer play?	It batches incoming transactions into a deterministic global order.
+What is a limitation of Calvin's deterministic approach?	It does not naturally support transactions whose read and write sets depend on additional ad hoc reads during execution.
+Why can Calvin recover from node failures without aborting every transaction?	Replicas execute the same ordered transactions and can reconstruct state from the shared deterministic input.
+What is Spanner's basic approach to distributed transactions?	It uses two-phase commit across partitions, with each partition backed by a consensus group for fault-tolerant replication.
+Why does Spanner run two-phase commit over Paxos groups instead of individual nodes?	A participant can still make progress even if some nodes inside a group fail, improving availability relative to plain 2PC over single nodes.
+What is TrueTime used for in Spanner?	To assign timestamps with bounded uncertainty and preserve externally consistent transaction ordering.
+Why can read-only operations in Spanner often avoid the full cost of read-write transactions?	Versioned data lets many reads execute against stable snapshots without taking write locks.
+What is external consistency in Spanner?	If transaction T1 commits before T2 starts, then T1 gets a smaller timestamp than T2, matching real-time order.
+Why are multipartition transactions more expensive in Spanner than single-shard ones?	They need both per-shard consensus and a cross-shard two-phase commit.
+Why is repartitioning necessary in a distributed database?	As nodes join, leave, or load changes, data must be moved to keep capacity and traffic balanced.
+Why is simple modulo-based partition mapping unstable when cluster size changes?	Changing the divisor remaps most keys, forcing large-scale data movement.
+What problem does consistent hashing solve?	It minimizes key remapping when nodes join or leave, so only a fraction of data needs to move.
+How does consistent hashing place responsibility for keys?	Nodes sit on a hash ring and each becomes responsible for the range between its predecessor and itself.
+What two guarantees define snapshot isolation?	Each transaction reads from a consistent snapshot, and conflicting concurrent writes to the same item cannot both commit.
+What anomaly does snapshot isolation prevent compared with read committed?	Read skew caused by seeing mutually inconsistent committed values from different points in time.
+Why is snapshot isolation still not fully serializable?	It can allow write skew, where disjoint writes each preserve local checks but jointly violate a global invariant.
+What is Percolator's main approach to distributed transactions?	It builds snapshot-isolated transactions on top of Bigtable using timestamps, locks, and a client-driven two-phase commit.
+What happens in Percolator's prewrite phase?	The transaction acquires locks and checks for conflicting later writes or unreleased locks before making tentative changes durable.
+Why does Percolator designate a primary lock?	It gives recovery logic a single authoritative place to inspect when deciding whether an incomplete transaction should commit or roll back.
+What happens in Percolator's commit phase?	The client releases locks beginning with the primary lock and publishes the write records so the new versions become visible.
+Why can snapshot isolation improve read performance?	Readers can use stable snapshots without taking read locks on current mutable state.
+What is coordination avoidance trying to achieve?	Preserve correctness while reducing the amount of cross-node synchronization needed for transactions.
+What does I-confluence mean?	Any two independently produced invariant-valid states can be merged into another invariant-valid state.
+Why does I-confluence matter for coordination avoidance?	If valid divergent states can always merge into a valid state, many operations can proceed without coordination.
+What is the main idea of RAMP transactions?	Provide atomic visibility of multipartition writes without forcing mutual exclusion between readers and writers.
+What does read atomicity in RAMP guarantee?	A transaction sees either all writes from another transaction or none of them, preventing fractured reads.
+How does RAMP avoid blocking readers and writers on one another?	It uses metadata about in-flight writes so readers can detect missing pieces and fetch them if necessary.
+Why do distributed transactions remain hard even with advanced protocols like Calvin, Spanner, Percolator, and RAMP?	They must balance atomicity, fault tolerance, coordination cost, and performance across partitions that can fail independently.
+What problem do consensus algorithms solve in distributed systems?	They let multiple processes agree on a single value despite crashes and message delays.
+Why can't consensus be guaranteed in bounded time in a fully asynchronous system?	Because a process cannot distinguish a crash from an arbitrarily slow process or network.
+How do practical consensus systems get liveness despite FLP impossibility?	They rely on failure detectors or timing assumptions to suspect failed processes and keep the protocol moving.
+What are the three core properties of consensus?	Agreement, validity, and termination.
+Why is consensus useful in replicated systems?	It lets processes move through state changes in a common order without disagreement about what clients should observe.
+What is the difference between best-effort broadcast and reliable broadcast?	Best-effort relies only on the sender to deliver messages, while reliable broadcast ensures all correct processes receive the same messages even if the sender fails.
+Why is naive reliable broadcast expensive?	Recipients may have to rebroadcast to everyone else, producing roughly N^2 message traffic.
+What does atomic broadcast add beyond reliable broadcast?	It guarantees all correct processes deliver the same messages in the same order.
+What two properties define atomic broadcast?	Atomicity of delivery and a shared total order of delivered messages.
+What is the relationship between atomic broadcast and consensus?	They are equivalent in asynchronous crash-failure systems because agreeing on message order is a form of consensus.
+What is virtual synchrony?	A group-communication model where messages are delivered in a consistent order within a changing group view.
+Why do view changes matter in virtual synchrony?	A message sent in one view can be delivered only in that same view, so views act as barriers around broadcasts.
+What is the main idea of Zookeeper Atomic Broadcast (ZAB)?	A single leader orders updates and broadcasts them to followers, using epochs to keep leadership unique.
+What happens in ZAB's discovery phase?	A prospective leader learns followers' latest epochs and proposes a new epoch greater than any they know.
+What is the purpose of ZAB's synchronization phase?	To establish the new leader and bring followers to a consistent history before new broadcasts begin.
+What happens in ZAB's broadcast phase?	The leader proposes updates, waits for quorum acknowledgments, and then commits them.
+Why is ZAB efficient once a stable leader exists?	The leader can sequence requests with only a couple of message rounds instead of running fresh consensus for every event.
+What roles exist in Paxos?	Proposer, acceptor, and learner.
+What is the purpose of proposal numbers in Paxos?	They create a total order among competing proposals and prevent older proposals from overriding newer rounds.
+What happens in Paxos phase 1?	A proposer sends Prepare requests and tries to collect promises from a quorum of acceptors.
+What promise does an acceptor make in Paxos phase 1?	It promises not to accept future proposals with numbers lower than the prepare request it has acknowledged.
+Why do acceptors report previously accepted values during Paxos prepare?	So a later proposer can preserve safety by continuing with the highest-numbered value already accepted.
+What happens in Paxos phase 2?	The proposer sends Accept requests for the chosen value and tries to get a quorum of acceptors to accept it.
+When must a Paxos proposer use an old accepted value instead of its own?	When a prepare response reveals that some acceptor already accepted a higher-numbered prior value.
+Why are quorums central to Paxos safety?	Any two majorities overlap, so some acceptor carries forward information about previously accepted values.
+What does Paxos guarantee with any number of failures?	Safety: it will not decide conflicting values.
+What does Paxos require to guarantee liveness with f failures?	At least 2f + 1 processes so a quorum of f + 1 can still be formed.
+How can Paxos recover from a proposer failure after partial progress?	A later proposer can learn the previously accepted value from an overlapping quorum and complete it.
+Why can competing proposers cause repeated restarts in Paxos?	They can keep issuing higher-numbered prepares and prevent each other from completing phase 2.
+How is proposer livelock commonly mitigated in Paxos?	With random backoff so one proposer eventually gets enough uninterrupted time to win.
+What is Multi-Paxos?	A Paxos optimization where a stable leader skips repeating phase 1 for every value and directly replicates multiple log entries.
+Why is Multi-Paxos much faster than rerunning classic Paxos for every command?	It avoids the full leader-establishment round on most operations.
+Why do some Multi-Paxos implementations use leases?	To let the leader serve reads safely without a quorum round, as long as followers promise not to accept another leader for the lease period.
+What is the main safety caveat of leases in Multi-Paxos?	They depend on bounded clock drift, so badly skewed clocks can break linearizable reads.
+What is Fast Paxos trying to optimize?	It reduces one message delay by allowing proposals to reach acceptors more directly in fast rounds.
+What trade-off does Fast Paxos make for lower latency?	It needs larger quorums and becomes more vulnerable to collisions between concurrent proposers.
+What is the main idea of EPaxos?	Commands do not need a single global leader; instead, replicas infer ordering from dependencies between interfering commands.
+When can EPaxos use its fast path?	When a fast quorum agrees on the same dependency set for the command.
+When does EPaxos fall back to the slow path?	When replicas report conflicting dependency information that must be reconciled before commit.
+What counts as interfering commands in EPaxos?	Commands whose execution order affects the final result.
+Why can EPaxos improve throughput over leader-centric consensus?	Independent nonconflicting commands can commit without funneling all work through one leader.
+What is Flexible Paxos?	A Paxos variant that requires only phase-1 quorums to intersect with phase-2 quorums rather than requiring all quorums to be majorities.
+What does Flexible Paxos trade off?	It can reduce the replication quorum size for lower latency, but may require a larger quorum during leader election.
+Why is the quorum condition Q1 + Q2 > N sufficient in Flexible Paxos?	Because it guarantees any phase-1 quorum overlaps with any phase-2 quorum.
+What is the key simplification in Raft compared with Paxos?	Raft makes leadership explicit and separates leader election, log replication, and safety more clearly.
+What roles exist in Raft?	Follower, candidate, and leader.
+Why can a Raft node vote for at most one candidate per term?	To prevent multiple leaders from winning the same term.
+What is a term in Raft?	A numbered time interval during which at most one leader is valid.
+How does Raft resolve stale terms?	A node that sees a higher term updates its own term and yields to the newer one.
+What does a Raft leader replicate?	An ordered log of commands for the replicated state machine.
+When is a Raft log entry committed?	When the leader knows it has been replicated to a majority.
+Why are only up-to-date candidates allowed to become leader in Raft?	So committed entries cannot be lost by electing a leader with an incomplete log.
+What happens if a Raft follower's log conflicts with the leader's log?	The leader finds the latest common prefix and overwrites the follower's uncommitted conflicting suffix.
+What guarantee does Raft provide about committed entries?	Committed entries remain in the logs of future leaders and cannot be rolled back.
+How does Raft reduce the chance of split votes?	By using randomized election timeouts so one candidate is likely to start earlier than the others.
+What extra problem do Byzantine consensus algorithms solve?	They tolerate nodes that behave arbitrarily or maliciously rather than merely crashing.
+Why do Byzantine consensus protocols usually need more messages than crash-fault protocols?	Replicas must cross-check one another's claims instead of trusting the leader or a single response path.
+How many nodes does PBFT need to tolerate f Byzantine faults?	At least 3f + 1 replicas.
+What is the main structure of PBFT?	A primary orders requests, backups validate them, and replicas move through pre-prepare, prepare, and commit phases.
+Why does PBFT use checkpoints?	To let replicas prove stable state, discard old protocol metadata, and support safe recovery.
+Why is PBFT much costlier than crash-fault consensus?	It requires dense replica-to-replica communication and extra validation at every step.
+Why must database subsystems be designed holistically?	Node-local performance, cluster communication, storage design, and coordination protocols all affect one another.
+What usually has the biggest impact on node-local database performance?	The storage engine and local read-write path.
+What often has the biggest impact on database scalability?	The subsystem responsible for communication and coordination across the cluster.
+Why is a fast storage engine not enough on its own?	If it cannot scale with data growth or is paired with slow distributed coordination, overall system performance will still suffer.
+Why is a fast storage engine undermined by a slow atomic commit protocol?	Distributed commit can become the dominant bottleneck even when local storage operations are fast.
+Why is scalability necessary for a useful storage engine?	A storage engine with degrading performance as data grows supports only a narrow range of workloads.
+What broad idea did Part II emphasize about distributed databases?	Node-local and cluster-wide mechanisms are interconnected and must be evaluated together.
+What is the role of failure detection in distributed systems?	To identify remote process failures accurately enough for higher-level algorithms to keep making progress.
+What is the role of leader election in distributed systems?	To choose a temporary coordinator that can reduce synchronization overhead.
+What is the role of dissemination in distributed systems?	To distribute information reliably across nodes through communication protocols.
+What is the role of anti-entropy in distributed systems?	To detect and repair replica divergence after updates are missed or delivered inconsistently.
+What is the role of distributed transactions in distributed systems?	To execute operations across multiple partitions atomically.
+What is the role of consensus in distributed systems?	To let remote participants agree on values despite failures.
+Why is understanding these distributed algorithms practically useful?	It helps you choose infrastructure software more intelligently and reason about likely failure modes and trade-offs.
+What kinds of systems commonly rely on these algorithms?	Databases, message queues, schedulers, and other infrastructure software.
