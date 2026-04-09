@@ -1,0 +1,39 @@
+Why is direct one-to-many broadcast often a poor fit for large clusters?	It depends heavily on one sender, scales poorly with cluster size, and requires the broadcaster and each recipient to overlap in availability.
+What problem does anti-entropy solve in replicated systems?	It repairs replica divergence after primary delivery fails or some updates are missed.
+Why is full pairwise dataset comparison usually too expensive for replica repair?	It requires scanning and exchanging very large amounts of data even when only a small subset has diverged.
+What is read repair?	A coordinator detects inconsistent replica responses during a read and sends missing updates to lagging replicas.
+Why is read repair naturally scoped to hot data?	It only repairs the records that are actually being read rather than the whole dataset.
+What is the trade-off of blocking read repair?	It improves read monotonicity but hurts availability and latency because the read waits for repairs to complete.
+What is the trade-off of asynchronous read repair?	It returns results faster but does not immediately guarantee repaired replicas for later reads.
+Why can quorum reads still return consistent results without repairing every replica?	It is enough to consult a sufficiently overlapping subset of replicas rather than every copy in the system.
+What is a digest read?	A read where some replicas return only a hash of their local data so the coordinator can cheaply detect divergence.
+Why are digest reads useful on the happy path?	Matching digests let the coordinator confirm replicas agree without fetching full data from every replica.
+What must happen when digest reads disagree?	The coordinator must issue full reads to the differing replicas, reconcile the values, and repair lagging nodes.
+What is hinted handoff?	A write-side repair technique where a coordinator or replica temporarily stores a hint for a write that a target replica missed.
+Why aren't hinted writes normally counted as full replicas?	Hints are temporary repair records and are not meant to serve normal reads like real replicas.
+What is sloppy quorum?	A quorum technique that uses substitute healthy nodes when the intended replicas are unavailable.
+What trade-off do sloppy quorums make?	They improve availability and durability during failures but can weaken consistency because substitute nodes are not the intended replicas.
+Why can sloppy quorums break immediate read-your-write behavior?	A later read from the original replica set may miss a recent write that was temporarily stored on substitute nodes.
+What is the main purpose of Merkle trees in anti-entropy?	To compare compact hierarchical hashes instead of whole datasets and quickly narrow repair to inconsistent ranges.
+How does a Merkle tree help localize replica differences?	Mismatched hashes higher in the tree identify which subtree to descend into until the divergent data range is isolated.
+What is the main trade-off in Merkle tree design?	Finer trees give more precise repair ranges but increase tree size and maintenance cost.
+What do bitmap version vectors track?	Which writes from each peer a node has seen, including gaps where some updates are missing.
+Why are bitmap version vectors useful for anti-entropy?	They let replicas identify specific missing writes instead of rechecking broad data ranges.
+What is a downside of bitmap version vectors?	A long-down node can prevent aggressive log truncation because peers must preserve information needed to catch it up.
+What is the main idea of gossip dissemination?	Nodes randomly exchange hot information with peers so updates spread cooperatively through the cluster.
+What do infective, susceptible, and removed mean in gossip protocols?	Infective nodes actively spread an update, susceptible nodes have not yet seen it, and removed nodes stop propagating it.
+Why is redundancy essential to gossip?	Duplicate paths and repeated delivery make propagation robust even when some nodes or links fail.
+What does gossip latency measure?	How long the system takes to approach convergence on an update.
+How do gossip protocols decide when to stop spreading a message?	Nodes lose interest after enough duplicate sightings or according to a probability function that suggests the update is already widespread.
+Why are pure gossip protocols not message-optimal?	They intentionally send redundant messages to gain robustness and probabilistic delivery guarantees.
+What is the weakness of dissemination over only a spanning tree?	A single broken link can disconnect an entire subtree from the broadcast.
+Why combine tree-based broadcast with gossip?	The tree keeps normal dissemination efficient, while gossip helps recover from failures and repair connectivity.
+What is the main idea of Plumtree?	Use an eager spanning-tree-like broadcast for efficiency and lazy gossip links for recovery and repair.
+How does Plumtree's lazy push help reliability?	Nodes advertise message IDs broadly, and peers that missed a full message can request it and help heal the dissemination tree.
+Why can Plumtree tend toward low-latency dissemination trees over time?	Faster responders are more likely to become part of the eager broadcast structure.
+Why do gossip systems often maintain only partial views of the cluster?	Keeping a full membership view is expensive and unnecessary when reliable dissemination can work from overlapping subsets.
+What is the difference between active and passive views in HyParView?	Active view peers are used for dissemination, while passive view peers are reserves for replacing failed active neighbors.
+Why does HyParView use shuffle operations?	To refresh partial views and exchange membership information without requiring every node to know the whole cluster.
+How does HyParView recover from an active-peer failure?	The node removes the failed peer and promotes a replacement from its passive view if a connection can be established.
+What is the main benefit of hybrid gossip approaches like HyParView and Plumtree?	They reduce normal message cost while preserving strong failure recovery through broader fallback dissemination.
+How do hinted handoff, read repair, Merkle trees, and bitmap version vectors optimize different aspects of repair?	Hinted handoff targets recent missed writes, read repair targets queried data, Merkle trees target inconsistent ranges, and bitmap vectors target specific missing events.

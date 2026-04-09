@@ -1,0 +1,47 @@
+Why is replication fundamental to fault tolerance?	Replication removes single points of failure by keeping multiple copies of data so the system can continue serving requests when some components fail.
+Why is replication especially valuable in multidatacenter deployments?	It improves availability through geographic redundancy and can reduce latency by placing data closer to clients.
+Why is keeping replicas perfectly in sync expensive?	Atomically updating multiple copies is equivalent to solving consensus, which adds significant coordination cost.
+What three events matter most when reasoning about replication visibility?	Write, replica update, and read.
+What does CAP mean by availability?	Every request to a nonfailing node eventually receives a response.
+What does CAP mean by consistency?	Operations appear atomic and linearizable rather than merely preserving database invariants.
+Why can't a distributed system guarantee both strong consistency and availability during a network partition?	Partitions prevent some nodes from coordinating, so the system must either reject some requests to preserve consistency or answer with potentially inconsistent data.
+What is a CP system in CAP terms?	A system that prefers rejecting requests over serving potentially inconsistent data during partitions.
+What is an AP system in CAP terms?	A system that continues serving requests during partitions even if some responses may be inconsistent.
+What does PACELC add beyond CAP?	It says that even when there is no partition, distributed systems still trade consistency against latency.
+Why should CAP be used carefully?	It concerns partitions rather than all failure types, and its formal definitions of consistency and availability differ from the looser meanings often used in practice.
+Why isn't partition tolerance really a tunable choice like consistency versus availability?	Real networks can partition whether we want them to or not, so systems must tolerate partitions instead of trading them away.
+What is harvest in a distributed query system?	The completeness of a response, such as returning 99 of 100 rows instead of failing the entire query.
+What is yield in a distributed query system?	The proportion of requests that complete successfully out of all attempted requests.
+Why is trading harvest for yield sometimes useful?	Returning partial but useful results can keep more requests successful during failures instead of failing them completely.
+What is a safe register?	A register where reads concurrent with a write may return arbitrary values from the register's range.
+What is a regular register?	A register where a read returns either the most recent completed write or a value from a write concurrent with that read.
+What is an atomic register?	A register that guarantees linearizability, so writes appear to take effect at a single instant.
+Why are consistency models useful in distributed systems?	They define which read and write histories are allowed, making it possible to reason about visibility despite replication and concurrency.
+Why is strict consistency mostly a theoretical model?	It requires instant global visibility based on real time, which is impossible in real distributed systems.
+What is linearizability?	Each operation appears to take effect exactly once at some point between invocation and completion, consistent with real-time order.
+What does linearizability prevent once a write becomes visible?	It prevents later reads from moving backward to older values, so stale reads are disallowed after the write's linearization point.
+Why is linearizability expensive in distributed systems?	It requires coordination and ordering, typically through consensus or similarly strong synchronization.
+What is the main difference between sequential consistency and linearizability?	Sequential consistency preserves per-process program order without requiring real-time order, while linearizability also respects real-time ordering.
+Why can sequential consistency still allow stale reads?	Operations can become visible later than their completion time as long as all processes observe a single consistent global order.
+What is causal consistency?	All processes must observe causally related operations in the same order, while unrelated concurrent writes may be seen in different orders.
+Why can causally unrelated writes be observed in different orders under causal consistency?	No happened-before relationship constrains them, so different replicas may receive and expose them in different orders.
+What is the main implementation idea behind causal consistency?	Track dependencies with logical metadata so an update becomes visible only after the updates it depends on have already been applied.
+What are vector clocks used for in replicated systems?	To capture partial causal order, detect divergent histories, and help reconcile conflicting versions.
+Why don't vector clocks fully solve conflict resolution by themselves?	They can detect that versions conflict, but application-specific logic is often still needed to decide how to merge them.
+What are session consistency models for?	They describe the guarantees a single client should observe while interacting with a replicated system.
+What is read-your-writes consistency?	A client's later reads must be able to observe its own earlier writes.
+What are monotonic reads?	Once a client has seen a value, later reads by that client cannot return an older value.
+What are monotonic writes?	Writes from the same client must become visible to others in the order the client issued them.
+What are writes-follow-reads?	A client's writes must be ordered after the writes whose effects that client has already observed.
+What is PRAM or FIFO consistency?	A model where writes from the same process are seen in order, but writes from different processes may be observed in different orders.
+What is eventual consistency?	If no new updates occur, all replicas eventually converge to the latest reconciled value.
+What are N, W, and R in tunable consistency?	N is replication factor, W is required write acknowledgments, and R is required read responses.
+Why does the condition R + W > N matter?	It guarantees overlap between read and write sets, so reads can observe the most recent completed write.
+How does increasing W or R affect a tunably consistent system?	It improves consistency but increases latency and requires more replicas to be available.
+Why don't quorum reads and writes automatically guarantee monotonic reads?	Incomplete writes may reach only some replicas, so different quorum reads can still alternate between old and newer values.
+How do witness replicas reduce storage cost without giving up quorum behavior?	Some replicas record that a write occurred instead of permanently storing full copies, and can temporarily hold real data when a copy replica is unavailable or times out.
+What is strong eventual consistency?	Replicas may diverge temporarily, but once all updates are delivered, they deterministically converge to the same correct state.
+Why are CRDTs useful in eventually consistent systems?	They allow replicas to apply updates independently and still merge their states without coordination conflicts.
+What is the core idea of grow-only and PN-counter CRDTs?	A grow-only counter lets each node increment only its own slot and merges by taking per-slot maxima; a PN-counter adds separate positive and negative counters so decrements can be represented by subtracting the negative total from the positive total.
+What is a last-write-wins register?	A register that resolves conflicting writes by keeping the value with the greatest timestamp.
+What is the main trade-off of last-write-wins conflict resolution?	It simplifies convergence but can discard concurrent updates that might both matter to the application.
