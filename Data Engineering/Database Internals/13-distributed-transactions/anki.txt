@@ -1,0 +1,47 @@
+Why are multipartition transactions harder than node-local transactions?	They require coordination across servers so all participants either commit durably or roll back together.
+Why must distributed transactions be recoverable?	If execution fails or aborts, every participant must be able to roll back so the database returns to its prior consistent state.
+Why don't atomic commitment protocols tolerate Byzantine failures?	They assume participants honestly report commit or abort decisions rather than lying or choosing arbitrary outcomes.
+What does a transaction manager do in a distributed database?	It schedules, coordinates, executes, and tracks transactions so local visibility rules line up with global commit decisions.
+What are the two phases of two-phase commit?	A prepare phase that collects votes and a commit-or-abort phase that finalizes the decision.
+What happens during the prepare phase of two-phase commit?	The coordinator asks cohorts whether they can commit their part of the transaction and records their votes durably.
+Why does two-phase commit hurt availability?	A single unavailable participant can prevent a distributed transaction from committing.
+Why do cohorts log their decisions durably in two-phase commit?	So they can recover their state and learn or replay the final outcome after failures.
+Why is a cohort that voted yes still uncertain after a coordinator failure?	It promised not to abort on its own, but may not know whether the coordinator later committed or aborted.
+Why is two-phase commit called a blocking protocol?	If the coordinator fails at the wrong time, cohorts can be forced to wait indefinitely for the final decision.
+What is the worst coordinator failure point in two-phase commit?	After collecting yes votes but before notifying cohorts of the final outcome.
+Why can cohorts safely replay a commit decision learned from peers or logs?	Because a commit in two-phase commit is unanimous: if one cohort was told to commit, all cohorts must commit.
+What extra phase does three-phase commit add?	A prepare phase between voting and final commit so cohorts can distinguish safer recovery states.
+How does three-phase commit try to avoid blocking on coordinator failure?	It uses an extra state plus timeouts so cohorts can deterministically move toward abort or commit depending on how far the protocol progressed.
+Why is three-phase commit less practical than it sounds?	It assumes a synchronous environment without partition-like communication failures and can still split decisions under partitions.
+What is the main failure risk of three-phase commit during a network partition?	Some cohorts may decide to commit while others time out and abort, creating split brain.
+Why is two-phase commit still widely used despite blocking?	It is conceptually simple, has low message overhead, and is relatively easy to implement and debug.
+What is Calvin's core idea for distributed transactions?	Choose a deterministic global transaction order before execution so replicas can execute consistently with less runtime coordination.
+How does Calvin reduce coordination during execution?	Replicas agree on transaction order and boundaries in advance, then execute against the same ordered input without renegotiating conflicts.
+What role does the Calvin sequencer play?	It batches incoming transactions into a deterministic global order.
+What is a limitation of Calvin's deterministic approach?	It does not naturally support transactions whose read and write sets depend on additional ad hoc reads during execution.
+Why can Calvin recover from node failures without aborting every transaction?	Replicas execute the same ordered transactions and can reconstruct state from the shared deterministic input.
+What is Spanner's basic approach to distributed transactions?	It uses two-phase commit across partitions, with each partition backed by a consensus group for fault-tolerant replication.
+Why does Spanner run two-phase commit over Paxos groups instead of individual nodes?	A participant can still make progress even if some nodes inside a group fail, improving availability relative to plain 2PC over single nodes.
+What is TrueTime used for in Spanner?	To assign timestamps with bounded uncertainty and preserve externally consistent transaction ordering.
+Why can read-only operations in Spanner often avoid the full cost of read-write transactions?	Versioned data lets many reads execute against stable snapshots without taking write locks.
+What is external consistency in Spanner?	If transaction T1 commits before T2 starts, then T1 gets a smaller timestamp than T2, matching real-time order.
+Why are multipartition transactions more expensive in Spanner than single-shard ones?	They need both per-shard consensus and a cross-shard two-phase commit.
+Why is repartitioning necessary in a distributed database?	As nodes join, leave, or load changes, data must be moved to keep capacity and traffic balanced.
+Why is simple modulo-based partition mapping unstable when cluster size changes?	Changing the divisor remaps most keys, forcing large-scale data movement.
+What problem does consistent hashing solve?	It minimizes key remapping when nodes join or leave, so only a fraction of data needs to move.
+How does consistent hashing place responsibility for keys?	Nodes sit on a hash ring and each becomes responsible for the range between its predecessor and itself.
+What two guarantees define snapshot isolation?	Each transaction reads from a consistent snapshot, and conflicting concurrent writes to the same item cannot both commit.
+What anomaly does snapshot isolation prevent compared with read committed?	Read skew caused by seeing mutually inconsistent committed values from different points in time.
+Why is snapshot isolation still not fully serializable?	It can allow write skew, where disjoint writes each preserve local checks but jointly violate a global invariant.
+What is Percolator's main approach to distributed transactions?	It builds snapshot-isolated transactions on top of Bigtable using timestamps, locks, and a client-driven two-phase commit.
+What happens in Percolator's prewrite phase?	The transaction acquires locks and checks for conflicting later writes or unreleased locks before making tentative changes durable.
+Why does Percolator designate a primary lock?	It gives recovery logic a single authoritative place to inspect when deciding whether an incomplete transaction should commit or roll back.
+What happens in Percolator's commit phase?	The client releases locks beginning with the primary lock and publishes the write records so the new versions become visible.
+Why can snapshot isolation improve read performance?	Readers can use stable snapshots without taking read locks on current mutable state.
+What is coordination avoidance trying to achieve?	Preserve correctness while reducing the amount of cross-node synchronization needed for transactions.
+What does I-confluence mean?	Any two independently produced invariant-valid states can be merged into another invariant-valid state.
+Why does I-confluence matter for coordination avoidance?	If valid divergent states can always merge into a valid state, many operations can proceed without coordination.
+What is the main idea of RAMP transactions?	Provide atomic visibility of multipartition writes without forcing mutual exclusion between readers and writers.
+What does read atomicity in RAMP guarantee?	A transaction sees either all writes from another transaction or none of them, preventing fractured reads.
+How does RAMP avoid blocking readers and writers on one another?	It uses metadata about in-flight writes so readers can detect missing pieces and fetch them if necessary.
+Why do distributed transactions remain hard even with advanced protocols like Calvin, Spanner, Percolator, and RAMP?	They must balance atomicity, fault tolerance, coordination cost, and performance across partitions that can fail independently.

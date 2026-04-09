@@ -1,0 +1,61 @@
+What problem do consensus algorithms solve in distributed systems?	They let multiple processes agree on a single value despite crashes and message delays.
+Why can't consensus be guaranteed in bounded time in a fully asynchronous system?	Because a process cannot distinguish a crash from an arbitrarily slow process or network.
+How do practical consensus systems get liveness despite FLP impossibility?	They rely on failure detectors or timing assumptions to suspect failed processes and keep the protocol moving.
+What are the three core properties of consensus?	Agreement, validity, and termination.
+Why is consensus useful in replicated systems?	It lets processes move through state changes in a common order without disagreement about what clients should observe.
+What is the difference between best-effort broadcast and reliable broadcast?	Best-effort relies only on the sender to deliver messages, while reliable broadcast ensures all correct processes receive the same messages even if the sender fails.
+Why is naive reliable broadcast expensive?	Recipients may have to rebroadcast to everyone else, producing roughly N^2 message traffic.
+What does atomic broadcast add beyond reliable broadcast?	It guarantees all correct processes deliver the same messages in the same order.
+What two properties define atomic broadcast?	Atomicity of delivery and a shared total order of delivered messages.
+What is the relationship between atomic broadcast and consensus?	They are equivalent in asynchronous crash-failure systems because agreeing on message order is a form of consensus.
+What is virtual synchrony?	A group-communication model where messages are delivered in a consistent order within a changing group view.
+Why do view changes matter in virtual synchrony?	A message sent in one view can be delivered only in that same view, so views act as barriers around broadcasts.
+What is the main idea of Zookeeper Atomic Broadcast (ZAB)?	A single leader orders updates and broadcasts them to followers, using epochs to keep leadership unique.
+What happens in ZAB's discovery phase?	A prospective leader learns followers' latest epochs and proposes a new epoch greater than any they know.
+What is the purpose of ZAB's synchronization phase?	To establish the new leader and bring followers to a consistent history before new broadcasts begin.
+What happens in ZAB's broadcast phase?	The leader proposes updates, waits for quorum acknowledgments, and then commits them.
+Why is ZAB efficient once a stable leader exists?	The leader can sequence requests with only a couple of message rounds instead of running fresh consensus for every event.
+What roles exist in Paxos?	Proposer, acceptor, and learner.
+What is the purpose of proposal numbers in Paxos?	They create a total order among competing proposals and prevent older proposals from overriding newer rounds.
+What happens in Paxos phase 1?	A proposer sends Prepare requests and tries to collect promises from a quorum of acceptors.
+What promise does an acceptor make in Paxos phase 1?	It promises not to accept future proposals with numbers lower than the prepare request it has acknowledged.
+Why do acceptors report previously accepted values during Paxos prepare?	So a later proposer can preserve safety by continuing with the highest-numbered value already accepted.
+What happens in Paxos phase 2?	The proposer sends Accept requests for the chosen value and tries to get a quorum of acceptors to accept it.
+When must a Paxos proposer use an old accepted value instead of its own?	When a prepare response reveals that some acceptor already accepted a higher-numbered prior value.
+Why are quorums central to Paxos safety?	Any two majorities overlap, so some acceptor carries forward information about previously accepted values.
+What does Paxos guarantee with any number of failures?	Safety: it will not decide conflicting values.
+What does Paxos require to guarantee liveness with f failures?	At least 2f + 1 processes so a quorum of f + 1 can still be formed.
+How can Paxos recover from a proposer failure after partial progress?	A later proposer can learn the previously accepted value from an overlapping quorum and complete it.
+Why can competing proposers cause repeated restarts in Paxos?	They can keep issuing higher-numbered prepares and prevent each other from completing phase 2.
+How is proposer livelock commonly mitigated in Paxos?	With random backoff so one proposer eventually gets enough uninterrupted time to win.
+What is Multi-Paxos?	A Paxos optimization where a stable leader skips repeating phase 1 for every value and directly replicates multiple log entries.
+Why is Multi-Paxos much faster than rerunning classic Paxos for every command?	It avoids the full leader-establishment round on most operations.
+Why do some Multi-Paxos implementations use leases?	To let the leader serve reads safely without a quorum round, as long as followers promise not to accept another leader for the lease period.
+What is the main safety caveat of leases in Multi-Paxos?	They depend on bounded clock drift, so badly skewed clocks can break linearizable reads.
+What is Fast Paxos trying to optimize?	It reduces one message delay by allowing proposals to reach acceptors more directly in fast rounds.
+What trade-off does Fast Paxos make for lower latency?	It needs larger quorums and becomes more vulnerable to collisions between concurrent proposers.
+What is the main idea of EPaxos?	Commands do not need a single global leader; instead, replicas infer ordering from dependencies between interfering commands.
+When can EPaxos use its fast path?	When a fast quorum agrees on the same dependency set for the command.
+When does EPaxos fall back to the slow path?	When replicas report conflicting dependency information that must be reconciled before commit.
+What counts as interfering commands in EPaxos?	Commands whose execution order affects the final result.
+Why can EPaxos improve throughput over leader-centric consensus?	Independent nonconflicting commands can commit without funneling all work through one leader.
+What is Flexible Paxos?	A Paxos variant that requires only phase-1 quorums to intersect with phase-2 quorums rather than requiring all quorums to be majorities.
+What does Flexible Paxos trade off?	It can reduce the replication quorum size for lower latency, but may require a larger quorum during leader election.
+Why is the quorum condition Q1 + Q2 > N sufficient in Flexible Paxos?	Because it guarantees any phase-1 quorum overlaps with any phase-2 quorum.
+What is the key simplification in Raft compared with Paxos?	Raft makes leadership explicit and separates leader election, log replication, and safety more clearly.
+What roles exist in Raft?	Follower, candidate, and leader.
+Why can a Raft node vote for at most one candidate per term?	To prevent multiple leaders from winning the same term.
+What is a term in Raft?	A numbered time interval during which at most one leader is valid.
+How does Raft resolve stale terms?	A node that sees a higher term updates its own term and yields to the newer one.
+What does a Raft leader replicate?	An ordered log of commands for the replicated state machine.
+When is a Raft log entry committed?	When the leader knows it has been replicated to a majority.
+Why are only up-to-date candidates allowed to become leader in Raft?	So committed entries cannot be lost by electing a leader with an incomplete log.
+What happens if a Raft follower's log conflicts with the leader's log?	The leader finds the latest common prefix and overwrites the follower's uncommitted conflicting suffix.
+What guarantee does Raft provide about committed entries?	Committed entries remain in the logs of future leaders and cannot be rolled back.
+How does Raft reduce the chance of split votes?	By using randomized election timeouts so one candidate is likely to start earlier than the others.
+What extra problem do Byzantine consensus algorithms solve?	They tolerate nodes that behave arbitrarily or maliciously rather than merely crashing.
+Why do Byzantine consensus protocols usually need more messages than crash-fault protocols?	Replicas must cross-check one another's claims instead of trusting the leader or a single response path.
+How many nodes does PBFT need to tolerate f Byzantine faults?	At least 3f + 1 replicas.
+What is the main structure of PBFT?	A primary orders requests, backups validate them, and replicas move through pre-prepare, prepare, and commit phases.
+Why does PBFT use checkpoints?	To let replicas prove stable state, discard old protocol metadata, and support safe recovery.
+Why is PBFT much costlier than crash-fault consensus?	It requires dense replica-to-replica communication and extra validation at every step.
