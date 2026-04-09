@@ -3,14 +3,12 @@ What is concurrency control in DBMS architecture?	Coordinating concurrent operat
 Why are main-memory DBMSs attractive?	Memory access is far faster than disk access, and programming against memory is simpler than programming against disk-oriented storage.
 Why are RAM cost and volatility major limits for main-memory DBMSs?	RAM is still expensive relative to persistent storage, and its contents can be lost on crashes or power failures without extra durability measures.
 How do memory-based DBMSs usually provide durability?	They write changes to a sequential log and maintain a disk-resident backup for recovery.
-What is checkpointing in an in-memory DBMS?	Applying batches of log records to a backup snapshot so older log segments can be discarded and recovery can start from a newer point.
 Why is an in-memory DBMS not just a disk-based DBMS with a huge cache?	In-memory systems can use different layouts, data structures, and optimizations than disk-oriented systems built around page and serialization overhead.
 When is a row-oriented data layout a good fit?	When workloads usually read or write most fields of a record together, such as point queries and range scans over whole rows.
 Why does row-oriented layout improve record access locality?	Values belonging to the same row are stored together, so reading one record tends to fetch its related fields in the same disk block.
 When is a column-oriented data layout a good fit?	When workloads scan many rows but touch only a subset of columns, especially for analytics and aggregates.
 Why can column-oriented layout outperform row-oriented layout for analytics?	It reads only needed columns and benefits from better cache utilization, compression, and vectorized processing.
 Why should column-oriented stores not be confused with wide-column stores?	Wide-column stores group columns into families but still organize data for key-based access to rows within those families rather than pure analytical column scans.
-What is a heap file in database storage?	A data file where records are not stored in any required key order and are typically placed in write order.
 What is an index-organized table in database storage?	A table that stores the actual data records inside the index structure in key order.
 How do primary and secondary indexes differ in database storage?	A primary index organizes access to the main data records, while secondary indexes provide alternative lookup paths using other fields.
 What is the difference between clustered and nonclustered indexes?	A clustered index keeps data records in search-key order, while a nonclustered index points to records stored in a different order.

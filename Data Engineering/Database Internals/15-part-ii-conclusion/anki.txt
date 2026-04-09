@@ -1,0 +1,6 @@
+Why is a fast storage engine not enough on its own?	If it cannot scale with data growth or is paired with slow distributed coordination, overall system performance will still suffer.
+Why is a fast storage engine undermined by a slow atomic commit protocol?	Distributed commit can become the dominant bottleneck even when local storage operations are fast.
+Why is scalability necessary for a useful storage engine?	A storage engine with degrading performance as data grows supports only a narrow range of workloads.
+What broad idea did Part II emphasize about distributed databases?	Node-local and cluster-wide mechanisms are interconnected and must be evaluated together.
+Why is understanding these distributed algorithms practically useful?	It helps you choose infrastructure software more intelligently and reason about likely failure modes and trade-offs.
+What kinds of systems commonly rely on these algorithms?	Databases, message queues, schedulers, and other infrastructure software.

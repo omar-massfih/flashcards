@@ -1,15 +1,9 @@
 How does a storage engine differ from a database management system?	A storage engine handles low-level data storage and retrieval, while a DBMS adds higher-level features such as schema, queries, indexes, and transactions.
 Why can storage engines treat keys and values as arbitrary byte sequences?	Their meaning, sorting, and representation semantics are defined by higher-level database components rather than by the storage engine itself.
-Why are pluggable storage engines useful in database systems?	They let database developers reuse existing engines and switch to engines that better fit particular workloads.
-What is the best way to compare databases for a real application?	Simulate the intended workloads in a production-like environment and measure the performance and operational metrics that matter to you.
-Why are long-running database tests important during evaluation?	Some performance, scalability, and operational problems appear only over time or as capacity grows.
 Why can operational friendliness matter more than raw performance when choosing a database?	A database that is easier to run, debug, and recover is often more valuable than one that is faster but less reliable.
 Why should database evaluation account for schema, record sizes, access patterns, and read/write rates?	Those variables determine whether the database can support the required queries, scale appropriately, and be operated safely over time.
 Why can reading database source code be useful even if you are only operating the database?	It helps you interpret logs, understand configuration, debug failures, and reduce recovery time when problems occur.
 Why should generic benchmarks such as YCSB be used cautiously?	Generic workloads can produce misleading conclusions unless they are tailored to real production conditions and access patterns.
 Why are benchmarks useful beyond comparing database vendors?	They also help define service expectations, understand system requirements, and support capacity planning.
-Why should teams test new database versions before rolling them out?	New releases can improve performance and security, but they can also introduce regressions, new bugs, or unexpected behavior.
 Why is designing a storage engine more than implementing a textbook data structure?	It also requires decisions about physical layout, serialization, garbage collection, concurrency, crash safety, and integration with database semantics.
 Why do storage-engine design decisions inevitably involve trade-offs?	Optimizing for one goal, such as write speed, read order, density, or simplicity, usually makes another goal harder to achieve.
-Why is there no universally optimal storage engine?	Different workloads and operational priorities require different trade-offs, so no single engine is best for every use case.
-Why do different storage engines end up with very different designs?	They optimize for different goals, such as read latency, write latency, storage density, or operational simplicity.
