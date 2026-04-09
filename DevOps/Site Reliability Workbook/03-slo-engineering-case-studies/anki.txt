@@ -1,0 +1,37 @@
+Why did Evernote adopt an SLO-centric SRE approach after trying other ops/dev models?	It wanted a shared, less subjective framework that balanced operations and development without pretending they were the same discipline.
+Why was Evernote drawn to the SRE model instead of forcing ops and development into one role?	It accepted their different specialties while giving both teams a common way to reason about reliability trade-offs.
+Why did Evernote start its SLO journey with uptime rather than a richer metric set?	It wanted a simple first SLO that captured a major user need and could be clearly explained and measured.
+What core user promise did Evernote's first SLO focus on?	That users could access and sync their content across clients.
+Why did Evernote choose third-party probing instead of only internal monitoring?	It wanted SLO measurement independent from its own stack so outages in shared infrastructure would still be visible.
+How did Evernote define a service as down for SLO purposes?	A failed probe had to be confirmed by a second geographically separate probe before counting as downtime.
+Why did Evernote count maintenance windows as downtime in SLO calculations?	Most users would experience planned maintenance as ordinary unavailability whether or not it was announced.
+How did Evernote use SLOs operationally after defining them?	It reviewed SLO performance monthly with Google and used misses to prioritize fixes and improvements.
+Why did Evernote accept imperfect first SLOs?	It preferred starting with a good-enough proxy and improving over time rather than waiting for a perfect but delayed solution.
+What organizational effect did SLOs have at Evernote beyond measurement?	They improved the relationship between operations and development by giving both teams a common measure of service quality.
+How did SLOs help Evernote make release decisions during a compressed timeline?	They quantified customer impact, which reduced subjective debate and helped narrow release windows.
+Why did Evernote not want a hard reliability wall between itself and Google Cloud?	It wanted Google to understand which service characteristics mattered to Evernote users and to share responsibility for those outcomes.
+How did shared SLOs change Evernote's relationship with Google?	Both sides used the same dashboards and could discuss incidents in terms of concrete impact on Evernote's customer-facing SLOs.
+Why are cloud-provider global SLOs sometimes insufficient for a customer like Evernote?	A customer's local or regional outages can be diluted inside a much larger provider-wide aggregate metric.
+How did shared SLOs improve major-incident handling for Evernote and Google?	Both parties could escalate quickly around the same measured customer impact instead of arguing from different views of severity.
+What was Evernote's next planned evolution after its initial uptime SLO?	Move toward more detailed API and client-view measurements to better reflect actual user quality of service.
+Why did The Home Depot need a common SLO language during its move to microservices and full-stack ownership?	Many small teams and services needed a shared way to express reliability expectations across dependencies.
+What problem did SLOs solve for service-to-service communication at The Home Depot?	They let teams ask consistent questions about availability, latency, capacity, overload behavior, and historical performance.
+What cultural problem existed at The Home Depot before its SLO effort?	Metrics were inconsistent and scattered, dependencies were opaque, and teams lacked a common way to discuss service reliability.
+What four areas did The Home Depot's SLO culture project target?	Common vernacular, evangelism, automation, and incentives.
+Why was establishing a common vernacular important at The Home Depot?	It gave teams a shared definition of what to measure and how to talk about reliability.
+What did The Home Depot decide every microservice should publish?	Availability and latency SLOs for its APIs.
+Why did The Home Depot decide not to set utilization SLOs?	Users care about responsiveness and capacity outcomes, not infrastructure utilization by itself.
+Why did The Home Depot include traffic volume in its SLO framework?	It needed a standard way to express how much demand a service was expected to handle, especially during peaks.
+Why did The Home Depot prefer latency percentiles over averages?	Percentiles better capture upper-bound user experience and tail behavior than arithmetic means.
+Why did The Home Depot track both 4xx and 5xx errors but use only 5xx for SLOs?	It wanted visibility into all errors, but treated server-side failures as the reliability signal for objectives.
+Why did The Home Depot keep tickets in its VALET framework?	Tickets were already an important operational signal and helped represent the amount of manual intervention a service still required.
+Why was VALET useful beyond being a metric list?	It gave the company a memorable shared framework for evangelizing SLO concepts.
+Why did The Home Depot invest heavily in evangelizing SLOs internally?	Teams unfamiliar with SLOs needed both education and cultural reinforcement before they would adopt them widely.
+Why did The Home Depot build TPS Reports?	To automate collection and reporting of VALET metrics for services running in production.
+What did the VALET service and dashboard add beyond raw metric collection?	They let teams register services, define SLO objectives, trend performance over time, and review services that missed targets.
+How did regular VALET reviews help development teams?	They turned SLO trends into action items for improving reliability or revising unrealistic targets.
+Why was building automation worth the effort at The Home Depot?	It helped the company scale from no SLO-supported services to hundreds in a relatively short time.
+How can VALET be adapted for batch applications?	Volume becomes records processed, availability becomes whether jobs finish on time, latency becomes runtime, errors become failed records, and tickets become manual fixes.
+How did VALET support destructive testing at The Home Depot?	It gave teams a way to measure the reliability impact of chaos-style tests in staging environments.
+What future step did The Home Depot want after collecting many SLOs?	Build an error-budget culture that would affect release decisions when services drifted out of SLO.
+Why did The Home Depot want more granular endpoint and consumer-specific SLOs?	Service-wide metrics can hide important differences between operations or between different callers of the same service.
