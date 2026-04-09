@@ -52,3 +52,25 @@ Why does architecture quantum differ from DDD bounded context?	It overlaps aroun
 Why can two independently deployed services still be dynamically coupled?	Runtime workflows can tie their operational characteristics together even when their deployment and static dependencies are separate.
 How does static coupling affect the scope of architecture characteristics?	The quantum boundary identifies which pieces must share operational qualities such as scalability, reliability, or deployability.
 Why can differing elasticity between two services make synchronous communication risky?	A faster-scaling caller can become blocked by a slower-scaling callee, causing the whole workflow to bog down.
+Why must software architecture adapt more often than building architecture?	Business conditions, technology platforms, and delivery practices change quickly, so software structure must evolve to keep supporting new demands.
+Why can mergers and acquisitions become an architectural scalability problem?	They can suddenly increase user volume, integration demands, and business scope beyond what an existing architecture can handle.
+Why can large monolithic systems struggle during rapid business growth?	Their resource usage and deployment scope grow together, making it hard to add capacity, isolate change, or scale only the stressed parts.
+What are the primary business drivers for architectural modularity?	Speed-to-market and competitive advantage.
+What architecture characteristics most strongly drive modularity benefits?	Maintainability, testability, deployability, scalability, and availability through fault tolerance.
+Why can modularity improve competitive advantage?	It combines faster change with better scalability and resilience, helping the business respond to markets and growth more effectively.
+Why doesn't architectural modularity always require microservices?	Modular monoliths and microkernel architectures can also partition functionality and improve maintainability, testability, and deployability.
+Why does higher incoming component coupling reduce maintainability?	Changes to one component are more likely to ripple into others, increasing change scope and coordination cost.
+What kinds of factors commonly affect architectural maintainability?	Component coupling, component cohesion, cyclomatic complexity, component size, and whether the architecture is technically or domain partitioned.
+How does change scope evolve from layered monolith to service-based architecture to microservices?	It narrows from application-level to domain-level to function-level change scope.
+Why can architectural modularity improve testability?	Smaller deployment units reduce test scope, make automated tests more targeted, and improve completeness of regression testing.
+How can communication between services undermine testability?	If services are tightly coupled through interactions, a change in one service expands testing scope to multiple services again.
+Why is deployability about more than just being able to deploy?	It also includes deployment frequency, deployment risk, and the amount of ceremony needed to release changes safely.
+Why do monolithic architectures tend to have poor deployability?	They require deploying the whole application, increase release risk, encourage long release intervals, and add more release ceremony.
+How does modularity improve deployability?	Separately deployed units reduce release scope and risk, allowing teams to deploy changes more frequently with less ceremony.
+What is the "big ball of distributed mud" in the context of deployability?	A distributed system so entangled that services must still be deployed together, losing the benefits of modularity.
+Why is elasticity more tied to service granularity than scalability is?	Handling sudden spikes requires very small startup times, which fine-grained services can often achieve more easily.
+Why does synchronous service communication hurt scalability and elasticity?	The more services must wait on each other to complete one request, the harder it is to scale or absorb spikes independently.
+What does fault tolerance mean in the context of modularity?	Some parts of the system remain available and responsive even when other parts fail.
+Why do monolithic systems have poor fault tolerance?	A catastrophic failure in one area can take down the entire deployment unit.
+Why is asynchronous communication important for fault tolerance in distributed systems?	It helps prevent failures in one service from immediately propagating to synchronously dependent services.
+How can modularity create a convincing business case for architecture migration?	By tying maintainability, testability, deployability, scalability, and fault-tolerance benefits directly to the business problems the current system is experiencing.
