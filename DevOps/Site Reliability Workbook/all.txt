@@ -106,3 +106,42 @@ How can VALET be adapted for batch applications?	Volume becomes records processe
 How did VALET support destructive testing at The Home Depot?	It gave teams a way to measure the reliability impact of chaos-style tests in staging environments.
 What future step did The Home Depot want after collecting many SLOs?	Build an error-budget culture that would affect release decisions when services drifted out of SLO.
 Why did The Home Depot want more granular endpoint and consumer-specific SLOs?	Service-wide metrics can hide important differences between operations or between different callers of the same service.
+Why can monitoring-system design involve trade-offs between use cases?	Choices that optimize one need, like fast alerting, may differ from choices that optimize another, like detailed long-term analysis.
+Why is data freshness important in monitoring?	Stale data delays detection, slows incident response, and can make engineers draw false conclusions about cause and effect.
+How can a monitoring system speed up expensive queries over large data sets?	By precomputing and storing derived time series for common queries.
+Why is long-term retention important in monitoring?	It enables growth analysis, capacity planning, and comparisons with past behavior.
+Why are monotonically increasing counters especially useful as monitoring metrics?	They let the monitoring system compute rates and windowed functions reliably over different time spans.
+Why are counters useful for SLO burn-rate alerting?	Their rates can be computed over short and long windows to estimate how quickly the error budget is being consumed.
+Why can percentiles be more useful than averages for latency monitoring?	Percentiles reveal tail behavior, while averages can hide a small but important fraction of very slow requests.
+When is it useful to keep raw monitoring data outside the primary monitoring system?	When you need offline analysis, longer-term reporting, or calculations that are too expensive or complex for the live monitoring stack.
+Why should dashboards present the same data differently for different audiences?	Executives, product owners, and SREs need different levels of detail and context to make decisions.
+Why is ad hoc drill-down valuable in monitoring?	It lets teams slice data by dimensions like version, request type, or machine class to find patterns and correlations during debugging.
+Why is alert classification useful in a monitoring system?	It supports proportional response, so minor issues can create tickets while severe problems page immediately.
+Why is alert suppression useful?	It reduces noise by collapsing redundant alerts and avoiding pages caused by an already known upstream problem.
+What is the main risk of alert suppression?	If suppression is not cleared correctly, engineers may miss real problems after the original event ends.
+Why are metrics usually better than logs for alerting and dashboards?	They are cheaper to aggregate in real time and make fast alerting and graphing easier.
+Why are logs often better than metrics for root-cause analysis?	They usually contain richer request- or event-level context needed to explain why something failed.
+Why are logs often better for non-urgent reporting?	They preserve more granular data, which usually makes retrospective analysis more accurate.
+If you need alerting on a rare exceptional event, why still prefer metrics-based alerting?	Increment a counter when the event occurs and alert on that metric so alerting stays in one consistent system.
+When is it a good idea to move information from logs into metrics?	When the value has bounded cardinality and would materially improve graphing, alerting, or rapid diagnosis.
+When should logs remain the primary data source instead of becoming metric labels?	When the field has extremely high cardinality, such as entity IDs, making it impractical as a metric dimension.
+How can a team speed up log-based investigations when metrics are not a good fit?	Automate the necessary log query and link that script or command from the alert.
+Why should monitoring configuration be treated as code?	It enables review, history, rollback, linting, and safer change management just like application code.
+Why is intent-based monitoring configuration preferable to UI-only configuration?	It is easier to review, version, reproduce, and automate consistently across teams.
+Why is consistency valuable in monitoring across an organization?	It makes dashboards easier to understand, improves cross-team debugging, and reduces ramp-up time for engineers changing teams.
+Why is it helpful to make basic monitoring coverage effortless?	New services automatically get baseline visibility and dashboards without requiring every team to reinvent instrumentation.
+Why should the components of a monitoring system be loosely coupled?	Stable interfaces between collection, storage, alerting, and visualization make the system easier to evolve or replace piece by piece.
+Why can separating dashboarding from storage and alerting ease migrations?	Teams can view data from old and new monitoring backends in one place while migrating gradually.
+What should appear prominently on a service's main dashboard when using SLO-based operations?	The SLI metrics tied to the service's SLOs.
+Why are SLO dashboards alone usually insufficient during an incident?	They show that user impact exists, but usually not what changed or which dependency or resource is causing it.
+What intended-change signals should monitoring expose during debugging?	Binary version, feature flags or command-line flags, dynamic configuration version, and build or packaging timestamps when versions are absent.
+Why should a service monitor its dependencies, not just itself?	A dependency failure or behavior change can break the service even when the service itself has not changed.
+What dependency metrics are commonly useful to expose?	Request and response size, latency, and response codes, ideally broken down by method or peer.
+Why is instrumenting a shared RPC client library often better than custom dependency monitoring in each service?	It gives consistent dependency metrics and automatically covers new dependencies with less duplicate effort.
+Why can a very narrow dependency API be hard to monitor well from generic client instrumentation?	Many different operations are hidden behind one method, so latency and errors are hard to interpret without extra context.
+Why should services monitor saturation even if they already alert on SLO symptoms?	Resource usage explains capacity limits and impending exhaustion that may cause future reliability problems.
+What kinds of saturation signals are worth monitoring?	Hard-limit resources like CPU, RAM, disk, and quota, plus soft-limit resources like threads, queues, file descriptors, goroutines, heap, or garbage-collection space.
+Why can status-code breakdowns be useful even when they are not the primary alerting signal?	They help explain traffic shifts, distinguish client from server problems, and show the effect of releases or quota enforcement.
+What is the difference between alerting metrics and debugging metrics?	Alerting metrics should change sharply in bad states; debugging metrics should help explain what is causing the bad state.
+How can postmortems improve monitoring quality?	They reveal which additional metrics would have made diagnosis faster the next time.
+Why is testing monitoring especially important even if alerts rarely fire?	An alert may sit unused for months or years, so teams need confidence it will trigger correctly and reach the right people when needed.
