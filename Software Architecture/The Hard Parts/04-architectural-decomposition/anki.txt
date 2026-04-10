@@ -1,0 +1,20 @@
+What core question should architects ask when evaluating a messy monolith for restructuring?	Is this codebase salvageable enough to decompose, or is a different restructuring approach needed?
+What does afferent coupling measure?	The number of incoming dependencies on a code artifact.
+What does efferent coupling measure?	The number of outgoing dependencies from a code artifact to other artifacts.
+Why are afferent and efferent coupling useful during decomposition?	They reveal dependency concentration and help architects see how hard shared code will be to separate or move.
+Why should architects interpret instability together with abstractness?	A low-instability component may be usefully stable or dangerously rigid, depending on how much abstraction it contains.
+What does distance from the main sequence measure?	How well a component balances abstractness and instability relative to an ideal relationship.
+What is the "zone of uselessness" in main-sequence analysis?	The region where code is too abstract to be practically useful.
+What is the "zone of pain" in main-sequence analysis?	The region where code is too concrete and brittle, making change difficult and risky.
+Why do components clustered in the zones of pain or uselessness matter during restructuring?	They suggest the internal structure is poorly balanced and may be expensive to improve before decomposition.
+When is component-based decomposition usually the better migration approach?	When the monolith already has reasonably identifiable components and boundaries.
+What is component-based decomposition?	An incremental refactoring approach that extracts and refines components into separately deployable services.
+Why should services be built from components rather than individual classes?	Components better preserve cohesive behavior and reduce the chance of creating fragile, overly fine-grained services.
+Why can service-based architecture be a useful target or stepping-stone during decomposition?	It lets teams separate coarse-grained domain services first, then decide later which domains need finer microservice granularity.
+Why can service-based architecture simplify an early migration from a monolith?	It lets teams postpone database decomposition, reuse familiar deployment artifacts, and treat the change as mostly technical rather than organizational.
+When is tactical forking usually the better migration approach?	When the codebase is decomposable but so unstructured that clean component extraction is impractical.
+What is tactical forking?	A decomposition approach that clones the monolith and lets teams delete unwanted code from each copy until separate services emerge.
+Why can deleting unwanted code be easier than extracting desired code from a chaotic monolith?	High coupling makes extraction drag many dependencies along, while deletion can preserve what still compiles and works.
+What is a major benefit of tactical forking?	Teams can begin quickly with little up-front analysis.
+What are the main drawbacks of tactical forking?	Resulting services may still contain leftover monolith code, retain poor internal structure, and drift in shared naming or duplicated logic.
+Why can tactical forking increase long-term maintainability risk?	Shared or duplicated code may have to be changed in multiple services, creating coordination and consistency problems.
