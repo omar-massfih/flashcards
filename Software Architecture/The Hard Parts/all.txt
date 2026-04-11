@@ -94,3 +94,39 @@ Why can deleting unwanted code be easier than extracting desired code from a cha
 What is a major benefit of tactical forking?	Teams can begin quickly with little up-front analysis.
 What are the main drawbacks of tactical forking?	Resulting services may still contain leftover monolith code, retain poor internal structure, and drift in shared naming or duplicated logic.
 Why can tactical forking increase long-term maintainability risk?	Shared or duplicated code may have to be changed in multiple services, creating coordination and consistency problems.
+When are component-based decomposition patterns most useful?	When a monolith has enough namespace or directory structure to refactor components incrementally toward services.
+What is the purpose of the Identify and Size Components pattern?	To catalog application components and find components that are too large or too small relative to the rest of the codebase.
+Why is component sizing important before extracting services?	Overly large components are usually more coupled, harder to extract, and likely to produce a less modular service architecture.
+Why are source-file count and line count weak component-size metrics?	They vary heavily with developer style and may not reflect how much behavior or complexity the component actually contains.
+Why can statement count be useful for component sizing?	It approximates how much work a component performs and can be aggregated across files within a namespace or directory.
+How can architects identify component-size outliers?	Compare each component's percentage of the total codebase or its distance from the mean component size in standard deviations.
+How should architects split an oversized component?	Use functional decomposition or domain analysis to find meaningful subdomains; if no clear subdomains exist, leave it intact.
+What governance helps preserve component sizing during migration?	Fitness functions that maintain component inventory and alert when components exceed a size threshold or standard-deviation threshold.
+What is the purpose of the Gather Common Domain Components pattern?	To find duplicated business-domain functionality and consolidate it into a shared component, shared service, or shared library.
+How does shared domain functionality differ from shared infrastructure functionality?	Shared domain functionality is business logic common to some processes; shared infrastructure functionality is operational behavior common across the system.
+Why can consolidating common domain functionality reduce duplicate services?	It prevents similar business logic from being extracted into several nearly identical services during decomposition.
+What clues can indicate common domain functionality in a monolith?	Shared classes across components, common inheritance structures, or repeated namespace leaf names such as audit, notification, or validation.
+What coupling trade-off should architects check before consolidating common domain logic?	Whether the new shared component creates too much incoming coupling and becomes an unhealthy dependency hotspot.
+Why might common domain code become a shared library instead of a shared service?	Some shared logic may be better bound at compile time than exposed as a separately deployed runtime dependency.
+What is the purpose of the Flatten Components pattern?	To ensure source code lives only in leaf-node namespaces or directories so each code file belongs to a well-defined component.
+Why does a namespace stop being a component once it has child namespaces?	It becomes a root namespace or subdomain, while the leaf-node namespaces become the actual components.
+What are orphaned classes in component flattening?	Classes that live in a root namespace instead of a leaf-node component namespace.
+How can architects flatten a namespace with orphaned classes?	Move leaf-node code down into the root namespace, or move root-namespace code up into new leaf-node components based on meaningful functions.
+Why should shared code in a root namespace be moved into its own leaf-node component?	Otherwise the shared code remains orphaned and cannot be cleanly tracked as a component.
+What does a high percentage of shared-code components suggest about decomposition feasibility?	The migration may create many shared dependencies and become difficult to maintain as a distributed architecture.
+What governance helps keep components flat during migration?	A fitness function that alerts when source code appears in a nonleaf root namespace.
+What is the purpose of the Determine Component Dependencies pattern?	To analyze incoming and outgoing dependencies between components and estimate the feasibility and effort of decomposing the monolith.
+Why should dependency analysis focus on components rather than classes inside a component?	Service candidates are built from components, so cross-component coupling better predicts the resulting service dependency graph.
+Why are dependency diagrams important before breaking apart a monolith?	They reveal coupling hotspots, migration risk, likely service dependencies, and whether the effort is refactoring or closer to a rewrite.
+How does component coupling affect monolith decomposition feasibility?	Low coupling points toward refactoring; high coupling suggests partial rewriting; extreme coupling can make decomposition impractical without a full rewrite.
+How can breaking apart one highly coupled component reduce coupling?	If many dependents use only a small part of it, extracting that part into a separate component can reduce coupling on the larger component.
+What governance helps control component dependency growth?	Fitness functions that cap total dependencies or forbid specific component-to-component dependencies.
+What is the purpose of the Create Component Domains pattern?	To group related components into logical domains that can later become coarse-grained domain services.
+Why are component domains important for service-based architecture?	They reveal which related components should move together into domain services rather than becoming too many small services.
+Why might old monolith namespaces need refactoring before domain extraction?	Related domain components may be scattered under inconsistent namespaces that do not reflect their business grouping.
+Why should domain grouping involve business stakeholders?	They help validate whether the proposed component groups match real business domains and responsibilities.
+What governance helps preserve component-domain boundaries?	Fitness functions that restrict allowed domains under a root namespace and alert on unexpected new domain nodes.
+What is the purpose of the Create Domain Services pattern?	To move well-defined component domains into separately deployed coarse-grained domain services.
+Why can creating domain services be safer than jumping directly to microservices?	It lets teams learn the domain boundaries before taking on fine-grained data decomposition, distributed workflows, and operational automation.
+What governance helps keep a domain service from becoming its own unstructured monolith?	A fitness function requiring components inside the service to stay under the service's domain namespace.
+What is the main risk of a seat-of-the-pants monolith migration?	Without structured decomposition patterns, teams can create poorly bounded services and a distributed system that is harder to maintain than the monolith.
