@@ -145,3 +145,36 @@ Why can status-code breakdowns be useful even when they are not the primary aler
 What is the difference between alerting metrics and debugging metrics?	Alerting metrics should change sharply in bad states; debugging metrics should help explain what is causing the bad state.
 How can postmortems improve monitoring quality?	They reveal which additional metrics would have made diagnosis faster the next time.
 Why is testing monitoring especially important even if alerts rarely fire?	An alert may sit unused for months or years, so teams need confidence it will trigger correctly and reach the right people when needed.
+What is the goal of SLO-based alerting?	Notify an on-call engineer about significant events before they consume too much of the error budget.
+What makes an event significant for SLO-based alerting?	It consumes a large enough fraction of the error budget to require action.
+Why does alert detection time matter?	Long detection time can allow an incident to consume too much error budget before anyone responds.
+Why does alert reset time matter?	Long reset time can create confusion, noise, and ignored alerts after an issue is resolved.
+Why is alerting when the recent error rate exceeds the SLO threshold usually too noisy?	Small, brief violations can trigger alerts even when they consume only a tiny fraction of the error budget.
+Why does increasing the alert window improve precision?	It requires an elevated error rate to persist long enough to represent a larger error-budget spend.
+What is the main drawback of a very long alert window?	It creates poor reset time because the long-window average stays high long after the incident ends.
+Why can long-window alert calculations be expensive?	They require evaluating many data points over a large time range.
+Why should SLO-based alerting usually avoid simple duration clauses?	They do not scale with incident severity and can reset whenever the metric briefly returns to a passing value.
+Why can duration-based alerts miss repeated error spikes?	Each brief recovery can reset the timer, so recurring budget-burning spikes may never satisfy the continuous-duration condition.
+What is burn rate in SLO alerting?	How fast the service is consuming error budget relative to the rate that would exactly exhaust the budget over the SLO window.
+What is the main weakness of a single burn-rate alert?	It can miss lower but sustained burn rates that still exhaust the error budget.
+Why use multiple burn rates and time windows?	They let the system page quickly for fast budget burn and create tickets for slower but still significant budget burn.
+When should an SLO-based alert page rather than create a ticket?	When the budget burn is fast enough that immediate human response is needed to defend the SLO.
+When is a ticket more appropriate than a page for SLO-based alerting?	When the budget burn is significant but slow enough to handle during normal working time.
+What problem does multiwindow multi-burn-rate alerting solve?	It preserves detection of significant budget burn while reducing false positives and improving reset time.
+How does multiwindow multi-burn-rate alerting work?	It requires both a long window and a shorter window to exceed the same burn-rate threshold before firing.
+Why does adding a short window improve reset time?	The alert stops once the short-window error rate returns below threshold, even if the long-window average remains elevated.
+Why is multiwindow multi-burn-rate alerting generally recommended?	It gives good precision and recall while letting teams tune alert severity by budget burn speed.
+Why do low-traffic services complicate error-budget alerting?	A single failure can represent a very high error rate and consume a large fraction of the budget.
+What key question should guide low-traffic alerting strategy?	What is the real user or business impact of a single failed request?
+How can artificial traffic help low-traffic services?	It creates more signal, letting existing SLO and alerting logic detect problems before many real users are affected.
+What is the risk of using artificial traffic for alerting?	Synthetic checks may cover only part of the service and can hide real-user failures if synthetic requests keep succeeding.
+When can combining services help low-traffic alerting?	When related low-traffic services contribute to one function and can be monitored as a larger signal group.
+What is a downside of combining services for alerting?	A complete failure of one small service may be diluted and not appear significant at the aggregate level.
+How can product or infrastructure changes improve low-traffic alerting?	Retries, fallback paths, or eventual execution can reduce the user impact of single failures and create more time to respond.
+Why is lowering an SLO a product decision, not just a monitoring tweak?	It changes reliability expectations, error-budget policy behavior, and stakeholder commitments.
+Why can extremely low availability targets break standard burn-rate paging assumptions?	A total outage may not consume enough budget within the paging window to cross the configured threshold.
+Why are extremely high availability targets hard to defend with alerting alone?	A total outage can exhaust the budget faster than metrics and notification systems can detect and route an alert.
+How can canarying help defend very high availability targets?	By limiting blast radius so a bad change burns budget slowly enough to detect and mitigate.
+Why should alerting parameters usually be standardized across many services?	Custom windows and burn rates per service create toil and cognitive load that do not scale.
+How can request bucketing reduce alerting complexity at scale?	Group request types with similar availability and latency requirements, then apply shared SLO and alerting parameters per bucket.
+What is the main trade-off of request-class buckets?	They reduce toil and complexity but may be less precise than bespoke objectives for every request type.
