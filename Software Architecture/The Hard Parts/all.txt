@@ -130,3 +130,59 @@ What is the purpose of the Create Domain Services pattern?	To move well-defined 
 Why can creating domain services be safer than jumping directly to microservices?	It lets teams learn the domain boundaries before taking on fine-grained data decomposition, distributed workflows, and operational automation.
 What governance helps keep a domain service from becoming its own unstructured monolith?	A fitness function requiring components inside the service to stay under the service's domain namespace.
 What is the main risk of a seat-of-the-pants monolith migration?	Without structured decomposition patterns, teams can create poorly bounded services and a distributed system that is harder to maintain than the monolith.
+Why is database decomposition usually harder than application decomposition?	Data is a critical business asset, data models are often highly coupled, and mistakes can disrupt both business integrity and application behavior.
+When is database decomposition required by the architecture style?	Microservices generally require separate data ownership and bounded contexts, while service-based architecture can still allow a shared database.
+How do application-decomposition concepts translate to data decomposition?	Components map roughly to data domains, class files to tables, and class coupling to database artifacts such as foreign keys, views, triggers, and stored procedures.
+What is the key trade-off in deciding whether to decompose data?	Balance data disintegrators that justify pulling data apart against data integrators that justify keeping data together.
+What are data disintegrators?	Forces that push toward breaking data apart, such as change control, connection management, scalability, fault tolerance, architectural quanta, and database type optimization.
+What are data integrators?	Forces that push toward keeping data together, especially strong data relationships and transactional consistency needs.
+Why is database change control a data disintegrator?	Breaking schema changes can force multiple services sharing the database to be updated, tested, and deployed together.
+What counts as a breaking database schema change?	Dropping tables or columns, renaming tables or columns, or changing column types used by existing queries or writes.
+How do bounded contexts reduce database change-control risk?	They isolate schema ownership so a database change mainly affects the services inside the owning context.
+Why should a service avoid directly accessing another service's database?	Direct access violates data ownership, couples the caller to another schema, and recreates shared-database change-control problems.
+How does a service contract abstract callers from database schema changes?	The service can expose JSON, XML, or object contracts that differ from the underlying table names, columns, and data types.
+Why can database connection management push teams to split data?	Each service instance often has its own connection pool, so shared databases can run out of connections as services multiply and scale.
+What symptom often indicates database connection saturation?	Frequent connection waits, which may appear as request timeouts or tripped circuit breakers.
+Why is database scalability a data disintegrator?	If services scale but a shared database cannot scale connections, throughput, capacity, or performance with them, the database becomes the bottleneck.
+How can splitting a database improve scalability?	Separate data domains reduce load and connection pressure on each database, allowing each part to scale more independently.
+Why is fault tolerance a data disintegrator?	A shared database can become a single point of failure that makes all dependent services nonoperational.
+How does splitting data improve fault tolerance?	A failure in one database affects only the services that depend on that data domain, while other parts can keep running.
+Why can architectural quanta push teams to split a database?	A shared database can statically couple otherwise separate services into one architecture quantum with shared operational characteristics.
+How can splitting data create separate architectural quanta?	Each group of services can own its corresponding data, allowing independent deployment and operational characteristics.
+Why is database type optimization a data disintegrator?	Different data shapes and access patterns may fit different database types better than a single monolithic database can.
+Why are data relationships data integrators?	Foreign keys, triggers, views, stored procedures, and logical relationships tie tables together and make safe separation harder.
+Why can foreign keys and views resist database decomposition?	They often enforce integrity or combine data across tables that would need to move into different schemas or databases.
+What trade-off should architects analyze around data relationships?	Whether a disintegrator such as change control, scalability, or fault tolerance is more important than preserving database-enforced relationships.
+Why are database transactions data integrators?	Keeping tables together can preserve a single ACID unit of work, while splitting them may require distributed transaction patterns or compensation.
+What risk appears when one logical transaction spans split databases?	One update may commit while another fails, creating consistency and integrity problems unless the workflow handles distributed failure.
+Why are data domains useful when decomposing a monolithic database?	They provide a domain-oriented unit for iteratively moving tables into schemas and eventually separate databases.
+What must happen to cross-domain database dependencies before extracting data domains?	Cross-domain foreign keys, views, triggers, functions, and stored procedures must be removed or moved to service-level interactions.
+Why can data-domain diagrams help a decomposition effort?	They show which relationships stay within a domain and which cross-domain dependencies must be broken.
+What is the five-step process for decomposing a monolithic database?	Identify data domains, assign tables to domain schemas, isolate service connections to owned schemas, move schemas to separate database servers, then switch services to the independent databases.
+Why can synonyms be useful during database decomposition?	They can make cross-schema dependencies easier to find and analyze, even though they do not eliminate coupling.
+What are benefits of data sovereignty per service?	Teams can change schemas independently and choose database technology suited to each service's use case.
+What are drawbacks of data sovereignty per service?	Cross-domain queries can be slower, database-enforced referential integrity is lost across domains, and stored database logic may need to move to services.
+What is the trade-off between backup/restore and replication for moving schemas?	Backup/restore is simpler but usually requires downtime; replication avoids downtime but requires more setup and coordination.
+What does database decomposition enable after domains are on separate servers?	Each database can be optimized for availability, scalability, and possibly a better database type.
+Why does database-type selection involve many trade-offs?	Each database product optimizes different characteristics such as learning curve, modeling fit, scalability, availability, consistency, maturity, and read/write priority.
+Why are relational databases often attractive for business applications?	They are mature, widely understood, SQL-based, flexible for read models, and strongly support ACID consistency.
+What is a limitation of relational databases for distributed scaling?	They often favor vertical scaling and consistency, making horizontal scaling and partition tolerance harder.
+What is a benefit of aggregate-oriented storage?	It can reduce joins, align storage with application objects, and make data easier to distribute across servers.
+What is a drawback of aggregate-oriented storage?	Choosing the right aggregate boundary is hard, and changing it later or analyzing across aggregates can be difficult.
+What is a key-value database best suited for?	Fast lookup, insert, and delete of values by known keys, such as session data, preferences, or cached properties.
+What is a major limitation of key-value databases?	The database generally cannot query inside the value; access is mainly by key.
+What is tunable consistency in NoSQL-style databases?	The ability to choose per operation how many replicas must participate, trading consistency against latency and availability.
+What is a document database best suited for?	Human-readable aggregate documents such as JSON or XML that need queryable fields and flexible structure.
+Why are document databases more flexible than basic key-value stores?	They understand document structure and can index or query multiple document attributes.
+Why is "schema-less database" a misleading phrase?	The database may not enforce one schema, but applications still depend on implicit or external schemas and must handle versions.
+What are column family databases best suited for?	High-throughput, horizontally scalable workloads over sparse, wide rows grouped by row keys and column name-value pairs.
+Why is row-key design important in column family databases?	The row key determines grouping and access patterns, so poor key design can undermine performance and scalability.
+What are graph databases best suited for?	Read-heavy traversal of explicit relationships among connected entities.
+Why are graph relationship-type changes expensive?	Edges may need to be recreated by visiting connected nodes, creating new relationships, and removing old ones.
+What problem do NewSQL databases try to solve?	Provide relational-style SQL and ACID consistency while adding horizontal scaling and stronger distributed availability features.
+Why can NewSQL be easier to adopt than many NoSQL databases?	It preserves familiar SQL and relational modeling while adding distributed scaling capabilities.
+What is the main appeal of cloud native databases?	They reduce operational burden and make scaling, experimentation, and cost visibility easier through managed cloud services.
+What is a risk of choosing cloud native databases?	Learning curves, product maturity, cloud lock-in, and specialized models can vary widely across offerings.
+What are time-series databases best suited for?	Append-only sequences of timestamped data points used to analyze changes over time.
+Why are time-series databases not general-purpose databases?	They are optimized for timestamped facts and time-window queries, not arbitrary transactional data models.
+What is the trade-off between embedded and referenced document aggregates?	Embedded aggregates simplify reads and rendering but duplicate data; referenced aggregates reduce duplication but require more retrieval and assembly.
