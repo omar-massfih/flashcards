@@ -233,3 +233,36 @@ Why should automation projects have a failure budget?	New automation can fail at
 Why did the decommissioning effort proceed in phases?	Phases reduced user disruption, let the team build tools as needed, and increased confidence in alternatives over time.
 What does "melt snowflakes" mean in toil reduction?	Modify or remove special cases so reality better matches automation assumptions.
 How can organizational nudges reduce future toil?	Escalations, recognition, documentation, and onboarding guidance steer users toward better low-toil alternatives.
+Why is simplicity a reliability goal for SREs?	Simple systems tend to break less often and are easier to understand, maintain, test, and repair.
+Why should SREs treat simplicity as an end-to-end property?	Operational complexity can appear in architecture, configuration, tooling, deployment, and processes, not only in source code.
+Why is measuring system-level complexity harder than measuring code complexity?	Systems have many interacting components, configurations, dependencies, and operational paths that do not reduce cleanly to one code metric.
+How can training time and explanation time proxy for system complexity?	They estimate how difficult the system is to learn, operate, and explain at a high level.
+What does administrative diversity reveal about system complexity?	How many different ways the system configures or manages similar settings.
+What does diversity of deployed configurations reveal about system complexity?	How many distinct production binaries, versions, flags, and environments operators must reason about.
+Why can system age increase complexity?	Over time, users may come to depend on incidental behaviors, making changes more fragile and unpredictable.
+What does Hyrum's Law warn about?	With enough users, every observable behavior of an API may become a dependency, even if it was not promised.
+Why is complexity often an externality?	The person or team adding complexity may not bear the full long-term cost of operating and understanding it.
+Why are SREs natural champions for end-to-end simplicity?	SRE work requires a whole-system view across services, dependencies, operations, and production failure modes.
+Why should new on-call engineers draw system diagrams?	Diagramming builds a shared mental model of system interactions and exposes gaps in understanding.
+Why keep canonical system diagrams in documentation?	They help new engineers learn the system and help experienced engineers track architectural changes.
+Why should SREs review major design documents?	SREs can identify operational complexity early and suggest simpler designs before the complexity is built.
+Why can structured RPC schemas be simpler than flexible untyped APIs?	They force upfront design decisions and make parameters, types, and compatibility more explicit.
+What lifecycle costs should teams consider before rewriting a system?	Development against a moving target, migration effort, dual-system maintenance, and the opportunity cost of not improving the current system.
+What comparison should teams make when evaluating a rewrite?	Compare the rewrite outcome to what the existing system could become if the same effort were invested in improving it.
+Why are wide APIs with many users hard to replace?	Many clients, configurations, and workflows must migrate, and some may depend on undocumented behavior.
+Why should simplification be prioritized like feature work?	It delivers operator and user value by reducing cognitive load, but it needs explicit time and rewards or feature work will crowd it out.
+Why can splitting SRE teams make simplification harder?	Narrower team scope can reduce ownership of cross-stack consistency and end-to-end simplification.
+How can system diagrams reveal reliability risks?	They make dependencies, request paths, amplification, and cycles visible enough to reason about.
+What is request amplification?	A failure or timeout causes retries at multiple layers, multiplying the total number of requests.
+Why are cyclic dependencies dangerous in production systems?	They can compromise system integrity and may make a full cold start impossible.
+Why are redundant lookups in one request a system smell?	They add unnecessary latency, capacity demand, and complexity to the request path.
+Why should acquired or independently built systems be integrated incrementally?	Incremental integration reduces migration risk and lets teams standardize without a disruptive big-bang rewrite.
+How do shared production standards reduce complexity?	They establish common ways to configure, monitor, provision, and perform common operational tasks.
+Why do standards need buy-in from SREs and developers?	Shared agreement makes the simplification plan credible, adoptable, and easier for managers to support.
+Why can a shared microservices platform simplify operations?	It replaces many bespoke production stacks with common workflows, tools, defaults, and reliability features.
+Why should shared platforms provide incremental productivity wins?	Teams are more likely to adopt a standard platform when each migration step pays off before the full transition is complete.
+Why distinguish managed services from merely hosted services?	Managed platforms should empower service teams with reliable workflows and tools rather than removing all responsibility from them.
+How can standard platforms change SRE engagement?	They can let many services run with lighter consulting or design-review support instead of deep SRE on-call involvement.
+Why use dependency allowlists for critical infrastructure services?	They prevent accidental new dependencies and keep critical service paths easier to reason about.
+Why are self-dependencies especially risky?	They may work during normal replicated operation but fail catastrophically during cold start or recovery.
+What is a practical way to break a circular service dependency?	Move the bootstrap data or lookup path to a lower-level local mechanism that does not depend on the service being resolved.
