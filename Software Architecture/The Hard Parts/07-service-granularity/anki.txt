@@ -1,0 +1,32 @@
+Why is service granularity harder to define than service modularity?	Modularity is about separating a system into parts; granularity is about deciding the right size of those parts based on what each service does.
+Why are class count and lines of code weak metrics for service granularity?	They vary with coding style and do not directly measure the service's functional responsibility.
+Why should service granularity balance disintegrators and integrators?	Focusing only on reasons to split can create overly fine-grained services with worse transactions, workflow, shared-code, or data-relationship trade-offs.
+Why is "single responsibility" risky as the only service-splitting rule?	What counts as one responsibility is subjective, so it can lead to unnecessary fine-grained services without objective trade-off analysis.
+When does weak service cohesion justify splitting a service?	When the service groups functions that belong to different business concerns rather than tightly related operations.
+Why can code volatility justify splitting a service?	If one part changes much more often than the rest, splitting it isolates change and reduces testing scope and deployment risk.
+How does volatility-based decomposition improve agility?	It lets frequently changing functionality be tested and deployed without redeploying stable functionality.
+Why can different throughput needs justify splitting a service?	Separate services can scale independently instead of forcing low-throughput functionality to scale with high-throughput functionality.
+How can splitting by throughput reduce operational waste?	It avoids scaling unrelated functions together, which can reduce infrastructure cost and improve elasticity.
+Why can fault tolerance justify splitting a service?	If one function's fatal failures bring down unrelated functions, separating them can preserve availability for the unaffected functions.
+What cohesion check should follow a fault-tolerance-based service split?	Check whether the leftover functionality still forms a coherent service with a clear responsibility.
+Why can security justify splitting a service?	Sensitive operations can be isolated behind a service-level access boundary with stricter controls.
+Why can extensibility justify splitting a service?	If new variants of a business function are expected, separate services can make additions easier to develop, test, and deploy.
+Why should extensibility be used cautiously as a service-splitting driver?	Predicted future variation may never appear, so splitting too early can add complexity without enough payoff.
+Why are database transactions granularity integrators?	Operations that require one ACID unit of work are simpler and safer when handled inside a single service and database transaction boundary.
+What trade-off can database transactions create against security?	Splitting can improve service-level access control, but keeping functions together may be necessary for all-or-nothing data consistency.
+Why can workflow or choreography push services back together?	If split services must constantly talk to each other, the communication can outweigh the benefits of separation.
+How can excessive synchronous service workflow reduce fault tolerance?	A failure in one required service can transitively make every dependent service or request path fail.
+How can excessive service workflow hurt performance?	Each service hop adds network, security, and serialization latency to the end-to-end request.
+How can excessive service workflow hurt data integrity?	If multiple services commit separately and one later step fails, the system may need compensating actions to repair partial state.
+What workflow signal suggests services may be too fine-grained?	A high percentage of requests require multiple services to coordinate synchronously.
+Why does request criticality matter in workflow-based granularity decisions?	Even if only a minority of requests need workflow, critical low-latency requests may justify recombining services.
+Why can shared domain code push services back together?	Frequent or large shared business logic can force coordinated testing and deployment across the services that use it.
+When is shared code not a good reason to merge services?	Shared infrastructure concerns such as logging, auditing, authentication, authorization, and monitoring are normal cross-cutting code.
+What shared-code signals suggest services should be merged?	A high percentage of shared domain code, frequent shared-code changes, or defects and business-rule changes that must be applied everywhere at once.
+Why can data relationships push services back together?	If split services constantly need each other's owned data, bounded-context rules create extra service calls and coordination.
+How do bounded contexts turn cross-service data relationships into workflow?	A service cannot directly query another service's database, so it must request that data through the owning service's API.
+Why is data-relationship granularity often hard to trade away?	Changing database entity relationships solely to support a service split is often infeasible or riskier than keeping related functionality together.
+How should architects use trade-off statements for service granularity?	Frame the competing qualities in business terms and decide with stakeholders which quality matters more for that case.
+Why can tightly bound activities remain one service despite different change rates?	If the activities must coordinate synchronously for every meaningful operation, performance and workflow control may matter more than isolated deployment.
+How can internal components help when one service contains differently changing logic?	Separate namespaces or components can isolate code structure inside one deployable service without creating interservice workflow.
+What does service granularity analysis show about design versus architecture?	Some quality concerns can be handled by design inside a service, so separate deployment units are not always required.
