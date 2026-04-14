@@ -266,3 +266,65 @@ How can standard platforms change SRE engagement?	They can let many services run
 Why use dependency allowlists for critical infrastructure services?	They prevent accidental new dependencies and keep critical service paths easier to reason about.
 Why are self-dependencies especially risky?	They may work during normal replicated operation but fail catastrophically during cold start or recovery.
 What is a practical way to break a circular service dependency?	Move the bootstrap data or lookup path to a lower-level local mechanism that does not depend on the service being resolved.
+What is the core idea of SRE practices?	Apply software engineering solutions to operational problems.
+How do SRE practices turn operational problems into engineering work?	They automate, redesign, or algorithmically manage work that would otherwise require manual operations.
+What are the two main categories of SRE team work?	Operational work and project work.
+Why is documentation not treated as a separate SRE work category?	Healthy documentation is embedded into project and operational tasks rather than treated as separate work.
+What project-work target does Google set for SREs?	At least 50% of SRE time should be spent on project work.
+Why should SRE teams periodically review their work balance?	Tracking work mix over time helps identify unhealthy operational load, underload, or lack of engineering capacity.
+What is the purpose of Production Excellence reviews?	To give SRE leadership a rubric-based view of team health and production practices over time.
+What is operational underload?	A state where engineers spend so little time operating a service that they lose practical knowledge of it.
+How can teams counter operational underload?	Take more operationally useful risks, move faster, run disaster recovery tests, onboard related services, or hand back services that no longer need SRE support.
+How should operational work feed project work?	Operational pain, toil, incidents, and requests should identify strategic projects that improve production systematically.
+What kinds of SRE projects can reduce operational load?	More robust storage, less brittle frameworks, safer rollouts, sharding, automation, and fixes for systemic outage causes.
+What is the main goal of a healthy on-call rotation?	Provide coverage for critical services without sacrificing the health of on-call engineers.
+Why should on-call load leave room for project work?	Project work lets the team strategically fix production problems and reduce future operational load.
+What pager-load target does Google use for on-call shifts?	At most two distinct incidents per 12-hour on-call shift.
+Why is psychological safety important for on-call rotations?	On-call work is stressful, so engineers need procedures, escalation paths, and support to respond confidently.
+Why should out-of-hours on-call work be compensated?	Compensation recognizes the burden, creates an incentive to participate, and discourages excessive shift-taking.
+Why is a training roadmap useful before a team starts on-call?	It defines the service knowledge and operational skills engineers need before taking production responsibility.
+What skills should on-call training exercises build?	Confidence and muscle memory for common debugging, mitigation, rollback, traffic draining, capacity, and monitoring tasks.
+Why are service deep dives useful for new on-call engineers?	They teach engineers to explore architecture, running jobs, dependencies, monitoring, and recent incidents from first principles.
+Why should new on-call engineers practice with mock incidents?	Role-playing recent failures builds debugging skill and psychological safety before real pages arrive.
+What should an on-call handoff include?	The previous shift's active issues, recent pages, mitigations, follow-up needs, and anything the next on-caller must watch.
+What should an on-call engineer prioritize during an incident?	Minimize user impact first, then ensure the issue is fully addressed and followed up.
+What is the purpose of an alert playbook?	Give high-level guidance on severity, user impact, debugging, mitigation, and resolution for a specific alert.
+Why should every paging alert have a playbook entry?	Playbooks reduce stress, MTTR, and human error when an alert fires.
+What is the trade-off between general and step-by-step playbooks?	General playbooks stay current longer; step-by-step playbooks reduce variability and MTTR but go stale faster.
+When should a playbook procedure become automation?	When it is a deterministic list of commands the on-caller runs every time the alert fires.
+Why are SLOs useful when redesigning on-call alerts?	They focus pages on user-impacting symptoms rather than low-level infrastructure noise.
+Why can one incident create multiple pages?	Several alerts can fire for the same underlying problem, so incident count and page count are not always identical.
+Why should response-time expectations vary by incident severity?	Not every issue requires an engineer to be at a computer within minutes; urgency should match user and business impact.
+When should an issue page a human instead of becoming a ticket?	When it is urgent, immediately actionable, and cannot be handled safely by automation or normal-hours follow-up.
+How can teams reduce bugs before they reach production?	Improve tests, use load testing, run production-like staging, canary releases, and learn from each production bug.
+Why is load testing important for reducing pager load?	Some bugs appear only under particular traffic levels or request mixes, not in ordinary functional tests.
+Why prefer "detect, roll back, fix, and roll forward" for new bugs?	It removes user impact quickly and avoids continuing to expose production to a known bad change.
+Why do frequent small releases reduce identification delay?	They make it easier to correlate a new page with the specific change that introduced the bug.
+How can searchable change logs reduce identification delay?	They help correlate alerts with recent code, configuration, or infrastructure changes.
+Why should on-call engineers ask for help early?	Faster collaboration reduces identification delay and reinforces that the on-caller is not alone.
+Why does mitigation delay increase pager load?	The longer a bug remains in production after identification, the more chances it has to recur and page again.
+How can feature flags reduce mitigation delay?	They let teams disable a broken feature without disabling unrelated functionality or waiting for a full rollback.
+How can draining requests reduce mitigation delay?	Traffic can be redirected away from affected instances or clusters quickly while rollback or repair proceeds.
+Why are non-rollbackable changes dangerous for on-call health?	They make mitigation slower and riskier, increasing user impact and pager load.
+What makes a paging alert high quality?	It is immediately actionable, has a strong signal-to-noise ratio, and corresponds to meaningful user or SLO impact.
+How should teams test new alerts before paging on them?	Run them in nonpaging mode long enough to observe normal production cycles and estimate false positives and pager-budget impact.
+Why is relaxing SLO-based alert thresholds rarely the right response to paging?	If alerts are symptom-based and tied to real error-budget burn, the system needs stability work rather than less sensitive paging.
+Why should teams identify the root cause of every page?	Knowing the cause lets teams prevent recurrence instead of leaving the next on-caller to face the same issue.
+Why is "transient" a weak explanation for a page?	It often masks an unidentified cause and invites the same bug to page again later.
+What should teams do when a page's root cause is unknown?	Add monitoring, logging, or investigation notes that make the next occurrence easier to diagnose.
+What is the difference between a point fix and a systemic fix?	A point fix addresses one instance of a bug; a systemic fix prevents a class of similar bugs.
+Why should page follow-up look for systemic fixes?	A page is a chance to remove an entire class of future failures, not just close the immediate incident.
+How can teams justify a larger production-health project from pages?	Compare implementation cost with the number of pages and handling hours the project would eliminate.
+Why should on-call data be tied to bugs or issues?	Structured data reveals which bugs, components, and processes cause the most pages and deserve priority.
+What does high-quality pager-load data enable?	Data-driven prioritization, known-issue tracking, automated reports, and better production-health decisions.
+How can teams maintain data quality for paging events?	Document expectations, alert on missing follow-up metadata, and reinforce good linking between pages, bugs, and handoffs.
+Why should teams watch pager-load trends over time?	Operational overload often accumulates gradually, so trend review catches unhealthy load before burnout.
+Why should on-call shifts often be limited to 12 hours when pages are frequent?	Shorter shifts reduce exhaustion and mistakes, making on-call more sustainable.
+Why is 24-hour continuous on-call usually unhealthy?	Engineers cannot reliably produce high-quality work while continuously responsible for pages without reprieve.
+Why should on-call scheduling support flexibility?	Team members' life circumstances change, and healthy rotations must preserve coverage while staying fair and humane.
+What properties should automated on-call scheduling support?	Changing constraints, load rebalancing, fairness, personal preferences, historical load, and stable already-published schedules.
+Why should teams plan for long-term breaks from on-call?	People may need temporary relief for burnout or personal circumstances without overloading the rest of the rotation.
+Why should SREs own production health rather than act only as operational helpers?	Ownership lets SREs define reliability roadmaps, drive resolution, maintain alerts, and improve the site strategically.
+How can SREs build ownership while collaborating with feature developers?	They can implement reliability fixes themselves and send code reviews to subject-matter experts.
+Why do positive team relationships improve on-call outcomes?	Engineers are more likely to fix bugs, complete action items, and avoid paging colleagues unnecessarily.
+What should teams do when on-call is drowning in alerts?	Step back, collect data, compare with partner teams, and address pager-load causes systematically.

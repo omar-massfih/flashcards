@@ -1,0 +1,11 @@
+What is the core idea of SRE practices?	Apply software engineering solutions to operational problems.
+How do SRE practices turn operational problems into engineering work?	They automate, redesign, or algorithmically manage work that would otherwise require manual operations.
+What are the two main categories of SRE team work?	Operational work and project work.
+Why is documentation not treated as a separate SRE work category?	Healthy documentation is embedded into project and operational tasks rather than treated as separate work.
+What project-work target does Google set for SREs?	At least 50% of SRE time should be spent on project work.
+Why should SRE teams periodically review their work balance?	Tracking work mix over time helps identify unhealthy operational load, underload, or lack of engineering capacity.
+What is the purpose of Production Excellence reviews?	To give SRE leadership a rubric-based view of team health and production practices over time.
+What is operational underload?	A state where engineers spend so little time operating a service that they lose practical knowledge of it.
+How can teams counter operational underload?	Take more operationally useful risks, move faster, run disaster recovery tests, onboard related services, or hand back services that no longer need SRE support.
+How should operational work feed project work?	Operational pain, toil, incidents, and requests should identify strategic projects that improve production systematically.
+What kinds of SRE projects can reduce operational load?	More robust storage, less brittle frameworks, safer rollouts, sharding, automation, and fixes for systemic outage causes.
