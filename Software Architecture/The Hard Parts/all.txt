@@ -218,3 +218,38 @@ How should architects use trade-off statements for service granularity?	Frame th
 Why can tightly bound activities remain one service despite different change rates?	If the activities must coordinate synchronously for every meaningful operation, performance and workflow control may matter more than isolated deployment.
 How can internal components help when one service contains differently changing logic?	Separate namespaces or components can isolate code structure inside one deployable service without creating interservice workflow.
 What does service granularity analysis show about design versus architecture?	Some quality concerns can be handled by design inside a service, so separate deployment units are not always required.
+Why is code reuse harder in distributed architectures than in monoliths?	Shared functionality can create deployment, versioning, runtime dependency, and bounded-context trade-offs across independently deployed services.
+Why is "share nothing" too extreme as a distributed architecture rule?	Some shared functionality is unavoidable, so architects must manage reuse deliberately rather than pretending it can always be eliminated.
+What is the main advantage of code replication?	It preserves bounded contexts and avoids shared code dependencies between services.
+What is the main risk of code replication?	Defects or required changes must be propagated manually across every copied version, causing inconsistency risk.
+When can code replication be reasonable?	For simple, static, one-off code that is very unlikely to change or contain defects.
+How can code replication help during monolith migration?	Replicated utility code can evolve independently inside each extracted service and shed unused behavior over time.
+Why do shared libraries preserve runtime operational characteristics better than shared services?	Calls to shared-library code remain local method calls, so they avoid network latency and service availability dependencies.
+What is the trade-off between coarse-grained and fine-grained shared libraries?	Coarse-grained libraries simplify dependency management but broaden change impact; fine-grained libraries isolate changes but create more dependencies to manage.
+Why should architects usually avoid coarse-grained shared libraries?	A change to one small part can force many services to retest, redeploy, or adopt a new version unnecessarily.
+Why are functionally partitioned shared libraries often preferable?	They favor change control by limiting which services are affected by a shared-code change.
+Why is shared library versioning important?	It provides backward compatibility and lets services adopt shared-code changes independently.
+How does versioning improve agility for shared libraries?	A service that needs a change can adopt the new library version without forcing every other consumer to redeploy immediately.
+Why is shared library versioning not simple?	Teams must communicate changes, track consumers, manage deprecation, and handle incompatible or urgent updates.
+What is the trade-off between custom and global shared-library deprecation policies?	Custom policies fit each library's change rate but are harder to manage; global policies are easier to govern but can create unnecessary churn.
+Why do serious shared-library defects override normal deprecation strategy?	All affected services may need to adopt the fixed version quickly, regardless of the usual compatibility window.
+When are shared libraries a good reuse choice?	In homogeneous environments where shared code changes at a low to moderate rate and compile-time versioning is useful.
+Why can shared services improve agility for volatile shared functionality?	Changing the shared behavior can require deploying only the shared service rather than rebuilding every consumer.
+Why are shared-service changes riskier than shared-library changes?	They are runtime changes, so a bad deployment can break all current consumers immediately.
+Why is shared-service versioning harder than shared-library versioning?	Versioning must work across runtime endpoints and protocols, and consumers still need coordination to target the right version.
+Why can API endpoint versioning become awkward for shared services?	Teams must decide which changes deserve new endpoints and coordinate consumers across every supported access protocol.
+How do shared services affect performance?	Consumers pay network, serialization, and often security latency for each call to shared functionality.
+How do shared services affect scalability?	The shared service must scale with all dependent services, adding capacity coordination and potential bottlenecks.
+How do shared services affect fault tolerance?	If the shared service becomes unavailable, every consumer that requires it can become nonoperational.
+When are shared services a good reuse choice?	In highly polyglot environments or when shared functionality changes often enough to justify the runtime dependency trade-offs.
+What problem do sidecars solve in distributed architectures?	They isolate cross-cutting operational capabilities from domain logic while providing a consistent operational interface.
+What kinds of concerns fit well in a sidecar or service mesh?	Operational concerns such as monitoring, logging, service discovery, authentication, authorization, and circuit breakers.
+Why should domain behavior usually stay out of a sidecar?	Domain classes in a sidecar create inappropriate coupling between services that should own their own bounded contexts.
+Why is a sidecar an orthogonal reuse pattern?	It lets operational concerns cut across domain-oriented service boundaries without mixing them into domain code.
+What is the main trade-off of using sidecars across heterogeneous platforms?	Each platform may need its own sidecar implementation, increasing infrastructure complexity.
+Why can sidecar components become risky if they grow too large?	They can become a heavyweight shared dependency that adds overhead to every service, including services that do not need all capabilities.
+How should teams evaluate adding utility code to a sidecar?	Compare how many services need it against the overhead and coupling it adds to every service.
+What determines whether reuse adds architectural value?	Reuse is found through abstraction but only pays off when the reused asset has a slow, well-understood rate of change.
+Why can centralizing a shared domain entity create brittleness?	A broad shared entity must satisfy many domains, and changes for one domain can ripple through every consumer.
+Why are operating systems and stable frameworks better reuse targets than volatile domain capabilities?	They usually have slower, better-governed change rates and clearer upgrade cadences.
+Why are platforms a common modern target for reuse?	They expose stable APIs around domain or infrastructure capabilities while hiding implementation changes behind contracts.
