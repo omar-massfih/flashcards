@@ -133,16 +133,11 @@ What is the main risk of a seat-of-the-pants monolith migration?	Without structu
 What happens after distributed data is pulled apart?	The data must be stitched back together through clear ownership, transaction handling, and access patterns for data a service no longer owns.
 What is the general rule for assigning table ownership to services?	The service that performs write operations to a table owns that table.
 Why does joint table ownership complicate the write-owner rule?	Multiple services write to the same table, so no single owner is obvious without applying another ownership technique.
-What is single table ownership in distributed data design?	Only one service writes to a table, making that service the table owner.
 How should architects usually handle single table ownership first?	Assign the writing service as owner first, then analyze harder common-ownership and joint-ownership cases.
 What is common table ownership in distributed data design?	Most or all services need to write to the same table.
 Why is a shared database a poor default solution for common table ownership?	It reintroduces shared-data problems such as change control, connection starvation, scalability limits, and fault-tolerance risk.
 How can common table ownership be resolved?	Create a dedicated service as the only owner of the common table, and have other services send it write requests or events.
-When is asynchronous fire-and-forget messaging useful for common table ownership?	When callers do not need a response or acknowledgment from the common data owner.
-Why use a persistent queue for fire-and-forget writes to a common data owner?	The broker stores messages durably so writes are not lost if a service or broker fails.
-When is synchronous communication useful for common table ownership?	When callers need returned information such as a confirmation number, database key, or immediate outcome.
 What is joint table ownership in distributed data design?	A small number of services, usually within the same domain, perform write operations on the same table.
-How does joint ownership differ from common ownership?	Joint ownership involves a few related services writing one table; common ownership involves most or all services writing one table.
 What are common techniques for resolving joint table ownership?	Table split, data domain, delegate, and service consolidation.
 What is the table split technique for joint table ownership?	Split one table into multiple tables so each service owns the columns or rows it is responsible for.
 How does table splitting change ownership?	It turns joint ownership of one table into single ownership of separate tables.
@@ -155,8 +150,6 @@ What is the main advantage of the data domain technique?	It preserves data consi
 What is a major drawback of the data domain technique?	Schema changes require coordination across multiple services, increasing testing scope and deployment risk.
 Why should teams reevaluate service boundaries when choosing a shared data domain?	Shared data may indicate the services are not independent enough to justify separate deployment unless other operational needs justify the split.
 What is the delegate technique for joint table ownership?	Assign one service as the sole table owner and have other services ask it to perform reads or writes on their behalf.
-What is primary domain priority in the delegate technique?	Choose the delegate service that most closely owns the main domain entity and performs most primary CRUD operations.
-What is operational characteristics priority in the delegate technique?	Choose the delegate service that needs stronger performance, scalability, availability, or throughput for the shared data.
 Why is primary domain priority often preferred for the delegate technique?	It keeps domain management responsibility with the service that best understands the entity and its business rules.
 What is a major disadvantage of the delegate technique?	It creates service coupling and interservice communication for nonowner reads or writes.
 When is the delegate technique best suited?	For write scenarios that do not require atomic cross-service transactions and can tolerate eventual consistency.
@@ -164,21 +157,9 @@ What is the service consolidation technique for joint table ownership?	Combine t
 What is the main transactional advantage of service consolidation?	It preserves atomic transactions inside one service and its database boundary.
 What are major drawbacks of service consolidation?	It creates coarser-grained scalability, less fault isolation, larger testing scope, and higher deployment risk.
 What should architects validate after assigning table ownership?	Business workflows and their transaction requirements.
-What is an ACID transaction?	A single atomic unit of work whose updates commit together or roll back together under atomicity, consistency, isolation, and durability.
-What does atomicity mean in an ACID transaction?	All updates in the transaction commit as one unit or all roll back as one unit.
-What does consistency mean in an ACID transaction?	The database is not left in an invalid state or allowed to violate integrity constraints during the transaction.
-What does isolation mean in an ACID transaction?	Uncommitted transaction data is not visible to other transactions outside the transaction scope.
-What does durability mean in an ACID transaction?	Once a commit succeeds, the committed updates are guaranteed to remain permanent despite later failures.
 When can a service in a distributed architecture still use ACID transactions?	Within its own database boundary, if the database supports ACID properties.
-What is a distributed transaction in service architectures?	An atomic business request whose database updates are performed by separately deployed remote services.
 Why do distributed transactions not provide business-request atomicity?	Each service commits its own part independently, so the overall business request cannot commit or roll back as one unit.
-Why do distributed transactions weaken consistency?	If one service succeeds and another fails, data owned by the participating services can become out of sync.
-Why do distributed transactions weaken isolation?	Data committed by one service becomes visible before the full business request has completed.
-Why do distributed transactions weaken durability across the business request?	Each service can make its own commit durable, but that does not guarantee every service in the business request also commits successfully.
 What does BASE mean for distributed transactions?	Basic availability, soft state, and eventual consistency.
-What does basic availability mean in BASE?	Services participating in the distributed transaction are expected to be available, with asynchronous communication sometimes used to reduce direct availability coupling.
-What does soft state mean in BASE?	The business request may be in progress, incomplete, or not fully knowable while distributed updates are still happening.
-What does eventual consistency mean in BASE?	Given enough time and successful processing, all parts of the distributed transaction reach a consistent state.
 What are the main eventual consistency patterns discussed for distributed transactions?	Background synchronization, orchestrated request-based, and event-based.
 What is the background synchronization pattern?	An external process periodically checks data sources and updates them to make them consistent.
 What is the main responsiveness advantage of background synchronization?	The user-facing request can finish quickly because consistency work happens later outside the request path.
