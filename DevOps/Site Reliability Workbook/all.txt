@@ -339,15 +339,10 @@ What is the Incident Commander role?	The person responsible for leading, coordin
 What roles does the Incident Commander own by default?	Any incident-response roles that have not yet been delegated.
 What is the Operations Lead role?	The person responsible for applying operational tools and coordinating technical work to mitigate or resolve the incident.
 What is the Communications Lead role?	The person responsible for status updates, stakeholder communication, and managing inquiries about the incident.
-When can the Communications Lead role be folded back into the Incident Commander role?	When the incident becomes small enough that separate communications coordination is no longer needed.
 Why declare incidents early?	Early declaration brings structure, reduces miscommunication, loops in the right teams sooner, and usually speeds resolution.
-Why are managed incidents usually resolved faster?	A managed response centralizes communication, clarifies ownership, and prevents uncoordinated parallel debugging.
-What is a war room in incident response?	A physical or virtual place where responders gather to communicate in real time and coordinate decisions.
 Why should incident responders use one shared communication location?	It reduces lost information, duplicated work, and conflicting assumptions during the response.
 Why should teams avoid relying on heroic individual effort during incidents?	Heroics are unreliable, harm work-life balance, and fail if the needed people are unreachable.
-Why should risky rollouts usually happen during business hours?	Developers and operators are easier to reach if the rollout causes user impact.
 What should teams do after mitigating an incident without knowing the root cause?	Continue investigating and prevent recurrence before resuming risky activity such as rollout expansion.
-Why should mitigation come before root-cause analysis during active incidents?	Customers mainly need the impact to stop; detailed understanding can continue after the service is stabilized.
 What order should active incident response usually follow?	Assess impact; mitigate impact; analyze root cause; then fix causes and write a postmortem after the incident.
 Why is assessing customer impact early important?	It determines severity, communication needs, escalation urgency, and whether the issue is truly an incident.
 Why should an Incident Commander establish formal structure as an incident grows?	More responders create communication overhead, so explicit roles and decision flow prevent confusion.
@@ -375,17 +370,11 @@ Why should incident response training use real scenarios?	Concrete incidents hel
 Why are incident response drills important?	They build habits and muscle memory before a high-stakes emergency occurs.
 What is disaster recovery testing in incident response practice?	A controlled emergency exercise where teams respond as if a real incident were happening without customer impact.
 What is a low-stakes way to practice major incident response?	Treat selected minor problems as formal incidents requiring structured coordination and communication.
-Why should drills use real tools when possible?	Practicing with actual communication, monitoring, and troubleshooting tools reveals process and tooling gaps.
-Why should incident drills be followed by a report?	The report captures what went well, what failed, and what should improve before a real incident.
-Who should participate in incident response drills?	Anyone likely to be involved in incidents, including SREs, developers, customer support, and communications partners.
 How can postmortems improve incident response readiness?	They reveal recurring failure modes, useful mitigations, tooling gaps, and scenarios for future drills.
 How can simulation exercises improve incident response teamwork?	They let responders practice roles, terminology, coordination, and escalation before real pressure hits.
 Why can time-bound simulation games help incident training?	They recreate urgency and communication stress in a safer environment.
 Why should major incident roles rotate during long incidents?	Rotation reduces fatigue, helps responders rest, and can bring fresh ideas into the response.
 Why record major incident calls or keep detailed logs?	They help reconstruct timelines and learn from real-time communication after the incident.
 What tools commonly support incident response?	On-call ownership data, a shared chat channel, conference calls, incident metadata, and postmortem records.
-Why might voice calls be useful during incident response?	They can make coordination decisions faster, while outcomes are recorded in chat or an incident log.
-Why should incident response processes evolve over time?	Business needs, team size, systems, and failure modes change, so the process must be reviewed and updated.
-Why is leadership support important for incident preparedness?	Teams need dedicated time for training, drills, tooling, and clear executive understanding during real incidents.
 What advantage does practiced incident response provide?	It can shave minutes or hours from response time and helps teams stay calm under pressure.
 Why does incident response structure matter more as incidents grow?	Larger incidents involve more unfamiliar collaborators, so procedures provide the coordination needed to move quickly.
