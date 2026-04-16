@@ -1,0 +1,35 @@
+What are the main distributed data access patterns?	Interservice communication, column schema replication, replicated caching, and data domain.
+What is the interservice communication pattern for distributed data access?	A service asks the data-owning service for needed read data through a remote access protocol.
+What is the main advantage of interservice communication for data access?	It is simple and avoids copying large volumes of data into the caller's bounded context.
+Why can interservice communication hurt data-access performance?	Each read can add network latency, security latency, and extra data-retrieval latency in the owning service.
+How does interservice communication affect service availability?	The caller depends on the owning service being available, so the caller may fail when the owner is down.
+How does interservice communication affect scalability?	If the caller scales up and repeatedly calls the owner, the owning service may need to scale with the caller's demand.
+Why does interservice communication require service contracts?	The caller and owning service must agree on request and response structures for transferring the needed data.
+What is the column schema replication pattern?	Copy needed columns into another service's table so that service can read the data locally.
+What is the main benefit of column schema replication?	The consuming service gets fast local reads without depending on the owning service at request time.
+What is the main data risk of column schema replication?	Copied data can become inconsistent with the source unless changes are synchronized reliably.
+Why can column schema replication create ownership problems?	The replicated column lives in another service's table, so governance must prevent nonowners from modifying copied data incorrectly.
+How is column schema replication usually synchronized?	The owning service publishes changes asynchronously through queues, topics, or event streams.
+When might column schema replication be worth considering?	For reporting, aggregation, or high-read scenarios where other access patterns fail because of volume, responsiveness, or fault-tolerance needs.
+Why is column schema replication often cautioned against?	It trades bounded-context cleanliness for duplicated data, synchronization work, and ownership governance.
+What is distributed caching?	Services use a separate external cache server to read or update shared cached data.
+Why is distributed caching weak as a distributed data access pattern?	It shifts dependency to a cache server, still requires remote calls, and can let multiple services mutate shared cached data inconsistently.
+What is replicated caching?	Each service has an in-memory copy of the same cache, and cache updates are synchronized between service instances.
+How does replicated caching support data access across bounded contexts?	The owner updates the cache, while consumers read local replicated cache data without calling the owner for each request.
+What is the main performance benefit of replicated caching?	Needed nonowned data is read from local memory instead of through a remote service call.
+How does replicated caching improve fault tolerance for consumers?	After the cache is populated, consumers can keep reading cached data even if the owning service becomes unavailable.
+How does replicated caching affect independent scaling?	Consumers can scale without forcing the owning service to handle every read request.
+Why are high data volumes a problem for replicated caching?	Every service instance holds its own copy, so memory use grows with cache size times instance count.
+Why are high update rates a problem for replicated caching?	Very volatile data may change faster than cache replication can keep all service copies effectively synchronized.
+What kinds of data fit replicated caching well?	Relatively static, moderate-volume data needed frequently by services that should avoid remote reads.
+What is the data domain pattern for distributed data access?	Put related tables in one shared schema or database so multiple services can read them directly.
+Why can a data domain provide excellent data-access performance?	Services can use normal database queries and joins instead of remote calls, copied columns, or cache assembly.
+How does the data domain pattern affect service coupling?	Services are decoupled from each other at runtime but coupled through the shared data schema.
+Why does the data domain pattern preserve data consistency?	Services access the same tables, so data does not need to be copied, transferred, or synchronized.
+How can a data domain preserve database integrity features?	Foreign keys, views, stored procedures, triggers, and related database artifacts can stay inside the shared schema.
+What is the main bounded-context trade-off of the data domain pattern?	It creates a broader bounded context, so schema changes may affect multiple services.
+Why can the data domain pattern create security concerns?	A service with access to the shared schema may see data it should not access unless permissions are carefully governed.
+Why does the data domain pattern require data ownership governance?	Multiple services share the schema, so teams must control which services may read or write each table or column.
+When is a data domain reasonable for distributed data access?	When other patterns fail because of performance, consistency, volume, or reliability constraints and the broader bounded context is acceptable.
+How should architects choose among distributed data access patterns?	Compare performance, consistency, fault tolerance, scalability, data volume, update rate, ownership, security, and bounded-context impact.
+What should an ADR for distributed data access capture?	The needed nonowned data, rejected access patterns, chosen pattern, ownership rules, and consequences such as startup or licensing constraints.
