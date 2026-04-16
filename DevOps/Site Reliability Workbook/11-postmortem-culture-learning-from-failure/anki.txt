@@ -1,0 +1,38 @@
+Why is introducing postmortems a cultural change?	It changes how teams talk about failure, accountability, learning, and follow-up, not just how they document incidents.
+What makes postmortems effective organizational tools?	They are written well, acted upon, and shared widely enough to drive learning and change.
+Why should teams start small with postmortem practice?	A basic process can create learning quickly, then be tuned as the organization gains experience.
+What is the main risk of a postmortem without follow-up action?	Users see no difference from having no postmortem because the system remains vulnerable to recurrence.
+Why should postmortems include enough background context?	Readers outside the immediate team need key terms and system context to understand and reuse the lessons.
+Why are glossaries useful in postmortems?	They make domain-specific terms understandable to a broader audience without overloading the main narrative.
+Why should postmortems include quantifiable impact data?	Numbers make severity, scope, and recovery progress understandable and reduce ambiguity.
+What should the root-cause section of a postmortem explain?	The system conditions, trigger, and failure path that allowed the incident to happen.
+What should the recovery-efforts section of a postmortem capture?	What responders did, how the issue was mitigated, and how user impact changed during recovery.
+What makes a postmortem action item actionable?	It has a clear owner, priority, tracking issue, and measurable completion criteria.
+Why should postmortem action items include preventative fixes?	Mitigations reduce impact, but preventative changes reduce the likelihood of the incident recurring.
+Why are vague action items harmful?	Words like "improve" or "make better" make success hard to verify and follow-up easy to ignore.
+Why is blaming individuals harmful in postmortems?	It reduces psychological safety, makes people risk-averse, and encourages hiding facts needed for learning.
+What should blameless postmortems focus on instead of who caused the incident?	The system design gaps, misleading information, unsafe defaults, and process weaknesses that shaped the outcome.
+Why should a postmortem usually have a single owner?	A single owner provides accountability for completing, sharing, and following up on the document.
+Why can public or broad postmortem sharing restore trust?	A thoughtful account shows affected people that the organization understands the failure and is acting on it.
+Why should postmortems be published promptly?	Incident details are fresher, affected people are waiting for an explanation, and delayed learning risks recurrence.
+How can a postmortem balance depth and conciseness?	Summarize the main findings while linking detailed logs, transcripts, graphs, and appendices for deeper analysis.
+Why group many action items by theme?	Themes make large follow-up plans easier to review, prioritize, assign, and track.
+Why should postmortems include multiple perspectives on impact?	Incidents often affect users, revenue, teams, dependencies, and recovery work in different ways.
+Why is trying to make humans less error-prone a weak postmortem action item?	Human behavior is unreliable under stress; safer systems and processes are more dependable controls.
+How should leaders model blameless behavior?	Use neutral language, ask what conditions shaped decisions, and redirect blameful discussion toward system learning.
+What is a constructive alternative to asking why someone made a bad choice?	Ask what warning signs existed, what information was missing, and what system changes would make the safe path easier.
+Why include incident participants in postmortem authoring?	They provide context and contributing factors that a single writer or team might miss.
+Why gather feedback on postmortem drafts?	Review catches blameful language, missing context, weak action items, and gaps in technical analysis.
+How can postmortems create positive organizational impact?	Lessons from one incident can drive changes across teams, reducing broader classes of failures.
+Why highlight reliability improvements from postmortems?	Showing fewer outages and better systems reinforces the value of postmortem work.
+What is a cross-team postmortem review?	A review where one team walks through an incident and other teams ask questions and learn from it.
+How can previous postmortems support training?	Exercises can reenact past incidents so new engineers practice realistic decision making and response.
+What is a warning sign that postmortem culture is failing?	People avoid association with incidents because they fear blame, shame, or painful review meetings.
+How should teams respond when leaders use blameful language?	Redirect toward assumptions, warning signs, missing information, and system conditions instead of individual fault.
+Why does lack of time degrade postmortem culture?	Overloaded teams produce weaker analysis and incomplete action items, increasing recurrence risk.
+What should teams ask when incidents repeat?	Whether action items are closing, reliability work is being deferred, fixes are systemic enough, or the service needs deeper redesign.
+Why bring together collaborators from similar incidents?	They can identify common causes and choose broader fixes that prevent repeated failure patterns.
+How do templates help postmortem culture?	They make postmortems easier to write, easier to review, and more consistent for readers.
+How can incident tools help create postmortems?	They can prepopulate roles, timelines, logs, affected services, severity, detection mechanisms, and other metadata.
+Why store postmortems in a searchable repository?	Searchable history lets future teams find prior incidents, patterns, and lessons.
+How can postmortem data support reliability analysis?	Metadata enables reporting on incident trends, duration, detection time, resolution time, blast radius, and vulnerable systems.
