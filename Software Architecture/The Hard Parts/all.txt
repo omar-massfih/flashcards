@@ -337,3 +337,53 @@ Why does the data domain pattern require data ownership governance?	Multiple ser
 When is a data domain reasonable for distributed data access?	When other patterns fail because of performance, consistency, volume, or reliability constraints and the broader bounded context is acceptable.
 How should architects choose among distributed data access patterns?	Compare performance, consistency, fault tolerance, scalability, data volume, update rate, ownership, security, and bounded-context impact.
 What should an ADR for distributed data access capture?	The needed nonowned data, rejected access patterns, chosen pattern, ownership rules, and consequences such as startup or licensing constraints.
+What is coordination in distributed workflows?	Combining two or more services to complete domain-specific work across service boundaries.
+What are the two fundamental distributed workflow coordination patterns?	Orchestration and choreography.
+What distinguishes orchestration from choreography?	Orchestration uses an orchestrator or mediator; choreography has no central coordinator.
+What is the orchestration communication style?	A mediator component manages workflow state, branching, error handling, notifications, and coordination among services.
+What should a microservices orchestrator usually be scoped to?	A specific workflow, not a global enterprise-wide mediator.
+Why are global orchestrators usually avoided in microservices?	They create a broad coupling point that undermines service decoupling.
+What belongs in an orchestrator?	Workflow behavior and state coordination, not unrelated domain behavior owned by participating services.
+When is orchestration especially useful?	When workflows have complex branching, boundary cases, retries, or error handling.
+Why can orchestration simplify workflow error handling?	The orchestrator owns the workflow state and can coordinate compensating actions from one place.
+How can orchestration improve recoverability?	The orchestrator can monitor progress and retry or remediate short-term participant failures.
+Why does orchestration make workflow state easier to query?	The orchestrator provides a single place that knows the current workflow status.
+What is a major responsiveness trade-off of orchestration?	Requests pass through a mediator, which can become a throughput bottleneck.
+What fault-tolerance risk does orchestration introduce?	The orchestrator can become a single point of failure for the workflow unless redundancy is added.
+Why can orchestration reduce scalability compared with choreography?	The mediator adds coordination points and can limit parallelism.
+How does orchestration affect service coupling?	Participating services become coupled to the orchestrator and its workflow contract.
+What is the choreography communication style?	Services coordinate by sending events or commands to one another without a central workflow owner.
+Why can choreography look simpler on the happy path?	It removes the orchestrator and lets services react through a chain of messages.
+Why do choreography designs often become complex in error scenarios?	Each error path may require new service-to-service messages and compensating behavior across participants.
+How does choreography affect responsiveness?	It can improve responsiveness by avoiding central choke points and allowing more parallelism.
+How does choreography affect scalability?	Services can often scale more independently because there is no mediator bottleneck.
+How does choreography affect fault tolerance?	There is no single orchestrator failure point, and multiple service instances can handle events independently.
+What is the main workflow-control disadvantage of choreography?	No single component owns the whole workflow, making state, errors, and recovery harder to manage.
+Why is error handling harder in choreography?	Domain services must know more about workflow failure paths and how to compensate for them.
+Why is recoverability harder in choreography?	There is no central component responsible for retrying, repairing, or coordinating stalled workflow steps.
+What is semantic coupling in a workflow?	The inherent coupling required by the domain process itself.
+What is implementation coupling in a workflow?	The extra coupling introduced by the architectural design used to implement the domain process.
+Can implementation reduce semantic coupling?	No; it can only model the required domain coupling well or make it worse.
+Why should implementation align closely with workflow semantics?	Extra architectural structure can add implementation complexity on top of unavoidable domain complexity.
+How can technical partitioning increase workflow complexity?	A single domain workflow may be spread across technical layers, adding coupling beyond the domain's natural shape.
+How does domain partitioning help workflow implementation?	Domain behavior stays closer to the component that owns the corresponding business workflow.
+What relationship exists between workflow complexity and orchestration usefulness?	As workflow steps, error paths, and semantic complexity increase, orchestration tends to become more useful.
+Where is the sweet spot for choreography?	High-throughput workflows that need responsiveness and scalability and have simple or infrequent error scenarios.
+Where is the sweet spot for orchestration?	Complex workflows with important boundary conditions, error handling, recoverability, or status-query needs.
+What is workflow state?	Transient information about which steps have run, which remain, ordering, errors, retries, and current status.
+Who naturally owns workflow state in orchestration?	The orchestrator, unless the design intentionally makes it stateless.
+Why is workflow state harder in choreography?	There is no obvious central owner for workflow progress and status.
+What is the front controller approach to choreography state?	The first service in the workflow owns workflow state in addition to its domain behavior.
+What is the main benefit of a front controller in choreography?	It makes current workflow state easy to query from one service.
+What is the main drawback of a front controller in choreography?	It adds workflow responsibility to a domain service and increases communication back to that service.
+What is stateless choreography?	A choreography approach that stores no central transient workflow state and rebuilds status by querying participant services.
+What is the main benefit of stateless choreography?	It keeps services highly decoupled and can offer high performance and scale for simple workflows.
+What is the main drawback of stateless choreography?	Workflow status must be reconstructed on demand, which can become complex and chatty.
+What is stamp coupling for workflow state?	Passing extra workflow state inside the message contract as services update and forward it.
+What is the main benefit of stamp coupling for workflow state?	Services can pass workflow context without querying a central state owner.
+What is the main drawback of stamp coupling for workflow state?	Contracts become larger and it still does not provide a single just-in-time status query point.
+What trade-off does removing a mediator create in choreography?	It reduces central coupling but often increases service-to-service communication and distributed workflow knowledge.
+When might choreography be worth complex error handling?	When the workflow needs high scale or responsiveness and error cases are rare or manageable.
+Why did the ticket workflow favor orchestration in the Sysops example?	The workflow needed strong control, status tracking, and error handling for lost, canceled, reassigned, or misrouted tickets.
+What consequence should an ADR note when choosing orchestration?	The orchestrator may become a scalability or availability concern if workflow volume grows.
+How should architects choose between orchestration and choreography?	Model likely happy paths, error paths, state needs, scale needs, and workflow-control needs, then compare trade-offs.
