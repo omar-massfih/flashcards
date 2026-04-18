@@ -437,3 +437,34 @@ How can code annotations or attributes help manage sagas?	They document which se
 Why is saga participation metadata useful?	It helps identify testing scope, affected services, and workflow impact when a service or saga changes.
 What can a saga code-walking tool report?	The services involved in a named saga by scanning service entry points and saga annotations.
 How should architects choose a transactional saga pattern?	Compare communication timing, consistency needs, coordination complexity, error frequency, responsiveness, scale, and semantic coupling.
+Why do contracts cut across communication, consistency, and coordination choices?	Every distributed interaction depends on what information is exchanged and how tightly that exchange is specified.
+What is a strict contract?	A contract that requires precise adherence to names, types, ordering, required fields, and other structural details.
+Why can strict contracts make integration architecture brittle?	Contract changes often force coordinated changes across every consumer that depends on the exact structure.
+What is contract fidelity?	Confidence that exchanged data matches the expected fields, types, and constraints.
+What is the main advantage of strict contracts?	They provide high contract fidelity and are easier to verify and document precisely.
+How can strict contracts help build-time verification?	Schema or type tools can validate integration points before deployment.
+What is a loose contract?	A contract with little or no schema metadata, often represented as simple name-value pairs.
+Why do loose contracts improve decoupling?	Services can evolve internal representations without forcing every consumer to match exact implementation details.
+Why are loose contracts easier to evolve?	Adding or changing unrelated data is less likely to break consumers that use only the fields they need.
+What is the main risk of loose contracts?	Misspelled names, missing values, unexpected types, and other contract mismatches may not be caught automatically.
+Why do loose contracts often need fitness functions?	Automated contract tests can verify that consumers still receive the data they require despite loose structure.
+How do REST-style contracts tend to reduce brittleness?	They model resources rather than procedure signatures, so adding unrelated resource details need not break existing consumers.
+How can GraphQL reduce overfetching between services?	Consumers can ask for only the fields they need from an aggregate contract.
+Why should contracts usually stay at a "need to know" level?	Including unused fields creates unnecessary coupling and breakage when irrelevant data changes.
+What is the microservices contract tension?	Teams want loose service coupling while still preserving enough contract fidelity to avoid broken integrations.
+Why do name-value pairs fit microservice integration well?	They are implementation-neutral and can be produced or consumed by most technology stacks.
+How do bounded contexts influence contract design?	Each service can keep its own internal domain representation and expose only the information other contexts need.
+What is a consumer-driven contract?	A contract test or specification written by a consumer that defines what it needs from a provider.
+How do consumer-driven contracts invert the usual provider contract model?	The consumer supplies expectations that the provider includes in its build or delivery pipeline.
+Why are consumer-driven contracts useful with loose contracts?	They preserve loose coupling while automatically verifying that required consumer fields still work.
+Why are consumer-driven contracts two interlocking mechanisms?	They combine loose data exchange with separate automated tests that govern the integration.
+What is stamp coupling?	Passing a larger data structure between services when each service uses only a small part of it.
+When can stamp coupling be legitimate?	When an industry-standard document or workflow state package must travel through multiple services.
+Why is accidental stamp coupling an anti-pattern?	It couples services to fields they do not use, causing irrelevant changes to break consumers.
+How can stamp coupling waste bandwidth?	Large payloads may be sent repeatedly even when each consumer needs only a tiny subset.
+How can stamp coupling help choreographed workflow management?	The message can carry workflow status, transaction state, and error context as it moves between services.
+What trade-off does stamp coupling create for workflow management?	It supports complex choreography but increases coupling and may increase payload size.
+When might stamp coupling be preferable to mediation?	When scalability pushes toward choreography and carrying workflow state in the contract is acceptable.
+How should architects choose contract strictness?	Balance contract fidelity, evolvability, team maturity, semantic coupling, verification needs, and change frequency.
+Why can app-store deployment constraints favor loose contracts?	Slow client release cycles make strict contract changes harder to coordinate quickly.
+What extra responsibility comes with loose mobile-app contracts?	More validation and compatibility logic must live in the app and service boundary.
