@@ -1,0 +1,58 @@
+What is a transactional saga?	A sequence of local transactions across services, with later steps or compensating actions used to complete or repair the overall workflow.
+Why are saga errors architecturally interesting?	Distributed transactions lack true business-request atomicity, so failure handling determines whether the workflow can recover safely.
+What three dimensions define transactional saga patterns?	Communication, consistency, and coordination.
+What are the two communication choices in saga patterns?	Synchronous and asynchronous communication.
+What are the two consistency choices in saga patterns?	Atomic consistency and eventual consistency.
+What are the two coordination choices in saga patterns?	Orchestrated coordination and choreographed coordination.
+What does a saga pattern superscript encode?	The saga's communication, consistency, and coordination choices.
+What is the Epic Saga pattern?	A synchronous, atomic, orchestrated saga.
+Why does the Epic Saga feel familiar to many architects?	It mimics monolithic transactional behavior with a central workflow owner and all-or-nothing coordination.
+What is the main advantage of the Epic Saga?	It provides clear transactional coordination and a clear workflow owner.
+Why is the Epic Saga highly coupled?	It combines synchronous communication, atomic consistency, and orchestrated coordination.
+What is a major operational drawback of the Epic Saga?	The orchestrator must coordinate all participants before responding, hurting responsiveness, availability, scale, and elasticity.
+What is a compensating update?	An operation that attempts to undo a committed write, such as reversing an update or deleting an inserted row.
+Why are compensating updates difficult in distributed systems?	They must repair already committed local transactions without true isolation across services.
+What is a side effect in compensating transactions?	Another service may already have acted on data before the compensation reverses the original change.
+Why can compensation failure confuse users?	The original partial change may remain committed while the user is told the overall operation failed or should be retried.
+Why can atomic distributed transactions unnecessarily couple users to backend workflow details?	The user may receive failure because a secondary workflow step failed, even if their main task succeeded.
+How do compensating updates affect responsiveness?	The caller may wait while the system detects failure and attempts corrective actions.
+What is the Phone Tag Saga pattern?	A synchronous, atomic, choreographed saga.
+Why does Phone Tag Saga need workflow logic inside domain services?	Atomicity must be coordinated somewhere, and there is no orchestrator to own it.
+When is Phone Tag Saga most plausible?	For simple workflows needing somewhat better scale than orchestration and having easy error handling.
+What is the main drawback of Phone Tag Saga?	Error handling and compensation logic spread across participating services.
+What is the Fairy Tale Saga pattern?	A synchronous, eventual-consistency, orchestrated saga.
+Why is Fairy Tale Saga often attractive?	It keeps a mediator for workflow control while avoiding holistic distributed transactionality.
+How does Fairy Tale Saga handle service-local transactions?	Each domain service owns its own transaction, while the orchestrator manages workflow progress and repair.
+What is the main trade-off of Fairy Tale Saga?	It improves simplicity and responsiveness but accepts that data may be temporarily inconsistent.
+What is the Time Travel Saga pattern?	A synchronous, eventual-consistency, choreographed saga.
+What kind of workflow fits Time Travel Saga well?	Simple one-way workflows such as chain-of-responsibility, pipes-and-filters, ingestion, or bulk-processing flows.
+Why does Time Travel Saga become hard for complex workflows?	Without an orchestrator, each service must manage workflow state, error paths, and eventual consistency.
+What is the Fantasy Fiction Saga pattern?	An asynchronous, atomic, orchestrated saga.
+Why is Fantasy Fiction Saga usually unattractive?	It tries to combine asynchronous communication with atomic coordination, creating complex pending-state and ordering problems.
+What problems does asynchronous atomic orchestration introduce?	The orchestrator must handle race conditions, out-of-order events, pending transactions, and dependency conflicts.
+What is the Horror Story Saga pattern?	An asynchronous, atomic, choreographed saga.
+Why is Horror Story Saga considered an anti-pattern?	It requires atomic consistency without either synchronous ordering or a mediator, forcing services to coordinate complex undo logic asynchronously.
+Why might architects accidentally choose Horror Story Saga?	They try to improve Epic Saga performance with asynchronicity and choreography while keeping atomic transactionality.
+What is the better direction than Horror Story Saga for high throughput?	Usually move toward eventual consistency, such as Anthology Saga, instead of preserving holistic atomicity.
+What is the Parallel Saga pattern?	An asynchronous, eventual-consistency, orchestrated saga.
+Why is Parallel Saga attractive for complex high-scale workflows?	It keeps an orchestrator for workflow control while using asynchronous communication and service-local transactions.
+How does Parallel Saga handle errors?	The mediator can issue asynchronous remediation, retries, synchronization, or compensating messages.
+What is the main trade-off of Parallel Saga?	It scales and responds well but must manage asynchronous timing, queues, race conditions, and eventual consistency.
+What is the Anthology Saga pattern?	An asynchronous, eventual-consistency, choreographed saga.
+Why is Anthology Saga the least coupled saga pattern?	It uses asynchronous communication, eventual consistency, and no central orchestrator.
+What kind of workflow fits Anthology Saga best?	Simple, mostly linear, high-throughput workflows with simple or infrequent error cases.
+Why is Anthology Saga difficult for complex workflows?	Coordination, error handling, and workflow context must live in the participating services or message contracts.
+What makes atomic consistency the hardest saga dimension?	It requires distributed participants to behave as one all-or-nothing unit despite independent local commits and failures.
+Why does eventual consistency often improve saga responsiveness?	The user can receive a successful response while background repair, retries, or manual handling resolves secondary failures.
+What is state management in an eventual-consistency saga?	Tracking the saga's current state and using retries, analysis, or manual repair to move it toward completion.
+How does state management differ from compensating updates?	State management records and repairs incomplete progress; compensating updates try to undo prior committed work.
+What is a saga state machine?	A model of all possible saga states, transitions, and actions in a distributed workflow.
+Why are saga state machines useful?	They make valid transitions, retry states, error states, and completion paths explicit.
+What should happen when an eventual-consistency saga enters an error state?	The system should retry, analyze, or escalate for manual repair until the saga reaches a valid completion state.
+Why should saga state be known even without atomic transactions?	Teams need to understand whether the workflow is complete, pending, failed, being retried, or awaiting repair.
+What is the trade-off of state management over atomic compensation?	It improves responsiveness and user experience but allows temporary inconsistency.
+Why can't distributed transactions be dropped in like a framework?	They require application-specific workflow, state, error-handling, and compensation logic designed into the services.
+How can code annotations or attributes help manage sagas?	They document which services participate in which sagas and make the information discoverable by tools.
+Why is saga participation metadata useful?	It helps identify testing scope, affected services, and workflow impact when a service or saga changes.
+What can a saga code-walking tool report?	The services involved in a named saga by scanning service entry points and saga annotations.
+How should architects choose a transactional saga pattern?	Compare communication timing, consistency needs, coordination complexity, error frequency, responsiveness, scale, and semantic coupling.
