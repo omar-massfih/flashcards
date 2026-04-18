@@ -1,0 +1,28 @@
+What is the first step in custom architecture trade-off analysis?	Find the dimensions or system parts that are entangled with one another.
+Why identify entangled dimensions before comparing architecture options?	It defines the real decision space and prevents analyzing choices in isolation.
+What practical question reveals coupling between two architecture parts?	If X changes, could Y be forced to change?
+What does a static coupling diagram show?	The structural dependencies an architecture quantum needs in order to run.
+What belongs in a static coupling diagram for a service?	Platform dependencies, library/framework dependencies, persistence dependencies, bootstrap integration points, and required messaging infrastructure.
+How can build automation help with coupling analysis?	It can emit dependency and integration metadata as systems are generated or deployed.
+Why build sample topologies during trade-off analysis?	They let architects test "what if" scenarios and see coupling effects before committing to an implementation.
+What is the goal of modeling coupling-point combinations?	To discover which forces require trade-off analysis and which combinations are infeasible.
+Why rate each design option independently before consolidating results?	It reduces comparison bias and makes the later matrix easier to interpret.
+What can a consolidated trade-off matrix reveal?	Patterns and correlations, such as tighter coupling usually reducing scale and responsiveness.
+Why are architecture trade-off tables often qualitative rather than quantitative?	Real architectures differ too much for precise numeric comparisons to transfer cleanly.
+How can architects strengthen qualitative trade-off analysis?	Use representative examples, local spikes, existing system evidence, and objective fitness functions.
+What is the out-of-context trap in architecture decisions?	Choosing from generic pros and cons without applying the specific constraints of the problem.
+How can context reverse an architecture decision?	A locally critical constraint can outweigh the option that looks best in a generic comparison.
+Why does narrowing the decision context simplify architecture design?	It removes irrelevant options and focuses attention on the trade-offs that can actually change the outcome.
+Why model relevant domain scenarios during trade-off analysis?	Domain scenarios expose the forces that matter to the real system rather than an abstract pattern.
+What can scenario modeling reveal that generic analysis often hides?	Workflow coordination, data consistency, security, operations, and failure-mode costs.
+What do simple change scenarios often reveal in service-splitting decisions?	Separate services can improve maintainability, testability, deployability, and extensibility.
+What do complex workflow scenarios often reveal in service-splitting decisions?	Splitting services may introduce coordination, performance, and data consistency costs.
+How should architects present trade-offs to nontechnical stakeholders?	Reduce the analysis to the few outcome-level choices stakeholders can meaningfully judge.
+What is a useful bottom-line framing for synchronous versus asynchronous workflows?	Whether the business values immediate start guarantees more than responsiveness and fault tolerance.
+Why is technology evangelism risky in architecture?	It tends to amplify benefits, minimize costs, and hide trade-offs until they reappear later.
+How should architects respond to silver-bullet technology claims?	Ask for the specific advantages, disadvantages, constraints, and failure modes in the local context.
+How can scenario analysis counter architecture evangelism?	It tests claimed benefits against real workflows instead of debating generic preferences.
+Why can past architecture success become misleading?	A solution that worked in one narrow context may fail under different business drivers or constraints.
+How can fitness functions support experimental architecture decisions?	They objectively detect whether expected risks, such as accidental coupling, are appearing.
+What role do metrics play in trade-off analysis?	They turn speculation into measurable evidence that can refine or challenge qualitative judgments.
+Why keep writing trade-off tables and ADRs after a successful architecture migration?	They preserve decision discipline, communicate rationale, and make future changes easier to evaluate.
