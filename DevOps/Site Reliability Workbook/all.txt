@@ -468,3 +468,37 @@ Why are RPC deadlines important for load management?	They stop servers and clien
 What happens when RPC requests lack useful deadlines?	Servers may hold resources until very large default limits, increasing latency and crash risk.
 How should clients and servers handle stale RPC work?	Clients should cancel no-longer-useful requests, and servers should stop expensive work after deadlines expire.
 Why should traffic-management systems be monitored together?	Their intersections can create runaway feedback loops invisible when each tool is observed alone.
+Why is reliability treated as a core design feature in NALSD?	Deferring reliability usually means fewer usable features, higher costs, and more disruptive redesign later.
+What is the first basic-design question in NALSD?	Is it possible: could the design work in principle without practical resource constraints?
+What is the second basic-design question in NALSD?	Can we do better: can the design be made simpler, faster, smaller, or more efficient?
+What is the first scale-up question in NALSD?	Is it feasible: can the design fit practical constraints such as money, hardware, time, and operations?
+What is the resilience question in NALSD?	Is it resilient: how does the design behave when components, machines, or datacenters fail?
+How does NALSD use iteration?	Each design is evaluated, its weaknesses are exposed, and the next design modifies or replaces parts accordingly.
+Why are imperfect assumptions acceptable in NALSD?	The value is in combining reasonable estimates to understand the design, not in producing perfect numbers.
+Why should resource estimates be made early in system design?	They reveal physical constraints before the team depends on an unrealistic architecture.
+Why use aggressive rounding in early capacity estimates?	It reduces the risk of prematurely underestimating storage, bandwidth, CPU, or memory requirements.
+Why is scientific notation useful in capacity calculations?	It reduces arithmetic mistakes when working with large rates, durations, and unit conversions.
+What does a dashboard freshness SLO constrain?	The maximum age of data that the system can usually display to users.
+What does a dashboard latency SLO constrain?	How quickly the system must answer user-facing read queries under normal conditions.
+Why compare design iterations against SLOs?	SLOs turn vague goals into measurable checks for latency, freshness, throughput, and reliability.
+Why is scanning raw logs usually unsuitable for user dashboards?	Query time grows with log volume, making dashboard latency worse as the system scales.
+Why precompute or index data for dashboard queries?	It keeps user-facing lookup time low even as the underlying event volume grows.
+What often limits a one-machine design at large scale?	Disk IOPS, memory capacity, network throughput, and single-machine failure risk.
+When is batch processing a poor fit for freshness-sensitive joins?	When related events may arrive in different batches and must be joined within a short freshness window.
+Why process the smaller event stream when joining two large logs?	Looping over the rarer events reduces work while still retrieving the needed records from the larger stream.
+What should a log joiner do when a matching query record is missing?	Retry for a bounded time, then discard or otherwise handle the click according to the freshness policy.
+Why shard a high-volume log-processing system?	Sharding splits input and output load so CPU, memory, disk, and network scale horizontally.
+How can logs be sharded consistently by key?	Hash the key, take modulo the number of shards, and route the record to that shard.
+Why must both sides of a join use compatible sharding?	Matching records need to land where the joiner can process them without excessive cross-shard traffic.
+Why might different stores shard on different keys?	Each store should shard by the key used for its dominant reads and writes.
+Why replicate log-processing shards?	Replicas allow processing to continue and reduce data-loss risk when a worker or machine fails.
+How can error budgets apply to rare shard-loss events?	Residual risk after reasonable replication can be accepted if the user-visible impact fits the error budget.
+Why use multiple datacenters for serving-derived data?	They allow failover when a datacenter has a power, network, or site-level failure.
+What problem does distributed consensus solve in multidatacenter state?	It lets replicas agree on durable state even when some replicas or datacenters fail.
+What trade-off does consensus introduce?	It improves fault tolerance but adds cross-node latency and limits sequential write throughput.
+How can sharding help a consensus-backed store scale?	Independent shards allow many consensus operations to proceed in parallel.
+Why calculate per-task memory and bandwidth in a sharded design?	To verify that each shard fits comfortably within machine resource limits.
+How can horizontal scaling reduce pipeline freshness lag?	Adding workers or shards increases processing capacity and lowers end-to-end backlog.
+Why separate components by expected growth pattern?	Parts with different scale drivers can then be scaled and operated independently.
+What is the main reliability benefit of component isolation?	A failure or overload in one component is less likely to take down the entire system.
+What does graceful degradation mean in large system design?	The system continues offering reduced or older results instead of failing completely.
