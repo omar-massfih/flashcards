@@ -1,0 +1,41 @@
+Why do operational and analytical data need different architectural treatment?	Operational data supports transactions and current system behavior, while analytical data supports reporting, prediction, ML, and strategic decisions.
+What problem did the data warehouse pattern try to solve?	Consolidate operational data from many systems into a separate store optimized for analytical queries.
+Why do data warehouses often transform operational schemas?	Operational schemas fit transactions, while analytical schemas often need denormalized structures for reporting and aggregation.
+What is a star schema?	A dimensional model that separates measurable facts from descriptive dimensions.
+Why are star schemas denormalized?	To simplify queries, reduce joins, speed aggregations, and support multidimensional analysis.
+What is fact data in a star schema?	Quantifiable business measures such as rates, durations, counts, distances, or repair times.
+What is dimension data in a star schema?	Descriptive attributes that give context to facts, such as names, locations, categories, or specialties.
+Why is a data warehouse technically partitioned?	It organizes data around analytical technical concerns rather than preserving operational domain boundaries.
+Why are data warehouses brittle integrations?	Operational schema changes must be reflected in extraction, transformation, and warehouse schemas.
+Why do data warehouses partition domain knowledge poorly?	Operational teams and analytics teams both need domain understanding, but the transformed warehouse separates data from its original context.
+Why can data warehouses become complex ecosystems?	They require separate storage, compute, schemas, ingestion, transformation, tooling, and maintenance outside operational systems.
+Why did many data warehouses provide limited business value?	They were expensive to build and maintain, yet often could not answer new analytical questions without more specialized work.
+How can data warehouse synchronization create bottlenecks?	Many operational data streams must converge through extraction and transformation pipelines that can slow teams and affect source systems.
+What problem did the data lake pattern try to address?	Avoid expensive up-front transformations by storing data closer to its native form and transforming it only when needed.
+Why can data lakes fit machine learning better than data warehouses?	ML often benefits from data closer to raw or semi-raw form rather than a heavily transformed analytical schema.
+Why is data discovery difficult in a data lake?	Domain relationships and meaning can be lost when raw data is dumped into a centralized, loosely structured store.
+Why can data lakes increase PII and privacy risk?	Raw or loosely organized data can be combined in ways that reveal sensitive or identifying information.
+Why are data lakes still technically partitioned?	They centralize ingestion, storage, transformation, and serving capabilities rather than aligning ownership with domains.
+Why can data lakes still suffer from stale data?	Batch-like ingestion and coupled pipelines can lag or break when upstream systems change.
+What quality burden do data lakes often push downstream?	Data integrity, quality checks, cleansing, and transformation move to lake consumers or downstream pipelines.
+What is data mesh?	A sociotechnical approach for decentralized sharing, access, and management of analytical data aligned to business domains.
+What are the four principles of data mesh?	Domain ownership of data; data as a product; self-serve data platform; computational federated governance.
+What does domain ownership mean in data mesh?	The domain that creates or deeply understands data owns and shares its analytical data product.
+What does "data as a product" mean in data mesh?	Domains serve data with consumer-oriented quality, discoverability, security, timeliness, and usability.
+Why does data mesh need a self-serve data platform?	Domain teams need platform capabilities to create, discover, govern, and consume data products without a centralized data team bottleneck.
+What is computational federated governance?	Organization-wide data policies are decided federatively and automated as code inside data products.
+What is a data product quantum?	An operationally independent architecture quantum that packages analytical data and behavior for a domain.
+How does a data product quantum relate to a service?	It sits adjacent to the domain service, highly coupled to its domain data but operationally separate.
+What is a source-aligned data product quantum?	A DPQ that exposes analytical data on behalf of the domain service or architecture quantum that originates it.
+What is an aggregate data product quantum?	A DPQ that combines data from multiple source data products.
+What is a fit-for-purpose data product quantum?	A DPQ built for a specific analytical, BI, ML, reporting, or supporting use case.
+What is a cooperative quantum in data mesh?	An operationally separate quantum that cooperates with a service through tight local contracts and eventual consistency.
+Why should DPQs communicate with operational services asynchronously?	Analytics should minimally affect operational performance, availability, and transaction behavior.
+Why should DPQs use eventual consistency with operational data?	Requiring analytical and operational data to stay transactionally synchronized defeats the decoupling purpose of data mesh.
+How does data mesh preserve domain context better than warehouses or lakes?	Data products remain owned and shaped by the domains that understand the data.
+How does data mesh reduce centralized analytics bottlenecks?	Data ownership and product creation are distributed to domains, while the platform supplies shared capabilities and governance.
+What is a key trade-off of data mesh?	It improves domain-aligned analytical decoupling but requires contract coordination, platform maturity, and federated governance.
+Why can loose contracts be useful between DPQs?	They reduce brittleness as source domains evolve while still allowing consumer-driven validation where needed.
+What should a data product expose besides data?	Metadata, quality expectations, access policies, lineage, freshness, and usage-oriented interfaces.
+How can data mesh address PII risk better than a data lake?	Domain owners and policy sidecars can enforce privacy and access rules at the point of data product access.
+What role does a governance sidecar play in a DPQ?	It stores and executes governance policies such as access control, compliance, privacy, and quality checks.
