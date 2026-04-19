@@ -1,27 +1,10 @@
-What is the goal of load management?	Equalize and stabilize system load so services remain efficient, reliable, and available under changing demand.
-Why does Google Cloud Load Balancing avoid DNS-based load balancing?	DNS load balancing depends on clients respecting TTLs and refetching records correctly.
-What is anycast in load balancing?	A routing method where multiple sites advertise the same IP address and network routing sends clients to a topologically near site.
-What are two main risks of plain anycast?	A nearby frontend can be overloaded, and BGP route changes can reset in-progress TCP connections.
-What is stabilized anycast?	An anycast design that forwards packets to the closest appropriate frontend site while preserving connection behavior despite route changes.
-What is Maglev?	Google's distributed packet-level load balancer for incoming cluster traffic.
-Why does Maglev use ECMP forwarding?	It spreads packets across a pool of Maglev machines, allowing capacity and redundancy to grow by adding servers.
-How does Maglev choose where to send packets?	It uses connection tracking for recent flows and consistent hashing when no valid tracked connection exists.
-Why does Maglev avoid sharing connection state between machines?	Consistent hashing and local connection tracking let any Maglev machine make compatible routing decisions.
-What is GSLB?	Google's Global Software Load Balancer, which balances live traffic between clusters and routes around failed capacity.
-How do GFEs use health checks?	They stop sending traffic to backends that fail health checks, NACK requests, or time out.
-What is lame duck mode?	A backend state where it fails health checks to drain new traffic while still serving in-flight requests.
-Why do GFEs keep persistent backend connections?	Ready-to-use backend connections reduce request latency, especially when encryption is used.
-How does edge SSL termination reduce latency?	Terminating SSL close to users reduces the high-latency part of the secure connection setup.
-How does GCLB route around application failures?	It detects unhealthy instances and sends traffic to healthy instances with available capacity.
 Why do canaries improve load-balanced availability?	A small rollout limits regression impact, and health checks can route traffic away from failing new instances.
-What did the Pokémon GO launch reveal about load testing?	Even load tests far above optimistic estimates can miss real launch demand by large margins.
 Why should load be measured close to the client?	Backend-visible traffic can hide refused connections, retries, or demand that never reached application servers.
 What is a cascading failure in load management?	Overload in one layer causes retries, slowness, or resource exhaustion that increases load on other layers.
 How can load balancer retries worsen overload?	Retrying timed-out requests adds more work to already slow or failing backends.
 What is a thundering herd retry problem?	Many clients retry at nearly the same time, creating synchronized traffic spikes.
 How do jitter and truncated exponential backoff reduce retry overload?	They spread retries over time and cap retry growth, preventing synchronized request spikes.
 Why can slow backends be dangerous to load balancers?	They hold connections and trigger retries or reconnection pressure, consuming load-balancer resources.
-What emergency actions helped isolate Pokémon GO's GCLB impact?	Separating Pokémon GO traffic into its own GFE pool and applying administrative rate limits.
 Why can autoscaling improve availability and utilization?	It adds capacity when demand rises and can reduce waste when demand falls.
 Why is autoscaling risky when misconfigured?	It can amplify bugs, overload dependencies, waste quota, or create feedback loops.
 Why can unhealthy instances break utilization-based autoscaling?	If nonserving instances are included in the average, the autoscaler may think capacity is sufficient and fail to scale up.
@@ -42,8 +25,6 @@ Why analyze dependencies before enabling autoscaling?	Backends must be able to a
 Why can shared quota make autoscaling dangerous for microservices?	One service can consume quota during a spike, leaving dependent services unable to scale.
 Why balance autoscaled instances across zones or regions?	It spreads quota use and failure domains instead of concentrating capacity in one location.
 Why are load balancing, autoscaling, and load shedding not independent?	Each changes traffic or capacity signals that the others may use, creating feedback loops.
-How did load shedding mislead the Dressy load balancer?	Dropped requests used little CPU, so the overloaded region looked artificially efficient and attracted more traffic.
-What lesson does the Dressy case study teach?	Load-management tools must share meaningful signals, including errors, not just raw utilization.
 How can a load balancer account for shed requests?	Treat error or shed requests as overload signals rather than low-cost successful work.
 Why should autoscaling usually happen before load shedding?	Otherwise the system may drop traffic it could have served after scaling up.
 Why are RPC deadlines important for load management?	They stop servers and clients from wasting resources on requests that are no longer useful.
