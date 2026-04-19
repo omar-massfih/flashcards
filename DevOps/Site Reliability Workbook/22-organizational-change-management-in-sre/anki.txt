@@ -38,4 +38,3 @@ How does transparent product development improve tool adoption?	Clear dates, vis
 Why target skeptical or demanding adopters early?	If the tool works for hard cases, it earns credibility and exposes adoption barriers sooner.
 Why is adoption the first success metric for common SRE tooling?	A tool that is not adopted creates little organizational value, even if it is technically strong.
 How does broad adoption create a network effect for internal tools?	Each improvement benefits more teams, which justifies more investment and further reduces migration cost.
-What are useful impact questions for horizontal SRE tooling?	How quickly developers can manage reliable services, how easily SREs can move domains, and how many services share common primitives.
