@@ -1,3 +1,0 @@
-What does DevSecOps recognize?	Development, security, and operations are interdependent rather than separate concerns.
-Why might error budgets be useful outside technical systems?	They provide a structured way to negotiate acceptable risk and prioritize improvement work.
-What mindset helps SRE continue evolving?	Treat SRE as a learning practice that improves through experimentation, feedback, and postmortems.
