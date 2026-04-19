@@ -1,5 +1,3 @@
-What is the core goal of SRE principles?	Maximize developer engineering velocity while keeping products reliable.
-Why must SRE teams choose where to focus?	SRE capacity is limited, and large or microservice-heavy environments can contain more services than one team can support well.
 What should SRE engagement focus on besides the service itself?	The product and developer teams' goals, constraints, priorities, and the best way SRE can support them.
 Why define the SRE role proactively?	Clear responsibilities and communication prevent SRE from becoming an undefined operations catch-all.
 How can SRE contribute during architecture and design?	Share reliability best practices, known infrastructure pitfalls, targeted prototypes, and design consulting before mistakes harden.
@@ -7,13 +5,8 @@ Why is early SRE engagement valuable?	Architectural reliability mistakes become 
 What does productionizing a service involve?	Preparing it for production through capacity planning, redundancy, overload handling, load balancing, monitoring, alerting, and operational practices.
 Why should SLOs be defined before general availability?	They provide an objective reliability target before the service commits to all users.
 Why share operational work during limited availability?	Developers gain production experience while SRE learns service behavior and failure modes.
-What should SRE help with during limited availability?	Reliability measurement, capacity modeling, resource acquisition, turnup automation, monitoring coverage, and SLO-aligned alerting.
-What should change once a service reaches general availability?	SRE usually takes most operational work, but developers should keep some operational exposure.
-Why should developers keep some operational responsibility after GA?	They retain awareness of production pain, operational load, and reliability-driving fixes.
 What is SRE's role during service deprecation?	Operate the old system while supporting user migration and any transition engineering.
-Why does deprecation require staffing attention?	SRE may temporarily support both the old and replacement systems.
 What happens when a service becomes abandoned?	Developers or remaining users generally resume operational support, while SRE provides best-effort help.
-What should SRE do when a service is unsupported?	Help remove production configuration and documentation references to the shut-down service.
 Why must SRE understand product and business goals?	SRE can only prioritize reliability work well when it understands what the product is trying to achieve.
 How should SRE and developer leadership collaborate?	Meet regularly, exchange technical and priority context, and operate as a joint leadership unit where possible.
 Why is risk identification a key SRE contribution?	SREs focus on reliability and can identify production risks before they become incidents.
@@ -27,17 +20,13 @@ When is full-time SRE embedding useful?	When the engagement is strategic, long-t
 When is part-time SRE engagement useful?	For brief, constrained projects where SRE can help without fully embedding in the product team.
 Why assess application or team maturity before engagement?	Maturity determines which SRE practices will have the highest leverage and what scope is realistic.
 What expectation should SRE set about application ownership?	Application owners remain responsible for changing and improving their application.
-Why should SRE avoid one-off scripts in engagements?	Engagement work should improve shared automation and tools rather than create bespoke operational debt.
 Why clarify new operational processes during engagement?	Developer teams need advance notice of practices such as load testing, readiness reviews, or changed release flow.
 How should SRE and developers handle readiness-review findings?	Prioritize proposed changes jointly so reliability work fits product and SRE goals.
-Why are SREs not traditional operations engineers?	Their goal is engineering leverage and automation, not ongoing manual execution of routine tasks.
 What should shared engagement goals include?	Scope, concrete milestones, expected end state, and what success looks like after the engagement.
 Why define the engagement success story explicitly?	It aligns both teams on the desired end state and makes disengagement or continuation easier to judge.
-What should happen before an SRE engagement kickoff?	SRE should review the architecture and shared goal to confirm the expected outcome is realistic.
 Why does an SRE engagement need a feedback method?	Both teams need a regular channel to adjust what is working and what is not.
 What should teams do if an SRE engagement is not working?	Discuss disengagement or reset scope rather than letting the relationship drift.
 How can SRE measure engagement impact?	Assess service maturity before and after the engagement across areas like observability, capacity, change management, and incident response.
-What is a point-in-time maturity assessment?	A structured evaluation of service reliability practices at a specific moment, agreed on with product engineering leads.
 What ground rules should SRE and developers agree on?	Operational work limits, service SLOs, error budget policy, and developer involvement in operations.
 Why set a hard limit on operational work?	It keeps SRE from becoming toil-bound and preserves time for engineering that reduces future operations.
 Why establish an SLO at the start of an SRE relationship?	It creates the reliability context needed to prioritize work and decide release velocity.
@@ -48,26 +37,19 @@ What can the absence of a roadmap signal?	The SRE team may need to change scope,
 Why have ongoing strategy conversations with developer leadership?	They surface shifts in priorities, new SRE opportunities, and work that no longer pays off.
 Why should SREs regularly meet service counterparts?	Relationships built before incidents make escalation and disagreement resolution faster and smoother.
 What is a state-of-production talk?	A periodic SRE update to product leadership explaining production health, investment needs, and SRE impact.
-What is a state-of-product talk useful for?	It helps SRE understand product progress, upcoming direction, and where reliability work can enable goals.
 Why perform regular service reviews between SRE and developer leads?	They align roadmaps, launches, pain points, and changes needed over the next planning horizon.
-What is a stop-keep-start retrospective useful for?	It surfaces what teams should stop doing, continue doing, and begin doing to improve the service relationship.
 What should happen when SRE engagement ground rules regress?	Both teams should reprioritize to restore reliability, from focused engineer work to feature freezes if needed.
 How should teams respond when a service risks missing its SLO?	Prioritize tactical mitigations and strategic fixes until the service returns to safety.
 How should teams use spare error budget?	Increase feature velocity rather than overinvesting in reliability beyond user needs.
 How should teams handle mistakes in SRE relationships?	Avoid blame, focus on system behavior, and communicate when emotions are lower.
 Why resolve cross-team conflict with high-bandwidth communication?	Video or in-person discussion reduces misread tone and surfaces missing context faster than long written threads.
-Why call out positive engineering behavior?	Positive feedback reinforces useful practices and builds healthier collaboration.
 What service traits let one SRE team support multiple services effectively?	Shared product context, similar technology stacks, and a small number of related developer teams.
-Why does similar technology matter for scaling SRE support?	It reduces cognitive load and enables reuse of skills, automation, and operational patterns.
 How can SRE organizations be grouped at scale?	By product area or by technology stack, depending on coordination and stability needs.
 Why organize some SRE teams by technology rather than product reporting line?	Technology grouping can reduce churn during developer reorganizations and improve reuse of expertise.
 When should SRE teams be created, sharded, merged, or dissolved?	When service needs, engineering load, and operational load justify changing team structure.
 Why shard an existing SRE team instead of building a new one from scratch?	Sharding transfers culture, leadership, and service knowledge into the new team.
 Why avoid unnecessary SRE team restructuring?	Reorgs disrupt teams and should be reserved for meaningful service or load changes.
 Why distribute SRE teams across locations?	Distributed teams can provide coverage, business continuity, and better support for global services.
-Why are singleton distributed teams risky?	They are less resilient, more isolated, and more vulnerable to external reorg effects.
-How should distributed SRE teams handle location-specific responsibilities?	Rotate or share responsibilities so knowledge and ownership do not become locked to one site.
-Why periodically gather distributed SRE teams physically?	In-person summits help maintain shared culture, standards, planning, and trust.
 When should an SRE engagement end?	When SRE no longer provides enough engineering value relative to cost, or work has become mostly toil.
 Why might SRE hand back a service?	The service may be optimized enough, declining in importance, nearing end of life, or better owned by developers.
 What should SRE do during handback?	Transfer production knowledge, documentation, operational practices, and context as smoothly as possible.
@@ -75,4 +57,3 @@ How can product-owned infrastructure reduce SRE burden?	Developers with producti
 What does a healthy SRE disengagement require?	Clear ownership transfer, aligned incentives, communication, and enough operational knowledge on the receiving team.
 Why can merging SRE and development ownership solve some tensions?	A single team can balance old-system operations and new-system development without cross-team prioritization conflict.
 What is the risk of ending SRE support abruptly?	Developers may inherit unfamiliar operational work and initially suffer slower response or more mistakes.
-What is shared destiny in SRE engagement?	A relationship where SRE and developers jointly own reliability outcomes and product success.
