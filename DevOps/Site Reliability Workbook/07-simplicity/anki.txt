@@ -18,7 +18,6 @@ Why are wide APIs with many users hard to replace?	Many clients, configurations,
 Why should simplification be prioritized like feature work?	It delivers operator and user value by reducing cognitive load, but it needs explicit time and rewards or feature work will crowd it out.
 Why can splitting SRE teams make simplification harder?	Narrower team scope can reduce ownership of cross-stack consistency and end-to-end simplification.
 How can system diagrams reveal reliability risks?	They make dependencies, request paths, amplification, and cycles visible enough to reason about.
-What is request amplification?	A failure or timeout causes retries at multiple layers, multiplying the total number of requests.
 Why are cyclic dependencies dangerous in production systems?	They can compromise system integrity and may make a full cold start impossible.
 Why are redundant lookups in one request a system smell?	They add unnecessary latency, capacity demand, and complexity to the request path.
 Why should acquired or independently built systems be integrated incrementally?	Incremental integration reduces migration risk and lets teams standardize without a disruptive big-bang rewrite.
