@@ -1,9 +1,4 @@
-What is incident resolution?	Mitigating impact and/or restoring the affected service to its previous condition.
-What is incident management?	Coordinating responders efficiently and keeping communication flowing among responders and stakeholders.
 Why should incident response be structured before an outage?	Pre-agreed communication and coordination rules reduce chaos and let responders focus on mitigation.
-What are core principles of incident response?	Maintain a clear line of command; define roles clearly; keep a working record; declare incidents early and often.
-What is the Incident Command System?	A standardized framework for communication, command, and role assignment during emergencies.
-What are the three Cs of incident management?	Coordinate response effort; communicate with responders and stakeholders; maintain control over the response.
 What usually explains failures in incident response?	A breakdown in coordination, communication, or control.
 What is the Incident Commander role?	The person responsible for leading, coordinating, delegating, and maintaining control of the incident response.
 What roles does the Incident Commander own by default?	Any incident-response roles that have not yet been delegated.
@@ -13,7 +8,6 @@ Why declare incidents early?	Early declaration brings structure, reduces miscomm
 Why should incident responders use one shared communication location?	It reduces lost information, duplicated work, and conflicting assumptions during the response.
 Why should teams avoid relying on heroic individual effort during incidents?	Heroics are unreliable, harm work-life balance, and fail if the needed people are unreachable.
 What should teams do after mitigating an incident without knowing the root cause?	Continue investigating and prevent recurrence before resuming risky activity such as rollout expansion.
-What order should active incident response usually follow?	Assess impact; mitigate impact; analyze root cause; then fix causes and write a postmortem after the incident.
 Why is assessing customer impact early important?	It determines severity, communication needs, escalation urgency, and whether the issue is truly an incident.
 Why should an Incident Commander establish formal structure as an incident grows?	More responders create communication overhead, so explicit roles and decision flow prevent confusion.
 When is it useful to hand off Incident Commander duties?	When another responder has better incident-management experience, context, availability, or location coverage.
@@ -22,7 +16,6 @@ What should chat be used for during a large incident?	Decision making, coordinat
 Why should Incident Commanders assign owners to mitigation options?	Ownership lets multiple approaches proceed in parallel without ambiguity about who is doing what.
 What is a generic mitigation?	A broad preplanned action that reduces user pain before the exact root cause is fully understood.
 Why are generic mitigations valuable?	They can stop the bleeding quickly while responders continue investigating the precise cause.
-What are examples of generic mitigations?	Rolling back a release, draining traffic from a region, disabling a feature flag, or routing around a failing dependency.
 What is the risk of generic mitigations?	They are blunt tools and may cause broader disruption than a precise fix.
 When should teams build general-purpose mitigation tools?	Before incidents occur, using past postmortems to identify useful rollback, drain, or recovery capabilities.
 Why do complex systems make incident response harder?	No single person may understand every interaction, so coordination and specialist escalation become critical.
@@ -34,17 +27,14 @@ Why should communications include regular status updates?	Without updates, peopl
 Why should teams prepare public communication templates?	Templates reduce stress and speed accurate announcements during high-pressure incidents.
 Why should teams prepare contact lists before incidents?	Prebuilt lists save time and reduce the chance of missing important stakeholders or experts.
 Why should teams define incident criteria beforehand?	Clear criteria help responders decide when to escalate from ordinary troubleshooting to formal incident response.
-What is incident response training for?	It gives responders a shared pattern, language, and expectations to follow during real emergencies.
 What should incident response training teach on-call engineers?	How to delegate, escalate, prioritize mitigation, and work within Incident Commander, Operations Lead, and Communications Lead roles.
 Why should incident response training use real scenarios?	Concrete incidents help people connect theory to actions they may need to take under stress.
 Why are incident response drills important?	They build habits and muscle memory before a high-stakes emergency occurs.
-What is disaster recovery testing in incident response practice?	A controlled emergency exercise where teams respond as if a real incident were happening without customer impact.
 What is a low-stakes way to practice major incident response?	Treat selected minor problems as formal incidents requiring structured coordination and communication.
 How can postmortems improve incident response readiness?	They reveal recurring failure modes, useful mitigations, tooling gaps, and scenarios for future drills.
 How can simulation exercises improve incident response teamwork?	They let responders practice roles, terminology, coordination, and escalation before real pressure hits.
 Why can time-bound simulation games help incident training?	They recreate urgency and communication stress in a safer environment.
 Why should major incident roles rotate during long incidents?	Rotation reduces fatigue, helps responders rest, and can bring fresh ideas into the response.
 Why record major incident calls or keep detailed logs?	They help reconstruct timelines and learn from real-time communication after the incident.
-What tools commonly support incident response?	On-call ownership data, a shared chat channel, conference calls, incident metadata, and postmortem records.
 What advantage does practiced incident response provide?	It can shave minutes or hours from response time and helps teams stay calm under pressure.
 Why does incident response structure matter more as incidents grow?	Larger incidents involve more unfamiliar collaborators, so procedures provide the coordination needed to move quickly.
