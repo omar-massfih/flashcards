@@ -1,22 +1,15 @@
 What is canarying in release engineering?	A partial, time-limited deployment of a change plus evaluation before deciding whether to continue rollout.
-What is the control in a canary release?	The portion of production that continues running the existing known version.
-What is the canary in a canary release?	The portion of production or traffic exposed to the release candidate.
-Why automate release engineering?	Automation reduces manual toil, inconsistent process, unknown rollout state, and rollback difficulty.
 What does a reproducible build provide?	The same inputs produce the same build artifacts across time and environments.
-Why should deployments be automated?	Computer-driven deployment is more repeatable, observable, and less error-prone than manual rollout steps.
 Why are small deployments safer?	They bundle fewer changes, making defects easier to attribute and rollback cheaper.
 How does CI/CD create a virtuous release cycle?	Automation enables frequent releases; frequent releases are smaller; smaller releases are easier to test and roll back.
 How should teams balance shipping velocity and reliability?	Ship as quickly as possible while staying within user-facing reliability targets and error budgets.
-Why are releases a major reliability risk?	Binary, configuration, dependency, and data changes often trigger production incidents.
 How do error budgets help release decisions?	They quantify how much release risk the service can afford while still meeting reliability goals.
 Why separate feature launches from binary releases?	Feature flags let teams enable, disable, or roll back individual features without rebuilding or redeploying the binary.
 What kinds of changes can use canary-style rollout?	Binary changes, configuration changes, data changes, dependency changes, feature flags, and experiment configuration.
 Why can production defects escape preproduction testing?	Test environments and test cases rarely match all production traffic, state, dependencies, and user behaviors.
 What is the main purpose of a canary release?	Detect defects with high confidence while exposing only a small fraction of users or traffic.
-What capabilities does a canary process require?	Subset deployment, evaluation of canary health, and integration with the release pipeline.
 What makes a canary process valuable?	It rejects bad releases confidently while avoiding frequent false alarms on good releases.
 How does canarying protect the error budget?	Only the canary population is exposed, so defect impact is proportional to canary size and duration.
-What is the risk of modeling canary impact too precisely?	Overly complex models can require constant tuning without improving business or technical outcomes.
 How should canary duration relate to release cadence?	Canaries must be short enough not to block the normal pace of releases.
 Why avoid running multiple canaries at the same time?	Overlapping canaries make system state harder to reason about and can contaminate signals.
 What determines a representative canary population?	Enough size, duration, traffic volume, timing, and metric coverage to reflect likely production behavior.
@@ -45,13 +38,6 @@ Why keep a noninteractive work unit within one pool during canarying?	Mixing can
 What monitoring breakdown is required for canary evaluation?	Metrics must be separable by canary and control population, version, shard, or other rollout label.
 Why is whole-service monitoring insufficient for small canaries?	Canary failures can be hidden inside aggregate service metrics because the canary is a small fraction of traffic.
 How should metric aggregation windows relate to canary duration?	Metric windows should be no longer than the canary duration, or prior events can muddy the signal.
-What is blue/green deployment?	Maintaining two deployable environments, switching traffic from the current environment to the new one.
-How can blue/green deployment act like a canary?	Gradually split traffic between green control and blue release candidate instead of cutting over all at once.
-What is the main cost of blue/green deployment?	It often requires enough resources to run two full environments.
 Why is artificial load generation not a substitute for canarying?	Synthetic traffic may cover code paths but miss real production state, traffic shifts, and mutable-system behavior.
-Why can artificial load be dangerous for some systems?	It may trigger real side effects such as billing, payments, emails, or external API calls.
-What is traffic teeing?	Copying production traffic to another deployment while the original production system serves the real response.
 What is the benefit of traffic teeing?	It gives the test deployment representative production-like requests without directly serving users.
 Why can traffic teeing mislead stateful-system evaluation?	Copied traffic may alter shared caches, storage, affinity, or other state that changes performance signals.
-What should happen when a canary is judged bad?	Pause rollout, roll back or stop exposure, and investigate before continuing deployment.
-Why must canarying evolve with the service?	Metrics, traffic patterns, dependencies, and failure modes change as the system and product change.
