@@ -35,7 +35,6 @@ What long-term fixes help prevent overload after immediate relief?	Align SLOs, s
 How can surveys help identify overload?	They reveal declining morale, psychological safety, satisfaction, and trust that may not appear in ticket counts.
 What does an unhealthy task queue indicate?	Backlogged, stale, missed-deadline, or unevenly assigned work suggests interrupts are exceeding capacity.
 Why should teams choose overload metrics collaboratively?	Every team's work pattern differs, and imposed metrics can feel disconnected from actual workload.
-What overload metrics are often useful?	Time to close issues, toil percentage, days of post-on-call follow-up, ticket backlog, and page or interrupt volume.
 Why identify psychosocial stressors in overload recovery?	Stressors such as conflict, insecurity, illness, or organizational change can convert load into perceived overload.
 How can partner development teams help reduce SRE overload?	They can provide context, take back services, own projects, reduce noise, or help with remediation.
 Why schedule interrupt-free time during overload recovery?	Deep root-cause work and automation need protected focus that on-call interruptions destroy.
