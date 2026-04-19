@@ -1,4 +1,3 @@
-Why are SLOs central to SRE practice?	They turn reliability into a measurable target that can drive prioritization, alerting, risk management, and engineering trade-offs.
 Why are SLOs useful for deciding reliability work priority?	They estimate which work most improves user experience or protects the error budget, rather than relying on intuition alone.
 What organizational state is needed for error-budget-based SRE?	Stakeholders must approve fit-for-purpose SLOs, operators must believe they are defensible, the organization must use the budget for decisions, and there must be a refinement process.
 Why is an SLO without an error budget policy weak?	It becomes a reporting metric rather than a rule that changes prioritization and risk decisions.
@@ -13,9 +12,6 @@ Why should initial SLIs be simple and easy to measure?	Low-cost measurements hel
 How should a team start choosing SLIs for a service?	Pick one application, identify the users, list common and critical interactions, and draw the main request, data, and dependency flows.
 Why should early SLOs use only a small number of SLI types?	A few critical user-facing measures are easier to reason about and act on than a broad set of diluted metrics.
 Why can multiple latency SLO thresholds be useful?	They capture both typical experience and tail latency, so a small slow cohort is not hidden by a good median or broad pass rate.
-What are common SLIs for request-driven services?	Availability, latency, and quality of undegraded responses.
-What are common SLIs for data pipelines?	Freshness, correctness, and coverage of processed data.
-What are common SLIs for storage systems?	Durability and successful later retrieval of written data, ideally scoped to the data users actually need.
 Why must durability SLIs be scoped carefully?	A system can preserve almost all historical records while the specific recent records users need are unavailable.
 Why might load balancer metrics be better than application-server logs for API SLIs?	They are often already available and can measure closer to the user's path than backend-only logs.
 Why can server-side measurements miss user-facing failures?	Requests that fail before reaching the backend are invisible to server logs.
@@ -25,16 +21,13 @@ Why should SLO time windows be chosen deliberately?	The window affects whether t
 What is a benefit of a rolling SLO window?	It better matches user experience because incidents do not reset psychologically at calendar boundaries.
 What is a benefit of a calendar-aligned SLO window?	It aligns better with business planning, quarterly reviews, and project allocation cycles.
 Who needs to agree on a proposed SLO?	Product managers, product developers, and the team responsible for defending the production SLO.
-What should an error budget policy define?	The actions to take when budget is exhausted or nearly exhausted, who owns them, and how disagreements are escalated.
 Why is stakeholder disagreement about enforcing an error budget a signal to revisit the policy?	It means the SLO or policy may not be fit for purpose, even if the budget calculation is technically correct.
-What should an SLO document include?	Authors, reviewers, approvers, review dates, service context, objectives, SLI implementations, budget calculation, and rationale for the numbers.
 Why are SLO dashboards and reports useful?	They provide snapshots and trends for communicating compliance, budget burn, and problem areas across teams.
 How can error budget consumption help prioritize incidents?	Incidents can be ranked by how much budget they consumed, highlighting which problems most affected reliability targets.
 How can support tickets help improve SLO quality?	Comparing ticket spikes with budget loss reveals whether SLIs capture real user-facing pain.
 What does it mean if incidents are not reflected in SLIs or SLO misses?	The SLO likely lacks coverage and should be refined.
 What does it mean if SLO misses do not correlate with user-facing issues?	The SLO may be too sensitive or the SLI implementation may be a poor proxy for user experience.
 How can a team improve a weak SLI implementation?	Measure closer to the user or increase coverage of real user interactions.
-What is an aspirational SLO?	A tighter target that is measured and tracked but does not yet trigger the error budget policy.
 When is an aspirational SLO useful?	When the desired target reflects user needs but the service cannot meet it yet without staying permanently in emergency mode.
 How can SLOs guide project choice between reliability investments?	Compare expected error-budget savings from each project and prioritize the one with the greatest user-impact reduction.
 Why can rare severe outages be less important than frequent bad releases?	Frequent smaller incidents may consume more total error budget over time than rare dramatic failures.
