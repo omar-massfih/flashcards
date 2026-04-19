@@ -1,11 +1,8 @@
-What is replication toil in configuration?	The repetitive work of maintaining duplicated configuration across many files, services, environments, or locations.
 Why does replicated configuration become hard to read?	Important differences are hidden among large amounts of duplicated irrelevant detail.
-What is complexity toil in configuration?	The work of understanding and managing emergent behavior from complex configuration automation or frameworks.
 Why can automation fail to eliminate configuration toil?	It may reduce duplication but introduce complex language, framework, or evaluation behavior that is hard to reason about.
 When should configuration be removed instead of automated?	When the application can safely infer or adapt behavior better than users can configure it.
 When is a configuration language useful?	When duplication and variation are large enough that abstraction reduces configuration maintenance toil.
 What critical properties should a configuration system provide?	Good tooling, hermetic evaluation, and separation between configuration interface and generated data.
-Why is configuration a programming-language problem?	Even when it describes data, configuration often needs abstraction, repetition, composition, validation, and evaluation semantics.
 What happens when programming features creep into data-only configuration formats?	The system becomes an accidental language with weak tooling and confusing semantics.
 Why are ad hoc configuration-language features risky?	They create undocumented interactions, gotchas, low expressiveness, and expensive custom tooling needs.
 Why can excessive domain-specific optimization hurt a configuration language?	A narrow user base makes learning resources, reusable knowledge, and tooling investment harder to justify.
@@ -14,14 +11,10 @@ What side effects can make configuration non-hermetic?	Changing external systems
 What is the safe order for configuration with side effects?	Evaluate configuration first, expose generated data for analysis, then apply side effects separately.
 Why are general-purpose scripting languages risky for configuration?	They are heavyweight, may need sandboxing, can access local systems, and may be unfamiliar to config maintainers.
 Why prefer an existing configuration DSL over inventing one?	Existing DSLs are more likely to have designed semantics, reusable tooling, documentation, and known operational behavior.
-What is Jsonnet used for in configuration systems?	A hermetic DSL that evaluates higher-level configuration into JSON-like static data.
-Why is JSON compatibility useful for a configuration DSL?	Many systems already consume JSON or JSON-compatible formats, reducing integration work.
 How can a configuration language target applications with nonnative formats?	Represent the config as generic data, then serialize it into formats such as INI, XML, YAML, or custom text.
 Why is string templating a last resort for configuration output?	It is harder to analyze and maintain than structured data generation.
 What benefit comes from driving multiple applications from one configuration language?	Shared values and abstractions can generate consistent configs for infrastructure, applications, monitoring, and policies.
 Why can unified configuration reduce drift?	A value such as a port, ownership rule, or retention policy can be defined once and emitted to every dependent system.
-Why does plain YAML often become painful for large Kubernetes configurations?	YAML has little useful abstraction, so variants create duplicated files with subtle differences.
-How can a configuration language improve Kubernetes configuration?	Templates or functions can generate many Kubernetes objects while centralizing shared structure and defaults.
 What is the benefit of configuration templates with overridable fields?	Common cases stay simple while power users can override specific low-level details when needed.
 Why are hidden template fields useful in generated configuration?	They allow template-only values to guide generation without appearing in output rejected by the target system.
 Why can abstract templates require explicit overrides?	They prevent incomplete generic templates from being emitted as valid production configuration.
@@ -32,26 +25,18 @@ Why represent named entities as object fields instead of arrays with name fields
 Why group configuration by logical relationship rather than top-level type?	It lets abstractions follow functional boundaries instead of scattering related entities across the data model.
 Why keep generated configuration data representation simple?	Verbosity can be hidden by the config language, while clever data-level abstractions create confusion.
 Why avoid custom interpolation syntax inside generated config strings?	It creates a second underpowered language that competes with the actual configuration language.
-Why should underlying configuration models fix naming inconsistencies directly?	Using a config language to hide inconsistent model design creates more layers of inconsistency.
 Why validate generated configuration data immediately after evaluation?	Generation can succeed while output still violates schema, references missing resources, or contains invalid domain values.
-Why is syntactic validation alone insufficient for configuration?	Parsable JSON, YAML, or protobuf can still be semantically wrong or unsafe for the application.
-Why reject unrecognized fields in generated configuration?	Unknown fields often indicate typos or template mistakes that should not silently disappear.
 Why validate configuration in a precommit hook?	It catches broken generated output before review, merge, or deployment.
 Why version configuration libraries?	Consumers can migrate independently when shared templates or utilities make breaking changes.
 What is the trade-off of versioning configuration libraries?	It enables independent migration but can leave consumers on deprecated versions with accumulating technical debt.
 Why store configuration in source control?	It provides history, review, ownership, rollback, and auditability for configuration changes.
 What should unit tests cover in configuration libraries?	Templates and helper functions should generate expected concrete configuration for representative inputs.
 When is checking generated config into source control useful?	When reviewers need concrete diffs, runtime evaluation should be avoided, and generated files are manageable.
-What is a drawback of checking generated config into source control?	Generated output may be unreadable, large, secret-bearing, or prone to merge conflicts.
 When is build-time configuration evaluation useful?	When you want generated data embedded in artifacts without evaluating config at runtime.
-What is a drawback of build-time configuration evaluation?	Builds become more complex and concrete generated changes are harder to inspect in review.
 When is runtime configuration evaluation useful?	When the application must evaluate user-provided or late-bound configuration during execution.
 What is the risk of runtime configuration evaluation?	Configuration bugs, resource abuse, or security issues may appear only during live execution.
-Why does hermetic configuration allow flexible evaluation timing?	The generated data should be the same regardless of where or when evaluation runs.
 Why can configuration execution need resource limits?	Accidental or malicious config can consume unbounded CPU or memory before producing output.
 Why is removing Turing completeness not enough to prevent abusive configuration?	Programs or data expansions can still consume impractical time or memory while technically terminating.
 When is configuration sandboxing most important?	When a service evaluates untrusted user-provided configuration in request handlers or shared infrastructure.
 How can untrusted configuration evaluation be sandboxed?	Run it in a separate process with CPU, memory, and time limits, and fail safely when limits are exceeded.
-Why might command-line evaluation be safer than linking a config interpreter into a service?	A separate process can be constrained and killed more easily than in-process evaluation.
 What should happen when config evaluation exceeds resource limits?	The evaluation should fail safely and report a useful error to the user.
-What is the minimum bar for a robust configuration language?	Good tooling, hermetic evaluation, and separation of configuration from generated data.
