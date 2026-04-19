@@ -1,6 +1,3 @@
-What are Terraform type constraints used for?	To validate user-provided values for input variables and resource arguments more precisely.
-What are the collection types in Terraform?	`list(...)`, `map(...)`, and `set(...)`.
-What are the structural types in Terraform?	`object(...)` and `tuple(...)`.
 What must an `object({...})` value contain to match its schema in Terraform?	All specified keys, with values matching the declared types.
 What happens to extra attributes when Terraform converts a value to an `object(...)` type?	Extra attributes are discarded during conversion.
 What must a `tuple([...])` value match in Terraform?	Exactly the declared number of elements and the declared type at each position.
@@ -8,7 +5,5 @@ What happens when Terraform converts a list or tuple to a set?	Duplicates are di
 What happens when Terraform converts a set to a list or tuple?	The elements come back in arbitrary order; for strings, Terraform uses lexicographical order.
 When is `any` an appropriate Terraform type constraint?	When the module treats the value as opaque and passes it through without inspecting its contents.
 Why would Terraform reject `["a", [], "b"]` for `list(any)`?	Because there is no single element type that both strings and an empty tuple can all convert to.
-What does `optional(string)` mean in an object type constraint (Terraform)?	The object attribute may be omitted; if omitted, Terraform supplies `null` of that type by default.
-What does `optional(number, 127)` mean in an object type constraint (Terraform)?	The attribute is optional and defaults to `127` if omitted or set to `null`.
 How does Terraform apply defaults for nested optional object attributes?	Top-down: it applies the outer optional default first, then nested defaults inside that value.
 How can a caller dynamically leave an optional object attribute unset in Terraform?	Use a conditional expression that returns `null` when you want Terraform to treat it as omitted.

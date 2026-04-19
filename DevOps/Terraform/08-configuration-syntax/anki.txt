@@ -1,4 +1,0 @@
-Terraform language: what is HCL?	A configuration language Terraform’s native syntax is based on (also used by other HashiCorp tools).
-What is a block in Terraform configuration syntax?	A container with a block type, optional labels, and a `{ ... }` body containing arguments and nested blocks.
-What are “block labels” (Terraform/HCL)?	Quoted strings after the block type keyword that identify a particular instance (label count depends on block type).
-For a `resource` block, what are the two labels (high level)?	The resource type (provider-specific) and the resource’s local name (arbitrary within the module).

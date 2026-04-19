@@ -5,5 +5,3 @@ Terraform types: what are “primitive” vs “complex/collection” types?	Pri
 What does `null` mean in Terraform configuration?	Absence/omission: setting an argument to `null` behaves as if the argument were omitted.
 If you set an argument to `null`, what does Terraform do with defaults/required args?	It uses the argument’s default if it has one; otherwise it errors if the argument is required.
 Why is `null` especially useful in Terraform expressions?	To conditionally omit an argument when a condition isn’t met.
-How do you access list/tuple elements vs map/object elements in Terraform expressions?	`seq[3]` uses a whole-number index; `map["key"]` uses a string key.
-When can you use dot-attribute notation on a map/object (Terraform)?	When the attribute name is a valid identifier (e.g., `local.object.attrname`).

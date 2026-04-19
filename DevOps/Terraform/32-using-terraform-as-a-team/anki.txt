@@ -1,7 +1,6 @@
 Why is adopting Terraform on a team more than just introducing a new tool?	It also changes team skills, habits, workflows, and deployment processes.
 Why can adopting infrastructure as code have a high opportunity cost?	Time spent learning and migrating to IaC is time not spent on other urgent projects.
 Why is incremental adoption of Terraform usually safer than a big-bang migration?	Small steps reduce risk and let each step deliver value even if the larger migration stalls.
-What is false incrementalism in a migration project?	Breaking work into steps that still provide no real value until the very last step is complete.
 What makes a good incremental Terraform adoption strategy?	Solve one small, concrete problem at a time so each step is independently worthwhile.
 Why must teams be given time to learn Terraform for adoption to succeed?	Otherwise they will fall back to manual changes during pressure and the Terraform code will drift from reality.
 What usually happens if only one person on a team understands the Terraform code?	Others will keep making manual changes, and the Terraform code will quickly become stale and untrusted.
@@ -18,7 +17,6 @@ What is a safer permission pattern for team Terraform deployments?	Use temporary
 Why should Terraform changes be promoted across environments as versioned artifacts?	It lets teams test the exact same version in pre-prod before production and roll back more predictably.
 What extra step is commonly worth adding to Terraform promotion flows compared with app deployment flows?	A human approval step that reviews the plan output before apply.
 Why should Terraform changes always be tested in pre-production before production?	Terraform usually does not roll back infrastructure changes automatically when something goes wrong.
-What are two common Terraform deployment failure cases teams should be prepared to handle?	Transient errors that need retries and failed state writes that leave behind `errored.tfstate`.
 What is `errored.tfstate` used for after a failed Terraform apply?	It contains state Terraform could not upload, so you can later recover by pushing it to the backend.
 When is `terraform force-unlock` appropriate?	Only when you are sure a state lock was left behind accidentally and no real operation is still using it.
 What problem does Terragrunt help solve in a Terraform live repository?	It reduces repeated boilerplate for provider, backend, module source, and environment-specific input configuration.

@@ -1,73 +1,44 @@
-What is infrastructure as code (IaC)?	Defining, deploying, updating, and destroying infrastructure through code rather than manual steps.
 What are snowflake servers and configuration drift?	A snowflake server is one that becomes uniquely configured over time; configuration drift is the gradual divergence of supposedly identical systems caused by repeated in-place or manual changes.
-What are the four main categories of IaC tools?	Configuration management; server templating; orchestration; provisioning.
-What does configuration management do (IaC)?	It installs and manages software on existing servers.
-What does server templating do (IaC)?	It builds reusable machine images.
-What does orchestration do (IaC)?	It manages running servers or containers.
-What does provisioning do (IaC)?	It creates infrastructure resources such as servers, databases, and networks.
-Mutable vs immutable infrastructure: what is the main tradeoff?	Mutable infrastructure is usually simpler and cheaper to update in place; immutable infrastructure is usually more predictable and less prone to configuration drift because changes happen by replacement.
 Terraform: how does it work at a high level?	It reads configuration files, builds a plan, and translates the desired state into API calls to providers.
-Why is Terraform considered declarative?	You describe the desired end state, and Terraform figures out how to reach it.
 Procedural vs declarative IaC: what is the main difference?	Procedural code specifies step-by-step actions; declarative code specifies the target end state.
 Why is declarative IaC often easier to reuse and maintain?	The code describes the current desired state directly, instead of encoding a sequence of history-dependent steps.
 What problem does Terraform state solve for declarative IaC?	It lets Terraform know what infrastructure already exists so it can compute the changes needed to reach the desired state.
 General-purpose language vs DSL for IaC: what is the tradeoff?	GPLs offer more flexibility and ecosystem support; DSLs are usually simpler, more concise, and more uniform for infrastructure tasks.
-Why is Terraform often described as masterless and agentless?	It runs as a client and talks directly to provider APIs instead of relying on a separate master server or per-server agent.
 What is one reason Terraform does not provide transparent portability across cloud providers?	Different providers expose different infrastructure primitives and features, so “the same” infrastructure usually cannot be mapped exactly across clouds.
 Why add a provider version constraint in `required_providers`?	To avoid unplanned upgrades that may introduce breaking changes.
 What does the Terraform version constraint `required_version` do?	Prevents using Terraform CLI versions that don’t satisfy the constraint.
-What file does Terraform use to record deployed infrastructure state by default?	`terraform.tfstate`.
 How do you reference another resource’s attribute in Terraform config?	Use `<TYPE>.<NAME>.<ATTRIBUTE>` (e.g., `azurerm_resource_group.rg.name`).
 Why does Terraform create a dependency graph?	To ensure resources are created/updated in a valid order based on references.
 What does it mean to “update in-place” (Terraform)?	The resource is modified while keeping the same identity/address; it is not destroyed and recreated.
 In plan output, what does “(known after apply)” mean?	The value is computed by the provider during apply and isn’t known at plan time.
 Why can adding a reference create an implicit dependency without `depends_on`?	Because Terraform can infer ordering from the expression graph (data flow) in configuration.
-What is an input variable (Terraform)?	A named value you can set from outside the config (or via defaults) and reference as `var.<name>`.
 Where do you commonly declare input variables (Terraform)?	In `.tf` files such as `variables.tf` using `variable "<name>" { ... }`.
-What does `default = "..."` do in a Terraform variable?	Makes the variable optional by providing a value when no input is given.
 When is a Terraform variable required input?	When it has no `default` and no value is provided via other mechanisms.
 How do you reference an input variable in Terraform configuration?	Use `var.<variable_name>` (e.g., `var.resource_group_name`).
-How do you override a variable value for a single run (Terraform)?	Pass it on the CLI, e.g. `terraform apply -var "resource_group_name=NewName"`.
 If CLI `-var` values aren’t saved, how do you avoid retyping them?	Use other mechanisms like `.tfvars` files or environment variables.
-What environment-variable naming pattern can set Terraform variables?	`TF_VAR_<variable_name>` (e.g., `TF_VAR_resource_group_name`).
 What do “must be replaced” and “forces replacement” indicate in Terraform plan output?	The change cannot be applied in place, so Terraform will destroy and recreate the resource instead.
 Why can a dependent resource be replaced when its dependency is replaced?	Because it references attributes that change (e.g., `resource_group_name`), forcing it to be recreated too.
 How do you tell replacement apart from in-place update in plan symbols?	`~` is update in-place; `-/+` is destroy then create replacement.
 Why should you be cautious about putting secrets in variable defaults?	Defaults can end up in code/version control; prefer secret-safe inputs (env vars/secret managers).
 What’s a typical variable definition “shape” you’ll see in real configs?	`variable "x" { type = string; description = "..."; default = "..." }`.
 When should you add a `type` to a Terraform variable?	When you want stronger validation and clearer intent (e.g., `string`, `list(string)`).
-What is an output value (Terraform)?	A declared value (in an `output` block) that Terraform records and can display/query for the user.
 When does Terraform print output values?	After `terraform apply` completes (it prints an “Outputs” section).
-How do you query saved outputs from the CLI (Terraform)?	Run `terraform output`.
 Where do you typically define outputs (Terraform)?	In `.tf` files (often `outputs.tf`), using `output "..." { ... }`.
 How do you reference a resource attribute in an output (Terraform)?	Use `<TYPE>.<NAME>.<ATTRIBUTE>` (e.g., `azurerm_resource_group.rg.id`).
 How does a parent configuration reference a child module’s output (Terraform)?	`module.<module_name>.<output_name>`.
-What does `sensitive = true` do for an output (Terraform)?	Marks the output as sensitive so Terraform suppresses it in normal CLI output.
 Does marking an output as sensitive keep it out of state (Terraform)?	No; it can still be stored in state, so you must protect state access.
-What is HCP Terraform (high level)?	A hosted Terraform platform for collaboration (versioning/auditing runs), remote execution, and remote state storage.
 Why run Terraform in a remote environment (HCP Terraform)?	It provides shared access to state and a stable environment for long-running Terraform operations.
 How do you configure HCP Terraform in Terraform CLI workflow (HCL block)?	Use a `terraform { cloud { organization = "..."; workspaces { name = "..." } } }` block.
-What is an HCP Terraform workspace (conceptually)?	A named context that holds state and run history for a configuration.
-What is the default execution mode for HCP Terraform CLI-driven workflow?	Remote execution (Terraform operations run in HCP Terraform).
-What does “local execution” mean with HCP Terraform (CLI-driven)?	Terraform runs locally but stores state remotely in HCP Terraform.
 Where should you set Azure `ARM_...` auth variables when using HCP Terraform?	In the HCP Terraform workspace Variables UI (not only as local shell exports).
 Which Azure auth value should be marked sensitive in HCP Terraform variables?	`ARM_CLIENT_SECRET`.
 What two main workflows does HCP Terraform support (names)?	VCS-driven workflow and API-driven workflow.
 What triggers runs in an HCP Terraform VCS-driven workflow?	Commits/changes to the connected VCS repository queue plans/runs automatically.
-Terraform language: what is HCL?	A configuration language Terraform’s native syntax is based on (also used by other HashiCorp tools).
-What is a block in Terraform configuration syntax?	A container with a block type, optional labels, and a `{ ... }` body containing arguments and nested blocks.
-What are “block labels” (Terraform/HCL)?	Quoted strings after the block type keyword that identify a particular instance (label count depends on block type).
-For a `resource` block, what are the two labels (high level)?	The resource type (provider-specific) and the resource’s local name (arbitrary within the module).
 Terraform resource meta-argument: what does `count` do?	Provisions multiple instances of the same resource from one block.
 Terraform resource meta-argument: what does `for_each` do?	Provisions multiple instances from one block, one per element in a map or set.
 What kinds of values can `for_each` take (Terraform)?	A map or a set of strings.
 Terraform resource meta-argument: what does `depends_on` do?	Forces Terraform to complete operations on listed upstream references before operating on this resource.
 Terraform resource meta-argument: what does `provider` do?	Selects a specific provider configuration (alias) to use for that resource.
-What is the purpose of `lifecycle { ... }` on a resource (Terraform)?	Defines lifecycle rules controlling create/update/replace/destroy behavior.
-Terraform lifecycle: what does `create_before_destroy` do?	Creates the replacement resource before destroying the current one.
-Terraform lifecycle: what does `prevent_destroy` do?	Makes Terraform error if a plan would destroy the resource.
 Does `prevent_destroy` protect a resource if you remove its configuration (Terraform)?	No; removing the block removes the rule, so Terraform can plan to destroy it.
-Terraform lifecycle: what does `ignore_changes` do?	Tells Terraform to ignore diffs for listed attributes and not try to update them.
 Terraform lifecycle: what does `replace_triggered_by` do?	Forces replacement when the referenced resources/attributes change.
 Terraform lifecycle: what is a `precondition`?	A condition that must be true before creating the resource; otherwise Terraform errors with `error_message`.
 Terraform lifecycle: what is a `postcondition`?	A condition checked after creating the resource; otherwise Terraform errors with `error_message`.
@@ -78,12 +49,7 @@ Terraform types: what are “primitive” vs “complex/collection” types?	Pri
 What does `null` mean in Terraform configuration?	Absence/omission: setting an argument to `null` behaves as if the argument were omitted.
 If you set an argument to `null`, what does Terraform do with defaults/required args?	It uses the argument’s default if it has one; otherwise it errors if the argument is required.
 Why is `null` especially useful in Terraform expressions?	To conditionally omit an argument when a condition isn’t met.
-How do you access list/tuple elements vs map/object elements in Terraform expressions?	`seq[3]` uses a whole-number index; `map["key"]` uses a string key.
-When can you use dot-attribute notation on a map/object (Terraform)?	When the attribute name is a valid identifier (e.g., `local.object.attrname`).
-Terraform heredoc: what does `<<-` mean (indented heredoc)?	Terraform trims common leading spaces from all lines (based on the least-indented line in the heredoc).
 Terraform tip: should you use heredocs to generate JSON/YAML?	No; prefer `jsonencode(...)` / `yamlencode(...)` to guarantee valid syntax.
-Terraform interpolation: what does `${ ... }` do?	Evaluates the expression, converts the result to a string if needed, and inserts it into the string.
-Terraform directives: what does `%{ ... }` enable?	Conditionals and iteration over collections to build strings.
 Terraform resource reference: what does `<TYPE>.<NAME>` refer to?	A managed resource instance (or instances) of the given type and local name.
 If a resource uses neither `count` nor `for_each`, what is the type/shape of `<TYPE>.<NAME>`?	An object representing the resource, with attributes you can access (e.g., `<TYPE>.<NAME>.id`).
 If a resource uses `count`, what is the type/shape of `<TYPE>.<NAME>`?	A list of instance objects.
@@ -92,18 +58,10 @@ Terraform child module: what does `module.<MODULE_NAME>` represent?	The result o
 If a `module` block uses neither `count` nor `for_each`, what is `module.<MODULE_NAME>`?	An object with one attribute per child-module output (access via `module.<MODULE_NAME>.<OUTPUT_NAME>`).
 If a `module` block uses `for_each`, what is `module.<MODULE_NAME>`?	A map of objects keyed by the `for_each` keys, each object holding the module outputs.
 If a `module` block uses `count`, what is `module.<MODULE_NAME>`?	A list of objects, one per module instance, each object holding the module outputs.
-Terraform paths: what is `path.module`?	The filesystem path of the module where the expression appears.
-Terraform paths: what is `path.root`?	The filesystem path of the root module of the configuration.
-Terraform paths: what is `path.cwd`?	The original working directory where Terraform was run (before any `-chdir`).
 Why avoid `path.module` in write operations (Terraform)?	Local module calls can share the same source directory, so writes can clobber each other and create race conditions.
 Terraform workspaces: what is `terraform.workspace`?	The name of the currently selected workspace.
 Why can using `terraform.workspace` for namespacing break module composability?	It can prevent calling the same module more than once in a configuration (name collisions/assumptions).
-Block-local values: what is `count.index`?	The per-instance index available inside blocks that use `count`.
-Block-local values: what are `each.key` and `each.value`?	The per-instance key and value available inside blocks that use `for_each`.
-Block-local values: what is `self` used for?	A reference to the current resource in provisioner/connection blocks.
-With `count`, how do you get an attribute of the first instance (Terraform)?	Index the list: `<TYPE>.<NAME>[0].id` (or similar).
 With `count`, how do you get a list of an attribute across instances (Terraform)?	Use splat: `<TYPE>.<NAME>[*].id`.
-With `for_each`, how do you access a particular instance attribute (Terraform)?	Index by key: `<TYPE>.<NAME>["key"].id`.
 With `for_each`, how do you collect an attribute across instances (Terraform)?	Use a for-expression, e.g. `[for v in <TYPE>.<NAME> : v.id]`.
 Terraform sensitive attributes: what happens in plan output?	Terraform shows a placeholder (like `(sensitive value)`) instead of the actual value.
 If you derive a value from a sensitive resource attribute, how does Terraform treat it?	It typically marks derived values as sensitive too (so they’re also hidden in plan/apply output).
@@ -113,20 +71,14 @@ How do unknown values propagate in expressions (Terraform)?	Operations that comb
 Why can’t `count` be unknown (Terraform)?	Terraform must know the instance count during planning to build the graph and addresses.
 What happens if a data source depends on unknown values (Terraform)?	It can’t be read during plan, so it’s deferred to apply and its results are unknown during planning.
 When might type errors involving unknown values be detected (Terraform)?	Sometimes only at apply time, because full validation may be deferred until values are known.
-Terraform operator precedence: what is the order from highest to lowest?	`!` and unary `-`; `*` `/` `%`; `+` `-`; `>` `>=` `<` `<=`; `==` `!=`; `&&`; `||`.
-In Terraform, are `?` and `:` considered operators?	No; together they are part of the conditional expression syntax.
-How do you compute exponents in Terraform (no operator)?	Use `pow(base, exponent)`.
 Terraform best practice: when should you use `==`/`!=`?	Prefer primitive values, or use explicit type conversions to make types match.
 Why can equality on structural types be surprising in Terraform?	Different structural types can look similar but never compare equal (e.g., an empty tuple literal `[]` vs an empty list value).
 Terraform idiom: how to check whether a list is empty?	Use `length(var.list) == 0` instead of `var.list == []`.
 Terraform: what are built-in functions used for in expressions?	To transform and combine values; they’re called with function-call syntax (see function reference for the full list).
-How do you pass a list/tuple as separate function arguments in Terraform?	Use argument expansion with `...`, e.g. `min([55, 2453, 2]...)`.
 What happens if you pass sensitive data into a Terraform function call?	The result is marked sensitive (conservatively, regardless of which function is called).
-Name four special Terraform functions whose timing can matter.	`file`, `templatefile`, `timestamp`, `uuid`.
 When does Terraform evaluate `file(...)` and `templatefile(...)` (high level)?	During initial configuration validation, before planning/applying actions.
 What practical limitation follows from `file(...)`/`templatefile(...)` being evaluated during validation?	You can’t use them to read files generated dynamically during plan/apply.
 How do `timestamp()` and `uuid()` behave during plan vs apply (Terraform)?	They produce unknown values during plan; the real values are decided during apply (timestamp corresponds to when apply begins).
-What is the syntax of a conditional expression (Terraform)?	`condition ? true_val : false_val`.
 Why add custom conditions in Terraform configs (high level)?	To capture assumptions and produce earlier, clearer error messages (e.g., in variable validation or pre/postconditions).
 Terraform recommendation: what should you do if the expected result type may be unclear?	Use explicit type conversion functions (e.g., `tostring(...)`) rather than relying on implicit conversion.
 Validation helper: how do you check membership in an allowed set (Terraform)?	`contains(["STAGE", "PROD"], var.environment)`.
@@ -136,13 +88,8 @@ What does `can(expr)` do in Terraform conditions?	Returns true if `expr` evaluat
 Example: how can `can` be used to validate a string with `regex` (Terraform)?	`can(regex("^[a-z]+$", var.name))` (because `regex` errors on non-match).
 In conditions, what are `self`, `each`, and `count` used for (Terraform)?	`self` refers to attributes of the instance under evaluation in postcondition blocks; `each`/`count` refer to per-instance values inside blocks using `for_each`/`count`.
 What does a for expression do (Terraform)?	A for expression transforms one collection into another by evaluating an expression per element (optionally filtering elements out).
-Terraform for expression: what does the two-symbol form `for k, v in ...` provide?	Two temporary symbols: key/index (`k`) and value (`v`) for each element.
-In a Terraform for expression over a list/tuple, what is the first symbol in `for i, v in ...`?	The zero-based index of each element.
-In a Terraform for expression over a map/object, what is the first symbol in `for k, v in ...`?	The key (map key) or attribute name (object attribute).
-Terraform for expression: what result type do `{...}` braces produce, and what syntax is required?	An object; you must provide `key_expr => value_expr`.
 Terraform for expression: how do you filter elements?	Add `if <condition>` at the end (e.g., `[for s in var.list : upper(s) if s != \"\"]`).
 What is a splat expression for (Terraform)?	A concise way to map over a collection and extract nested attributes/indexes (often equivalent to a for-expression).
-What does the `[*]` operator do in a splat expression (Terraform)?	Iterates over all elements on the left and applies the access operations on the right to each element.
 Can splat expressions chain deeper attribute/index accesses (Terraform)?	Yes; e.g. `var.list[*].interfaces[0].name` applies `.interfaces[0].name` to each element.
 What collection types support splat expressions (Terraform)?	Lists, sets, and tuples.
 How do you get a “splat-like” result for a map/object (Terraform)?	Use a for-expression (splats don’t work on maps/objects).
@@ -150,7 +97,6 @@ Common use: why use `var.obj[*]` for an optional object input (Terraform)?	To dr
 Why do you need `dynamic` blocks (Terraform)?	Some resource arguments are repeatable nested blocks that can’t be generated with expressions in `name = expr` form; `dynamic` generates nested blocks from data.
 Where can you use `dynamic` blocks (Terraform)?	Inside `resource`, `data`, `provider`, and `provisioner` blocks.
 In a `dynamic` block, what does `for_each` do (Terraform)?	Supplies the collection/structural value to iterate over; one nested block is generated per element.
-In a `dynamic` block, what does `content { ... }` define (Terraform)?	The body of each generated nested block.
 In a `dynamic` block, what does `iterator` control (Terraform)?	The name of the temporary variable for the current element; defaults to the dynamic label if omitted.
 What are `iterator.key` and `iterator.value` in a `dynamic` block (Terraform)?	`key` is map key or list index (for sets, `key == value` and shouldn’t be used); `value` is the element value.
 In a `dynamic` block, what does `labels` do (Terraform)?	Optional list of strings to set the generated block labels (in order); can use the iterator variable to compute labels.
@@ -168,25 +114,17 @@ How does Terraform destroy resources created during a test file?	It attempts to 
 What is `expect_failures` used for in Terraform tests?	To mark specific custom-condition failures as the expected success case for a run.
 When is `expect_failures` usually safest to use in Terraform tests?	With `command = plan`, because apply runs can fail earlier during planning.
 What kinds of failures can `expect_failures` cover in Terraform tests?	Only user-defined custom condition failures, not arbitrary type or runtime errors.
-What does input variable validation verify (Terraform)?	That input variables meet required formats, ranges, or other constraints before planning continues.
 When does Terraform execute input variable validation?	Immediately, before generating a plan.
-What do preconditions validate in Terraform?	Assumptions about resources, data sources, or outputs before Terraform creates or exposes them.
 When does Terraform execute preconditions?	After generating a plan but before creating the associated resource, data source, or output.
-What do postconditions validate in Terraform?	Guarantees that resources or data sources must satisfy after Terraform creates or reads them.
 When does Terraform execute postconditions?	After planning and applying changes to a resource, or after reading from a data source.
-What does a `check` block validate in Terraform?	Infrastructure behavior or conditions outside the normal resource lifecycle.
 When does Terraform execute `check` blocks?	At the end of `plan` and `apply` operations.
 What happens when a Terraform `check` assertion fails?	Terraform reports a warning and continues the current operation.
 How do `check` blocks differ from variable validation and pre/postconditions (Terraform)?	Checks do not block operations when they fail.
 What is continuous validation in HCP Terraform?	Regularly re-running checks, preconditions, and postconditions to verify infrastructure over time.
 When does HCP Terraform continuous validation run `check` blocks?	Whenever workspace health assessments run, in addition to normal plan/apply execution.
-What is the purpose of policy enforcement in HCP Terraform?	To validate that Terraform plans comply with security rules and best practices.
 What policy frameworks can HCP Terraform use for custom policies?	Sentinel and OPA.
 When does HCP Terraform evaluate a policy set?	For each run in the selected workspaces.
 What determines whether failed policies stop a run in HCP Terraform?	The policy’s enforcement level.
-What are Terraform type constraints used for?	To validate user-provided values for input variables and resource arguments more precisely.
-What are the collection types in Terraform?	`list(...)`, `map(...)`, and `set(...)`.
-What are the structural types in Terraform?	`object(...)` and `tuple(...)`.
 What must an `object({...})` value contain to match its schema in Terraform?	All specified keys, with values matching the declared types.
 What happens to extra attributes when Terraform converts a value to an `object(...)` type?	Extra attributes are discarded during conversion.
 What must a `tuple([...])` value match in Terraform?	Exactly the declared number of elements and the declared type at each position.
@@ -194,14 +132,9 @@ What happens when Terraform converts a list or tuple to a set?	Duplicates are di
 What happens when Terraform converts a set to a list or tuple?	The elements come back in arbitrary order; for strings, Terraform uses lexicographical order.
 When is `any` an appropriate Terraform type constraint?	When the module treats the value as opaque and passes it through without inspecting its contents.
 Why would Terraform reject `["a", [], "b"]` for `list(any)`?	Because there is no single element type that both strings and an empty tuple can all convert to.
-What does `optional(string)` mean in an object type constraint (Terraform)?	The object attribute may be omitted; if omitted, Terraform supplies `null` of that type by default.
-What does `optional(number, 127)` mean in an object type constraint (Terraform)?	The attribute is optional and defaults to `127` if omitted or set to `null`.
 How does Terraform apply defaults for nested optional object attributes?	Top-down: it applies the outer optional default first, then nested defaults inside that value.
 How can a caller dynamically leave an optional object attribute unset in Terraform?	Use a conditional expression that returns `null` when you want Terraform to treat it as omitted.
-What components can Terraform version constraints apply to?	Modules, provider requirements, and Terraform itself via `required_version`.
-What does `!=` mean in a Terraform version constraint?	Exclude one exact version.
 What does the Terraform pessimistic constraint operator `~>` do?	It allows only the right-most specified version component to increment.
-Do `>`, `>=`, `<`, `<=`, or `~>` match pre-release versions in Terraform?	No; pre-release versions are not matched by those operators.
 What is the recommended module-version practice for third-party Terraform modules?	Require specific versions so updates happen only when you choose.
 How should reusable Terraform modules constrain Terraform core and provider versions?	Constrain only the minimum allowed versions, such as `>= 0.12.0`.
 How should root Terraform modules usually constrain provider versions?	Use `~>` to set both lower and upper bounds for each provider they depend on.
@@ -219,11 +152,8 @@ What is `prevent_destroy` useful for on Terraform state-storage infrastructure?	
 Why is versioning useful on a Terraform state bucket?	It keeps older revisions of state so you can inspect or recover previous versions.
 Why is encryption important for Terraform state storage?	State can contain sensitive data, so encryption reduces the risk of exposing secrets.
 What is the backend bootstrap chicken-and-egg problem in Terraform?	You often need Terraform to create the remote state backend before Terraform can use that backend for its own state.
-What limitation does Terraform place on backend blocks?	Backend configuration cannot use normal variables or references.
 What is partial backend configuration in Terraform?	Leaving some backend settings out of code and supplying them at `terraform init` time with `-backend-config`.
-What are Terraform workspaces?	Named, separate state instances for the same Terraform configuration.
 Why are Terraform workspaces useful?	They let you try isolated copies of the same configuration without changing the base code.
-Why are Terraform workspaces weak for isolating staging from production?	They usually share the same backend and credentials, and the active workspace is easy to overlook.
 What is file-layout isolation in Terraform?	Separating environments and components into different folders and state files.
 Why is file-layout isolation stronger than workspaces for real environments?	It makes environment boundaries explicit and can use separate backends and access controls.
 What is a common tradeoff of file-layout isolation in Terraform?	It improves safety and clarity, but requires running Terraform separately in multiple folders and coordinating dependencies between them.
@@ -241,9 +171,6 @@ When using `for_each` on a resource, why is `toset(...)` often needed?	Resource-
 What is one key advantage of `for_each` over `count` for inline blocks?	`for_each` can be used inside `dynamic` blocks to generate nested blocks, while `count` cannot.
 What is the purpose of a `dynamic` block in Terraform?	To generate repeated nested blocks inside a resource, data source, provider, or provisioner from collection data.
 What is `default_tags` in the AWS provider used for?	To apply a baseline set of tags automatically to most AWS resources managed through that provider configuration.
-What is a for string directive in Terraform?	A `%{ for ... } ... %{ endfor }` construct that repeats text generation inside a string or heredoc.
-What does an if string directive do in Terraform?	It conditionally renders part of a string using `%{ if ... }`, optionally with `%{ else }`.
-What problem do strip markers `~` solve in Terraform string directives?	They remove surrounding whitespace that would otherwise be preserved in heredocs and rendered strings.
 How can `count` be used to model a simple conditional resource in Terraform?	Set `count` to `1` when the condition is true and `0` when it is false.
 Why can `for_each` plus a filtered for-expression be useful for conditionals?	You can create zero or more instances by transforming and filtering a collection before iterating over it.
 Why can `one(concat(a[*].x, b[*].x))` be safer than repeating an if/else condition in Terraform outputs?	It derives the surviving value from whichever conditional resource exists instead of duplicating branching logic in another place.
@@ -283,17 +210,12 @@ What is a major drawback of centralized secret stores?	They add external depende
 What important Terraform gotcha applies no matter how you source secrets?	Any secrets passed into resources or data sources can end up in plain text in Terraform state.
 How should Terraform state and plan files be protected if secrets may be present?	Secrets can end up in both state and saved plan files, so store them in encrypted locations and strictly limit access to the backend or storage location.
 Why do infrastructure projects often take much longer than expected?	They combine immature tooling, frequent yak shaving, and a long checklist of real production requirements.
-What is accidental complexity in infrastructure work?	Complexity caused by particular tools, processes, or incidental implementation choices rather than the core problem itself.
-What is essential complexity in infrastructure work?	Complexity that comes from the real production requirements of the system itself and cannot be avoided by better tooling alone.
-What is yak shaving in DevOps work?	Having to complete many unexpected prerequisite tasks before you can finish the task you originally meant to do.
 Why are large Terraform modules considered harmful?	They are slower, riskier, harder to secure, harder to understand, harder to review, and harder to test.
 What is the recommended size principle for Terraform modules?	Prefer small modules that each do one thing well.
 Why can a single huge Terraform module be insecure?	Changing anything may require broad access to everything it manages, violating least privilege.
 Why are small Terraform modules easier to review safely?	The plan output and code changes stay small enough that humans can realistically read and reason about them.
 What makes Terraform modules composable?	Passing data in through input variables, returning useful output values, and combining simple modules into higher-level modules.
 Why is writing example usage first a good Terraform module design practice?	It helps define a cleaner API and user experience before implementation details dominate the design.
-What is the purpose of an `examples/` folder for Terraform modules?	To provide executable examples that serve as documentation, manual test harnesses, and the basis for automated tests.
-What is the purpose of a `test/` folder in a Terraform modules repo?	To hold automated tests that exercise the module examples and verify expected behavior.
 Why are validation, precondition, and postcondition checks useful in production-grade modules?	They let the module fail earlier and more clearly when assumptions or guarantees are violated.
 When should you use input variable validation in Terraform modules?	For basic input sanitization that can be checked directly from one variable's value.
 When should you use preconditions in Terraform modules?	To check assumptions before apply when the condition depends on more than a single variable or on dynamic data.
@@ -307,13 +229,9 @@ Why should `.terraform.lock.hcl` be checked into version control?	It makes provi
 How do you intentionally upgrade locked Terraform providers?	Update the version constraint and run `terraform init -upgrade`.
 What is one benefit of versioning Terraform modules with Git tags and semantic versioning?	You can promote known-good module versions across environments and roll back if needed.
 Why can registry-style module sources be clearer than raw Git URLs?	They separate the module source address from the version number and make version selection easier to read.
-What is a Terraform provisioner used for?	To execute scripts or copy files during resource creation or destruction.
 Why are provisioners often considered an escape hatch in Terraform?	They break out of Terraform's normal declarative model and can make code less portable and more brittle.
 What is the difference between `local-exec` and `remote-exec` provisioners?	`local-exec` runs on the Terraform client machine, while `remote-exec` runs on the target resource after connecting to it.
 Why is User Data often preferable to `remote-exec` on EC2?	It is easier to use with ASGs, safer than opening SSH, and leaves clearer debugging artifacts on the instance.
-What is a `null_resource` used for in Terraform?	To participate in Terraform lifecycle logic and run provisioners without managing a real infrastructure object.
-What does the `triggers` argument on a `null_resource` do?	It forces the resource to be replaced when the trigger values change, which can re-run attached provisioners.
-What is the `external` data source used for in Terraform?	To call an external program that exchanges JSON with Terraform so Terraform can read data it cannot fetch natively.
 Why should Terraform escape hatches such as provisioners and `external` be used conservatively?	They increase brittleness, reduce portability, and make the configuration harder to reason about declaratively.
 Why can't Terraform testing use localhost?	Terraform usually manages real external infrastructure, so meaningful tests must target a real environment rather than the local machine.
 What is the practical equivalent of localhost for Terraform testing?	An isolated real deployment environment, such as a sandbox cloud account.
@@ -321,9 +239,7 @@ Why is a per-developer isolated sandbox environment ideal for manual Terraform t
 Why should Terraform sandbox environments be cleaned up regularly?	To prevent abandoned resources from increasing cost, clutter, and operational confusion.
 What is a common automated cleanup strategy for Terraform sandbox environments?	Run scheduled cleanup tooling that deletes old or unused resources after a defined age threshold.
 Why can't Terraform modules have pure unit tests?	Their behavior depends heavily on real provider APIs and deployed infrastructure, so fully isolated in-memory tests are usually impractical.
-What is the closest Terraform equivalent to a unit under test?	A single reusable Terraform module.
 Why are Terraform unit tests effectively integration tests with real providers?	They still rely on real cloud APIs and real infrastructure even when they focus on a single module.
-What is Terratest commonly used for in Terraform workflows?	To automate apply, validation, and destroy flows for infrastructure tests in Go.
 Why should a Terraform test usually schedule cleanup before running apply?	So cleanup still happens if later test steps fail.
 Why do infrastructure tests often need retry logic during validation?	Because deployments, health checks, DNS updates, and provider behavior are often asynchronous or temporarily flaky.
 What is dependency injection in Terraform module testing?	Designing modules so external dependencies can be passed in as input variables instead of always being looked up internally.
@@ -338,16 +254,13 @@ Why can test stages speed up iterative Terraform development?	They let you skip 
 Why are retries on known Terraform or provider errors useful in infrastructure tests?	They reduce flaky failures from transient network, eventual-consistency, or provider-side issues.
 Why are end-to-end tests that rebuild an entire infrastructure from scratch often impractical?	They are slow, expensive, and increasingly flaky as the number of resources grows.
 What is a more practical end-to-end testing strategy for complex Terraform environments?	Maintain a persistent production-like test environment, apply incremental changes to it, and validate behavior there.
-What is static analysis in Terraform testing, and what can it catch well?	Checking Terraform code without deploying it; it is good at finding syntax problems, type issues, and some policy violations visible directly in the configuration.
 What is a key limitation of static analysis for Terraform?	It cannot prove that deployed infrastructure actually works and is weak at reasoning about dynamic runtime values.
-What is plan testing in Terraform?	Running `terraform plan` and analyzing the planned changes programmatically or through policy checks.
 What does plan testing validate better than pure static analysis?	It can inspect real provider reads and computed change data without actually creating resources.
 What is the test pyramid for infrastructure code?	A strategy that favors many smaller tests, fewer integration tests, and only a small number of high-value end-to-end tests.
 Why are smaller Terraform modules easier to test?	They require less infrastructure to deploy, produce fewer failure modes, and give faster, more focused feedback.
 Why is adopting Terraform on a team more than just introducing a new tool?	It also changes team skills, habits, workflows, and deployment processes.
 Why can adopting infrastructure as code have a high opportunity cost?	Time spent learning and migrating to IaC is time not spent on other urgent projects.
 Why is incremental adoption of Terraform usually safer than a big-bang migration?	Small steps reduce risk and let each step deliver value even if the larger migration stalls.
-What is false incrementalism in a migration project?	Breaking work into steps that still provide no real value until the very last step is complete.
 What makes a good incremental Terraform adoption strategy?	Solve one small, concrete problem at a time so each step is independently worthwhile.
 Why must teams be given time to learn Terraform for adoption to succeed?	Otherwise they will fall back to manual changes during pressure and the Terraform code will drift from reality.
 What usually happens if only one person on a team understands the Terraform code?	Others will keep making manual changes, and the Terraform code will quickly become stale and untrusted.
@@ -364,7 +277,6 @@ What is a safer permission pattern for team Terraform deployments?	Use temporary
 Why should Terraform changes be promoted across environments as versioned artifacts?	It lets teams test the exact same version in pre-prod before production and roll back more predictably.
 What extra step is commonly worth adding to Terraform promotion flows compared with app deployment flows?	A human approval step that reviews the plan output before apply.
 Why should Terraform changes always be tested in pre-production before production?	Terraform usually does not roll back infrastructure changes automatically when something goes wrong.
-What are two common Terraform deployment failure cases teams should be prepared to handle?	Transient errors that need retries and failed state writes that leave behind `errored.tfstate`.
 What is `errored.tfstate` used for after a failed Terraform apply?	It contains state Terraform could not upload, so you can later recover by pushing it to the backend.
 When is `terraform force-unlock` appropriate?	Only when you are sure a state lock was left behind accidentally and no real operation is still using it.
 What problem does Terragrunt help solve in a Terraform live repository?	It reduces repeated boilerplate for provider, backend, module source, and environment-specific input configuration.

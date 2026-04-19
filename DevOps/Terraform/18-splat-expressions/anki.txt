@@ -1,5 +1,4 @@
 What is a splat expression for (Terraform)?	A concise way to map over a collection and extract nested attributes/indexes (often equivalent to a for-expression).
-What does the `[*]` operator do in a splat expression (Terraform)?	Iterates over all elements on the left and applies the access operations on the right to each element.
 Can splat expressions chain deeper attribute/index accesses (Terraform)?	Yes; e.g. `var.list[*].interfaces[0].name` applies `.interfaces[0].name` to each element.
 What collection types support splat expressions (Terraform)?	Lists, sets, and tuples.
 How do you get a “splat-like” result for a map/object (Terraform)?	Use a for-expression (splats don’t work on maps/objects).

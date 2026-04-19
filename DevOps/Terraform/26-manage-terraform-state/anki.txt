@@ -10,11 +10,8 @@ What is `prevent_destroy` useful for on Terraform state-storage infrastructure?	
 Why is versioning useful on a Terraform state bucket?	It keeps older revisions of state so you can inspect or recover previous versions.
 Why is encryption important for Terraform state storage?	State can contain sensitive data, so encryption reduces the risk of exposing secrets.
 What is the backend bootstrap chicken-and-egg problem in Terraform?	You often need Terraform to create the remote state backend before Terraform can use that backend for its own state.
-What limitation does Terraform place on backend blocks?	Backend configuration cannot use normal variables or references.
 What is partial backend configuration in Terraform?	Leaving some backend settings out of code and supplying them at `terraform init` time with `-backend-config`.
-What are Terraform workspaces?	Named, separate state instances for the same Terraform configuration.
 Why are Terraform workspaces useful?	They let you try isolated copies of the same configuration without changing the base code.
-Why are Terraform workspaces weak for isolating staging from production?	They usually share the same backend and credentials, and the active workspace is easy to overlook.
 What is file-layout isolation in Terraform?	Separating environments and components into different folders and state files.
 Why is file-layout isolation stronger than workspaces for real environments?	It makes environment boundaries explicit and can use separate backends and access controls.
 What is a common tradeoff of file-layout isolation in Terraform?	It improves safety and clarity, but requires running Terraform separately in multiple folders and coordinating dependencies between them.

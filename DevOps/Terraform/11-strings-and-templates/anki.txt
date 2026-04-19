@@ -1,4 +1,1 @@
-Terraform heredoc: what does `<<-` mean (indented heredoc)?	Terraform trims common leading spaces from all lines (based on the least-indented line in the heredoc).
 Terraform tip: should you use heredocs to generate JSON/YAML?	No; prefer `jsonencode(...)` / `yamlencode(...)` to guarantee valid syntax.
-Terraform interpolation: what does `${ ... }` do?	Evaluates the expression, converts the result to a string if needed, and inserts it into the string.
-Terraform directives: what does `%{ ... }` enable?	Conditionals and iteration over collections to build strings.

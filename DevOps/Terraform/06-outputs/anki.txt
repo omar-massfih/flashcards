@@ -1,8 +1,5 @@
-What is an output value (Terraform)?	A declared value (in an `output` block) that Terraform records and can display/query for the user.
 When does Terraform print output values?	After `terraform apply` completes (it prints an “Outputs” section).
-How do you query saved outputs from the CLI (Terraform)?	Run `terraform output`.
 Where do you typically define outputs (Terraform)?	In `.tf` files (often `outputs.tf`), using `output "..." { ... }`.
 How do you reference a resource attribute in an output (Terraform)?	Use `<TYPE>.<NAME>.<ATTRIBUTE>` (e.g., `azurerm_resource_group.rg.id`).
 How does a parent configuration reference a child module’s output (Terraform)?	`module.<module_name>.<output_name>`.
-What does `sensitive = true` do for an output (Terraform)?	Marks the output as sensitive so Terraform suppresses it in normal CLI output.
 Does marking an output as sensitive keep it out of state (Terraform)?	No; it can still be stored in state, so you must protect state access.

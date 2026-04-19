@@ -6,16 +6,8 @@ Terraform child module: what does `module.<MODULE_NAME>` represent?	The result o
 If a `module` block uses neither `count` nor `for_each`, what is `module.<MODULE_NAME>`?	An object with one attribute per child-module output (access via `module.<MODULE_NAME>.<OUTPUT_NAME>`).
 If a `module` block uses `for_each`, what is `module.<MODULE_NAME>`?	A map of objects keyed by the `for_each` keys, each object holding the module outputs.
 If a `module` block uses `count`, what is `module.<MODULE_NAME>`?	A list of objects, one per module instance, each object holding the module outputs.
-Terraform paths: what is `path.module`?	The filesystem path of the module where the expression appears.
-Terraform paths: what is `path.root`?	The filesystem path of the root module of the configuration.
-Terraform paths: what is `path.cwd`?	The original working directory where Terraform was run (before any `-chdir`).
 Why avoid `path.module` in write operations (Terraform)?	Local module calls can share the same source directory, so writes can clobber each other and create race conditions.
 Terraform workspaces: what is `terraform.workspace`?	The name of the currently selected workspace.
 Why can using `terraform.workspace` for namespacing break module composability?	It can prevent calling the same module more than once in a configuration (name collisions/assumptions).
-Block-local values: what is `count.index`?	The per-instance index available inside blocks that use `count`.
-Block-local values: what are `each.key` and `each.value`?	The per-instance key and value available inside blocks that use `for_each`.
-Block-local values: what is `self` used for?	A reference to the current resource in provisioner/connection blocks.
-With `count`, how do you get an attribute of the first instance (Terraform)?	Index the list: `<TYPE>.<NAME>[0].id` (or similar).
 With `count`, how do you get a list of an attribute across instances (Terraform)?	Use splat: `<TYPE>.<NAME>[*].id`.
-With `for_each`, how do you access a particular instance attribute (Terraform)?	Index by key: `<TYPE>.<NAME>["key"].id`.
 With `for_each`, how do you collect an attribute across instances (Terraform)?	Use a for-expression, e.g. `[for v in <TYPE>.<NAME> : v.id]`.

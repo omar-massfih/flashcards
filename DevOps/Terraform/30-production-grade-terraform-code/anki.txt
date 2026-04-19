@@ -1,15 +1,10 @@
 Why do infrastructure projects often take much longer than expected?	They combine immature tooling, frequent yak shaving, and a long checklist of real production requirements.
-What is accidental complexity in infrastructure work?	Complexity caused by particular tools, processes, or incidental implementation choices rather than the core problem itself.
-What is essential complexity in infrastructure work?	Complexity that comes from the real production requirements of the system itself and cannot be avoided by better tooling alone.
-What is yak shaving in DevOps work?	Having to complete many unexpected prerequisite tasks before you can finish the task you originally meant to do.
 Why are large Terraform modules considered harmful?	They are slower, riskier, harder to secure, harder to understand, harder to review, and harder to test.
 What is the recommended size principle for Terraform modules?	Prefer small modules that each do one thing well.
 Why can a single huge Terraform module be insecure?	Changing anything may require broad access to everything it manages, violating least privilege.
 Why are small Terraform modules easier to review safely?	The plan output and code changes stay small enough that humans can realistically read and reason about them.
 What makes Terraform modules composable?	Passing data in through input variables, returning useful output values, and combining simple modules into higher-level modules.
 Why is writing example usage first a good Terraform module design practice?	It helps define a cleaner API and user experience before implementation details dominate the design.
-What is the purpose of an `examples/` folder for Terraform modules?	To provide executable examples that serve as documentation, manual test harnesses, and the basis for automated tests.
-What is the purpose of a `test/` folder in a Terraform modules repo?	To hold automated tests that exercise the module examples and verify expected behavior.
 Why are validation, precondition, and postcondition checks useful in production-grade modules?	They let the module fail earlier and more clearly when assumptions or guarantees are violated.
 When should you use input variable validation in Terraform modules?	For basic input sanitization that can be checked directly from one variable's value.
 When should you use preconditions in Terraform modules?	To check assumptions before apply when the condition depends on more than a single variable or on dynamic data.
@@ -23,11 +18,7 @@ Why should `.terraform.lock.hcl` be checked into version control?	It makes provi
 How do you intentionally upgrade locked Terraform providers?	Update the version constraint and run `terraform init -upgrade`.
 What is one benefit of versioning Terraform modules with Git tags and semantic versioning?	You can promote known-good module versions across environments and roll back if needed.
 Why can registry-style module sources be clearer than raw Git URLs?	They separate the module source address from the version number and make version selection easier to read.
-What is a Terraform provisioner used for?	To execute scripts or copy files during resource creation or destruction.
 Why are provisioners often considered an escape hatch in Terraform?	They break out of Terraform's normal declarative model and can make code less portable and more brittle.
 What is the difference between `local-exec` and `remote-exec` provisioners?	`local-exec` runs on the Terraform client machine, while `remote-exec` runs on the target resource after connecting to it.
 Why is User Data often preferable to `remote-exec` on EC2?	It is easier to use with ASGs, safer than opening SSH, and leaves clearer debugging artifacts on the instance.
-What is a `null_resource` used for in Terraform?	To participate in Terraform lifecycle logic and run provisioners without managing a real infrastructure object.
-What does the `triggers` argument on a `null_resource` do?	It forces the resource to be replaced when the trigger values change, which can re-run attached provisioners.
-What is the `external` data source used for in Terraform?	To call an external program that exchanges JSON with Terraform so Terraform can read data it cannot fetch natively.
 Why should Terraform escape hatches such as provisioners and `external` be used conservatively?	They increase brittleness, reduce portability, and make the configuration harder to reason about declaratively.

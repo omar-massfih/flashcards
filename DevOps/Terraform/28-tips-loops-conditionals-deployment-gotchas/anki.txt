@@ -5,9 +5,6 @@ When using `for_each` on a resource, why is `toset(...)` often needed?	Resource-
 What is one key advantage of `for_each` over `count` for inline blocks?	`for_each` can be used inside `dynamic` blocks to generate nested blocks, while `count` cannot.
 What is the purpose of a `dynamic` block in Terraform?	To generate repeated nested blocks inside a resource, data source, provider, or provisioner from collection data.
 What is `default_tags` in the AWS provider used for?	To apply a baseline set of tags automatically to most AWS resources managed through that provider configuration.
-What is a for string directive in Terraform?	A `%{ for ... } ... %{ endfor }` construct that repeats text generation inside a string or heredoc.
-What does an if string directive do in Terraform?	It conditionally renders part of a string using `%{ if ... }`, optionally with `%{ else }`.
-What problem do strip markers `~` solve in Terraform string directives?	They remove surrounding whitespace that would otherwise be preserved in heredocs and rendered strings.
 How can `count` be used to model a simple conditional resource in Terraform?	Set `count` to `1` when the condition is true and `0` when it is false.
 Why can `for_each` plus a filtered for-expression be useful for conditionals?	You can create zero or more instances by transforming and filtering a collection before iterating over it.
 Why can `one(concat(a[*].x, b[*].x))` be safer than repeating an if/else condition in Terraform outputs?	It derives the surviving value from whichever conditional resource exists instead of duplicating branching logic in another place.

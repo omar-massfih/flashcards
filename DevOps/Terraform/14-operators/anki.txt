@@ -1,6 +1,3 @@
-Terraform operator precedence: what is the order from highest to lowest?	`!` and unary `-`; `*` `/` `%`; `+` `-`; `>` `>=` `<` `<=`; `==` `!=`; `&&`; `||`.
-In Terraform, are `?` and `:` considered operators?	No; together they are part of the conditional expression syntax.
-How do you compute exponents in Terraform (no operator)?	Use `pow(base, exponent)`.
 Terraform best practice: when should you use `==`/`!=`?	Prefer primitive values, or use explicit type conversions to make types match.
 Why can equality on structural types be surprising in Terraform?	Different structural types can look similar but never compare equal (e.g., an empty tuple literal `[]` vs an empty list value).
 Terraform idiom: how to check whether a list is empty?	Use `length(var.list) == 0` instead of `var.list == []`.

@@ -1,6 +1,2 @@
 What does a for expression do (Terraform)?	A for expression transforms one collection into another by evaluating an expression per element (optionally filtering elements out).
-Terraform for expression: what does the two-symbol form `for k, v in ...` provide?	Two temporary symbols: key/index (`k`) and value (`v`) for each element.
-In a Terraform for expression over a list/tuple, what is the first symbol in `for i, v in ...`?	The zero-based index of each element.
-In a Terraform for expression over a map/object, what is the first symbol in `for k, v in ...`?	The key (map key) or attribute name (object attribute).
-Terraform for expression: what result type do `{...}` braces produce, and what syntax is required?	An object; you must provide `key_expr => value_expr`.
 Terraform for expression: how do you filter elements?	Add `if <condition>` at the end (e.g., `[for s in var.list : upper(s) if s != \"\"]`).

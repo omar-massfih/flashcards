@@ -1,3 +1,2 @@
 Why add a provider version constraint in `required_providers`?	To avoid unplanned upgrades that may introduce breaking changes.
 What does the Terraform version constraint `required_version` do?	Prevents using Terraform CLI versions that don’t satisfy the constraint.
-What file does Terraform use to record deployed infrastructure state by default?	`terraform.tfstate`.
