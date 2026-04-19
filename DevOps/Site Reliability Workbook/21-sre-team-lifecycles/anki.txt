@@ -1,5 +1,3 @@
-What is the first principle for adopting SRE practices?	SRE needs SLOs with consequences.
-Why can an organization adopt SRE practices before hiring SREs?	SLOs, error budgets, and reliability-driven decisions can be implemented by existing engineering teams.
 Why is an implicit 100% SLO harmful?	It forces reactive behavior because any failure appears unacceptable and no error budget exists for trade-offs.
 What should an error budget policy guide?	Tactical outage mitigation, change safety, and longer-term reliability work.
 What commitment makes SLOs useful without SRE staff?	Leadership and teams must agree to measure the SLO and follow the error budget policy.
@@ -7,63 +5,45 @@ What skills matter when hiring a first SRE?	Operations, software engineering, mo
 Why is the first SRE role difficult?	The person must balance ambiguous velocity and reliability goals while establishing practices that may not yet exist.
 Where can a first SRE be placed?	In a product development team, operations team, or horizontal consulting role.
 What should determine first-SRE placement?	Current challenges, expected next-year challenges, organizational influence, long-term org design, and the person's strengths.
-Why avoid unstable SRE placement models long term?	Inconsistent models undermine clarity, trust, and the effectiveness of the SRE role.
 What is the first mission of a new SRE?	Understand the service, its toil, current problems, SLOs, and reliability-improving engineering needs.
-What is the second principle for adopting SRE?	SREs must have time to make tomorrow better than today.
 Why must SREs have protected project time?	Without engineering time, toil grows with service complexity and talented engineers leave.
 What initial projects are useful for a first SRE?	Better monitoring, postmortem action items, and automation that removes specific toil.
 What signals show a first SRE role is unhealthy?	Work indistinguishable from other engineers, disproportionate operations burden, or ignored SLOs.
 Why build a community for distributed SREs?	Individual SREs embedded across teams need shared identity, practices, support, and consistency.
-What is the third principle for SRE teams?	SRE teams have the ability to regulate their workload.
 Why must SRE teams regulate workload?	They need power to keep toil bounded and preserve engineering capacity for reliability work.
 What skills should an initial SRE team combine?	Reliability-focused coding, automation, production debugging, strong software practices, careful operations, and architecture understanding.
 Why seed a new SRE team with internal transfers when possible?	Internal transfers bring relationships and organizational context that reduce ramp-up time.
 When might an organization create a new SRE team for a major project?	When the project has significant reliability or operational risk and enough scope to justify dedicated headcount.
-What is a horizontal SRE team?	A team that consults across other teams and builds shared practices, tools, monitoring, alerting, or operational standards.
-What is the risk of renaming operations to SRE without changing practices?	The organization may see SRE as rebranding rather than a distinct engineering discipline.
-What should a new SRE team avoid taking on first?	Too many services at once, because constant firefighting prevents lasting reliability work.
 Why should a new SRE team engage early in a major project?	Early design input can define SLOs, identify reliability risks, and avoid costly later rework.
-Why should new SRE teams avoid over-introspection?	Perfecting SRE theory can distract from delivering reliability improvements for the service.
-Why should SRE not own operations on day one for a new service?	Keeping initial operational responsibility with the project team preserves developer ownership while SRE productionizes the service.
 What condition should exist before SRE onboards a service?	Clear agreement that the service meets required production readiness and operational standards.
 What should a horizontal SRE team do to avoid being seen as a gatekeeper?	Deliver useful tooling, communicate wins, and focus on enabling solutions rather than blocking teams.
 What risk appears when converting an existing operations team to SRE?	People may fear automation as a path to job loss or lack time and skills to change how work is done.
 How can leaders support an operations-to-SRE conversion?	Create slack, communicate clearly, provide training, adjust evaluations, and add experienced engineering support.
 Why must converted teams renegotiate responsibilities?	They need capacity to automate and improve systems instead of remaining trapped in daily toil.
-What maturity appears in the norming stage of an SRE team?	SLOs, sustainable on-call, bounded toil, postmortem culture, training, and stakeholder reporting become routine.
 Why document and bound toil in the norming stage?	Visible toil can be managed, reduced, and traded against engineering project work.
 Why are regular training exercises useful for maturing SRE teams?	Exercises such as Wheel of Misfortune and DiRT build operational skill before real incidents.
 Why should product developers remain involved in on-call during SRE maturity?	Operational exposure keeps reliability issues visible to the people who can fix product causes.
 Why should SRE teams publish regular stakeholder reports?	Reports communicate highlights, lowlights, reliability metrics, and the value of SRE work.
 Why is self-service important when transforming a toil-heavy team?	Product teams can make routine changes themselves, freeing SREs for higher-leverage reliability work.
 How can office hours reduce SRE interrupt load?	They batch questions and reviews into predictable windows while sharing knowledge with partner teams.
-What defines a performing SRE team?	It partners on architecture and has real ability to regulate its workload.
 Why should mature SRE teams partner on architecture?	Early architectural input can improve reliability, scalability, operability, reuse, and migration simplicity.
 How can an SRE team reduce overload when supporting a product-owned service?	Lower the SLO, transfer operational work, or hand the service back if toil constraints cannot be met.
-What should happen when an SRE team solves all major reliability problems for a service?	Either choose new reliability challenges intentionally or hand the service back.
 Why can a fully optimized service create SRE attrition risk?	SREs may leave for more interesting work if the team becomes mostly low-value operations.
 How should SRE teams without partner development teams handle impossible SLO/toil constraints?	Stop feature work for reliability work, reduce SLOs, or obtain more people or infrastructure.
 Why create additional SRE teams?	Service complexity, broader SRE rollout, or geographic coverage may exceed one team's capacity.
-How should organizations learn before creating another SRE team?	Read postmortems from prior team formation and repeat what worked while fixing what failed.
 Why seed new SRE teams from existing SRE teams?	Experienced SREs transfer culture, practices, and leadership faster than all-new hiring.
 Why split on-call responsibilities slowly after team splits?	It avoids sudden loss of experienced responders and gives new teams time to build confidence.
 What are common ways to split a too-complex service across SRE teams?	Architecture, language, location, or major service boundary.
-How can responsibility gaps appear after an SRE team split?	Components owned by the original team may be omitted from both new charters.
 How can teams prevent gaps after splitting SRE ownership?	Assign a default owning team for leftovers and appoint an overarching technical lead.
 Which services should receive SRE support first during rollout?	Services whose reliability has high financial, reputational, or product-function impact.
-Why should unreliable services not automatically get SRE support?	SRE should be applied where it creates business value, not as a reward for neglecting reliability.
 Why staff sister SRE teams across continents?	They improve continuity, reduce on-call stress, expand hiring, and push documentation and training maturity.
 What trade-off drives time-zone placement for sister SRE teams?	Minimize out-of-hours on-call while preserving enough overlap for collaboration.
 Why are three-site SRE splits difficult?	They make shared meetings, knowledge parity, operational consistency, and automation incentives harder.
 Why seed a new geographic SRE site with experienced transfers?	The first site establishes norms, trains hires, and carries culture into future local teams.
-How can one SRE office become a "night shift"?	It may get more toil, less product contact, and less impactful project work than the colocated office.
 How can sister SRE teams preserve parity?	Balance on-call and tickets, distribute interesting projects, maintain similar seniority, and split cross-site work intentionally.
 Why split some projects across SRE sites?	Cross-site projects spread knowledge, build trust, and reduce location silos.
 Why fund regular travel for distributed SRE teams?	Face-to-face interaction builds trust, rapport, and healthier long-term collaboration.
 Why do multi-site SRE leaders need strong relationships?	They must debate decisions, resolve disagreements, advocate for each other, and support both team sites.
-What is a Mission Control-style SRE program?	Product engineers temporarily embed in SRE to learn production practices and bring that experience back.
-What is an SRE exchange program?	An SRE spends time with another SRE team, observes practices, shares ideas, and writes recommendations.
-Why create a standard SRE training curriculum?	It gives new SREs a shared baseline of tools, concepts, and incident practices.
 Why do horizontal SRE projects matter at scale?	They prevent duplicated team-specific tooling and converge on shared platforms for common operational needs.
 Why is SRE mobility healthy?	Engineers can find better-fit roles, spread knowledge, and avoid being trapped on unhealthy teams.
 Why review SRE teams through a production excellence process?	Senior SREs can compare teams, recognize strong performance, and intervene before teams become overwhelmed.
