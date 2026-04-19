@@ -1,15 +1,7 @@
-What is operational load for an SRE team?	The ongoing maintenance work needed to keep services running, including pages, tickets, and operational responsibilities.
-What are interrupts in SRE operational work?	Urgent pages and tickets that preempt planned engineering or project work.
-What is operational overload?	A state where urgent operational work continually prevents the team from making progress on key priorities.
-Why is overload dangerous for reliability?	Stress and constant interruptions increase mistakes, reduce engineering improvements, and can harm end users.
-What long-term confidence does a healthy SRE team need?	Confidence that it can complete engineering projects that reduce operational load for its services.
-What is work overload?	An objective state where assigned tasks cannot be completed within their required deadlines or available time.
-What is perceived overload?	A subjective state where people feel they have too much work, even if measured workload has not clearly increased.
 Why does perceived overload still matter?	It can create the same stress, avoidance, reduced progress, and team dysfunction as objective overload.
 Why can unpredictable on-call work trigger perceived overload?	Engineers cannot know whether tickets will be quick or turn into deep investigations, so queues can feel larger than they are.
 How can cognitive bias worsen perceived overload?	Seeing a large queue or pager storm can make work feel impossible before actual effort or complexity is known.
 How can poor prioritization create overload?	If every task seems equally urgent, engineers keep reacting to interrupts instead of protecting time for root-cause work.
-What should teams do before assuming workload must change?	Quantify the work, compare trends over time, and identify psychological or organizational stressors.
 How can a team quantify operational workload?	Measure tickets, pages, time to close issues, post-on-call follow-up time, toil percentage, and backlog size.
 Why collect a snapshot of every team member's tasks?	It reveals hidden workload, duplicate effort, stale work, and mismatched priorities.
 What is the first step toward fixing team overload?	Make the work visible and scope the overload before deciding what to drop, automate, or prioritize.
@@ -18,8 +10,6 @@ How can team-wide triage reduce overload quickly?	List all responsibilities, ran
 What kinds of tasks should overloaded teams automate first?	Low-effort repetitive tasks that remove significant operational load once deployed.
 How can documentation reduce overload?	Self-service procedures let customers or partner teams solve common requests without creating repeated interrupts.
 Why close stale or obsolete tickets during overload triage?	Backlogs often contain outdated, duplicate, nonactionable, or low-impact work that consumes attention.
-What should teams do with useful but deferred work?	Document current context before setting it aside so future resumption is cheaper.
-Why use a second-phase triage list?	It lets teams temporarily drop uncertain tasks and later resume only the ones still worth doing.
 How can regular interrupt triage prevent overload recurrence?	Frequent backlog review catches pileups before they crowd out engineering work.
 Why set a lightweight per-person ticket threshold?	It gives the team an early warning that interrupts are accumulating unevenly or unsustainably.
 What can a lead do when ticket load exceeds a threshold?	Close stale tickets, redistribute work, prompt queue cleanup, run a fix-it, or assign root-cause reduction work.
@@ -40,22 +30,15 @@ Why audit alerts during overload recovery?	Non-user-facing or nonactionable aler
 Why limit operational work to on-call time when recovering from overload?	It protects off-call time for project work that removes root causes and reduces future interrupts.
 When might an SRE team hand a service back to developers?	When the team cannot safely support it and the service load or maturity is blocking higher-priority SRE work.
 Why does cross-training help reduce overload?	Shared knowledge lets more engineers handle incidents and tickets, lowering bottlenecks and fear.
-Why can remote or outside SREs help overloaded teams?	They provide on-call relief, new perspective, and temporary capacity while the team recovers.
 Why can team social events matter during overload recovery?	Low-pressure interaction can rebuild trust, belonging, and psychological safety.
 What long-term fixes help prevent overload after immediate relief?	Align SLOs, standardize services, update old systems, reduce cognitive load, and automate repeated work.
-Why does service uniformity reduce overload?	Similar services are easier to understand, automate, troubleshoot, and train on.
-What are common symptoms of team overload?	Low morale, long hours, working while sick, frequent illness, unhealthy queues, and imbalanced workload metrics.
 How can surveys help identify overload?	They reveal declining morale, psychological safety, satisfaction, and trust that may not appear in ticket counts.
 What does an unhealthy task queue indicate?	Backlogged, stale, missed-deadline, or unevenly assigned work suggests interrupts are exceeding capacity.
 Why should teams choose overload metrics collaboratively?	Every team's work pattern differs, and imposed metrics can feel disconnected from actual workload.
 What overload metrics are often useful?	Time to close issues, toil percentage, days of post-on-call follow-up, ticket backlog, and page or interrupt volume.
-Why should managers avoid imposing a single overload metric?	A metric can misrepresent work styles and make team members feel misunderstood.
-What should managers model during overload?	Healthy boundaries such as normal working hours, staying home when sick, and respecting prioritization.
 Why identify psychosocial stressors in overload recovery?	Stressors such as conflict, insecurity, illness, or organizational change can convert load into perceived overload.
 How can partner development teams help reduce SRE overload?	They can provide context, take back services, own projects, reduce noise, or help with remediation.
 Why schedule interrupt-free time during overload recovery?	Deep root-cause work and automation need protected focus that on-call interruptions destroy.
 What work should be prioritized while overloaded?	Projects that pay down repetitive toil and reduce future interrupt load.
 Why can dropping work be necessary during overload?	Continuing all work may guarantee failure; explicitly dropping low-value tasks protects critical priorities.
 How should teams protect themselves after recovering from overload?	Monitor workload metrics, keep triage lightweight and regular, address root causes, and watch early warning signs.
-What creates a self-enforcing overload cycle?	Interrupts create stress; stress reduces productivity and collaboration; reduced productivity causes more overload.
-Why is respect for the team part of reliability work?	Healthy teams make fewer mistakes, collaborate better, and have capacity to improve the service.
