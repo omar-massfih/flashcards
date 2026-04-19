@@ -9,14 +9,11 @@ How does SRE differ from DevOps in scope?	DevOps is a broad cultural and organiz
 Why does SRE frame operations as a software problem?	Because recurring operational work can often be reduced or eliminated through software engineering, automation, and better system design.
 Why are SLOs culturally important in SRE?	They turn reliability into a shared stakeholder decision and make reliability discussions data-driven rather than blame-driven.
 Why does SRE treat toil as something to minimize rather than as the job itself?	Manual repetitive operations consume the engineering time needed to make services more reliable and scalable.
-What is the wisdom of production?	The practical understanding gained from observing how a system actually behaves under real production load, incidents, tickets, and user conditions.
-Why can too little operational exposure be a problem for SREs?	Without enough contact with production reality, engineers may lose the feedback needed to design and operate the service well.
 Why is the 50% toil cap better understood as a guarantee?	It guarantees space for engineering work that creates lasting operational improvement instead of letting toil consume the whole role.
 What is the Murphy-Beyer effect in SRE toil?	As automatable work disappears, the remaining toil is often the work that is hardest or least attractive to automate.
 How can reducing MTTR increase product development velocity?	Faster recovery and earlier problem discovery reduce the cleanup and interruption costs that otherwise slow feature work.
 Why is shared ownership important between SRE and product development?	It prevents a hard split between building and operating, aligns incentives, and spreads authority to fix production problems.
 Why should product developers and SREs use the same operational tooling?	Divergent tools create inconsistent behavior, duplicated effort, and weaker shared understanding of how the service is managed.
-Why does SRE sometimes support CI/CD for different reasons than DevOps?	DevOps often emphasizes business flow and collaboration, while SRE emphasizes the operational reliability benefits of smaller tested changes.
 Why are narrow reliability or launch incentives risky?	People can optimize the metric locally or game it unintentionally, harming the broader goal of reliable product velocity.
 Why does early SRE engagement improve product outcomes?	Reliability issues are cheaper to fix during design and build than after operational ownership has shifted.
 Why can withdrawal or delay of operational support be useful?	It creates an incentive to fix services that are too operationally costly instead of normalizing endless toil.
