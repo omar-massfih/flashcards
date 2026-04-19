@@ -1,4 +1,3 @@
-What is the goal of SLO-based alerting?	Notify an on-call engineer about significant events before they consume too much of the error budget.
 What makes an event significant for SLO-based alerting?	It consumes a large enough fraction of the error budget to require action.
 Why does alert detection time matter?	Long detection time can allow an incident to consume too much error budget before anyone responds.
 Why does alert reset time matter?	Long reset time can create confusion, noise, and ignored alerts after an issue is resolved.
@@ -8,7 +7,6 @@ What is the main drawback of a very long alert window?	It creates poor reset tim
 Why can long-window alert calculations be expensive?	They require evaluating many data points over a large time range.
 Why should SLO-based alerting usually avoid simple duration clauses?	They do not scale with incident severity and can reset whenever the metric briefly returns to a passing value.
 Why can duration-based alerts miss repeated error spikes?	Each brief recovery can reset the timer, so recurring budget-burning spikes may never satisfy the continuous-duration condition.
-What is burn rate in SLO alerting?	How fast the service is consuming error budget relative to the rate that would exactly exhaust the budget over the SLO window.
 What is the main weakness of a single burn-rate alert?	It can miss lower but sustained burn rates that still exhaust the error budget.
 Why use multiple burn rates and time windows?	They let the system page quickly for fast budget burn and create tickets for slower but still significant budget burn.
 When should an SLO-based alert page rather than create a ticket?	When the budget burn is fast enough that immediate human response is needed to defend the SLO.
