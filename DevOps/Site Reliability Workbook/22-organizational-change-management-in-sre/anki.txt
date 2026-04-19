@@ -1,0 +1,60 @@
+What does organizational change management mean in an SRE context?	Preparing and supporting people, teams, and business units through organizational change; it is distinct from change control for individual technical changes.
+Why are SREs often central to organizational change?	SREs sit where product velocity, system reliability, operational risk, and cross-team coordination meet.
+How do error budgets help manage change in SRE?	They provide a shared mechanism for balancing launch velocity against reliability risk.
+What is the core idea of Lewin's unfreeze-change-freeze model?	First make the group ready for change, then execute the change, then institutionalize the new behavior.
+When is Lewin's change model most useful?	For planning broad organizational change where group dynamics are a major factor.
+What does McKinsey's 7-S model examine during organizational change?	Structure, strategy, systems, skills, style, staff, and shared values.
+What does the 7-S model add beyond purely technical change planning?	It considers both business elements and people-management elements.
+When can McKinsey's 7-S model help an SRE organization?	When evaluating a transition from traditional systems administration toward a broader SRE operating model.
+Why is Kotter's change process relevant to SRE work?	SREs often lead urgent, cross-team reliability and scaling changes that need vision, coalition-building, adoption, and reinforcement.
+Why might SRE teams not need to create urgency during a Kotter-style change?	Operational pain, scaling limits, outages, or toil often already make the urgency obvious.
+What is the Prosci ADKAR model?	A people-focused change model based on awareness, desire, knowledge, ability, and reinforcement.
+When is ADKAR especially useful for SRE leadership?	For coordinating high-level change across distributed teams while allowing local implementation details.
+What do emotion-based change models help managers understand?	How people emotionally react to change, which affects productivity, morale, and adoption.
+Why is the Deming Plan-Do-Check-Act cycle insufficient for organizational change management?	It improves processes but does not directly address motivation, leadership, or the human side of change.
+Why can frequent organizational restructuring harm engineering teams?	It can reduce confidence, damage culture, and make people feel unstable rather than engaged.
+What is a practical rule for choosing a change-management model?	Match the model to the situation; no single framework fits every SRE change.
+Why can operational toil become a trigger for organizational change?	When firefighting consumes engineering time, it exposes the need to change priorities, systems, or ownership.
+How can reliability work protect feature velocity?	Reducing operational fires frees engineers to build, release, and iterate more safely.
+Why form a small guiding coalition for reliability change?	A focused cross-functional group can define the vision, build credibility, and coordinate execution.
+Why does executive support matter for grassroots technical change?	It gives reliability work enough priority and staffing to compete with feature work.
+How can temporary mitigations enable a long-term migration?	They reduce immediate pressure enough for engineers to design, test, and roll out a durable replacement.
+Why reduce load on a failing system before replacing it?	Lowering load buys operational breathing room and reduces migration risk.
+Why is dual publishing or dual reading useful during infrastructure migration?	It lets traffic move gradually between old and new systems while preserving rollback or backup paths.
+Why start a migration with low-traffic but high-importance flows?	They provide meaningful validation and business value while limiting blast radius.
+Why are short-term wins important during change?	They prove the change is working, build trust, and justify continued investment.
+What makes a technical migration accelerate over time?	Automation, standardized paths, default support for common use cases, and visible early success.
+When can an old system be deprecated during migration?	When the new system has enough adoption, reliability, and momentum that continued old-system support is no longer justified.
+How can eliminating one bottleneck reveal another?	Once one source of toil is removed, teams gain enough attention to see the next constraint clearly.
+Why can SRE-owned manual releases become a bottleneck?	They consume scarce SRE time, slow developer velocity, and make each release larger and riskier.
+How do standard service frameworks support organizational change?	They encode common production behaviors, reduce variation, and make automation easier.
+Why should reliability features be built into common development frameworks?	They make safe operational behavior the default instead of an optional afterthought.
+Why can better tooling still fail to gain adoption?	Users may face weak incentives, poor visibility, migration cost, or fear of changing a working process.
+How can release dashboards reduce change aversion?	They make deployment status and service metrics visible, helping teams trust the new process.
+Why pair new deployment tooling with training and consulting?	Training turns awareness into ability, while consulting helps teams with nonstandard requirements adopt safely.
+Why is incremental change often easier than jumping to a perfect solution?	Small steps reduce risk, produce early evidence, and let the plan evolve as new information appears.
+Why is a broad master plan still useful during incremental change?	It keeps each small iteration moving toward the same strategic goal.
+When is building new infrastructure worth the cost?	When existing solutions cannot support the scale, reliability, or operational model required by the strategic vision.
+Why should teams look for future bottlenecks before growth exposes them?	Non-horizontal or superlinear scaling limits can become urgent reliability problems if ignored.
+Why do SRE organizations often end up with fragmented tooling?	Different teams solve local problems independently when common tools do not meet their needs.
+Why is fragmented production tooling costly?	It duplicates engineering effort, increases maintenance burden, and prevents consistent practices.
+Why is common tooling adoption an organizational change problem?	The hard part is not only building the tool, but changing habits, incentives, workflows, and trust.
+Why is ADKAR a good lens for common tooling adoption?	It highlights both the technical requirements and the people-side path from awareness to sustained use.
+Why can tool builders drift away from user needs?	Production changes quickly, use cases vary widely, and builders may be disconnected from current operators.
+Why can one-size-fits-all tooling fail?	Different teams may have conflicting needs, so a broad tool must support common cases without blocking special cases.
+Why did part-time virtual tooling teams struggle?	On-call interruptions, time zones, context switching, and scattered ownership made coordinated software delivery difficult.
+Why can centralized horizontal development improve common SRE tools?	Focused teams can deliver predictably while still gathering requirements from production users.
+Why should common SRE tools be built like products?	They need roadmaps, user research, support, predictable delivery, and adoption strategy.
+What is the value of zero-config production tooling?	It gives most services useful defaults without requiring every team to design custom configuration.
+Why should common tooling still allow escape hatches?	Unusual or very large services may need custom behavior that defaults cannot cover.
+Why is migration often harder than blank-slate design?	Existing users, dependencies, habits, and running services constrain every step.
+Why must migration cost be low for common tooling adoption?	If switching costs feel higher than the benefits, teams will keep their familiar local solutions.
+What is the knowledge-to-ability gap in change adoption?	People may understand the change but still need time, coaching, and practice before they can use it effectively.
+Why is best-effort internal tooling risky?	Unpredictable staffing and delivery reduce user trust and slow adoption.
+How does transparent product development improve tool adoption?	Clear dates, visible progress, and regular communication build confidence before migration begins.
+Why target skeptical or demanding adopters early?	If the tool works for hard cases, it earns credibility and exposes adoption barriers sooner.
+Why is adoption the first success metric for common SRE tooling?	A tool that is not adopted creates little organizational value, even if it is technically strong.
+How does broad adoption create a network effect for internal tools?	Each improvement benefits more teams, which justifies more investment and further reduces migration cost.
+What are useful impact questions for horizontal SRE tooling?	How quickly developers can manage reliable services, how easily SREs can move domains, and how many services share common primitives.
+Why is constant reevaluation important in SRE change management?	Systems, teams, and constraints evolve, so the change plan must be adjusted as new facts appear.
+How should grassroots SRE change mature over time?	It can start organically, but should gain structured coordination, planning, and communication as it grows.
