@@ -1,0 +1,83 @@
+Why can data processing pipelines be business-critical?	Delayed, stale, or incorrect pipeline output can directly create user-facing errors, bad decisions, billing mistakes, or costly recovery work.
+What is a pipeline stage?	A distinct processing step whose output is consumed by another step or by a downstream storage or serving system.
+What should drive the choice of data pipeline technology?	The use case's latency, correctness, scale, cost, operational, and development requirements.
+What is the purpose of an ETL pipeline?	Extract data, transform or aggregate it, and load it into a format optimized for analysis, serving, or further processing.
+When is streaming usually preferable to batch processing?	When the application needs low-latency or continuously updated results.
+Why do ML systems often need preprocessing pipelines?	Raw product, user, image, or event data usually must be normalized, joined, labeled, and shaped before model training.
+What questions help diagnose stale or missing ML recommendations?	Check whether input data is stuck, whether the model is poor or buggy, and whether production is serving a stale model.
+Why should pipeline owners define SLOs?	SLOs make pipeline health measurable and alert before customer impact or error-budget exhaustion becomes severe.
+What are common forms of data freshness SLOs?	Percent of data processed within a time bound, oldest data age below a bound, or job completion within a bound.
+Why are data correctness SLOs important?	They detect pipeline output errors that may otherwise silently charge users incorrectly, mislead products, or corrupt downstream systems.
+How can golden data help measure pipeline correctness?	Known expected inputs and outputs can flow through production-like paths and be compared against actual results.
+What is a backward-looking correctness SLO?	A target that limits how much bad output occurred over a period, such as incorrect invoices per quarter or hours of bad data served.
+Why isolate high-priority data in a pipeline?	Resource-constrained systems can process important data first instead of letting lower-priority work consume capacity.
+How can pipelines implement data priority isolation?	Use separate queues, jobs, worker pools, resource tiers, or retry paths for different priority classes.
+Why should pipeline SLOs usually be end-to-end?	Customers care about when correct data is usable, not whether each internal stage individually looked healthy.
+What risk comes from only measuring per-stage pipeline SLOs?	Each stage can appear healthy while the combined pipeline violates user-visible latency or correctness requirements.
+How can per-stage correctness checks miss data corruption?	One stage may add or expect data that a downstream stage drops, leaving both stages locally "correct" but the final output wrong.
+Why plan for pipeline dependency failure?	A pipeline can fail its own SLO even when a storage, network, cloud, or third-party dependency stays within its advertised SLA.
+What should pipeline owners do when dependency SLAs are weaker than pipeline SLOs?	Add redundancy, replication, failover, or accept and communicate a looser customer-facing SLO.
+Why practice disaster recovery for pipelines?	Regular exercises reveal whether failover works, resources are available, and stale or incorrect data can be avoided.
+What should a pipeline system diagram show?	Pipeline applications, data stores, dependencies, transformations, and where data can become stuck or corrupted.
+Why should pipeline diagrams link to live monitoring?	On-call engineers can move from the diagram to current stage status, logs, dashboards, and debugging information quickly.
+What should process documentation cover for pipelines?	Common and uncommon operational tasks such as releases, format changes, region turnup, failover, and turndown.
+Why link playbooks from pipeline alerts?	The on-call engineer can immediately follow recovery steps for the specific alert condition.
+What is the goal of pipeline prototyping?	Verify that the business logic and programming model can express the required semantics before productionizing the pipeline.
+Why run a small dry run on production-like data?	It exposes bottlenecks and integration problems before a pipeline processes the full production workload.
+Why should staging pipeline data resemble production data?	Unit tests miss many data-shape and integration failures that only appear with realistic end-to-end data.
+How can A/B comparisons help pipeline releases?	Compare new output with known-good output to find expected and unexpected differences before promotion.
+Why is pipeline canarying harder than canarying stateless services?	Pipelines persist data and may need a full processing cycle before correctness or customer impact is visible.
+How can dry-run or two-phase writes make pipeline canaries safer?	The canary can process real data without immediately mutating production storage until results are verified.
+Why might pipeline canaries use a subset of data instead of a subset of servers?	Some replicated or managed pipeline systems cannot safely deploy one region or cell independently.
+What is the purpose of partial deployment in pipelines?	Run a major change on a limited account, user, region, or data subset before exposing the full workload.
+What should happen after a bad pipeline production deployment?	Roll back binaries or configs, mark bad data as unsafe, restore known-good data, and reprocess if necessary.
+What is hotspotting in a data pipeline?	A subset of data or a shared resource receives disproportionate access and becomes overloaded.
+How can hotspotting appear in pipelines?	Overloaded serving tasks, hot storage ranges, lock contention, disk contention, or oversized work units.
+Why should pipelines support blocking fine-grained bad data?	Isolating problematic records, users, or patterns lets the rest of the pipeline continue making progress.
+How can dynamic rebalancing reduce pipeline hotspots?	The framework can split oversized or slow work into smaller pieces distributed across workers.
+Why build an emergency shutdown or skip mechanism into pipeline clients?	Operators can quickly stop processing a damaging data pattern without shutting down the whole pipeline.
+What strategies reduce pipeline hotspotting?	Spread access patterns, reduce load, reduce lock granularity, dynamically rebalance, or isolate problematic data.
+Why is autoscaling useful for pipelines?	It handles variable workload without permanently provisioning for peak capacity.
+Why do batch pipelines still need resource planning when autoscaling exists?	Batch jobs may consume all available resources at once, and scaling can pressure downstream storage or networks.
+What costs should pipeline resource planning include beyond workers?	Storage, network bandwidth, cross-region replication, cross-region reads and writes, and expensive storage access patterns.
+Why measure resource usage per pipeline stage?	End-to-end SLOs show customer health, but per-stage resource metrics reveal which jobs drive cost or capacity problems.
+What security rule should pipeline stages follow for access control?	Grant each stage only the minimum access needed to read prior output and write its own output.
+How should pipelines handle temporary PII storage?	Avoid it when possible; otherwise encrypt it and apply strict access and TTL controls.
+What does a pipeline page usually mean operationally?	Automated mitigation has likely failed, so manual intervention and customer communication may be needed.
+When are exactly-once semantics unnecessary in a pipeline?	When work units are idempotent and repeated processing produces the same correct result.
+What are windowing functions used for in event pipelines?	They group unordered or late-arriving events into fixed, sliding, or session windows for aggregation.
+What is an idempotent mutation in a pipeline?	A write or update that can be applied multiple times with the same final result.
+Why are idempotent mutations useful for pipeline recovery?	Failed or interrupted work can be retried without duplicating or corrupting output.
+What is a two-phase mutation pattern?	Write proposed mutations to temporary storage, verify them, then apply only the validated mutations.
+When are two-phase mutations especially useful?	Testing, canarying, or risky releases where output must be validated before production data is changed.
+What is checkpointing in a pipeline?	Periodically saving partial processing state so a long-running job can resume instead of restarting from the beginning.
+How does checkpointing reduce recovery cost?	It lets jobs skip work already completed after failure, preemption, rescheduling, or resource changes.
+Why use shared libraries across similar pipelines?	Common metrics, monitoring, reporting, and utilities can be improved once and reused consistently.
+Why split a large pipeline into smaller pipeline services?	Smaller components can be released, monitored, scaled, and operated independently.
+What does a pipeline maturity matrix assess?	Failure tolerance, scalability, monitoring and debugging, implementation transparency, and testing maturity.
+How should teams use a pipeline maturity matrix?	Score the pipeline, identify weak areas, and prioritize improvements using existing tooling where possible.
+What are the two most common pipeline failure symptoms?	Delayed data and corrupt data.
+Why is stale pipeline data often safer than incorrect data?	Stale data can be waited on or communicated, while incorrect data propagates and may require difficult repair.
+Why should pipeline stages respect data dependencies?	Downstream stages should not process incomplete input that can create incorrect output.
+What helps debug delayed pipeline data?	Current and historical run progress, logs, data-flow diagrams, counters, and work-unit tracing.
+What is the first response to corrupt pipeline data?	Stop or filter additional corrupt data from entering or spreading through the system.
+How is corrupt pipeline data repaired?	Restore a known-good version, reprocess affected data, or selectively repair impacted users or accounts.
+Why keep intermediate pipeline data or checkpoints?	They can reduce the amount of work needed to repair corruption or recover from failures.
+What dependency issues can delay pipeline input or output?	Storage refusal, throttling, hot ranges, network problems, resource exhaustion, or dependency bugs.
+What pipeline application issues commonly cause outages?	Performance regressions, bad configs, CPU-heavy logic, out-of-memory failures, permission errors, or wrong input/output paths.
+Why can unexpected load growth break a pipeline?	It may exceed worker capacity and also overload downstream storage, networking, or serving dependencies.
+How can pipelines survive unexpected resource growth temporarily?	Request emergency capacity and prioritize higher-value data while lower-priority work is delayed or dropped.
+Why are singly homed pipelines vulnerable to regional outages?	If the only region fails, processing stops and data may become stranded, delayed, or incorrect downstream.
+What is the benefit of decoupling data collection from data delivery?	Collection and delivery become separate failure domains, reducing the blast radius of production issues.
+Why isolate pipeline work by event type or data class?	Failures, overload, ownership, access control, and retention policies for one class do not have to affect others.
+What does a timeliness SLO measure for event delivery?	How long it takes for data for a time period to become delivered and available for downstream jobs.
+What does a completeness SLO measure for event delivery?	The percentage of successfully published events that are eventually delivered.
+What does a skewness SLO measure for event delivery?	How much data is assigned to the wrong time bucket or partition.
+Why measure pipeline SLOs with an independent external system?	It reduces bias and avoids adding unrelated measurement complexity to the delivery system itself.
+Why use server receipt time for event-delivery buckets?	Client timestamps can be delayed, buffered, offline, or wrong, making server receipt time more reliable for delivery SLOs.
+Why separate data delivery SLOs from data quality SLOs?	Delivery systems can guarantee timely intact delivery, while business owners must define quality for event contents.
+Why provide a pipeline as a limited managed service?	A small, well-defined API hides operational complexity and scales support better than exposing every internal capability.
+Why require explicit event ownership in a pipeline service?	Ownership improves data quality accountability and gives operators a clear communication path during incidents.
+How should high-volume pipeline logs be managed?	Log useful or exceptional events, rate-limit noisy logs, and avoid drowning signal in routine request logs.
+Why should autoscaler limits still be capacity-planned?	Limits must be high enough for peaks but low enough to prevent runaway scaling from exhausting shared quota.
+What should incident responders avoid during pipeline incidents?	Avoid major new deployments unless rolling back or fixing recently deployed bad code is necessary.
