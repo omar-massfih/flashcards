@@ -2,9 +2,7 @@ Why can making a service more reliable eventually become worse rather than bette
 What are the two main cost dimensions of increasing reliability?	The cost of extra redundant resources and the opportunity cost of engineering time spent reducing risk instead of building user-facing features.
 What does it mean for SRE to make a service "reliable enough, but no more"?	Align reliability with the business's actual risk tolerance instead of overinvesting in unnecessary availability.
 Why does SRE treat the availability target as both a minimum and a maximum?	Falling short hurts users, but greatly exceeding the target can waste opportunities to ship features, reduce costs, or pay down technical debt.
-What is time-based availability?	Availability measured as the proportion of time a system is up during a period.
 Why is time-based availability often less meaningful for globally distributed Google services?	A service may still be serving some traffic somewhere even when part of it is impaired, so pure uptime does not reflect user experience well.
-What is yield-based availability in SRE?	Availability measured as the proportion of successful requests or successful units of work.
 Why does Google often measure availability as request success rate instead of uptime?	Request success rate better reflects user-visible reliability in globally distributed services that are rarely completely down everywhere.
 Why can request-success-rate availability also work for nonserving systems?	Batch, pipeline, and storage systems usually still have a measurable notion of successful versus failed units of work.
 What kinds of factors help determine the risk tolerance of a consumer service?	User expectations, revenue impact, whether the service is paid or free, competitor reliability, and whether the service targets consumers or enterprises.

@@ -8,7 +8,6 @@ Why should paging alerts be grouped toward a 1:1 alert-to-incident ratio?	Duplic
 Why must paging alerts be actionable and tied to SLO-threatening symptoms?	Otherwise they create noise, fatigue, and operational overload without improving service reliability.
 What helps on-call engineers feel safe enough to think clearly during incidents?	Clear escalation paths, well-defined incident-management procedures, and a blameless postmortem culture.
 Why are blameless postmortems important to on-call culture?	They focus on learning from system behavior and improving safeguards instead of punishing individuals.
-What is operational overload in an SRE team?	A state where operational work exceeds sustainable limits and crowds out the engineering work needed to reduce future toil.
 What is a common monitoring-related cause of operational overload?	Misconfigured or noisy alerts that page too often, page for low-priority issues, or produce many alerts for one incident.
 What does "give back the pager" mean in SRE?	The SRE team asks the developer team to retake exclusive on-call responsibility until the service meets operational standards again.
 Why is operational underload also a problem for SREs?	If engineers are rarely exposed to production, they lose familiarity, confidence, and troubleshooting sharpness.

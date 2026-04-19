@@ -1,7 +1,5 @@
 Why is late onboarding of already-launched services not the ideal SRE engagement model?	Because reliability issues are more expensive to fix after launch and SRE spends time unwinding avoidable design and implementation choices.
 What are the two major improvements over the classic late-stage PRR model?	Engaging SRE earlier in the service lifecycle and providing SRE-validated frameworks and platforms by default.
-What is the main purpose of a Production Readiness Review (PRR)?	To verify that a service is operationally ready for production support and to drive improvements needed for reliable ongoing management.
-What are the main phases of the simple PRR model?	Engagement, analysis, improvements and refactoring, training, onboarding, and continuous improvement.
 Why are PRR checklists useful?	They turn production experience and best practices into a concrete review tool for finding reliability, monitoring, dependency, and operational gaps.
 Why is training a dedicated phase in the PRR model?	Because the whole SRE team must learn enough about the service's design, setup, and operations to manage it safely in production.
 Why does onboarding require a progressive transfer of responsibility?	SRE needs time to assume operations, tooling, access, and change management while the development team remains available for backup and advice.
@@ -11,7 +9,6 @@ What is the main benefit of involving SRE during the design phase?	It prevents c
 How can SRE reduce launch risk when engaged early?	By helping implement patterns such as dark launches and other controls that expose issues before users are affected.
 What scaling problems pushed SRE beyond the PRR-centric model?	Long onboarding lead times, duplicated production work across services, limited SRE capacity, and growth in service count due to microservices.
 Why were frameworks a structural improvement over repeated PRRs alone?	They encoded production best practices directly into reusable software so services could become production-ready by design.
-What kinds of concerns do SRE-supported service frameworks typically standardize?	Instrumentation, request logging, traffic and load controls, configuration, and other production-facing infrastructure behavior.
 How do frameworks reduce operational overhead?	They provide built-in deployment, monitoring, automation, and conformance mechanisms, reducing per-service custom work.
 How do frameworks enable universal SRE influence even without full service ownership?	Services built on the framework inherit SRE-maintained production features and improvements whether or not SRE runs the service directly.
 What new shared-responsibility model became possible with SRE platforms?	SRE can own the common production platform while development teams remain responsible for service-specific business-logic issues.

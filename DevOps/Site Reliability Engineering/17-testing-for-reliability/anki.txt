@@ -1,6 +1,5 @@
 Why is testing essential for predicting future reliability after changes?	Each passing test before and after a change demonstrates an area of equivalence and reduces uncertainty about how the system will behave in production.
 How does test coverage affect reliability and release pace?	Higher coverage reduces uncertainty per change, allowing more changes before predicted reliability falls below an acceptable threshold.
-What is a zero-MTTR bug in reliability testing?	A bug caught by preproduction system-level testing before release, so user-facing repair time is effectively zero because the push is blocked.
 Why do tests improve user-facing MTBF even if they do not prove reliability?	Catching bugs before release prevents some failures from ever reaching users, increasing the time users experience between failures.
 Why are production tests necessary in addition to hermetic tests?	Production is not fully hermetic because live rollouts, configurations, and dependencies create combinations that offline tests may never exercise.
 What is the purpose of a configuration test in production?	To compare the version-controlled configuration with the way production is actually configured and detect unsafe drift or mismatched rollout state.

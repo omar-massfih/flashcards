@@ -1,4 +1,3 @@
-What is release engineering?	The discipline of building, packaging, and delivering software in a reliable, repeatable, automated way.
 Why do SREs care about release engineering?	Reliable services depend on releases being reproducible, intentional, and safe from source code through deployment.
 Why do release engineers define shared release best practices?	To make releases consistent and repeatable so teams do not reinvent brittle processes for building and shipping software.
 Why do release engineers and SREs collaborate closely?	They need shared rollout, canary, and rollback strategies that let changes reach production safely.
@@ -6,7 +5,6 @@ What does the self-service model mean in release engineering?	Product teams can 
 Why does a self-service release model improve scale?	Central release engineers provide platforms and policies, while individual teams release independently without waiting on a central gatekeeper.
 Why can frequent releases reduce change complexity?	Each release contains fewer changes, which makes testing, debugging, and rollback easier.
 What is push on green in release engineering?	A model that automatically deploys each build that passes all required tests.
-What is a hermetic build?	A build that produces the same result from the same source revision regardless of the machine environment because it uses pinned tools and dependencies.
 Why are hermetic builds important in release engineering?	They make builds repeatable, reduce environmental drift, and let teams rebuild older releases reliably.
 What is cherry picking in release engineering?	Rebuilding from an older release revision while selectively including specific later changes.
 Why should build tools be versioned with the source revision being built?	So rebuilding an older release does not silently pick up newer compiler or tool behavior.

@@ -6,9 +6,7 @@ How should SLOs be defined?	In terms of user-visible experience rather than inte
 How is an error budget defined?	The allowed amount of unreliability for a service over a period, equal to 1 minus the SLO.
 How do error budgets help balance reliability and feature velocity?	Teams can keep launching changes while within budget, but should freeze risky changes when the budget is exhausted.
 Why do error budgets reduce tension between SRE and product development?	They replace opinion-based launch debates with a shared quantitative rule.
-What are the only three useful outputs of monitoring?	Pages, tickets, and logs.
 Why are email-only alerts considered dangerous?	They rely on indefinite human vigilance and are likely to be ignored over time.
-What does an "N + 2" capacity target mean?	The system should handle peak load with the two largest instances unavailable, possibly in degraded mode.
 Why should capacity planning use load tests instead of tradition?	System behavior changes over time, so historical assumptions about capacity may no longer be true.
 Why should launches not be sized only for day-one steady-state assumptions?	Launches can attract unusually high traffic precisely when reliability matters most.
 How should a well-designed service behave under overload?	It should degrade gracefully and preserve core functionality with reasonable but reduced results.

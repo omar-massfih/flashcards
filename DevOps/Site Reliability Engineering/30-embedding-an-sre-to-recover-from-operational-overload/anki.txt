@@ -3,7 +3,6 @@ What does "ops mode" mean in this chapter?	A way of running a service by adding 
 How does the SRE model differ from ops mode?	SRE aims to keep staffing from scaling directly with service load by using software, simplification, and better system design.
 Why should an embedded SRE shadow on-call early in the engagement?	It reveals whether the team's scale assumptions are real and exposes the daily sources of stress and reactive work.
 What is "kindling" in the context of operational overload?	Latent weaknesses or neglected risks that are likely to turn into future incidents or ongoing operational pain.
-What are examples of operational kindling an embedded SRE should look for?	Knowledge gaps, noisy unactionable alerts, weak capacity plans, missing SLOs, shallow postmortems, and critical systems no one understands well.
 Why should the embedded SRE write or co-write the next strong postmortem instead of critiquing old ones from afar?	Modeling a good blameless postmortem teaches the team what useful analysis looks like without putting them on the defensive.
 Why is the Bad Apple Theory harmful in postmortem culture?	It wrongly assumes failures are caused mainly by flawed individuals instead of by systems that mislead or overload people.
 Why should the embedded SRE sort team fires into toil and not-toil?	The distinction clarifies which work should be automated away and which work is legitimate operational overhead.

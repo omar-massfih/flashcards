@@ -1,6 +1,5 @@
 Why does poor in-datacenter load balancing waste capacity?	A service can only accept traffic until its most loaded backend saturates, so imbalance leaves reserved capacity idle on less loaded backends.
 What is the main limitation of simple flow-control-based backend health detection?	A fixed active-request threshold can misclassify slow or long-lived backends and only protects against very extreme overload.
-What is lame duck state for a backend?	A state in which the backend is still alive and can finish existing work but explicitly asks clients to stop sending it new requests.
 Why is lame duck state useful during shutdowns and restarts?	It lets active requests drain cleanly, reducing user-facing errors during pushes, maintenance, or machine failures.
 When might a service need a larger backend subset per client?	When there are far fewer clients than backends or when some clients generate bursty or highly uneven traffic.
 What properties should a good subsetting algorithm have?	It should spread load uniformly, minimize churn on failures or restarts, and adapt gracefully as the numbers of clients or backends change.

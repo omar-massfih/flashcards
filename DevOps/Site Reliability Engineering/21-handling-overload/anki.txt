@@ -3,7 +3,6 @@ Why is queries per second usually a poor capacity metric?	Request cost can vary 
 Why are per-customer quotas important during global overload?	They ensure that misbehaving customers absorb the errors while well-behaved customers remain protected.
 Why can quota totals safely add up to more than total fleet capacity?	Service owners rely on the fact that not all customers will hit their maximum negotiated usage at the same time.
 Why can rejecting out-of-quota requests at the backend still be too expensive?	If rejections are frequent, the backend may spend a large fraction of its resources just saying no instead of serving useful work.
-What is client-side adaptive throttling?	A scheme where clients self-regulate and drop some requests locally after observing too many backend rejections.
 Why does adaptive throttling use both attempted requests and accepted requests?	The gap between them estimates how aggressively the backend is rejecting traffic, which lets the client infer when it should slow itself down.
 What is the trade-off when tuning the adaptive-throttling multiplier?	A lower multiplier wastes fewer backend resources on rejections but propagates state changes more slowly; a higher multiplier does the opposite.
 Why can adaptive throttling work poorly for very sporadic clients?	Their local sample of backend behavior is too small and stale to estimate overload accurately.

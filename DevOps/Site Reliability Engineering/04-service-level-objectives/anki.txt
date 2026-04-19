@@ -1,14 +1,9 @@
-What is an SLI in SRE?	A carefully defined quantitative measure of some aspect of the service level being provided.
-What is an SLO in SRE?	A target value or target range for a service level measured by an SLI.
-What is an SLA in SRE?	An explicit or implicit agreement with users that includes consequences for meeting or missing service targets.
 How can you usually tell the difference between an SLO and an SLA?	If missing the target has an explicit consequence, especially a business or financial one, it is an SLA.
 Why is correctness still important even when it is not purely an SRE-owned concern?	A system can be available and fast yet still unhealthy if it returns the wrong answer or processes the wrong data.
 Why is an SLI sometimes only a proxy for what users actually care about?	The most user-relevant behavior may be hard to measure directly, so teams approximate it with something measurable.
 Why can client-side measurement be necessary in addition to server-side measurement?	Server metrics can miss user-visible problems such as frontend or browser-side latency.
-Why should teams avoid choosing every possible metric as an SLI?	Too many indicators dilute attention and make it harder to focus on the behaviors that actually matter.
 Why is averaging a metric over a long window potentially misleading?	It can hide short bursts, spikes, and other behaviors that matter operationally.
 Why can average latency be a poor SLI summary?	Averages can hide long-tail requests that strongly affect user experience.
-Why are percentiles usually better than means for latency SLIs?	Percentiles reveal the shape of the distribution, including tail behavior, instead of collapsing it into one average.
 What does a high percentile such as the 99th or 99.9th latency represent?	A plausible worst-case latency that exposes long-tail behavior.
 Why do some SRE teams focus on high-percentile latency rather than averages?	If tail latency is good, the typical experience is usually good as well, and users are sensitive to variance.
 Why should SRE teams avoid assuming their operational data is normally distributed?	System metrics are often skewed or bounded, so standard intuitions about averages and outliers may fail.

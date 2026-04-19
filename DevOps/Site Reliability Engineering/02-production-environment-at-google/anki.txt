@@ -12,12 +12,7 @@ What is Colossus?	A cluster-wide filesystem layer over distributed storage that 
 What is Bigtable?	A distributed NoSQL database for very large datasets, modeled as a sparse sorted map.
 What is Spanner?	A globally consistent distributed database with an SQL-like interface.
 What is Google Front End (GFE)?	A reverse proxy that terminates client connections and routes requests to the appropriate backend service.
-What does Global Software Load Balancing (GSLB) do?	It directs traffic to suitable locations with available capacity, including at DNS, service, and RPC levels.
 What is Chubby used for in Google's production environment?	Distributed locking, master election, and storage of small pieces of consistent coordination data.
 What is Borgmon?	A monitoring system that scrapes metrics for alerting and historical analysis.
 What RPC system underlies service-to-service communication at Google?	Stubby, whose open source descendant is gRPC.
-Why might Google use an RPC boundary even for work that could be a local call?	It makes later refactoring into a separate service easier.
-Why are protocol buffers used for RPC payloads?	They serialize structured data compactly, quickly, and with less ambiguity than XML.
-What is one operational advantage of a single shared repository?	Engineers can fix problems across project boundaries and submit those changes through the same review flow.
 Why does Google run broad automated testing when a changelist is submitted?	To detect breakage in any code that depends directly or indirectly on the change.
-What is push-on-green?	A release model that automatically pushes a new version to production after it passes tests.

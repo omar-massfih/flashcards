@@ -16,5 +16,3 @@ What is cancellation propagation in distributed systems?	Propagating the fact th
 Why is bimodal latency dangerous for server pools?	A small fraction of requests that hang until deadline can exhaust threads or other resources and cause many otherwise healthy requests to fail.
 Why are extremely long deadlines dangerous even when average latency is low?	They let a few stuck requests monopolize resources for far too long, which can dominate system capacity.
 Why can slow startup and cold caches trigger cascading failures?	Recently started tasks may be much less efficient, so routing normal traffic to them immediately can overload them before they warm up.
-What are common triggering conditions for cascading failures?	Process death, updates, rollouts, organic growth, planned drains, request-profile changes, and shifts in available resource slack.
-What are common immediate mitigation steps during a cascading failure?	Add resources, stop health-check-driven churn, cautiously restart wedged servers, drop traffic, enter degraded modes, remove batch load, or block known-bad traffic.

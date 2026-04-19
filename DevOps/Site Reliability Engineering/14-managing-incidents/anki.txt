@@ -4,10 +4,7 @@ Why is sharp focus on only the technical problem dangerous during an incident?	I
 What is freelancing during an incident?	People making uncoordinated changes outside the incident structure, often with good intentions but harmful effects.
 Why is freelancing dangerous during incident response?	It creates conflicting actions, hidden state changes, and extra confusion for the people trying to stabilize the system.
 Why is clear separation of responsibilities important in incident management?	It reduces confusion, limits duplicated effort, and lets people act autonomously within a defined role.
-What is the role of the incident commander?	Hold the high-level state of the incident, structure the response, assign responsibilities, and remove roadblocks.
-What is the role of Ops during an incident?	Make operational changes to the system and work to mitigate and restore service.
 Why should Ops be the only group changing the system during an incident?	Restricting changes to one coordinated group reduces conflicting actions and preserves a shared view of system state.
-What is the role of communications during an incident?	Provide clear periodic updates to responders, stakeholders, and sometimes customers so others can stay informed without interrupting Ops.
 Why is a live incident state document critical?	It preserves shared real-time context, supports handoffs, and creates a record for later postmortem analysis.
 What should a good incident handoff include?	A live verbal or equivalent walkthrough of current state, explicit transfer of command, and clear acknowledgment from the new incident commander.
 Why should the transfer of incident command be explicit?	Everyone must know exactly who is leading at all times, especially during shift or time-zone handoffs.

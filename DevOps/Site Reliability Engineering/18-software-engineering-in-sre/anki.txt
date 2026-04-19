@@ -8,11 +8,9 @@ Why is moving from implementation requests toward intent useful in capacity plan
 Why are dependencies crucial to intent-based capacity planning?	Where one service can run is constrained by where its dependent services can run and by latency or locality requirements between them.
 Why are performance metrics essential for capacity planning?	They translate higher-level demand into the lower-level resource usage required by dependent services and infrastructure.
 Why must prioritization be explicit in intent-driven planning?	When capacity is insufficient, the system needs transparent rules for which requirements or service goals should be sacrificed first.
-Why was Auxon a good SRE-led software project?	The team both understood the production pain deeply and directly felt the consequences when the tool failed or succeeded.
 Why is approximation often a good early strategy in SRE software projects?	A simpler initial solution can prove the concept and create momentum while the team learns the harder parts of the problem space.
 How should teams use approximation without trapping themselves later?	Abstract the approximated component behind a clean interface so it can be replaced as understanding and requirements mature.
 Why is modularity especially important when requirements are fuzzy?	It lets teams keep shipping while preserving the ability to swap implementations and adapt as the surrounding ecosystem changes.
-Why was agnosticism an important design principle for Auxon?	Accepting many data sources and surrounding tools lowered adoption friction and kept the system broadly useful across divergent teams.
 Why is launch and iterate especially important for SRE software projects?	Production problems and requirements are often partly unknown, so shipping something useful early creates learning and credibility faster than waiting for a perfect design.
 Why do internal SRE tools still need strong product thinking?	Even expert internal users need usable workflows, documentation, support, and a believable roadmap or they will build their own alternatives.
 Why is choosing the right early customers important for an internal SRE product?	Teams with real pain and no entrenched solution are more likely to adopt early, prove value, and become advocates.
