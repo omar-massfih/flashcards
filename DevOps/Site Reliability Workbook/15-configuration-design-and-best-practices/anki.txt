@@ -1,0 +1,49 @@
+Why is configuration design a reliability concern?	Configuration is a human interface for changing production behavior, so confusing or unsafe configuration increases outage risk.
+Why can configuration be riskier than ordinary code changes?	A single configuration option can dramatically change behavior and may bypass the review, testing, and rollout rigor used for code.
+What makes a good configuration interface?	It enables quick, confident, understandable, and testable changes to system behavior.
+Why does configuration usability affect production reliability?	Operators under pressure are more likely to make mistakes when configuration has high cognitive load or unclear controls.
+Why separate configuration philosophy from configuration mechanics?	Philosophy covers what users should decide; mechanics covers language, storage, deployment, and tooling choices.
+What is the ideal direction for configuration design?	Minimize required user input and move toward systems that infer safe behavior automatically.
+Why should configuration design favor a user-centric view?	Configuration questions interrupt users' actual goals, so fewer and clearer questions reduce toil and mistakes.
+What is the risk of an infrastructure-centric configuration interface?	It exposes many low-level knobs and shifts system assembly burden onto users.
+Why can limited configuration options improve adoption?	Lower onboarding effort lets users get useful behavior without learning and tuning many controls.
+Why should configuration questions stay close to user goals?	Users can answer in domain terms, while the system retains freedom to improve implementation details over time.
+What is the trade-off of asking users for low-level implementation details?	Users gain fine control but pay with more decisions, more expertise required, and more chances for error.
+What is a mandatory configuration question?	A question that must be answered before the system can provide core functionality.
+What is an optional configuration question?	A question that can improve or tune behavior but is not required for basic functionality.
+Why minimize mandatory configuration questions?	Every required answer adds onboarding cost, cognitive load, and another opportunity for misconfiguration.
+How can mandatory configuration questions often be reduced?	Convert them into optional questions by providing safe and useful defaults.
+What is a dynamic configuration default?	A default calculated from deployment, workload, resources, or other existing system properties.
+Why are dynamic defaults useful?	They avoid asking users to provide values the system can infer more accurately from runtime context.
+When should dynamic defaults gain override knobs?	When legitimate minority use cases need control, but most users should still get safe automatic behavior.
+What does widespread dissatisfaction with a dynamic default suggest?	The default decision logic may no longer match common user needs and should be improved broadly.
+Why must defaults be chosen carefully?	Most users keep defaults, so a bad default can shape behavior and failures at large scale.
+When should an optional configuration knob be removed?	When it lacks a clear use case or mostly adds confusion and cognitive load.
+How should configuration support power users without burdening everyone?	Keep common configuration high-level and expose low-level controls as optional overrides.
+Why optimize for total organizational configuration time?	A design that helps common cases can save more time than one that makes rare complex cases slightly easier.
+What does it mean to separate configuration interface from resulting data?	Users may edit a high-level UI or DSL, while infrastructure consumes generated static data.
+Why should infrastructure consume static configuration data?	Static data is easier to validate, store, analyze, automate, and consume consistently across systems.
+Why can a high-level configuration interface still be useful?	It lets users express goals or abstractions while compiling to the plain data consumed by infrastructure.
+What is the danger of tightly coupling external config format to internal data structures?	Internal implementation details leak into the user interface and make future changes harder.
+Why store metadata about how configuration was ingested?	It helps trace authorship, original source, language, path, and context during debugging or incidents.
+How can generated configuration data support analysis?	It can be queried to see which options are used, by whom, and what the impact of changing or removing an option would be.
+Why is semantic validation important for configuration?	Syntactically valid configuration can still reference nonexistent resources, impossible limits, wrong units, or unsafe combinations.
+When should misconfiguration be caught?	As early as possible, ideally when the user commits or submits the configuration.
+What syntax tooling helps users edit configuration safely?	Editor highlighting, linters, and automatic formatters.
+Why are automatic formatters valuable for configuration?	They reduce formatting debate, lower cognitive load, prevent some mechanical mistakes, and support automated edits.
+Why should every configuration snippet have a clear owner?	Ownership improves isolation, accountability, communication, and incident response without relying on blame.
+Why version configuration changes?	Versioning allows teams to inspect past states, compare changes, and roll back to known-good configuration.
+Why log both configuration edits and application events?	A committed config may not be applied immediately, so operators need to connect edits to actual system changes.
+Why can tighter coupling between software and configuration be useful?	It helps prevent configuring features that are unavailable, removed, or unsupported by the running software.
+What properties make configuration rollout safer?	Gradual deployment, rollback capability, and automatic stop or rollback when operator control is threatened.
+Why avoid global all-at-once configuration pushes?	Gradual rollout limits blast radius and allows detection before a bad change causes a full outage.
+Why is rollback usually better than emergency patching during a config incident?	Rollback restores a known-good state faster and with higher confidence than an improvised fix.
+What is hermetic configuration?	Configuration whose behavior depends only on versioned, controlled inputs rather than mutable external resources.
+Why does non-hermetic configuration make rollback hard?	External resources can change independently, so reverting the config may not restore the previous behavior.
+Why should systems guard against loss of operator control?	Some config mistakes, such as bad firewall or access settings, can prevent operators from undoing the change.
+How can systems handle configuration that may remove operator control?	Require confirmation, use countdown rollback, halt rollout, or automatically revert if control signals disappear.
+What should configuration tooling reveal during an incident?	What changed, who owned it, when it was applied, where it rolled out, and how to revert it.
+Why is configuration design similar to API and UI design?	It defines how humans safely express intent to a system and should be purposeful rather than accidental.
+What is a common sign that configuration use cases were misidentified?	Many users need complex overrides instead of being served by the simple common path.
+How should teams respond when many users need advanced configuration?	Revisit user research and redesign common abstractions instead of adding endless special-case knobs.
+Why is configuration support cost a useful design signal?	High support demand often means the configuration model is unclear, unsafe, or too far from user goals.
