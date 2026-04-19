@@ -19,7 +19,6 @@ Why is pipeline canarying harder than canarying stateless services?	Pipelines pe
 How can dry-run or two-phase writes make pipeline canaries safer?	The canary can process real data without immediately mutating production storage until results are verified.
 Why might pipeline canaries use a subset of data instead of a subset of servers?	Some replicated or managed pipeline systems cannot safely deploy one region or cell independently.
 What is the purpose of partial deployment in pipelines?	Run a major change on a limited account, user, region, or data subset before exposing the full workload.
-What is hotspotting in a data pipeline?	A subset of data or a shared resource receives disproportionate access and becomes overloaded.
 How can hotspotting appear in pipelines?	Overloaded serving tasks, hot storage ranges, lock contention, disk contention, or oversized work units.
 Why should pipelines support blocking fine-grained bad data?	Isolating problematic records, users, or patterns lets the rest of the pipeline continue making progress.
 How can dynamic rebalancing reduce pipeline hotspots?	The framework can split oversized or slow work into smaller pieces distributed across workers.
@@ -31,12 +30,8 @@ What costs should pipeline resource planning include beyond workers?	Storage, ne
 What security rule should pipeline stages follow for access control?	Grant each stage only the minimum access needed to read prior output and write its own output.
 How should pipelines handle temporary PII storage?	Avoid it when possible; otherwise encrypt it and apply strict access and TTL controls.
 When are exactly-once semantics unnecessary in a pipeline?	When work units are idempotent and repeated processing produces the same correct result.
-What are windowing functions used for in event pipelines?	They group unordered or late-arriving events into fixed, sliding, or session windows for aggregation.
-What is an idempotent mutation in a pipeline?	A write or update that can be applied multiple times with the same final result.
 Why are idempotent mutations useful for pipeline recovery?	Failed or interrupted work can be retried without duplicating or corrupting output.
-What is a two-phase mutation pattern?	Write proposed mutations to temporary storage, verify them, then apply only the validated mutations.
 When are two-phase mutations especially useful?	Testing, canarying, or risky releases where output must be validated before production data is changed.
-What is checkpointing in a pipeline?	Periodically saving partial processing state so a long-running job can resume instead of restarting from the beginning.
 How does checkpointing reduce recovery cost?	It lets jobs skip work already completed after failure, preemption, rescheduling, or resource changes.
 Why use shared libraries across similar pipelines?	Common metrics, monitoring, reporting, and utilities can be improved once and reused consistently.
 Why split a large pipeline into smaller pipeline services?	Smaller components can be released, monitored, scaled, and operated independently.
