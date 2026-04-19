@@ -1,33 +1,23 @@
-Why is reliability often the most important system feature?	Without reliability, users lose trust; without trust, they stop using the system.
 Who ultimately decides whether a system is reliable?	Users decide through their experienced reliability, not through the provider's internal monitoring alone.
 What is monitoring valuable for in user reliability?	It helps teams notice and fix problems before customers experience or report them.
 Why does reliability become a partnership for platforms?	Customers build systems on the platform, so their architecture and operations combine with platform behavior to determine user experience.
 Why can a highly reliable platform still produce poor customer experience?	A customer's unreliable application can multiply with platform reliability and lower the end-user availability they observe.
 Why do platform customers hold providers accountable for their own bad experience?	Users associate the total experience with the platform even when part of the failure comes from their design choices.
-Why does every important system tend to become a platform?	Valuable systems attract integrations, APIs, automation, and other systems that want access to their users or capabilities.
-What happens if a popular system refuses to offer an API?	Others may wrap the UI or create unofficial machine interfaces, leaving the owner with less control.
 How do customer difficulties create platform toil?	Support questions, complaints, and break/fix help consume engineering time that could improve the platform.
-Why do internal platform teams still need customer-oriented SRE?	Internal teams also have customers whose unreliable use of the platform creates support load and perceived platform unreliability.
 Why should platform teams practice SRE with customers?	Customers need help designing and operating reliable systems on the platform, and the platform team learns what guidance and features are needed.
-Does practicing SRE with customers require taking their pager?	No; it means doing much of the reliability work that normally precedes pager handoff with representative customers.
 Why should customers define SLOs for applications built on a platform?	SLOs clarify whether observed platform behavior actually threatens user-facing reliability.
-What problem appears when customers lack explicit SLOs?	They invent unstated expectations and escalate unexpected changes whether or not users are harmed.
 Why are shared SLIs and SLOs useful between platform and customer teams?	They turn vague worry into a concrete discussion about threatened reliability and contributing dependencies.
-What should platform teams teach customers about SLOs?	How to define SLIs, SLOs, and error budgets for critical applications built on the platform.
 Why audit a customer's monitoring?	Many alerts measure things unrelated to user-facing SLOs and create unnecessary pages for both customer and platform teams.
 What should happen to customer alerts that do not affect SLOs?	They should usually be removed, reduced, or reframed so they stop creating unnecessary operational noise.
 Why build shared dashboards with platform customers?	Both teams can see customer SLOs and platform-relevant signals without exchanging ad hoc data during incidents.
-What should shared SLO dashboards include?	Customer application SLO performance plus platform metrics relevant to the customer's experience.
 Why collect SLO data before renegotiating reliability targets?	Measured behavior reveals whether stated expectations match actual user needs and current performance.
 What common surprise appears after customers start measuring SLOs?	Applications often achieve less reliability than assumed, while users may still be satisfied.
 When should customers avoid chasing additional "nines"?	If users are happy and better reliability would not improve adoption, retention, or usage.
-Why periodically revisit customer SLO targets?	User expectations, product needs, platform behavior, and business priorities can change over time.
 What is the purpose of customer design reviews?	Understand customer architecture and operations to find reliability risks such as SPOFs, manual rollbacks, or unsafe rollouts.
 How should customer reliability risks be prioritized?	Rank them by expected error-budget impact rather than by intuition alone.
 What can platform teams learn from customer design reviews?	How customers consume the platform, what mistakes they make, and which reliability trade-offs they choose.
 Why do design reviews help set customer expectations?	They reveal what reliability the current architecture can realistically provide.
 Why practice failure scenarios with platform customers?	Joint drills build communication muscle memory, trust, lower MTTR, and reveal operational edge cases.
-What kinds of exercises help platform teams practice with customers?	Wheel of Misfortune, disaster recovery tests, paper game days, and simulated incidents.
 Why conduct joint postmortems with customers?	They build trust and expose platform and customer-side lessons that isolated postmortems miss.
 Why can't platform teams deeply engage every customer?	The one-on-one SRE model is expensive and only scales to a representative or high-value subset.
 Why choose customer-engagement criteria deliberately?	Mixing selection strategies can confuse stakeholders and overwhelm the SRE team.
@@ -37,9 +27,6 @@ What is feature-coverage customer sampling?	Choose customers whose usage covers 
 When is feature-coverage sampling useful?	When the platform has many diverse features and long-tail usage patterns that could hide surprises.
 What is workload-coverage customer sampling?	Choose representative customers from each major usage pattern or workload cohort.
 When is workload-coverage sampling useful?	When platform usage clusters into distinct customer types, even if no single customer dominates.
-Why stick to one customer-selection strategy?	Consistent selection keeps scope defensible, predictable, and manageable.
 What should platform teams turn customer SRE lessons into?	Reusable guidance, training, dashboards, product features, and platform improvements.
 Why do one-to-many reliability materials still need customer engagement?	Direct work with customers reveals which lessons, diagrams, docs, and training content are actually needed.
 How can customer SRE reduce future support toil?	Better customer design and shared diagnostics prevent repeated break/fix escalations.
-Why are customer expectations part of reliability management?	Expectations shape perceived reliability and trust, even when measured behavior has not changed.
-What is the core shift when SRE reaches beyond its walls?	SRE expands from operating its own systems to helping customers operate reliable systems on top of them.
