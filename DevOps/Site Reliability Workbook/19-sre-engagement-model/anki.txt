@@ -22,7 +22,6 @@ Why assess application or team maturity before engagement?	Maturity determines w
 What expectation should SRE set about application ownership?	Application owners remain responsible for changing and improving their application.
 Why clarify new operational processes during engagement?	Developer teams need advance notice of practices such as load testing, readiness reviews, or changed release flow.
 How should SRE and developers handle readiness-review findings?	Prioritize proposed changes jointly so reliability work fits product and SRE goals.
-What should shared engagement goals include?	Scope, concrete milestones, expected end state, and what success looks like after the engagement.
 Why define the engagement success story explicitly?	It aligns both teams on the desired end state and makes disengagement or continuation easier to judge.
 Why does an SRE engagement need a feedback method?	Both teams need a regular channel to adjust what is working and what is not.
 What should teams do if an SRE engagement is not working?	Discuss disengagement or reset scope rather than letting the relationship drift.
