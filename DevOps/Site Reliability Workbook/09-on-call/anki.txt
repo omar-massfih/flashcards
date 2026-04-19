@@ -1,13 +1,11 @@
 What is the main goal of a healthy on-call rotation?	Provide coverage for critical services without sacrificing the health of on-call engineers.
 Why should on-call load leave room for project work?	Project work lets the team strategically fix production problems and reduce future operational load.
-What pager-load target does Google use for on-call shifts?	At most two distinct incidents per 12-hour on-call shift.
 Why is psychological safety important for on-call rotations?	On-call work is stressful, so engineers need procedures, escalation paths, and support to respond confidently.
 Why should out-of-hours on-call work be compensated?	Compensation recognizes the burden, creates an incentive to participate, and discourages excessive shift-taking.
 Why is a training roadmap useful before a team starts on-call?	It defines the service knowledge and operational skills engineers need before taking production responsibility.
 What skills should on-call training exercises build?	Confidence and muscle memory for common debugging, mitigation, rollback, traffic draining, capacity, and monitoring tasks.
 Why are service deep dives useful for new on-call engineers?	They teach engineers to explore architecture, running jobs, dependencies, monitoring, and recent incidents from first principles.
 Why should new on-call engineers practice with mock incidents?	Role-playing recent failures builds debugging skill and psychological safety before real pages arrive.
-What should an on-call handoff include?	The previous shift's active issues, recent pages, mitigations, follow-up needs, and anything the next on-caller must watch.
 What should an on-call engineer prioritize during an incident?	Minimize user impact first, then ensure the issue is fully addressed and followed up.
 What is the purpose of an alert playbook?	Give high-level guidance on severity, user impact, debugging, mitigation, and resolution for a specific alert.
 Why should every paging alert have a playbook entry?	Playbooks reduce stress, MTTR, and human error when an alert fires.
