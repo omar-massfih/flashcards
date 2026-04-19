@@ -30,7 +30,6 @@ How should SRE teams without partner development teams handle impossible SLO/toi
 Why create additional SRE teams?	Service complexity, broader SRE rollout, or geographic coverage may exceed one team's capacity.
 Why seed new SRE teams from existing SRE teams?	Experienced SREs transfer culture, practices, and leadership faster than all-new hiring.
 Why split on-call responsibilities slowly after team splits?	It avoids sudden loss of experienced responders and gives new teams time to build confidence.
-What are common ways to split a too-complex service across SRE teams?	Architecture, language, location, or major service boundary.
 How can teams prevent gaps after splitting SRE ownership?	Assign a default owning team for leftovers and appoint an overarching technical lead.
 Which services should receive SRE support first during rollout?	Services whose reliability has high financial, reputational, or product-function impact.
 Why staff sister SRE teams across continents?	They improve continuity, reduce on-call stress, expand hiring, and push documentation and training maturity.

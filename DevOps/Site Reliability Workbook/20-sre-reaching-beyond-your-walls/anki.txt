@@ -8,7 +8,6 @@ Why should platform teams practice SRE with customers?	Customers need help desig
 Why should customers define SLOs for applications built on a platform?	SLOs clarify whether observed platform behavior actually threatens user-facing reliability.
 Why are shared SLIs and SLOs useful between platform and customer teams?	They turn vague worry into a concrete discussion about threatened reliability and contributing dependencies.
 Why audit a customer's monitoring?	Many alerts measure things unrelated to user-facing SLOs and create unnecessary pages for both customer and platform teams.
-What should happen to customer alerts that do not affect SLOs?	They should usually be removed, reduced, or reframed so they stop creating unnecessary operational noise.
 Why build shared dashboards with platform customers?	Both teams can see customer SLOs and platform-relevant signals without exchanging ad hoc data during incidents.
 Why collect SLO data before renegotiating reliability targets?	Measured behavior reveals whether stated expectations match actual user needs and current performance.
 What common surprise appears after customers start measuring SLOs?	Applications often achieve less reliability than assumed, while users may still be satisfied.
@@ -21,12 +20,6 @@ Why practice failure scenarios with platform customers?	Joint drills build commu
 Why conduct joint postmortems with customers?	They build trust and expose platform and customer-side lessons that isolated postmortems miss.
 Why can't platform teams deeply engage every customer?	The one-on-one SRE model is expensive and only scales to a representative or high-value subset.
 Why choose customer-engagement criteria deliberately?	Mixing selection strategies can confuse stakeholders and overwhelm the SRE team.
-What is revenue-coverage customer sampling?	Choose the smallest customer set that represents a target share of revenue.
-When is revenue-coverage sampling useful?	When revenue is concentrated among a few large customers whose reliability outcomes matter disproportionately.
-What is feature-coverage customer sampling?	Choose customers whose usage covers a target share of platform features.
-When is feature-coverage sampling useful?	When the platform has many diverse features and long-tail usage patterns that could hide surprises.
-What is workload-coverage customer sampling?	Choose representative customers from each major usage pattern or workload cohort.
-When is workload-coverage sampling useful?	When platform usage clusters into distinct customer types, even if no single customer dominates.
 What should platform teams turn customer SRE lessons into?	Reusable guidance, training, dashboards, product features, and platform improvements.
 Why do one-to-many reliability materials still need customer engagement?	Direct work with customers reveals which lessons, diagrams, docs, and training content are actually needed.
 How can customer SRE reduce future support toil?	Better customer design and shared diagnostics prevent repeated break/fix escalations.

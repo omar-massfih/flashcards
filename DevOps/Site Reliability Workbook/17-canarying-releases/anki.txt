@@ -27,7 +27,6 @@ Why can infrastructure differences distort canary evaluation?	Canary and control
 Why consider shared failure domains in canary analysis?	A bad canary can affect the control, or an external failure can make both canary and control look bad.
 Why use absolute SLO checks alongside canary comparisons?	A/B comparison can miss cases where both canary and control degrade together.
 Why is before/after canary evaluation risky?	Time itself changes traffic, load, and user behavior, so differences may not be caused by the release.
-What is a gradual canary rollout?	A canary with multiple stages that increases exposure as confidence grows.
 Why use stricter signals in early canary stages?	Small early stages should catch obvious failures while minimizing blast radius.
 Why can later canary stages evaluate noisier metrics?	Larger populations provide more data and better confidence for subtle performance or resource signals.
 Why is canarying noninteractive systems harder?	Work units may take a long time, pass through multiple stages, and mix signals across worker pools.

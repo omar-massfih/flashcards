@@ -1,15 +1,8 @@
 Why is reliability treated as a core design feature in NALSD?	Deferring reliability usually means fewer usable features, higher costs, and more disruptive redesign later.
-What is the first basic-design question in NALSD?	Is it possible: could the design work in principle without practical resource constraints?
-What is the second basic-design question in NALSD?	Can we do better: can the design be made simpler, faster, smaller, or more efficient?
-What is the first scale-up question in NALSD?	Is it feasible: can the design fit practical constraints such as money, hardware, time, and operations?
-What is the resilience question in NALSD?	Is it resilient: how does the design behave when components, machines, or datacenters fail?
-How does NALSD use iteration?	Each design is evaluated, its weaknesses are exposed, and the next design modifies or replaces parts accordingly.
 Why are imperfect assumptions acceptable in NALSD?	The value is in combining reasonable estimates to understand the design, not in producing perfect numbers.
 Why should resource estimates be made early in system design?	They reveal physical constraints before the team depends on an unrealistic architecture.
 Why use aggressive rounding in early capacity estimates?	It reduces the risk of prematurely underestimating storage, bandwidth, CPU, or memory requirements.
 Why is scientific notation useful in capacity calculations?	It reduces arithmetic mistakes when working with large rates, durations, and unit conversions.
-What does a dashboard freshness SLO constrain?	The maximum age of data that the system can usually display to users.
-What does a dashboard latency SLO constrain?	How quickly the system must answer user-facing read queries under normal conditions.
 Why compare design iterations against SLOs?	SLOs turn vague goals into measurable checks for latency, freshness, throughput, and reliability.
 Why is scanning raw logs usually unsuitable for user dashboards?	Query time grows with log volume, making dashboard latency worse as the system scales.
 Why precompute or index data for dashboard queries?	It keeps user-facing lookup time low even as the underlying event volume grows.

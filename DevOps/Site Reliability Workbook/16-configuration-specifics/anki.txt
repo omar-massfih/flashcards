@@ -2,7 +2,6 @@ Why does replicated configuration become hard to read?	Important differences are
 Why can automation fail to eliminate configuration toil?	It may reduce duplication but introduce complex language, framework, or evaluation behavior that is hard to reason about.
 When should configuration be removed instead of automated?	When the application can safely infer or adapt behavior better than users can configure it.
 When is a configuration language useful?	When duplication and variation are large enough that abstraction reduces configuration maintenance toil.
-What critical properties should a configuration system provide?	Good tooling, hermetic evaluation, and separation between configuration interface and generated data.
 What happens when programming features creep into data-only configuration formats?	The system becomes an accidental language with weak tooling and confusing semantics.
 Why are ad hoc configuration-language features risky?	They create undocumented interactions, gotchas, low expressiveness, and expensive custom tooling needs.
 Why can excessive domain-specific optimization hurt a configuration language?	A narrow user base makes learning resources, reusable knowledge, and tooling investment harder to justify.

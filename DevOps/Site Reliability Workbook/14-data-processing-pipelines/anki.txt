@@ -1,9 +1,7 @@
 When is streaming usually preferable to batch processing?	When the application needs low-latency or continuously updated results.
 Why should pipeline owners define SLOs?	SLOs make pipeline health measurable and alert before customer impact or error-budget exhaustion becomes severe.
-What are common forms of data freshness SLOs?	Percent of data processed within a time bound, oldest data age below a bound, or job completion within a bound.
 Why are data correctness SLOs important?	They detect pipeline output errors that may otherwise silently charge users incorrectly, mislead products, or corrupt downstream systems.
 How can golden data help measure pipeline correctness?	Known expected inputs and outputs can flow through production-like paths and be compared against actual results.
-What is a backward-looking correctness SLO?	A target that limits how much bad output occurred over a period, such as incorrect invoices per quarter or hours of bad data served.
 Why isolate high-priority data in a pipeline?	Resource-constrained systems can process important data first instead of letting lower-priority work consume capacity.
 How can pipelines implement data priority isolation?	Use separate queues, jobs, worker pools, resource tiers, or retry paths for different priority classes.
 Why should pipeline SLOs usually be end-to-end?	Customers care about when correct data is usable, not whether each internal stage individually looked healthy.
@@ -23,10 +21,8 @@ How can hotspotting appear in pipelines?	Overloaded serving tasks, hot storage r
 Why should pipelines support blocking fine-grained bad data?	Isolating problematic records, users, or patterns lets the rest of the pipeline continue making progress.
 How can dynamic rebalancing reduce pipeline hotspots?	The framework can split oversized or slow work into smaller pieces distributed across workers.
 Why build an emergency shutdown or skip mechanism into pipeline clients?	Operators can quickly stop processing a damaging data pattern without shutting down the whole pipeline.
-What strategies reduce pipeline hotspotting?	Spread access patterns, reduce load, reduce lock granularity, dynamically rebalance, or isolate problematic data.
 Why is autoscaling useful for pipelines?	It handles variable workload without permanently provisioning for peak capacity.
 Why do batch pipelines still need resource planning when autoscaling exists?	Batch jobs may consume all available resources at once, and scaling can pressure downstream storage or networks.
-What costs should pipeline resource planning include beyond workers?	Storage, network bandwidth, cross-region replication, cross-region reads and writes, and expensive storage access patterns.
 What security rule should pipeline stages follow for access control?	Grant each stage only the minimum access needed to read prior output and write its own output.
 How should pipelines handle temporary PII storage?	Avoid it when possible; otherwise encrypt it and apply strict access and TTL controls.
 When are exactly-once semantics unnecessary in a pipeline?	When work units are idempotent and repeated processing produces the same correct result.
@@ -40,8 +36,6 @@ What helps debug delayed pipeline data?	Current and historical run progress, log
 What is the first response to corrupt pipeline data?	Stop or filter additional corrupt data from entering or spreading through the system.
 How is corrupt pipeline data repaired?	Restore a known-good version, reprocess affected data, or selectively repair impacted users or accounts.
 Why keep intermediate pipeline data or checkpoints?	They can reduce the amount of work needed to repair corruption or recover from failures.
-What dependency issues can delay pipeline input or output?	Storage refusal, throttling, hot ranges, network problems, resource exhaustion, or dependency bugs.
-What pipeline application issues commonly cause outages?	Performance regressions, bad configs, CPU-heavy logic, out-of-memory failures, permission errors, or wrong input/output paths.
 Why can unexpected load growth break a pipeline?	It may exceed worker capacity and also overload downstream storage, networking, or serving dependencies.
 How can pipelines survive unexpected resource growth temporarily?	Request emergency capacity and prioritize higher-value data while lower-priority work is delayed or dropped.
 Why are singly homed pipelines vulnerable to regional outages?	If the only region fails, processing stops and data may become stranded, delayed, or incorrect downstream.

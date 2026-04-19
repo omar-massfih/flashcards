@@ -1,4 +1,3 @@
-What makes an event significant for SLO-based alerting?	It consumes a large enough fraction of the error budget to require action.
 Why does alert detection time matter?	Long detection time can allow an incident to consume too much error budget before anyone responds.
 Why does alert reset time matter?	Long reset time can create confusion, noise, and ignored alerts after an issue is resolved.
 Why is alerting when the recent error rate exceeds the SLO threshold usually too noisy?	Small, brief violations can trigger alerts even when they consume only a tiny fraction of the error budget.

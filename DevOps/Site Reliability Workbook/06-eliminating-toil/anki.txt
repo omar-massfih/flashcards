@@ -1,7 +1,4 @@
-Why should SRE teams place an upper bound on toil?	A bound forces teams to identify, quantify, and optimize operational work instead of letting it consume engineering time.
 Why are runbook steps often a sign that work is automatable?	Instructions like "log in, run this command, check output, restart if..." are close to pseudocode for automation.
-Why does toil lack enduring value?	Completing the task helps only in the moment and does not prevent the same problem from returning.
-Why can toil hurt team morale and careers?	It crowds out creative engineering work, encourages burnout, and can stall skill growth over time.
 Why is intuition alone a weak way to measure toil?	It is not repeatable, objective, or transferable across teams and long-running projects.
 Why should toil-reduction projects use objective measures?	Objective measures help compare candidates, justify long-term investment, and prove whether toil actually decreased.
 What is a good unit for measuring toil?	Any objective, consistent measure of human effort, such as minutes, tickets, patches, production changes, or hardware operations.
@@ -11,18 +8,14 @@ Why should toil measurement be streamlined?	Collecting toil metrics should not i
 Why can a toil-reduction project be worthwhile even if hours-saved math looks weak?	Automation can also improve morale, reduce interrupts, standardize processes, reduce errors, improve security, and shorten response times.
 Why is ticket-driven business process work an insidious source of toil?	It often accomplishes user goals, spreads evenly across the team, and therefore accumulates quietly without obvious failure.
 How can teams reduce ticket-process toil before full automation?	Simplify and streamline the process so it is easier to operate now and easier to automate later.
-What are production interrupts as a toil category?	Time-sensitive janitorial tasks such as freeing resources, restarting leaking applications, or manually adjusting capacity.
 How can release shepherding create toil despite deployment automation?	Rollbacks, emergency patches, repetitive configuration changes, and failed release workflows can still require manual handling.
 Why can one-time migrations still count as toil?	They may be repetitive, low-creativity interface-replacement work whose business value remains essentially unchanged.
 How can capacity planning and cost engineering create toil?	They can involve repetitive negotiations, quota reviews, capacity adjustments, workload tuning, and recovery work for traffic events.
 When does troubleshooting become toil?	When engineers repeatedly debug the same failure modes caused by brittle architecture or poor observability.
 Why should teams use a data-driven approach to toil management?	It supports objective prioritization, ROI estimates, and clearer decisions about which toil sources to eliminate first.
-What is the optimal toil-management strategy?	Engineer the toil out of the system at its source rather than only managing the resulting manual work.
 Why are production operators well positioned to reduce toil at the source?	They understand the system quirks and operational pain points that product teams may not see directly.
 When should a team consider rejecting toil?	When the cost of performing the work exceeds the value of doing it, especially if SLOs and error budgets show it is not necessary.
 How can delaying toil sometimes reduce its cost?	Batching similar tasks reduces interrupts and helps reveal patterns that can be targeted for elimination.
-How can SLOs help reduce toil?	They let teams ignore or defer work that does not threaten the service's error budget or user-facing health.
-Why is service-level health better than device-level health for toil reduction?	It lets teams avoid reacting to every individual device problem when the overall service is still healthy.
 Why start with human-backed interfaces before full automation?	They reduce free-form request churn, reveal edge cases, and let teams move incrementally toward automation.
 Why should teams provide self-service methods where possible?	Self-service lets users satisfy common requests without filing tickets or waiting for service-owner intervention.
 How should self-service handle uncommon or failed requests?	It can gracefully degrade to a ticket or human-backed path for specialized cases.

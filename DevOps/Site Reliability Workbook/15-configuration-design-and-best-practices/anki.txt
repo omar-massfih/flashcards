@@ -5,7 +5,6 @@ Why should configuration questions stay close to user goals?	Users can answer in
 What is the trade-off of asking users for low-level implementation details?	Users gain fine control but pay with more decisions, more expertise required, and more chances for error.
 Why minimize mandatory configuration questions?	Every required answer adds onboarding cost, cognitive load, and another opportunity for misconfiguration.
 How can mandatory configuration questions often be reduced?	Convert them into optional questions by providing safe and useful defaults.
-What is a dynamic configuration default?	A default calculated from deployment, workload, resources, or other existing system properties.
 Why are dynamic defaults useful?	They avoid asking users to provide values the system can infer more accurately from runtime context.
 When should dynamic defaults gain override knobs?	When legitimate minority use cases need control, but most users should still get safe automatic behavior.
 Why must defaults be chosen carefully?	Most users keep defaults, so a bad default can shape behavior and failures at large scale.
@@ -24,7 +23,6 @@ Why are automatic formatters valuable for configuration?	They reduce formatting 
 Why should every configuration snippet have a clear owner?	Ownership improves isolation, accountability, communication, and incident response without relying on blame.
 Why version configuration changes?	Versioning allows teams to inspect past states, compare changes, and roll back to known-good configuration.
 Why can tighter coupling between software and configuration be useful?	It helps prevent configuring features that are unavailable, removed, or unsupported by the running software.
-What properties make configuration rollout safer?	Gradual deployment, rollback capability, and automatic stop or rollback when operator control is threatened.
 Why avoid global all-at-once configuration pushes?	Gradual rollout limits blast radius and allows detection before a bad change causes a full outage.
 Why is rollback usually better than emergency patching during a config incident?	Rollback restores a known-good state faster and with higher confidence than an improvised fix.
 What is hermetic configuration?	Configuration whose behavior depends only on versioned, controlled inputs rather than mutable external resources.

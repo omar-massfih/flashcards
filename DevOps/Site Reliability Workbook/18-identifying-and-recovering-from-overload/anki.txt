@@ -4,7 +4,6 @@ How can cognitive bias worsen perceived overload?	Seeing a large queue or pager 
 How can poor prioritization create overload?	If every task seems equally urgent, engineers keep reacting to interrupts instead of protecting time for root-cause work.
 How can a team quantify operational workload?	Measure tickets, pages, time to close issues, post-on-call follow-up time, toil percentage, and backlog size.
 Why collect a snapshot of every team member's tasks?	It reveals hidden workload, duplicate effort, stale work, and mismatched priorities.
-What is the first step toward fixing team overload?	Make the work visible and scope the overload before deciding what to drop, automate, or prioritize.
 Why can sunk cost fallacy worsen overload?	Teams keep investing in low-priority work because abandoning past effort feels wasteful.
 How can team-wide triage reduce overload quickly?	List all responsibilities, rank priority, close stale work, defer noncritical items, and focus on load-reducing actions.
 What kinds of tasks should overloaded teams automate first?	Low-effort repetitive tasks that remove significant operational load once deployed.
@@ -21,7 +20,6 @@ How can ignored email alerts becoming tickets create overload?	Previously hidden
 Why can mismatched service and dependency SLOs contribute to overload?	The SRE team may be held to reliability expectations that dependencies cannot support.
 How can loss of psychological safety worsen overload?	People stop trusting, collaborating, and sharing knowledge, making the team slower and less resilient.
 Why should overload recovery address stress before root causes?	High stress reduces clarity and collaboration, preventing the team from solving the underlying work problems.
-What is participatory management in overload recovery?	A style where team members actively help diagnose problems, set priorities, and choose recovery actions.
 Why can increasing team control reduce perceived overload?	Autonomy and transparent prioritization help people feel able to influence an otherwise overwhelming situation.
 Why are active listening sessions useful for overloaded teams?	They surface hidden pain points without judgment and rebuild trust between leaders and engineers.
 Why can silencing known noisy alerts be a valid short-term overload tactic?	It immediately reduces stress and interrupt volume while preserving a tracking path for later fixes.
@@ -31,7 +29,6 @@ Why limit operational work to on-call time when recovering from overload?	It pro
 When might an SRE team hand a service back to developers?	When the team cannot safely support it and the service load or maturity is blocking higher-priority SRE work.
 Why does cross-training help reduce overload?	Shared knowledge lets more engineers handle incidents and tickets, lowering bottlenecks and fear.
 Why can team social events matter during overload recovery?	Low-pressure interaction can rebuild trust, belonging, and psychological safety.
-What long-term fixes help prevent overload after immediate relief?	Align SLOs, standardize services, update old systems, reduce cognitive load, and automate repeated work.
 How can surveys help identify overload?	They reveal declining morale, psychological safety, satisfaction, and trust that may not appear in ticket counts.
 What does an unhealthy task queue indicate?	Backlogged, stale, missed-deadline, or unevenly assigned work suggests interrupts are exceeding capacity.
 Why should teams choose overload metrics collaboratively?	Every team's work pattern differs, and imposed metrics can feel disconnected from actual workload.

@@ -1,21 +1,12 @@
-Why are SLOs useful for deciding reliability work priority?	They estimate which work most improves user experience or protects the error budget, rather than relying on intuition alone.
 What organizational state is needed for error-budget-based SRE?	Stakeholders must approve fit-for-purpose SLOs, operators must believe they are defensible, the organization must use the budget for decisions, and there must be a refinement process.
-Why is an SLO without an error budget policy weak?	It becomes a reporting metric rather than a rule that changes prioritization and risk decisions.
-Why is 100% reliability usually the wrong SLO target?	It is unachievable across real dependencies, expensive beyond user value, blocks useful change, and forces purely reactive operations.
 Who should own trade-offs once an SLO is below 100%?	Someone empowered to balance feature velocity and reliability, often the product owner or product manager.
 Why are ratio-style SLIs useful?	They map cleanly to 0%-100%, make error budgets easy to calculate, and allow common tooling for alerting and reporting.
-What is the difference between an SLI specification and an SLI implementation?	The specification states the user-relevant outcome to measure; the implementation states exactly how that outcome is measured.
 Why can one SLI specification have multiple implementations?	Different measurement points trade off quality, coverage, and cost while trying to approximate the same user outcome.
 Why is it acceptable for the first SLO attempt to be imperfect?	The main goal is to start measuring and create a feedback loop for later refinement.
 When can current performance be a reasonable starting point for SLOs?	When no better user-satisfaction data exists and the team has a process for revisiting and refining the target.
-Why should initial SLIs be simple and easy to measure?	Low-cost measurements help teams start learning quickly, and they can be refined as the SLO process matures.
 How should a team start choosing SLIs for a service?	Pick one application, identify the users, list common and critical interactions, and draw the main request, data, and dependency flows.
-Why should early SLOs use only a small number of SLI types?	A few critical user-facing measures are easier to reason about and act on than a broad set of diluted metrics.
-Why can multiple latency SLO thresholds be useful?	They capture both typical experience and tail latency, so a small slow cohort is not hidden by a good median or broad pass rate.
 Why must durability SLIs be scoped carefully?	A system can preserve almost all historical records while the specific recent records users need are unavailable.
 Why might load balancer metrics be better than application-server logs for API SLIs?	They are often already available and can measure closer to the user's path than backend-only logs.
-Why can server-side measurements miss user-facing failures?	Requests that fail before reaching the backend are invisible to server logs.
-Why can client-side instrumentation improve SLI quality?	It measures closer to the real user experience, including problems outside the backend's view.
 What is the cost of client-side SLI instrumentation?	It requires code changes and reliable telemetry infrastructure, which adds engineering and operational work.
 Why should SLO time windows be chosen deliberately?	The window affects whether the SLO supports fast tactical corrections, strategic planning, or alignment with user memory and business cycles.
 What is a benefit of a rolling SLO window?	It better matches user experience because incidents do not reset psychologically at calendar boundaries.
