@@ -1,7 +1,6 @@
 Why is an implicit 100% SLO harmful?	It forces reactive behavior because any failure appears unacceptable and no error budget exists for trade-offs.
 What should an error budget policy guide?	Tactical outage mitigation, change safety, and longer-term reliability work.
 What commitment makes SLOs useful without SRE staff?	Leadership and teams must agree to measure the SLO and follow the error budget policy.
-What skills matter when hiring a first SRE?	Operations, software engineering, monitoring, production automation, and system architecture.
 Why is the first SRE role difficult?	The person must balance ambiguous velocity and reliability goals while establishing practices that may not yet exist.
 Where can a first SRE be placed?	In a product development team, operations team, or horizontal consulting role.
 What should determine first-SRE placement?	Current challenges, expected next-year challenges, organizational influence, long-term org design, and the person's strengths.
@@ -11,7 +10,6 @@ What initial projects are useful for a first SRE?	Better monitoring, postmortem 
 What signals show a first SRE role is unhealthy?	Work indistinguishable from other engineers, disproportionate operations burden, or ignored SLOs.
 Why build a community for distributed SREs?	Individual SREs embedded across teams need shared identity, practices, support, and consistency.
 Why must SRE teams regulate workload?	They need power to keep toil bounded and preserve engineering capacity for reliability work.
-What skills should an initial SRE team combine?	Reliability-focused coding, automation, production debugging, strong software practices, careful operations, and architecture understanding.
 Why seed a new SRE team with internal transfers when possible?	Internal transfers bring relationships and organizational context that reduce ramp-up time.
 When might an organization create a new SRE team for a major project?	When the project has significant reliability or operational risk and enough scope to justify dedicated headcount.
 Why should a new SRE team engage early in a major project?	Early design input can define SLOs, identify reliability risks, and avoid costly later rework.
@@ -28,7 +26,6 @@ Why is self-service important when transforming a toil-heavy team?	Product teams
 How can office hours reduce SRE interrupt load?	They batch questions and reviews into predictable windows while sharing knowledge with partner teams.
 Why should mature SRE teams partner on architecture?	Early architectural input can improve reliability, scalability, operability, reuse, and migration simplicity.
 How can an SRE team reduce overload when supporting a product-owned service?	Lower the SLO, transfer operational work, or hand the service back if toil constraints cannot be met.
-Why can a fully optimized service create SRE attrition risk?	SREs may leave for more interesting work if the team becomes mostly low-value operations.
 How should SRE teams without partner development teams handle impossible SLO/toil constraints?	Stop feature work for reliability work, reduce SLOs, or obtain more people or infrastructure.
 Why create additional SRE teams?	Service complexity, broader SRE rollout, or geographic coverage may exceed one team's capacity.
 Why seed new SRE teams from existing SRE teams?	Experienced SREs transfer culture, practices, and leadership faster than all-new hiring.
