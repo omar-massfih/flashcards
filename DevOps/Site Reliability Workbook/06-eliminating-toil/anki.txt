@@ -1,4 +1,3 @@
-What is toil in SRE?	A repetitive, predictable, constant stream of service-maintenance tasks that consumes human operational effort.
 Why should SRE teams place an upper bound on toil?	A bound forces teams to identify, quantify, and optimize operational work instead of letting it consume engineering time.
 Why are runbook steps often a sign that work is automatable?	Instructions like "log in, run this command, check output, restart if..." are close to pseudocode for automation.
 Why does toil lack enduring value?	Completing the task helps only in the moment and does not prevent the same problem from returning.
@@ -44,7 +43,6 @@ What does legacy-system encapsulation do?	It wraps a brittle system with APIs, a
 Why is encapsulation of a legacy system only a stopgap?	The legacy core remains brittle, so the team has refinanced the debt rather than removed it.
 How should legacy-system replacement usually proceed?	Incrementally, using a common interface and safe migration techniques such as canaries or blue-green deployments.
 Why are historical inputs and outputs useful when replacing legacy systems?	They provide production-sized expectations for checking that the replacement behaves acceptably.
-What is custodial ownership in legacy-system retirement?	After most users migrate, remaining users or teams take responsibility for the leftover legacy remnants.
 Why did the datacenter repair automation include automated risk assessment?	Manual drain-risk decisions were error-prone and could isolate capacity or cause outages.
 Why should automation avoid relying on expert technicians to catch errors?	Expert judgment is hard to replicate and new users may use tools in unsafe ways the system did not anticipate.
 Why is repair automation not "fire and forget"?	It can outlive original assumptions, require ongoing maintenance, and become brittle unless designed to evolve.
