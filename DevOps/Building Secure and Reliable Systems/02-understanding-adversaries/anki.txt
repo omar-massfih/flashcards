@@ -4,7 +4,6 @@ Why should you ask whether your system could help attack someone else?	An attack
 Why does attacker economics matter in system design?	If defenses raise the attack cost above the expected payoff, opportunistic attackers may move to easier targets.
 Why should basic security controls come before exotic defenses?	Attackers usually choose the cheapest method that works, so simple gaps like phishing exposure or missing two-factor authentication often dominate rare advanced attacks.
 Why can ordinary services become interesting to nation-state actors?	Communications, location data, identity data, supply-chain access, or specialized designs can have intelligence value even when the service does not look military.
-Why does being small or non-obvious not eliminate nation-state risk?	Small organizations can be stepping stones, supply-chain entry points, or holders of niche data that matters to a larger campaign.
 Why is location or communication metadata especially sensitive to government adversaries?	It can reveal relationships, routines, and physical presence that may be hard to obtain through other intelligence methods.
 Why are hacktivist threats hard to predict from technical sophistication alone?	Their triggers are often political or reputational, and low-skill actors can still cause visible harm using defacement or rented denial-of-service tools.
 Why do criminal attackers often favor low-friction attacks?	Profit-seeking attackers optimize for return on effort, so scalable tooling, reusable malware, and social engineering can beat technically elegant intrusions.
@@ -13,16 +12,12 @@ Why does attack automation change defensive assumptions?	Automated tools can fin
 Why is insider risk both a reliability and security problem?	The same privileged access that lets employees operate systems can also amplify mistakes, negligence, malicious actions, or hijacked accounts.
 Why should systems be designed for both malicious and accidental insiders?	Intent is often hard to prove after damage occurs, and controls like least privilege, review, auditing, and recoverability reduce both classes of risk.
 Why should an insider threat model include people outside the employee roster?	Contractors, vendors, open source contributors, API partners, family, and roommates can all influence trusted systems, code, devices, or access paths.
-Why can open source contributors and API partners act like insiders?	Their code or privileged integration paths may affect production behavior, user data, or downstream customers even without formal employment.
 Why does least privilege protect against both account takeover and operator mistakes?	Compromised or mistaken actors inherit only the narrow scope and duration of access needed for their role.
 Why do business justifications and access auditing matter for sensitive systems?	They create reviewable intent for access and make inappropriate use easier to detect after the fact.
 Why is recoverability a core control for insider risk?	Preventive controls can fail, so the organization must be able to restore systems and data after accidental or malicious destructive actions.
 Why are automated checks important for human-error threat models?	They catch dangerous configurations or changes before one typo, tired decision, or misunderstood behavior can affect the whole system.
 Why is studying attacker methods often more useful than attributing attacker identity?	Attribution is hard and motives can be disguised, but tactics, techniques, and procedures are observable enough to guide defenses.
 Why is threat intelligence useful beyond copying indicators of compromise?	Good reports explain attacker progression, intent, and peer-industry patterns, which helps defenders anticipate classes of attacks.
-Why are indicators of compromise a limited form of threat intelligence?	They are concrete and automatable, but they often describe artifacts attackers can change quickly.
 Why does a kill-chain model help defenders prepare for attacks?	It breaks an intrusion into stages, revealing multiple points where controls can prevent, detect, or slow the attacker.
 Why are TTP catalogs useful for threat modeling?	They translate vague attacker concern into concrete behaviors that teams can test, monitor, and defend against.
-Why is attack sophistication a poor predictor of attack method?	Even capable attackers may use simple phishing, stolen credentials, or commodity tools when those methods satisfy their goals cheaply.
 Why should defenders avoid underestimating a determined adversary?	Well-resourced attackers may spend money, time, or operational risk on unusual paths if the target is valuable enough.
-Why might detection and attribution fail to deter attackers?	Some attackers are anonymous, geographically protected, or sponsored by states, so legal consequences may be uncertain or irrelevant.
