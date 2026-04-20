@@ -1,0 +1,52 @@
+Why can a reliability incident expose hidden security-recovery dependencies?	Secure recovery steps may depend on secrets, hardware tokens, or access paths that are unavailable during the outage, turning safeguards into restoration blockers.
+Why do reliability and security sometimes require opposite failure behavior?	Reliability often favors keeping access available during accidental failures, while security may favor denying access when an adversary could exploit the failure.
+Why can fail-open behavior be dangerous in a security-sensitive system?	It preserves availability during failures but may give attackers an intentional path around controls.
+Why can fail-secure behavior create reliability or safety risk?	It preserves protection under failure but can block legitimate users or responders when access is urgently needed.
+Why does redundancy increase both reliability and attack surface?	Extra paths let legitimate users survive component failures, but attackers only need one vulnerable path to succeed.
+Why might security incidents need tighter information sharing than reliability incidents?	Broad visibility can tip off an adversary or leak sensitive investigative details, so response often uses need-to-know collaboration.
+Why can detailed logs be both useful and risky?	They speed diagnosis and detection, but can add cost, create reliability load, and become valuable targets if they contain sensitive data.
+Why can a reliability failure become a security failure even without an attacker?	Accidental misdelivery, corruption, or outage can violate confidentiality, integrity, or availability just like a malicious action would.
+Why can legitimate traffic spikes resemble denial-of-service attacks?	From the service's perspective, overload looks similar whether traffic comes from attackers, synchronized clients, or real-world events.
+Why are reliability and security hard to add after a system is built?	They emerge from interactions among components, operational processes, and lifecycle changes rather than from one isolated feature.
+Why does the invisibility of reliability and security encourage underinvestment?	When nothing is broken, prevention looks like optional cost, while the severe costs of failure remain hidden until an incident.
+Why are security risks harder to compose than reliability risks?	Reliability models can often assume partially independent failures, while attackers adapt and exploit the weakest path through the whole system.
+Why does simpler design improve both security and reliability?	It reduces attack surface, removes unexpected interactions, and makes the system easier to reason about during emergencies.
+Why can small code changes trigger large security or reliability failures?	Accumulated complexity can hide dependencies, so an innocuous change may cross a tipping point only visible under production conditions.
+Why does resilience require more than making individual components robust?	Complex systems still fail through overload, dependencies, and compromise, so design must limit blast radius and provide alternate paths.
+Why does defense in depth help when prevention is imperfect?	Multiple independent protections make one failure less likely to become full compromise or total outage.
+Why are distinct failure domains valuable for both reliability and security?	They limit how far component failures, stolen credentials, or compromised hosts can spread.
+Why does least privilege reduce both accidental and malicious damage?	A user, process, or attacker can only affect the narrow scope needed for its role.
+Why can multi-party authorization improve reliability as well as security?	Requiring independent approval for sensitive actions catches both malicious attempts and innocent high-impact mistakes.
+Why should security and reliability testing continue throughout the system lifecycle?	New features, scale changes, and adversaries can invalidate assumptions that were true at design time.
+Why is fast security recovery a double-edged sword?	Rapid patching reduces exploit exposure but can also ship bugs or performance regressions at fleet scale.
+Why do recovery systems need a trustworthy desired-state model?	Recovery can otherwise roll systems back to obsolete or unsafe versions while trying to restore service.
+Why are canaries and slow rollouts useful for both reliability and security?	They reduce the blast radius of faulty or malicious changes before the whole system is exposed.
+Why must systems plan for detection and recovery, not only prevention?	Perfect prevention is impractical, so trustworthy systems need ways to notice failures and restore safe operation.
+Why should threat modeling start from attacker motivation rather than attacker stereotypes?	Motivation reveals which assets, actions, and failure modes matter, while stereotypes can hide ordinary people with time, money, access, or incentives.
+Why can one attacker profile imply several different defenses?	Attackers can combine motives such as money, coercion, espionage, and destruction, so defenses should protect assets and paths rather than assume one fixed story.
+Why should you ask whether your system could help attack someone else?	An attacker may target you for certificates, infrastructure, data, or access that makes a larger attack on another victim easier.
+Why does attacker economics matter in system design?	If defenses raise the attack cost above the expected payoff, opportunistic attackers may move to easier targets.
+Why should basic security controls come before exotic defenses?	Attackers usually choose the cheapest method that works, so simple gaps like phishing exposure or missing two-factor authentication often dominate rare advanced attacks.
+Why can ordinary services become interesting to nation-state actors?	Communications, location data, identity data, supply-chain access, or specialized designs can have intelligence value even when the service does not look military.
+Why does being small or non-obvious not eliminate nation-state risk?	Small organizations can be stepping stones, supply-chain entry points, or holders of niche data that matters to a larger campaign.
+Why is location or communication metadata especially sensitive to government adversaries?	It can reveal relationships, routines, and physical presence that may be hard to obtain through other intelligence methods.
+Why are hacktivist threats hard to predict from technical sophistication alone?	Their triggers are often political or reputational, and low-skill actors can still cause visible harm using defacement or rented denial-of-service tools.
+Why do criminal attackers often favor low-friction attacks?	Profit-seeking attackers optimize for return on effort, so scalable tooling, reusable malware, and social engineering can beat technically elegant intrusions.
+Why does social engineering remain effective despite being technically simple?	It exploits trust, urgency, and human workflow instead of software flaws, so the attacker can bypass stronger technical barriers.
+Why does attack automation change defensive assumptions?	Automated tools can find, exploit, and repeat weaknesses at scale, so systems need resilient defaults and automated defensive iteration.
+Why is insider risk both a reliability and security problem?	The same privileged access that lets employees operate systems can also amplify mistakes, negligence, malicious actions, or hijacked accounts.
+Why should systems be designed for both malicious and accidental insiders?	Intent is often hard to prove after damage occurs, and controls like least privilege, review, auditing, and recoverability reduce both classes of risk.
+Why should an insider threat model include people outside the employee roster?	Contractors, vendors, open source contributors, API partners, family, and roommates can all influence trusted systems, code, devices, or access paths.
+Why can open source contributors and API partners act like insiders?	Their code or privileged integration paths may affect production behavior, user data, or downstream customers even without formal employment.
+Why does least privilege protect against both account takeover and operator mistakes?	Compromised or mistaken actors inherit only the narrow scope and duration of access needed for their role.
+Why do business justifications and access auditing matter for sensitive systems?	They create reviewable intent for access and make inappropriate use easier to detect after the fact.
+Why is recoverability a core control for insider risk?	Preventive controls can fail, so the organization must be able to restore systems and data after accidental or malicious destructive actions.
+Why are automated checks important for human-error threat models?	They catch dangerous configurations or changes before one typo, tired decision, or misunderstood behavior can affect the whole system.
+Why is studying attacker methods often more useful than attributing attacker identity?	Attribution is hard and motives can be disguised, but tactics, techniques, and procedures are observable enough to guide defenses.
+Why is threat intelligence useful beyond copying indicators of compromise?	Good reports explain attacker progression, intent, and peer-industry patterns, which helps defenders anticipate classes of attacks.
+Why are indicators of compromise a limited form of threat intelligence?	They are concrete and automatable, but they often describe artifacts attackers can change quickly.
+Why does a kill-chain model help defenders prepare for attacks?	It breaks an intrusion into stages, revealing multiple points where controls can prevent, detect, or slow the attacker.
+Why are TTP catalogs useful for threat modeling?	They translate vague attacker concern into concrete behaviors that teams can test, monitor, and defend against.
+Why is attack sophistication a poor predictor of attack method?	Even capable attackers may use simple phishing, stolen credentials, or commodity tools when those methods satisfy their goals cheaply.
+Why should defenders avoid underestimating a determined adversary?	Well-resourced attackers may spend money, time, or operational risk on unusual paths if the target is valuable enough.
+Why might detection and attribution fail to deter attackers?	Some attackers are anonymous, geographically protected, or sponsored by states, so legal consequences may be uncertain or irrelevant.

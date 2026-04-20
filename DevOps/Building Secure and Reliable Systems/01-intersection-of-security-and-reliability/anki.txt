@@ -1,0 +1,24 @@
+Why can a reliability incident expose hidden security-recovery dependencies?	Secure recovery steps may depend on secrets, hardware tokens, or access paths that are unavailable during the outage, turning safeguards into restoration blockers.
+Why do reliability and security sometimes require opposite failure behavior?	Reliability often favors keeping access available during accidental failures, while security may favor denying access when an adversary could exploit the failure.
+Why can fail-open behavior be dangerous in a security-sensitive system?	It preserves availability during failures but may give attackers an intentional path around controls.
+Why can fail-secure behavior create reliability or safety risk?	It preserves protection under failure but can block legitimate users or responders when access is urgently needed.
+Why does redundancy increase both reliability and attack surface?	Extra paths let legitimate users survive component failures, but attackers only need one vulnerable path to succeed.
+Why might security incidents need tighter information sharing than reliability incidents?	Broad visibility can tip off an adversary or leak sensitive investigative details, so response often uses need-to-know collaboration.
+Why can detailed logs be both useful and risky?	They speed diagnosis and detection, but can add cost, create reliability load, and become valuable targets if they contain sensitive data.
+Why can a reliability failure become a security failure even without an attacker?	Accidental misdelivery, corruption, or outage can violate confidentiality, integrity, or availability just like a malicious action would.
+Why can legitimate traffic spikes resemble denial-of-service attacks?	From the service's perspective, overload looks similar whether traffic comes from attackers, synchronized clients, or real-world events.
+Why are reliability and security hard to add after a system is built?	They emerge from interactions among components, operational processes, and lifecycle changes rather than from one isolated feature.
+Why does the invisibility of reliability and security encourage underinvestment?	When nothing is broken, prevention looks like optional cost, while the severe costs of failure remain hidden until an incident.
+Why are security risks harder to compose than reliability risks?	Reliability models can often assume partially independent failures, while attackers adapt and exploit the weakest path through the whole system.
+Why does simpler design improve both security and reliability?	It reduces attack surface, removes unexpected interactions, and makes the system easier to reason about during emergencies.
+Why can small code changes trigger large security or reliability failures?	Accumulated complexity can hide dependencies, so an innocuous change may cross a tipping point only visible under production conditions.
+Why does resilience require more than making individual components robust?	Complex systems still fail through overload, dependencies, and compromise, so design must limit blast radius and provide alternate paths.
+Why does defense in depth help when prevention is imperfect?	Multiple independent protections make one failure less likely to become full compromise or total outage.
+Why are distinct failure domains valuable for both reliability and security?	They limit how far component failures, stolen credentials, or compromised hosts can spread.
+Why does least privilege reduce both accidental and malicious damage?	A user, process, or attacker can only affect the narrow scope needed for its role.
+Why can multi-party authorization improve reliability as well as security?	Requiring independent approval for sensitive actions catches both malicious attempts and innocent high-impact mistakes.
+Why should security and reliability testing continue throughout the system lifecycle?	New features, scale changes, and adversaries can invalidate assumptions that were true at design time.
+Why is fast security recovery a double-edged sword?	Rapid patching reduces exploit exposure but can also ship bugs or performance regressions at fleet scale.
+Why do recovery systems need a trustworthy desired-state model?	Recovery can otherwise roll systems back to obsolete or unsafe versions while trying to restore service.
+Why are canaries and slow rollouts useful for both reliability and security?	They reduce the blast radius of faulty or malicious changes before the whole system is exposed.
+Why must systems plan for detection and recovery, not only prevention?	Perfect prevention is impractical, so trustworthy systems need ways to notice failures and restore safe operation.
