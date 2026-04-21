@@ -71,3 +71,20 @@ Why are conformance checks such a powerful framework mechanism?	They prevent ent
 Why does early investment in CI/CD and rollback safety increase sustained velocity?	It enables frequent low-risk releases instead of letting manual release bottlenecks slow the project later.
 Why is initial velocity a poor reason to defer security and reliability work?	Short-term speed often turns into technical debt, risky retrofits, and slower delivery once the system grows.
 Why do security and reliability goals often align with maintainability?	Systems that are understandable and modular are easier to change, debug, and defend without causing new failures.
+Why should least privilege be designed early rather than retrofitted later?	Interfaces, roles, and workflows are cheaper to partition before broad access patterns harden into the system.
+Why should access be classified by risk instead of protected uniformly?	Different data and actions carry different blast radii, so matching controls to risk avoids both overexposure and unnecessary friction.
+Why can read access be as dangerous as write or admin access?	Reading sensitive data can cause irreversible breaches even when nothing is modified.
+Why is zero trust a useful starting point for least privilege?	Network location alone is weak evidence of trust, so access decisions should depend on authenticated users, devices, and context instead.
+Why are small functional APIs a foundation for least privilege?	Narrow actions let you grant only the permissions a task needs and make misuse easier to detect.
+Why is naive session logging a weak substitute for well-designed administrative APIs?	Attackers or even normal tools can bypass, obscure, or muddy shell transcripts so the audit trail is hard to trust.
+Why should breakglass use be rare and heavily scrutinized?	It bypasses normal controls, so frequent use signals missing safe workflows and expands risk.
+Why should breakglass mechanisms be tested regularly?	An emergency path that is never exercised may fail exactly when the normal authorization system is broken.
+Why is testing least privilege different from testing with least privilege?	One verifies that access policy is correctly scoped, while the other ensures test infrastructure itself does not need dangerous access.
+Why are separate test environments and credentials important for least privilege?	They let people validate behavior without giving tests or analysts the power to affect production systems and data.
+Why are shared authorization frameworks better than bespoke per-service authorization logic?	Central frameworks let organizations add controls like MFA or MPA consistently and evolve policy without rewriting every service.
+Why is multi-party authorization stronger on small functional APIs than on broad standing access?	Approvers can understand and approve a specific action more confidently than a vague bundle of future power.
+Why can social dynamics undermine multi-party authorization?	If approvers do not feel safe rejecting a request, the review becomes ritual instead of protection.
+Why does three-factor authorization protect a different threat than multi-party authorization?	3FA helps against compromise of a shared workstation platform, while MPA helps against unilateral insider action or single-user compromise.
+Why is temporary access a powerful least-privilege control even without perfect granularity?	Expiring access reduces ambient authority and creates clear points for logging and review.
+Why does least privilege depend on the quality of security-impacting data?	Bad group membership, sensitivity labels, or device context lead the policy engine to make the wrong decision.
+Why is usability part of least privilege design rather than a separate concern?	If approvals, justifications, or denials are too painful, people route around them and weaken the control system.
