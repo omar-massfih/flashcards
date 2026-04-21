@@ -45,3 +45,15 @@ Why is threat intelligence useful beyond copying indicators of compromise?	Good 
 Why does a kill-chain model help defenders prepare for attacks?	It breaks an intrusion into stages, revealing multiple points where controls can prevent, detect, or slow the attacker.
 Why are TTP catalogs useful for threat modeling?	They translate vague attacker concern into concrete behaviors that teams can test, monitor, and defend against.
 Why should defenders avoid underestimating a determined adversary?	Well-resourced attackers may spend money, time, or operational risk on unusual paths if the target is valuable enough.
+Why can a safe proxy improve a production system faster than rewriting the system itself?	It adds access control, validation, logging, and rate limiting on the traffic path without requiring invasive changes to the target system.
+Why should risky production operations go through a proxy instead of directly to the target system?	A proxy gives one choke point for authorization, validation, auditing, and safety checks that would otherwise be scattered or missing.
+Why should target systems accept privileged requests only from the proxy?	If direct access remains available, users can bypass the controls that make the proxy valuable.
+Why is a safe proxy a natural place to centralize auditing?	Every sensitive action crosses the same path, so the proxy can reliably record who did what and when.
+Why can a safe proxy reduce the blast radius of human mistakes?	It can prevalidate requests and rate limit dangerous actions so one bad command does not hit the whole fleet at once.
+Why is a safe proxy a good fit for closed-source or third-party systems?	You can add control and visibility around systems you cannot modify internally.
+Why should a safe proxy preserve the target system's external API when possible?	Low-friction adoption makes engineers more likely to use the proxy instead of fighting it.
+Why can a safe proxy become a single point of failure?	If the proxy or one of its dependencies is unavailable, administrative access to many systems may fail at the same time.
+Why are policy templates and secure defaults important for safe proxies?	The policy layer is itself a source of risk, so templates and generated defaults reduce dangerous access-control mistakes.
+Why should a safe proxy forward the caller's identity instead of acting with broad proxy privileges?	If the proxy executes requests only on behalf of the caller, compromising the proxy alone gives an attacker less standing power.
+Why do safe proxies still need a breakglass path?	Emergencies sometimes require bypassing normal friction so responders can restore service quickly.
+Why is user resistance a real risk when introducing safe proxies?	If the proxy adds too much friction, people will look for ways around it and weaken the safety model.
