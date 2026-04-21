@@ -1,0 +1,14 @@
+Why do feature requirements map more directly to code and tests than security or reliability requirements?	User-facing features usually correspond to specific flows, while security and reliability emerge from architecture, dependencies, tooling, and operations.
+Why should design documents raise security and reliability questions before implementation starts?	Early design review exposes architectural constraints while they are still cheap to change.
+Why can product decisions sometimes reduce security risk more than technical controls?	Changing the product model can eliminate the need to handle sensitive data instead of trying to protect it afterward.
+Why can outsourcing sensitive-data handling reduce one class of risk while creating others?	It lowers local handling burden but adds vendor trust, integration, dependency, and outage risks.
+Why can adding a backup provider or fallback path increase complexity instead of simply improving reliability?	Multiple integrations and exceptional paths add code, operational load, and new failure modes.
+Why should designers assume attackers may try to trigger fallback modes intentionally?	Rare exceptional paths may have weaker protections and can become deliberate targets.
+Why are rarely used fallback mechanisms especially risky?	Paths exercised only during unusual conditions can accumulate hidden bugs and operational surprises.
+Why can vendor libraries still be a security concern even when a third party handles the core service?	Privileged client or server-side code and its dependencies can still introduce vulnerabilities into your system.
+Why can sandboxing third-party components be both valuable and costly?	It reduces blast radius but adds integration complexity, coordination boundaries, and new failure modes.
+Why can a strong software framework increase both safety and development velocity?	It automates common work while embedding security and reliability protections into the default path.
+Why are conformance checks such a powerful framework mechanism?	They prevent entire classes of bugs and vulnerabilities before code reaches production.
+Why does early investment in CI/CD and rollback safety increase sustained velocity?	It enables frequent low-risk releases instead of letting manual release bottlenecks slow the project later.
+Why is initial velocity a poor reason to defer security and reliability work?	Short-term speed often turns into technical debt, risky retrofits, and slower delivery once the system grows.
+Why do security and reliability goals often align with maintainability?	Systems that are understandable and modular are easier to change, debug, and defend without causing new failures.
