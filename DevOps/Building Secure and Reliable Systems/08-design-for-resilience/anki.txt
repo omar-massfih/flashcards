@@ -1,0 +1,31 @@
+Why is resilience different from recovery?	Resilience is about delaying, containing, or withstanding breakage, while recovery is about restoring the system after breakage occurs.
+Why should resilience be designed before incidents rather than improvised during them?	Systems under stress will break at their weakest points unless you predefine safer failure modes and boundaries.
+Why should each layer of a system be independently resilient?	Defense in depth works best when one failing layer does not immediately collapse all the others.
+Why should feature criticality and feature cost be explicit in resilient design?	You need to know which work is worth preserving and which work can be shed when resources become scarce.
+Why are controlled breakpoints better than chaotic collapse?	Planned degradation preserves important behavior and buys responders time instead of triggering cascading failure.
+Why should defense-in-depth planning consider the whole attack chain, not just final compromise?	You gain more chances to detect, block, or contain an attack when you design defenses for reconnaissance, deployment, execution, and compromise.
+Why should systems deliberately disable low-value or high-cost features under stress?	Freeing those resources lets the system preserve more critical and safer functionality.
+Why is it better to choose degraded modes before an incident than during one?	Preplanned tradeoffs are more consistent, faster, and less error-prone than decisions made under pressure.
+Why is the cost of failure as important as the rate of failure?	Expensive failures waste resources and can amplify overload through retries and cascading effects.
+Why should systems fail early or cheaply when possible?	Rejecting bad or doomed work before heavy processing preserves capacity for useful requests.
+Why is lame-duck mode useful for overloaded or unhealthy servers?	It warns callers to reduce traffic before the server crashes and shifts the load explosively elsewhere.
+Why should degraded user experiences remain explicit about stale or unsafe state?	Users can often keep working safely if the system clearly communicates limits instead of hiding brokenness behind confusing behavior.
+Why are automated resilience responses often better than manual reactions?	Automation can react faster, apply policies consistently, and optimize across more variables than humans can in real time.
+Why is load shedding preferable to letting overloaded components crash?	Serving some errors intentionally preserves enough capacity to keep the rest of the system alive.
+Why do load-shedding policies need request priority and request cost?	The system must know which work is most valuable and which work consumes scarce resources fastest.
+Why can throttling reduce overload even without rejecting requests?	Delaying responses slows client request rates and gives the system time to reallocate capacity.
+Why must resilience automation respect nonnegotiable security properties?	A system that becomes easier to attack under stress has traded one disaster for another.
+Why should automated mitigation have bounded authority, such as a change budget?	Automation can otherwise magnify bugs or misread conditions into system-wide damage.
+Why is compartmentalization useful for resilience as well as security?	It localizes failures, simplifies quarantine, and gives responders options short of taking the whole system offline.
+Why does role separation reduce the blast radius of a compromised workload?	Compromising one role should not automatically grant the capabilities or data of every other job.
+Why does location separation improve resilience and security?	It limits the effects of physical compromise, local disasters, and regional outages to the affected location.
+Why should physical and logical boundaries align when possible?	When natural physical failure boundaries match logical trust boundaries, localized events stay localized more reliably.
+Why does time separation through key and credential rotation limit attacker persistence?	Stolen secrets become useless unless the attacker can keep regaining access over time.
+Why is redundancy ineffective if redundant components share the same root causes?	Copies that fail for the same reasons do not meaningfully improve resilience.
+Why does each failure domain need both functional isolation and data isolation?	A domain cannot truly operate or be evaluated independently if it shares critical state with the domains meant to back it up.
+Why can high-availability components improve resilience by changing less?	Fewer dependencies and a lower change rate reduce the chances that the backup path fails for the newest reason.
+Why do low-dependency components trade features for survival?	Simplifying the stack removes failure modes and makes last-resort service more likely to remain available.
+Why do backup components tend to fail at the worst time if they are not actively managed?	Unused alternatives either rot from lack of exercise or get overloaded because the rest of the system has quietly started depending on them.
+Why is continuous validation essential for resilience mechanisms?	Without regular exercise, defenses, fallback paths, and assumptions drift until they fail in the first real emergency.
+Why should emergency components and recovery paths be exercised as part of normal operations?	Real use keeps them functional and trains humans before an actual crisis forces reliance on them.
+Why should teams measure key-rotation latency instead of assuming it is quick?	Only repeated measurement reveals the true end-to-end delay, hidden dependencies, and places where emergency rotation will stall.
