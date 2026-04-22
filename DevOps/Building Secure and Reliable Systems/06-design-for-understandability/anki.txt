@@ -1,7 +1,6 @@
 Why does understandability directly affect a system's security and reliability?	Engineers can only preserve invariants, modify behavior safely, and respond well to incidents if they can accurately reason about the system.
 Why is testing often insufficient to establish strong security or reliability invariants?	Tests exercise only a small slice of possible behaviors, while invariants must hold even under unusual, malformed, or malicious conditions.
 Why are invariants a useful way to think about security and reliability?	They force you to ask whether a property holds under all relevant behaviors, not just during normal operation.
-Why is there a practical middle ground between ad hoc testing and full formal verification?	Designing for understandability makes high-confidence informal reasoning feasible without the cost of proving the whole system formally.
 Why are mental models both necessary and dangerous in complex systems?	They simplify reasoning enough for humans to work, but can become misleading when the system enters unusual states.
 Why should systems fail in ways that preserve useful mental models?	Predictable failure modes make diagnosis and mitigation faster than opaque behaviors like thrashing or silent corruption.
 Why is unmanaged complexity the main enemy of understandability?	It forces engineers to hold too many interactions and assumptions in their heads at once.
@@ -9,9 +8,7 @@ Why doesn't simply splitting a system into components automatically make it unde
 Why does centralizing common security and reliability responsibilities improve understandability?	Reviewers can validate one framework or library instead of hunting through every application path for missing checks.
 Why should internal components treat callers as potentially untrustworthy?	If a component's correctness depends on callers always honoring undocumented preconditions, you must understand every call site to trust it.
 Why are narrow, structured interfaces easier to reason about than free-form ones?	Explicit schemas and method contracts reduce ambiguity, improve tooling, and make behavior easier to predict as systems evolve.
-Why do common object models improve understandability across a system?	They let engineers reuse one mental model for object properties, scoping, grouping, and operations instead of learning each resource type from scratch.
 Why do idempotent operations simplify reasoning in distributed systems?	Clients can retry safely after ambiguous failures without needing to know whether the first attempt already took effect.
-Why are IP addresses poor identities in modern microservice systems?	They are unstable, spoofable, and usually identify shared hosts rather than the actual workload that should be authorized or audited.
 Why do meaningful, nonreusable, spoof-resistant identifiers improve both security and reliability?	They make access control, auditing, and resource planning easier to understand and harder to subvert.
 Why does a single organization-wide identity model improve understandability?	Engineers and auditors can reason about users, machines, and workloads in one shared language instead of juggling competing identity systems.
 Why should application developers rely on infrastructure authentication and transport-security abstractions?	Systematic infrastructure controls are easier to understand and audit than ad hoc per-application crypto and credential choices.
@@ -21,6 +18,4 @@ Why do security boundaries depend on trust assumptions, not just architecture di
 Why can decomposing a system into smaller trust domains reduce the impact of vulnerabilities?	A flaw in one component can no longer automatically reach data or capabilities that sit behind a different boundary.
 Why can types make complex data flows easier to reason about?	They turn implicit assumptions about values into explicit contracts that can be checked at construction and trusted downstream.
 Why do safe-by-construction data types like HTML- or SQL-safe wrappers reduce review burden?	Reviewers can focus on the trusted builders and sink APIs instead of tracing every raw string through the application.
-Why can't ordinary type or module boundaries usually be treated as true security boundaries?	They help against nonmalicious mistakes, but malicious or compromised code can often bypass them through reflection or similar mechanisms.
 Why should secure-by-construction APIs also optimize for developer usability?	Developers adopt safe abstractions more readily when those abstractions also make routine work simpler and faster.
-Why can't a safer cryptography library eliminate all cryptographic design mistakes?	It can prevent many low-level misuse patterns, but it cannot decide whether the application chose the right primitive or security goal.
