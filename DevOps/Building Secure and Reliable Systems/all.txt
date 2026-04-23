@@ -152,3 +152,36 @@ Why can high-availability components improve resilience by changing less?	Fewer 
 Why do low-dependency components trade features for survival?	Simplifying the stack removes failure modes and makes last-resort service more likely to remain available.
 Why is continuous validation essential for resilience mechanisms?	Without regular exercise, defenses, fallback paths, and assumptions drift until they fail in the first real emergency.
 Why should emergency components and recovery paths be exercised as part of normal operations?	Real use keeps them functional and trains humans before an actual crisis forces reliance on them.
+Why should recovery be designed before systems fail?	Recovery decisions made during incidents are slower, riskier, and more likely to miss subtle security and reliability tradeoffs.
+Why should rollout mechanisms be able to move very fast but be governed by policy?	The system may need emergency speed, while normal safety comes from adjustable rate limits and approvals rather than hardcoded slowness.
+Why should emergency releases use the normal rollout path at maximum speed?	The normal path is exercised constantly, so it is more likely to work under pressure than a rarely used emergency-only mechanism.
+Why should change actuation be decoupled from change rate policy?	The mechanism that applies a change should stay stable while policies about timing, urgency, and acceptable risk evolve.
+Why isolate rate limiting into a simple standalone service?	A small focused limiter is easier to test, audit, and reason about than rate controls scattered through every rollout tool.
+Why are wall-clock time dependencies dangerous during recovery?	Recovery may replay old events, use expired credentials, or encounter skewed clocks, causing correct recovery actions to fail unexpectedly.
+Why are epochs or version numbers often safer than absolute expiration times?	They let operators pause or advance validity deliberately instead of being forced forward by the passage of wall-clock time.
+Why should epoch advancement still have a hard backstop rate limit?	A compromised system that can advance epochs too quickly can cause lasting damage such as rollover or forced expiration.
+Why do rollbacks create a security and reliability tradeoff?	Rolling back may restore stability, but it can also reintroduce a vulnerability that the newer version fixed.
+Why is arbitrary rollback unsafe after a security fix?	Attackers can deliberately downgrade the system until they reach an older version with a known exploitable weakness.
+Why are hardcoded deny lists weak rollback protection for self-updating components?	They either still allow stepwise rollback attacks or effectively remove the reliable path back to a known stable version.
+Why should rollback-blocking state live outside a self-updating release?	State that survives upgrades and downgrades can prevent bad versions from returning even when the currently running release changes.
+Why are security version numbers useful for rollback decisions?	They summarize the security floor as an ordered value, making it easier to compare releases without maintaining an ever-growing deny list.
+Why raise the minimum acceptable security version only after a patched release proves stable?	The first patch may contain reliability bugs, so teams need a temporary rollback window before making the security fix mandatory.
+Why does signing-key rotation help recovery from compromised release infrastructure?	New releases can revoke trust in the old key, invalidating attacker-signed or obsolete releases that relied on it.
+Why must firmware and hardware update schemes account for long-idle spare parts?	Old spares may not trust current signing keys, so recovery may require bridge releases or multiple signatures.
+Why is explicit revocation safer than relying only on certificate expiration?	Operators can revoke compromised credentials directly without depending on accurate clocks or waiting for time-based expiry.
+Why can a centralized certificate-validity database become a recovery hazard?	If every service must contact it before accepting credentials, its outage can cascade into a fleet-wide access failure.
+Why is failing open dangerous for revocation systems?	Attackers can exploit outages or DoS dependencies to make old revoked credentials usable again.
+Why distribute revocation lists to local nodes instead of editing access files by hand?	Central distribution preserves one source of truth and lets normal rollout, monitoring, and rate-limiting mechanisms manage emergency changes.
+Why should revocation updates protect nodes from revoking their own credentials?	A malicious or mistaken update that revokes everything can otherwise turn revocation itself into a fleet-wide denial of service.
+Why must recovery systems know intended state down to precise artifacts?	You can only restore and verify a known-good state if software, configuration, firmware, and environment are explicitly specified.
+Why compare actual machine state against intended state continuously?	Checksums and deviation logs turn corruption, accidental edits, and malicious changes into detectable and repairable differences.
+Why must recovery account for in-memory state as well as files on disk?	Services may keep old configuration loaded until restarted or refreshed, so repairing files alone may not restore real behavior.
+Why should firmware configuration be treated as recoverable system state?	Firmware versions and settings can determine whether machines boot securely and whether hardware behaves correctly after recovery.
+Why should global singleton services support multiple instances from the beginning?	Recovery may require rebuilding or restoring a second copy, and single-instance assumptions become painful when added late.
+Why do backups only prove value through tested restores?	A backup that cannot be validated and restored under realistic conditions does not actually reduce recovery risk.
+Why do backups need integrity protection comparable to primary storage?	Attackers or insiders can corrupt backups and then force a restore unless the restore path verifies authenticity and authorization.
+Why can data recovery conflict with deletion or privacy guarantees?	Restores can accidentally resurrect data that users or policies assume was permanently destroyed.
+Why must emergency access preserve both reliability and security?	It is the last path into the system during severe outages, so failure blocks recovery while weak controls invite compromise.
+Why should normal access-control services not be single points of failure for responders?	If SSO, device trust, or authorization services fail, responders still need a lower-dependency way to reach critical systems.
+Why should emergency communication channels have minimal dependencies?	Responders cannot coordinate recovery if their only chat or bridge depends on the same broken infrastructure.
+Why should responders practice emergency access during normal operations?	Regular use keeps credentials, tools, documentation, and human habits fresh enough to work during a real crisis.
