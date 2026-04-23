@@ -185,3 +185,29 @@ Why must emergency access preserve both reliability and security?	It is the last
 Why should normal access-control services not be single points of failure for responders?	If SSO, device trust, or authorization services fail, responders still need a lower-dependency way to reach critical systems.
 Why should emergency communication channels have minimal dependencies?	Responders cannot coordinate recovery if their only chat or bridge depends on the same broken infrastructure.
 Why should responders practice emergency access during normal operations?	Regular use keeps credentials, tools, documentation, and human habits fresh enough to work during a real crisis.
+Why is a DoS attack useful to think about as an economic problem?	The attacker is trying to make demand exceed capacity, forcing the defender to spend more or deny service to legitimate users.
+Why should DoS defense start by understanding the attacker's efficiency strategy?	A small adversary can disrupt a larger service by finding the dependency where each attacker request consumes the most defender resources.
+Why does the weakest dependency determine a service's DoS posture?	Disrupting DNS, network paths, frontends, or backends can all deny service, so the least protected dependency becomes the practical target.
+Why distinguish ordinary DoS from DDoS when designing defenses?	Single-source attacks can often be handled in application logic, while distributed attacks usually need infrastructure-level filtering or absorption.
+Why are amplification attacks especially efficient for adversaries?	Spoofed small requests can cause many third-party servers to send larger responses toward the victim.
+Why is source-address spoofing prevention part of ecosystem-wide DoS defense?	Amplification attacks depend on forged return addresses, so filtering spoofed outbound packets removes the attacker's reflection tool.
+Why should DoS priorities be based on threat modeling instead of the last outage?	Recency bias can waste effort, while threat modeling points work toward the cheapest attack paths against the service.
+Why are layered defenses essential for DoS mitigation?	Traffic becomes more focused and expensive to handle deeper in the stack, so each layer should protect the layer behind it.
+Why is dropping attack traffic early so valuable?	Early filtering preserves downstream bandwidth, CPU, memory, and backend capacity for legitimate traffic.
+Why are stateful firewalls risky as the first line of defense for inbound production traffic?	Attackers can exhaust connection-tracking state and turn the firewall itself into the bottleneck.
+Why should load balancers prevent attack traffic from focusing on one component?	A distributed attack becomes much more damaging if the infrastructure accidentally funnels it into a single constrained resource.
+Why do caching proxies improve DoS resilience?	Repeated requests can be served near the edge without consuming application backend resources.
+Why should DoS alerts fire only when human action may be needed?	Pages for harmless absorbed traffic create noise, while capacity exhaustion or active defenses indicate decisions may be required.
+Why does graceful degradation matter during a DoS attack?	Disabling lower-value behavior can preserve the most important service functions instead of letting the whole system fail.
+Why can QoS controls improve DoS resilience?	They let critical traffic keep bandwidth while less important work yields under congestion.
+Why do automated DoS mitigations need both detection and response capabilities?	The system must identify harmful traffic patterns and also have a safe mechanism to block, throttle, or challenge them quickly.
+Why are false positives unavoidable in automated DoS mitigation?	Attack signals are imperfect, and many real users can share attributes such as an IP address with abusive traffic.
+Why can CAPTCHA-style challenges reduce collateral damage from application-layer blocks?	They give legitimate humans a path through broad mitigations that would otherwise block everyone sharing a suspicious signal.
+Why must the DoS mitigation system avoid depending on the service it protects?	An attack that disrupts production should not also disable the tools and controls needed to mitigate it.
+Why can very short canaries be useful for automated DoS responses?	They provide a last sanity check against harmful mitigations while still allowing response on the order of seconds.
+Why should a failed DoS controller usually fail static?	Keeping the last known policy avoids both blocking all traffic and removing active protections during an ongoing attack.
+Why can a purely reactive block teach attackers too much?	If defenses map too obviously to one visible signature, attackers can A/B test their way around the filter.
+Why should DoS responders consider that suspicious spikes may be legitimate users?	Real-world events can synchronize normal behavior, so treating every surge as hostile can harm the users the service is meant to protect.
+Why can client retry behavior create a self-inflicted DoS?	Tight retry loops multiply demand during an outage, making recovery harder and sometimes looking like an external attack.
+Why is exponential backoff with jitter better than simple retries?	Backoff reduces retry volume, and jitter prevents all clients from retrying in synchronized bursts.
+Why should overloaded services answer as many retrying clients as they safely can?	Each successful response lets a client exit its retry loop, reducing the traffic pressure that is prolonging the outage.
