@@ -1,0 +1,32 @@
+Why must deployment security answer "what was deployed," not just "who deployed it"?	Authorized humans can still make mistakes or act maliciously, so identity checks alone do not prove an artifact is safe.
+Why is the software supply chain part of the system's security boundary?	Code can affect production only after it is built, tested, and deployed, so attackers can target any of those steps to bypass earlier controls.
+Why should supply-chain threat models include both mistakes and malicious insiders?	The mitigations often need to stop the same harmful outcomes regardless of whether the bad action was accidental or intentional.
+Why are mandatory code reviews a supply-chain security control, not just a code quality practice?	They create multi-party authorization so no one person can silently ship a dangerous change.
+Why are code reviews insufficient on their own for deployment security?	A reviewed change still says nothing about what was actually built or deployed unless later stages are also controlled.
+Why is automation a security and reliability win in deployment pipelines?	Automation makes build and deployment steps repeatable, reduces human mistakes, and narrows opportunities for tampering.
+Why must configuration changes receive the same rigor as code changes?	Misconfiguration can be just as dangerous as buggy code, so review, testing, and versioning should apply to both.
+Why is configuration-as-code especially useful for recovery and auditing?	It preserves an inspectable intended state and reuses the same review and rollback controls as source code.
+Why should secrets stay out of source control and deployment manifests?	Anything stored there tends to spread too widely and too durably to preserve confidentiality.
+Why is artifact verification stronger than trusting a deployer's account?	It checks whether required build and test steps actually happened instead of assuming a human followed them.
+Why should production reject artifacts that bypass the official supply chain?	Otherwise attackers can sidestep reviews and tests by deploying directly to the environment they want to compromise.
+Why is binary provenance useful beyond incident forensics?	It also enables automated deployment policy decisions based on how an artifact was produced.
+Why should binary provenance record both inputs and the build command?	Verifiers need to know not just what sources were used, but also what transformation produced the output.
+Why should provenance identify dependencies as well as main sources?	Compilers, libraries, and tools can all influence the output and therefore its integrity.
+Why can a plain code signature provide weak assurance?	A signature is only meaningful if the signer, key protection, and signing environment are all trustworthy and tightly scoped.
+Why are provenance-based deployment policies stronger than simple signature checks?	They can verify specific properties such as source repository, tests passed, or build freshness instead of merely checking that some trusted key signed the artifact.
+Why should deployment policy be expressed per environment rather than buried in CI/CD configuration?	Explicit policy makes the intended rules easier to inspect, reason about, and verify independently of pipeline implementation details.
+Why must provenance be authenticated and bound to the exact artifact?	Otherwise an attacker can forge the provenance or attach a valid record to the wrong binary.
+Why are hermetic builds valuable even when reproducibility is not required?	Explicitly pinning inputs improves integrity, policy analysis, and safe cherry-picking of emergency fixes.
+Why do reproducible builds strengthen trust in artifacts?	Independent parties can rebuild and confirm that the claimed inputs really produce the deployed output.
+Why does verifiable build security depend on the architecture of the build system?	Trust comes from how provenance is produced and protected, not merely from the fact that a build happened.
+Why must verifiable build systems isolate user-defined build steps from signing keys?	Build commands are effectively remote code execution, so they cannot run with privileges that let them forge trusted outputs.
+Why should trusted orchestrators fetch and pin build inputs on behalf of the build?	This reduces the chance that untrusted build steps can smuggle in unauthenticated dependencies or lie about what was used.
+Why do deployment controls need proper choke points?	A policy that can be bypassed is not really enforcing anything.
+Why should policy enforcement happen at or directly in front of the admission point?	Every deployment request must pass that point, making it the place where verification can be made universal.
+Why is post-deployment verification still useful when deployment-time checks exist?	Policies change, systems fail open, breakglass happens, and investigators may need evidence after the fact.
+Why must deployment logs capture enough state to reevaluate policy later?	Post-deployment verification is impossible if the logs omit facts that the original decision depended on.
+Why should supply-chain hardening be rolled out one control at a time?	Incremental deployment reduces disruption and makes debugging and adoption much easier.
+Why do deployment policy engines need actionable error messages?	Users can fix violations quickly only if the system explains which rule failed and what acceptable alternatives look like.
+Why should provenance be unambiguous and travel with the artifact when possible?	One clear record per artifact is faster to verify, easier to debug, and avoids ambiguous lookups in external databases.
+Why should each deployment be governed by exactly one unambiguous policy?	Overlapping policies create confusing semantics and make both debugging and correctness analysis harder.
+Why must breakglass deployments be rare, loud, and audited?	Emergency bypass is necessary for recovery, but it becomes an attacker path unless every use is exceptional and quickly reviewed.
