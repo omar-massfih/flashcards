@@ -260,15 +260,12 @@ Why must unit tests be fast and hermetic to be trusted?	Slow or nondeterministic
 Why should unit tests cover malformed and boundary-case inputs, not just normal behavior?	Security and reliability failures often appear in exceptional, adversarial, or near-limit cases.
 Why are parameterized tests useful?	They let one behavioral claim be checked across many inputs without duplicating brittle test boilerplate.
 Why can peer review of tests matter as much as peer review of code?	A weak test can pass even when the new logic is broken or never exercised.
-Why do tests often take longer to write than the code they cover?	Useful tests must encode edge cases, failure modes, and expectations that production code alone does not make explicit.
 Why can writing tests force better software design?	Code often needs cleaner seams, fewer hidden dependencies, and clearer contracts before it becomes easy to test.
 Why are mocks and fakes useful in unit tests?	They let tests observe behavior without depending on flaky, noisy, or unsafe real systems.
 Why can overmocking make tests less valuable?	Tests that assert call choreography instead of outcomes often lock in implementation details rather than protecting behavior.
 Why should fake implementations usually be owned by the team that owns the real abstraction?	They are more likely to stay realistic and evolve with the actual service contract.
 Why do integration tests increase confidence beyond unit tests?	They exercise real interactions between components, catching failures at composition boundaries that isolated tests miss.
-Why are integration tests usually slower and flakier than unit tests?	They involve real dependencies, setup, and environmental variability rather than isolated logic.
 Why should integration environments use seeded nonsensitive data instead of mirrored production data?	Test realism should not come at the cost of exposing sensitive information or inheriting dirty state.
-Why is good logging especially important in integration tests?	When multiple real components interact, logs are often the fastest way to localize where the breakdown occurred.
 Why can dynamic program analysis find bugs ordinary tests miss?	Instrumentation can detect invalid states like memory misuse even when a test otherwise appears to pass.
 Why do sanitizer-instrumented builds belong in CI even if they are slower?	They surface memory, race, and undefined-behavior bugs that are too costly to catch manually and too dangerous to leave for production.
 Why is fuzzing valuable for both security and reliability?	It explores strange input combinations that humans did not think to test and can reveal crashes, hangs, leaks, and inconsistent behavior.
@@ -276,14 +273,10 @@ Why is fuzzing especially good at finding parser and protocol bugs?	These compon
 Why should fuzzing-generated crash inputs become regression tests?	Each discovered crashing input captures a real bug pattern that future refactors might accidentally reintroduce.
 Why do coverage-guided fuzzers outperform purely random fuzzing?	They keep inputs that reach new code paths, so the search gets progressively better at exploring the program.
 Why are dictionaries and seed corpora useful to fuzzers?	They help the fuzzer generate inputs that survive shallow parsing and reach deeper, more interesting logic.
-Why must fuzz drivers avoid nondeterminism and slow side effects?	Reproducible crashes and high execution speed are what make fuzzing productive.
-Why can shallow crashes block discovery of more interesting bugs?	A fuzzer may keep tripping the first easy error and never explore deeper states unless that blocker is fixed or carefully suppressed.
 Why is continuous fuzzing more valuable than one-off fuzzing runs?	New bugs are introduced continuously, so long-lived automation catches regressions soon after they land.
 Why can static analysis find bugs before any test runs?	It reasons about source code directly, which lets it flag suspicious patterns without needing an execution that happens to trigger them.
 Why are fast, shallow static analyzers useful early in development?	They provide cheap feedback on likely mistakes and style problems at about the speed of compilation.
-Why do deeper static analyses run less interactively than linters?	Reasoning about control flow, data flow, and semantics is more computationally expensive, so the feedback loop is slower.
 Why do static analysis tools need to balance false positives against false negatives?	A tool that cries wolf too often gets ignored, but a tool that is too conservative misses real bugs.
-Why can auto-fix suggestions dramatically increase the adoption of static analysis?	Developers are much more likely to accept warnings when the safe repair is immediate and mechanical.
 Why can formal methods justify their high cost in some domains?	When failure is extremely expensive, stronger proofs about critical properties can be worth far more than the up-front effort.
 Why must deployment security answer "what was deployed," not just "who deployed it"?	Authorized humans can still make mistakes or act maliciously, so identity checks alone do not prove an artifact is safe.
 Why is the software supply chain part of the system's security boundary?	Code can affect production only after it is built, tested, and deployed, so attackers can target any of those steps to bypass earlier controls.
