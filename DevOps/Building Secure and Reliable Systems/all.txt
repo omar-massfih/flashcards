@@ -231,10 +231,8 @@ Why does public transparency logging improve trust in certificate issuance?	Exte
 Why use multiple independent logs for highly sensitive issuance events?	Reconciling independent records makes tampering or omission harder to hide and gives investigators stronger evidence after an incident.
 Why can't security and reliability be bolted onto software after launch?	Late fixes fight assumptions already embedded in the codebase, so they are more painful, less complete, and more disruptive.
 Why are frameworks better than manual review for enforcing common security and reliability invariants?	They can centralize recurring protections so correctness does not depend on every developer and reviewer remembering every rule.
-Why do hardened frameworks scale fixes better than application-by-application patches?	Repairing one shared building block can remove the same class of issue across many services at once.
 Why do frameworks make code easier to reason about?	They separate business logic from common concerns like auth, logging, and retries, so reviewers can focus on a smaller surface.
 Why can frameworks improve reliability through automatic metrics and traffic-management hooks?	Common instrumentation, health signaling, and load-balancing integration become available by default instead of as ad hoc per-service work.
-Why should RPC backends express common concerns through interceptors or middleware stages?	Reusable stages make request handling uniform, composable, and easier to secure and observe.
 Why should a framework run completed interceptors' cleanup steps even when a request fails?	Logging, cleanup, and state restoration still need to happen on rejected or aborted requests.
 Why pass verified request state through a shared context object?	Authentication and similar checks can happen once, then be safely reused by downstream logic.
 Why should frameworks cancel requests that can no longer meet their deadline?	Stopping doomed work early conserves resources and gives callers faster feedback.
@@ -244,22 +242,17 @@ Why do safe query builders or typed SQL APIs eliminate many SQL injection bugs?	
 Why do HTML safe types need context-specific contracts?	A value that is safe in one HTML or JavaScript context may be dangerous in another, so one generic "safe string" is not enough.
 Why are reviewed escape hatches better than pretending one safe API fits every use case?	Rare exceptional cases can be handled deliberately without weakening the default guarantees for everyone else.
 Why do compiler-enforced restrictions often work better than feedback from linters or code review?	Developers get immediate, local, actionable guidance while they still have full context for the code they are writing.
-Why do autofixes help teams adopt safer APIs?	They remove mechanical migration work and make the safe path easier to follow than the unsafe one.
-Why should safe libraries cover common cases simply rather than trying to elegantly cover every edge case?	Simple libraries are easier to understand, trust, and adopt correctly.
 Why can exemption requests improve a safety library over time?	Repeated exemptions reveal missing abstractions that should become first-class safe APIs.
 Why is incremental migration usually safer than converting a whole legacy codebase at once?	Gradual rollout avoids brittle giant changes while still ratcheting the codebase toward safer defaults.
-Why consolidate legacy unsafe paths into a single obvious conversion function?	A single choke point is easier to audit, restrict, and eventually remove than many scattered exceptions.
 Why does multilevel nesting increase security and reliability risk?	Deep nesting hides control flow and makes mistakes in rare or error-handling paths harder to notice.
 Why does YAGNI improve security and reliability?	Code that does not exist cannot hide bugs, demand maintenance, or create unnecessary edge cases.
 Why must teams actively repay technical debt?	Deferred cleanup turns into hidden complexity and brittle behavior that often fails in unusual situations.
 Why should code health be measured and surfaced explicitly?	Metrics and alerts make complexity and neglect visible before they quietly become production problems.
-Why should refactoring and functional changes stay in separate commits?	Keeping them separate makes review simpler and reduces the chance that behavior changes hide inside structural edits.
 Why prefer memory-safe languages when practical?	They eliminate a large class of memory corruption bugs that commonly become security vulnerabilities and crashes.
 Why do strong typing and static type checking help large codebases stay secure and reliable?	They enforce invariants at compile time, catching many integration mistakes before runtime.
 Why use strong domain types instead of raw strings and numbers?	They encode meaning such as identity, units, or roles directly in the type system, making misuse harder.
 Why should implicit conversions and nonexplicit constructors be treated cautiously?	They can silently turn the wrong value into a superficially valid object and hide bugs until runtime.
 Why are sanitizers valuable even when tests already pass?	They can expose memory, concurrency, and undefined-behavior bugs that ordinary tests execute without noticing.
-Why is a race detector useful even in a language designed to avoid memory corruption?	Data races can still produce unreliable behavior even when raw memory safety problems are prevented.
 Why should software be built with testability in mind from the start?	Code that is hard to isolate, observe, or control will also be hard to validate before bugs reach production.
 Why is testing a complement to safe-by-construction coding rather than a replacement for it?	Tests sample behaviors, while safe APIs and language constraints can eliminate entire bug classes regardless of test coverage.
 Why are unit tests valuable for security and reliability?	They catch mistakes in small components early, cheaply, and close to the code that introduced them.
