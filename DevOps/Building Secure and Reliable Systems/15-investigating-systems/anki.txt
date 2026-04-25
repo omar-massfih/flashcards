@@ -1,0 +1,24 @@
+Why should debugging be treated as a learnable investigation skill rather than as guesswork?	Systematic collection of data, hypotheses, and experiments makes progress possible even in unfamiliar systems.
+Why does debugging require knowing how the system is supposed to work?	You can recognize abnormal behavior only by comparing what you observe against a mental model of intended behavior.
+Why do large, mature systems produce more "zebra" bugs than small, new systems?	Common failures get eliminated over time, so rare interactions and scale effects become a larger share of what remains.
+Why can rare failures become routine at large scale?	Very unlikely events on one machine become everyday occurrences when multiplied across huge fleets.
+Why are checksums useful beyond hardware faults?	They can detect corruption from both hardware glitches and software bugs, provided their scope matches the failure you care about.
+Why must the scope of a checksum match the system property you want to protect?	A checksum only detects corruption in the data it covers, so omitted context can let the wrong state still look valid.
+Why should investigators write down both observations and expectations?	Bugs often live in the gap between what the system did and what people assumed it would do.
+Why is normalized deviance dangerous for debugging and security?	Teams can get used to broken or risky behavior and stop noticing signals that should trigger deeper investigation.
+Why should you try to reproduce bugs outside production when possible?	Reproduction in a safe environment lets you experiment freely, involve more people, and add intrusive diagnostics without harming users.
+Why is isolating a problem to the smallest reproducing scope so valuable?	Smaller scopes eliminate irrelevant components and make root causes easier to reason about and test.
+Why must investigators be cautious about confusing correlation with causation?	Events that happen together may share a symptom or a timeline without sharing a root cause.
+Why should teams invest in observability when stuck debugging?	Better signals, traces, and internal visibility can turn opaque failures into testable explanations.
+Why can cleaning up code be a legitimate debugging tactic?	Simpler code, better warnings, and clearer error handling can expose bugs that were hidden by accidental complexity.
+Why can deleting a legacy system be safer than endlessly debugging it?	Removing unused or poorly understood code eliminates both bug surface and attack surface instead of preserving them forever.
+Why should systems fail as close as possible to the source of the problem?	Early, local failure prevents downstream effects that obscure the root cause and spread damage.
+Why is collaborative debugging valuable for both learning and incident response?	It exposes investigators to each other's tools and reasoning while making the team more practiced at solving problems together.
+Why should suspected security compromises be escalated to specialists early?	Security investigations introduce attacker behavior, legal concerns, and evidence-handling risks that ordinary debugging does not.
+Why can ordinary debugging actions be harmful during a security investigation?	Changing files or behavior may destroy evidence or tip off an attacker who is still active in the system.
+Why do missing, corrupted, or strangely absent logs raise suspicion during an investigation?	Attackers often tamper with exactly the records investigators would rely on to reconstruct events.
+Why should logging systems be designed to be append-only and hard to alter?	Attackers commonly try to erase their traces, so investigations depend on logs being difficult to rewrite after the fact.
+Why should debugging logs be protected like other sensitive data?	Logs often contain metadata or contents that reveal user behavior, secrets, or internal system structure.
+Why should investigators log security-relevant actions even when they seem operationally routine?	Actions on data, ownership, and account state often become the key timeline for later reconstruction.
+Why should logging systems degrade gracefully instead of simply stopping at capacity limits?	Summarized or lower-fidelity retention is far more useful during incidents than losing all historical signal.
+Why is robust emergency debugging access necessary even when strong access controls exist?	When the normal security systems fail, responders still need a controlled way to investigate and repair them.
