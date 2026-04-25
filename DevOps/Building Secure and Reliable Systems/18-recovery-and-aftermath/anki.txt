@@ -1,0 +1,24 @@
+Why should recovery from a security incident be treated differently from recovery from an ordinary outage?	A live attacker can react to your recovery steps, so restoring service safely requires thinking about adversarial behavior, not just broken systems.
+Why should recovery usually be staffed separately from investigation?	Recovery and investigation need different skills, can run in parallel, and both suffer when the same tired people try to do everything.
+Why are the engineers who run systems day to day often critical to recovery?	Returning systems to a known good state depends on practical domain knowledge that outside responders usually do not have.
+Why does recovery need tight coordination with the incident commander and investigation team?	Recovery decisions change the attacker's environment, so they must stay aligned with what the investigation has learned and with overall incident strategy.
+Why must recovery information be stored somewhere the attacker cannot reach?	Plans, notes, and checklists can reveal exactly how you intend to eject the attacker and what blind spots you still have.
+Why is scoping recovery harder than just listing known compromised machines?	Indirectly affected systems, dependencies, and attacker-reachable assets may also need remediation even if compromise is not yet proven.
+Why should recovery planning track attacker behaviors as well as compromised assets?	Defenses must block the methods the attacker used, not just rebuild the places where they were caught.
+Why should recovery plans assume the attacker may still be present and watching?	If the attacker can observe your moves, they may hide, pivot, or retaliate before you finish ejecting them.
+Why is ejecting an attacker before you understand the attack risky?	Acting too early can reveal your investigation while leaving untouched footholds that let the attacker return or escalate.
+Why is there still sometimes a case for ejecting an attacker before full understanding?	If the attacker is actively stealing data or causing damage, immediate harm reduction can outweigh the benefits of waiting.
+Why is building a clean parallel environment a common recovery pattern?	When core infrastructure is suspect, you need a trusted place to bootstrap recovery without relying on attacker-visible systems.
+Why should recovery consider attack variants, not just the exact exploit already observed?	Related systems and sibling vulnerabilities can let the attacker or a copycat come right back through a slightly different path.
+Why can restoring from a "known good" image still be dangerous?	If the image or snapshot still contains the original weakness, recovery can put the same attack path back into service.
+Why must recovery think carefully about the attack timeline?	You need to know how far back to revert or rebuild so you do not preserve attacker changes while trying to clean them up.
+Why should compromised backups or snapshots be quarantined rather than casually reused?	They may contain attacker modifications and can also be valuable evidence for understanding what happened.
+Why can short-term recovery mitigations create dangerous technical debt?	Emergency fixes often bypass normal safeguards, and if they linger they can become fragile, forgotten parts of the system.
+Why are detailed recovery checklists so important during incident cleanup?	They turn a stressful, high-risk recovery into explicit, reviewable steps that teams can coordinate and execute consistently.
+Why is quarantine a useful recovery tool?	Isolation can limit attacker movement or contain compromised assets while buying time to rebuild or migrate safely.
+Why is reinstalling systems from known good sources usually safer than deleting discovered malware?	A clean rebuild is less likely to miss hidden persistence or attacker changes than selective cleanup.
+Why does strong provenance make recovery easier?	When you can trace what binaries were built from what inputs, you can identify and replace artifacts produced during the compromised window.
+Why is data sanitization often more than just restoring a backup?	You may need to verify code, configs, and records against trusted sources and reconcile attacker-induced changes instead of bluntly overwriting everything.
+Why can incident recovery be a good time to introduce stronger identity controls?	A forced reset moment can create leverage for adding protections like two-factor authentication that were hard to roll out in normal times.
+Why should postmortems separate short-term mitigations from long-term improvements?	Some fixes can be applied immediately, while deeper structural changes need to be tracked as strategic work instead of vague intent.
+Why is the quiet period after recovery part of incident response rather than a return to business as usual?	It is the window where lessons, tooling changes, and structural fixes determine whether the same class of incident happens again.
