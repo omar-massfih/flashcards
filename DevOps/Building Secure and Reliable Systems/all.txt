@@ -327,3 +327,27 @@ Why should debugging logs be protected like other sensitive data?	Logs often con
 Why should investigators log security-relevant actions even when they seem operationally routine?	Actions on data, ownership, and account state often become the key timeline for later reconstruction.
 Why should logging systems degrade gracefully instead of simply stopping at capacity limits?	Summarized or lower-fidelity retention is far more useful during incidents than losing all historical signal.
 Why is robust emergency debugging access necessary even when strong access controls exist?	When the normal security systems fail, responders still need a controlled way to investigate and repair them.
+Why should disaster planning begin with risk analysis instead of generic response advice?	Preparation is scarce, so the plan should focus first on failures that are most likely or most damaging to the organization.
+Why should disaster risk analysis include dependencies and people, not just headline systems?	Operations often fail through missing supporting components or unavailable expertise rather than through the primary service alone.
+Why is it useful to classify systems by criticality during disaster planning?	It clarifies which systems must be restored first and which tradeoffs are acceptable during recovery.
+Why can low-probability disasters still deserve top planning attention?	Extreme impact can make rare events worth preparing for even when they are unlikely.
+Why should disaster response be organized into phases rather than treated as one continuous scramble?	Immediate response, recovery, and resumption of operations require different goals, decisions, and success criteria.
+Why should incident teams define exit criteria before or during recovery work?	Explicit completion conditions prevent both premature closure and endless cleanup being mistaken for active incident response.
+Why do incident response skills need regular rehearsal?	Under stress, teams fall back to habit, so unpracticed processes become slow, inconsistent, and error-prone.
+Why should incident response plans be flexible rather than scenario-perfect?	Real incidents evolve unpredictably, so rigid scripts break when the facts stop matching the imagined case.
+Why should incident response be organized around roles rather than specific people?	Incidents ignore vacations, travel, and time zones, so responsibilities must survive individual unavailability.
+Why must incident teams avoid single points of failure in authority and expertise?	Recovery stalls if one absent person is the only path to approval, knowledge, or access.
+Why is an incident response team charter useful?	It defines mission, scope, and ownership so the team can focus on qualifying incidents instead of absorbing every urgent task.
+Why should incident teams separate severity from priority?	Impact and response tempo are related but different, so confusing them leads to poor coordination and misallocated effort.
+Why should incident documentation be stored somewhere accessible during a disaster?	A response plan is useless if the incident takes down the very systems needed to read it.
+Why should emergency access paths be predefined before an incident?	Ad hoc access requests during a crisis add delay, confusion, and avoidable security risk.
+Why should responders have predetermined tools and data access for investigations?	Waiting to assemble permissions and tooling during an incident wastes the scarce time when fast triage matters most.
+Why should organizations prestage known-safe fallback systems and recovery paths?	Recovery is much easier when responders already have trusted ways to operate after the primary environment is impaired or suspect.
+Why are restore drills as important as backups themselves?	Backups that were never actually restored may fail when needed, turning assumed resilience into false confidence.
+Why should incident-response training extend beyond the core IR team?	Incidents are often first seen or influenced by engineers outside the response team, so untrained helpers can either accelerate or derail the response.
+Why must responders be trained on competing goals like uptime, containment, and evidence preservation?	Stress pushes people toward gut decisions, so they need prior guidance on which tradeoffs apply in which situations.
+Why are tabletop exercises valuable even though they do not disrupt production?	They let teams practice decisions, communication, and procedure-following in realistic scenarios without needing a real outage.
+Why is fault injection especially useful for production resilience testing?	It creates controlled failures that reveal how systems behave under stress without requiring uncontrolled real disasters.
+Why must disaster testing include multicomponent and full failover scenarios?	Components that survive individual tests can still interact badly when multiple dependencies fail together or when the whole site shifts over.
+Why are Red Team exercises uniquely valuable for disaster preparedness?	They test detection, decision-making, and human behavior under surprise conditions that scripted exercises rarely reproduce.
+Why must exercises produce blameless postmortems and owned action items?	Testing improves preparedness only when lessons are captured, assigned, and turned into changes.
