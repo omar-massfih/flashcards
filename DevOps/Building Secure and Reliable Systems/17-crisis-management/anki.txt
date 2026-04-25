@@ -1,0 +1,26 @@
+Why should responders first ask whether an incident is actually a crisis?	Not every security event needs full-scale crisis management, and over-escalation wastes scarce attention and coordination capacity.
+Why does triage in security response begin with estimating likely impact, not proving every fact first?	Early response decisions must be made under uncertainty, so teams need a defensible severity estimate before full evidence exists.
+Why can the same attack be a routine problem for one organization and a crisis for another?	The seriousness of an incident depends on local defenses, visibility, automation, and blast radius, not just on the attack label.
+Why should teams decide in advance what kinds of incidents count as crises?	Precommitted criteria reduce panic, inconsistency, and debate in the first moments of a response.
+Why might some vulnerabilities be managed like active incidents even before exploitation is confirmed?	Extreme-risk bugs can demand incident-style coordination because the exposure window and mitigation effort are both urgent.
+Why is "don't panic" a real operational rule in security incidents?	Rushing to act can destroy evidence, alert the attacker, or force cleanup before the team understands what happened.
+Why must security responders usually investigate before they remediate?	Unlike ordinary outages, a live attacker may adapt to your actions, so premature fixes can hide scope and leave footholds behind.
+Why does an incident commander need explicit acceptance of the role?	Crisis work fails fast when authority is ambiguous and people assume someone else is in charge.
+Why is the operations lead a distinct role from the incident commander?	The IC steers strategy and coordination, while the OL drives technical execution, preventing both responsibilities from collapsing onto one overloaded person.
+Why should major incidents add leads like communications, legal, or management liaison early?	Critical decisions and external obligations emerge in parallel with technical work, so waiting creates bottlenecks later.
+Why must crisis teams have an operational security plan before an incident happens?	Once a sensitive response begins, there is little time to invent safe communications, access paths, and confidentiality rules.
+Why is logging into a compromised server often an OpSec mistake?	Direct login can expose valuable credentials to the attacker and signal that the investigation has begun.
+Why should responders avoid interacting directly with attacker infrastructure during an investigation?	Unusual scans, downloads, or lookups can reveal discovery of the attack and change attacker behavior.
+Why can early password resets, account locks, or system shutdowns backfire?	They may tip off the attacker before scope is known, causing them to hide, pivot, or destroy evidence.
+Why is there an exception to strict OpSec for imminent risk?	When harm is immediate and severe, rapidly protecting users or critical systems can outweigh the value of staying hidden.
+Why does digital forensics focus so heavily on timelines and event relationships?	Understanding what happened depends not just on isolated facts but on the sequence and causation connecting them.
+Why should incident investigations be driven by pivot points?	Each confirmed fact should generate the next focused question, letting the team expand scope systematically instead of wandering.
+Why is sharding a large investigation into forensics, reversing, and hunting effective?	Each stream produces inputs the others need, so parallel specialists can tighten the feedback loop and find compromised systems faster.
+Why is deciding when to stop investigating and start remediation so hard?	You almost never know everything, so the team must judge when it has enough understanding to remove the attacker safely.
+Why must the incident commander avoid getting pulled into technical tasks?	If the IC disappears into operations, no one is left to manage priorities, roadblocks, staffing, and coordination.
+Why assign remediation planning before the forensic work is fully finished?	By the time the team is ready to act, cleanup steps are already prepared instead of being invented under pressure.
+Why are handovers a first-class incident-management skill?	Long incidents outlast human concentration, so continuity depends on transferring context without losing direction.
+Why should incident shifts be capped instead of sustained in hero mode?	Fatigue eventually creates more errors than progress, turning extra effort into slower and lower-quality response.
+Why is a "follow-the-sun" model powerful for global incidents?	It keeps fresh responders working continuously without forcing one team into unsafe exhaustion.
+Why should incident communication default to being explicit and slightly redundant?	Stress, jargon, and unfamiliar collaborators make misunderstandings likely unless meaning is spelled out clearly.
+Why is hedging dangerous during crisis communication?	Vague confidence statements blur uncertainty instead of locating it, which makes decision-making harder.
