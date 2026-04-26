@@ -1,0 +1,10 @@
+Why should restoring service take precedence over root-cause investigation during an outage?	Every extra minute of downtime increases damage, so incident response should first shrink user impact and investigate deeply only after service is back.
+Why are prebuilt diagnostic scripts so valuable during incidents?	They capture the evidence needed for postmortems without forcing responders to improvise or prolong the outage.
+Why is the most recent change often a good starting hypothesis in a postmortem?	Recent changes frequently alter the system state that triggered the failure, so they provide a practical place to begin even though they are not proof of cause.
+Why can status-page monitoring falsely suggest that a dependency is healthy?	A shallow health check may exercise only a lightweight path while the real request path is deadlocked, exhausted, or otherwise unusable.
+Why are remote calls without effective timeouts dangerous?	A downstream failure can pin caller threads indefinitely, turning one sick dependency into a system-wide hang.
+Why can cleanup code be the true source of a production outage?	If cleanup throws before later cleanup steps run, it can silently leak scarce resources until the whole system blocks.
+Why can a failover expose bugs that were dormant before the failover?	Long-lived pooled resources may look valid until the topology changes, at which point stale connections fail in edge-case cleanup paths.
+Why can one small resource-handling bug cripple many upstream systems at once?	When many consumers share a dependency, exhausting that dependency's pool turns a local bug into a broad outage through contention and blocking.
+Why is it unrealistic to rely on code review or testing to eliminate every production bug?	Some failures appear only under rare timing, topology, or load conditions, so resilient systems must assume that some bugs will escape.
+Why is containing failure propagation more important than trying to write perfect software?	Interdependent systems inevitably contain defects, so survival depends on preventing one component's bug from taking down everything connected to it.
