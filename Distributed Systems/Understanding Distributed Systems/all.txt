@@ -4,8 +4,7 @@ Why can distribution improve performance in ways a single node never could?	It l
 Why can't networking libraries fully hide communication complexity in distributed systems?	Network failures, corruption, and security concerns leak through abstractions, so designers still need to understand what happens on the wire.
 Why is coordination fundamentally hard in distributed systems?	Nodes can exchange only unreliable messages, so failures and uncertainty make it difficult to know whether others received, processed, or agreed with a decision.
 Why does the two generals problem matter beyond the thought experiment itself?	It shows that perfect certainty is impossible over an unreliable network, so real systems must cope with uncertainty instead of trying to eliminate it completely.
-Why is throughput alone a misleading measure of system performance?	A system can accept many requests while still responding too slowly or failing many of them, so performance must also account for latency and success.
-Why is goodput more meaningful than raw throughput?	What users care about is the rate of successful requests completed with acceptable latency, not merely the total amount of incoming load.
+Why is goodput more meaningful than raw throughput?	Raw throughput can look high even while many requests fail or become too slow; goodput measures the rate of requests that actually succeed with acceptable latency.
 Why is scaling up not a complete answer to scalability?	Better hardware eventually hits cost and physical limits, so sustained growth usually requires scaling out across many machines.
 Why did cloud computing make scaling out much more practical?	It turned acquiring more machines from a slow procurement problem into an on-demand operational decision.
 Why must distributed systems assume failures will happen?	At scale, even unlikely faults become frequent because many components operate continuously and one failure can raise the chance of others.
