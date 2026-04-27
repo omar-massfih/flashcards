@@ -1,0 +1,16 @@
+Why does partitioning become necessary as a dataset grows?	Once the data and access load exceed what one machine can store or serve, splitting the data across nodes is the only way to keep increasing capacity.
+Why does partitioning increase both storage capacity and request throughput?	Each node stores and serves only a subset of the data, so both bytes and requests are spread across more machines.
+Why does partitioning require a routing layer such as a gateway?	Clients need some component that knows which partition owns the requested data and can forward the request to the right node or nodes.
+Why does partitioning make operations like aggregation or multi-key updates harder?	Data that used to be local may now span nodes, so reads must be gathered and transactions coordinated across partitions.
+Why can partitioning still fail to scale if the workload is skewed?	If one partition receives far more traffic than the others, that hotspot becomes the real bottleneck no matter how many cold partitions exist.
+Why is rebalancing one of the hardest operational parts of partitioning?	The system must move data between nodes while continuing to serve traffic, and excessive movement consumes bandwidth and destabilizes performance.
+Why is range partitioning attractive?	It preserves key order, which makes ordered scans and range queries efficient within and across partitions.
+Why is range partitioning vulnerable to skew and hotspots?	If keys or access patterns cluster in part of the keyspace, some ranges grow much larger or hotter than others.
+Why does static partitioning make scaling easier operationally but harder strategically?	Pre-creating many partitions simplifies moving ownership between nodes later, but choosing the right number up front is difficult and mistakes hurt either performance or future scalability.
+Why is dynamic partitioning appealing despite the extra complexity?	It lets the system split hot or oversized partitions and merge cold ones over time, adapting the partition layout to actual load.
+Why is hash partitioning attractive for balancing data volume?	A good hash spreads keys uniformly, so partitions tend to contain similar amounts of data even when the original keys are unevenly distributed.
+Why does hash partitioning not eliminate hotspots by itself?	Uniform key distribution does not help when one specific key is accessed much more often than the others mapped to its partition.
+Why is naive modulo-based hashing expensive when adding or removing partitions?	Changing the divisor remaps most keys, so the system must reshuffle a large fraction of the dataset.
+Why is consistent hashing so useful for elastic partitioned systems?	It minimizes remapping when partitions are added or removed, so only a relatively small subset of keys needs to move.
+Why is the loss of global key order the main downside of hash partitioning?	Without ordered partition boundaries, efficient range scans across the full dataset become much harder than with range partitioning.
+Why does partitioning fit caches more naturally than transactional databases?	Caches usually avoid cross-partition transactions and large aggregations, so they gain the scaling benefits of partitioning without paying as much coordination complexity.
