@@ -1,0 +1,12 @@
+Why does TCP split a byte stream into numbered segments?	Segmenting and numbering the data lets the receiver detect loss, duplication, and reordering so the stream can be reconstructed reliably.
+Why does TCP require acknowledgments and retransmission timers?	They let the sender infer that data was probably lost and resend it, creating the illusion of reliable delivery over an unreliable network.
+Why does TCP use checksums?	They let the receiver detect corruption in transit so damaged segments are not silently accepted as valid data.
+Why does opening a TCP connection add latency before useful work begins?	The three-way handshake costs at least one round-trip before the connection is established, so bandwidth is effectively zero until that setup finishes.
+Why can keeping a TCP connection open be better than closing it immediately after each request?	Reusing a connection avoids repeatedly paying the handshake cold-start cost and the overhead of tearing down and recreating socket state.
+Why can rapidly opening and closing many TCP connections cause problems even after each one is closed?	Closed connections linger in TIME_WAIT to absorb delayed packets, so high churn can exhaust available sockets and cause new connection attempts to fail.
+Why does TCP implement flow control?	It prevents a fast sender from overrunning the receiver's buffer by limiting how much unprocessed data can be in flight toward that receiver.
+Why is TCP flow control similar to service-level rate limiting?	Both are backpressure mechanisms that stop one side from sending more work than the other side can safely absorb.
+Why does TCP implement congestion control in addition to flow control?	Protecting the receiver is not enough; TCP also needs to avoid flooding the shared network path and contributing to packet loss for everyone.
+Why does round-trip time strongly affect how much bandwidth TCP can use?	TCP can grow in-flight data only as acknowledgments return, so long RTTs slow its ability to fill the pipe even when raw network capacity is high.
+Why can geographically closer servers improve TCP performance even when bandwidth is unchanged?	Shorter RTT reduces handshake delay and lets congestion control ramp up faster, so the connection reaches useful throughput sooner.
+Why can UDP outperform TCP for some real-time applications?	If old data quickly becomes worthless, avoiding retransmissions and connection overhead can produce fresher results than TCP's insistence on reliable ordered delivery.
