@@ -1,0 +1,4 @@
+Why does scaling a system make resiliency more important rather than less?	Scaling adds more machines, services, and dependencies, so the probability that some part is failing at any given time goes up.
+Why do higher availability targets force systems to detect and repair faults automatically?	As downtime budgets shrink to minutes per day or month, there is too little time for manual diagnosis and recovery to preserve the target.
+Why is building for resiliency more about fast detection, reaction, and repair than about preventing every fault?	In distributed systems faults are inevitable, so the practical goal is to limit how long they harm users rather than pretend they can all be avoided.
+Why should resiliency work start by studying common failure causes?	You cannot prioritize defenses intelligently until you know which faults are likely, how they spread, and how much damage they can cause.
